@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 # plyranges
 
 The `plyranges` ^[tentative title] package provides a 
-(fluent)[https://en.wikipedia.org/wiki/Fluent_interface] interface for 
+[fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for 
 performing common genomic data analysis tasks. One goal of this package is to 
 decrease the learning curve for Bioconductor and S4 classes (especially for new users) by providing a consistent interface to common classes, _IRanges_, _GRanges_ and _SummarizedExperiment_. 
 

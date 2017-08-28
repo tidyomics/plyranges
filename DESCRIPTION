@@ -1,0 +1,20 @@
+Package: plyranges
+Type: Package
+Title: A fluent interface for manipulating GenomicRanges/SummarizedExperiment
+Version: 0.1.0
+Authors: Stuart Lee, Michael Lawrence
+Maintainer: Stuart Lee <stuart.lee1@monash.edu>
+Description: A dplyr-like interface for interacting with the common Bioconductor 
+    classes GRanges and SummarizedExperiment. By providing a grammatical
+    and consistent way of manipulating these classes their accessiblity for new
+    Bioconductor users is hopefully increased.
+Depends: R (>= 3.4.0), methods, GenomicRanges (>= 1.28.4)
+Imports: dplyr, rlang, magrittr
+biocViews: Infrastructure, Data Representation, WorkflowStep
+License: Artistic-2.0
+Encoding: UTF-8
+LazyData: true
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1
