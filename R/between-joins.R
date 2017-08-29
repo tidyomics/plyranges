@@ -24,15 +24,15 @@
 #' @export
 setGeneric("left_join",
            function(x, y, by = NULL, ...) standardGeneric("left_join"))
-#' @describeIn join
+#' @describeIn join left_join
 #' @export
 setGeneric("right_join",
            function(x, y, by = NULL, ...) standardGeneric("right_join"))
-#' @describeIn join
+#' @describeIn join right_join
 #' @export
 setGeneric("inner_join",
            function(x, y, by = NULL, ...) standardGeneric("inner_join"))
-#' @describeIn join
+#' @describeIn join inner_join
 #' @export
 setGeneric("full_join",
            function(x, y, by = NULL, ...) standardGeneric("full_join"))
@@ -97,7 +97,7 @@ setMethod("inner_join", c("DataFrame", "DataFrame"),
 # so we need to subset the ranges in x based on the keys in the by
 # Note this is different to an overlap join - we are just joining the
 # mcols(x), mcols(y)
-#' @describeIn join
+#' @describeIn join inner_join
 #' @export
 setMethod("inner_join", c("GRanges", "GRanges"),
           function(x, y, by = NULL) {
@@ -113,7 +113,7 @@ setMethod("inner_join", c("GRanges", "GRanges"),
             ranges_common
           })
 
-#' @describeIn join
+#' @describeIn join inner_join
 #' @export
 setMethod("inner_join", c("GRanges", "DataFrame"),
           function(x, y, by = NULL) {
@@ -127,14 +127,14 @@ setMethod("inner_join", c("GRanges", "DataFrame"),
             ranges_common
           })
 
-#' @describeIn join
+#' @describeIn join inner_join
 #' @export
 setMethod("inner_join", c("DataFrame", "GRanges"),
           function(x,y, by = NULL) {
             inner_join(x, mcols(y), by = by)
           })
 
-#' @describeIn join
+#' @describeIn join left_join
 #' @export
 setMethod("left_join", c("DataFrame", "DataFrame"),
           function(x, y, by = NULL) {
@@ -152,7 +152,7 @@ setMethod("left_join", c("DataFrame", "DataFrame"),
           })
 
 # should have an option to copy here?
-#' @describeIn join
+#' @describeIn join left_join
 #' @export
 setMethod("left_join", c("GRanges", "GRanges"),
           function(x, y, by = NULL) {
@@ -160,7 +160,7 @@ setMethod("left_join", c("GRanges", "GRanges"),
             x
           })
 
-#' @describeIn join
+#' @describeIn join left_join
 #' @export
 setMethod("left_join", c("GRanges", "DataFrame"),
           function(x, y, by = NULL) {
@@ -168,13 +168,13 @@ setMethod("left_join", c("GRanges", "DataFrame"),
             x
           })
 
-#' @describeIn join
+#' @describeIn join left_join
 #' @export
 setMethod("left_join", c("DataFrame", "GRanges"),
           function(x, y, by = NULL) {
             left_join(x, mcols(y), by = by)
           })
-#' @describeIn join
+#' @describeIn join left_join
 #' @export
 setMethod("right_join", c("DataFrame", "DataFrame"),
           function(x, y, by = NULL) {
@@ -192,7 +192,7 @@ setMethod("right_join", c("DataFrame", "DataFrame"),
 
           })
 
-#' @describeIn join
+#' @describeIn join right_join
 #' @export
 setMethod("right_join", c("GRanges", "GRanges"),
           function(x, y, by = NULL) {
@@ -200,14 +200,14 @@ setMethod("right_join", c("GRanges", "GRanges"),
             y
           })
 
-#' @describeIn join
+#' @describeIn join right_join
 #' @export
 setMethod("right_join", c("GRanges", "DataFrame"),
           function(x, y, by = NULL) {
             right_join(mcols(x), y, by = by)
           })
 
-#' @describeIn join
+#' @describeIn join right_join
 #' @export
 setMethod("right_join", c("DataFrame", "GRanges"),
           function(x, y, by = NULL) {
@@ -215,7 +215,7 @@ setMethod("right_join", c("DataFrame", "GRanges"),
             y
           })
 
-#' @describeIn join
+#' @describeIn join right_join
 #' @export
 setMethod("full_join", c("DataFrame", "DataFrame"),
           function(x, y, by = NULL) {
@@ -235,7 +235,7 @@ setMethod("full_join", c("DataFrame", "DataFrame"),
 # unclear how the full join should work in terms of returning the ranges
 # at the moment full join performs a full join on the metadata
 # then returns the ranges on either x or y
-#' @describeIn join
+#' @describeIn join full_join
 #' @export
 setMethod("full_join", c("GRanges", "GRanges"),
           function(x,y, by = NULL) {
@@ -255,14 +255,14 @@ setMethod("full_join", c("GRanges", "GRanges"),
 
           })
 
-#' @describeIn join
+#' @describeIn join full_join
 #' @export
 setMethod("full_join", c("DataFrame", "GRanges"),
           function(x, y, by = NULL) {
             full_join(x, mcols(y), by = by)
           })
 # does it make sense to return a Ranges here
-#' @describeIn join
+#' @describeIn join full_join
 #' @export
 setMethod("full_join", c("GRanges", "DataFrame"),
           function(x, y, by = NULL) {

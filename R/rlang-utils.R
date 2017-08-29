@@ -25,6 +25,9 @@ rlang::new_overscope
 rlang::eval_bare
 
 #' @export
+rlang::eval_tidy
+
+#' @export
 rlang::syms
 
 is_empty_quos <- function(quos) {

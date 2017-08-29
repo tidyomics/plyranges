@@ -4,6 +4,8 @@
 #' @param ... Name-value pairs of summary functions.
 #'
 #' @return a \link[tibble]{tibble}
+#' @importFrom tibble as_tibble
+#' @export
 summarise.GRanges <- function(.data, ...) {
 
   dots <- quos(...)
@@ -18,6 +20,8 @@ summarise.GRanges <- function(.data, ...) {
 }
 
 
+#' @importFrom rlang UQS quos
+#' @importFrom dplyr bind_cols bind_rows
 summarise.GroupedGRanges <- function(.data, ...) {
 
   groups <- groups(.data)

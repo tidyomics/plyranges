@@ -61,7 +61,8 @@ setGeneric("within_full_ojoin",
 #' joining by overlapping intervals.
 #'
 #' @seealso \link[GenomicRanges]{setops-methods}, \link[IRanges]{findOverlaps-methods}
-#' @importFrom IRanges findOverlaps queryHits subjectHits
+#' @importFrom IRanges findOverlaps
+#' @importFrom S4Vectors queryHits subjectHits
 setMethod("left_ojoin",
           signature = c("GRanges", "GRanges"),
           function(x, y, maxgap = 0L, minoverlap = 1L,  type = "any", ignore.strand = TRUE) {

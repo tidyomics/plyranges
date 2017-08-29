@@ -9,7 +9,9 @@
 #' @description Unlike \pkg{dplyr}'s filter, the filter for \code{GRanges}
 #' is only valid for a single logical expression.
 #' @importFrom dplyr filter
-#' @importFrom IRanges as.env runValue
+#' @importFrom IRanges as.env
+#' @importFrom S4Vectors runValue
+#' @importFrom rlang enexpr new_overscope overscope_eval_next overscope_clean eval_bare
 #' @seealso \link[dplyr]{filter}
 filter.GRanges <- function(.data, expr) {
 

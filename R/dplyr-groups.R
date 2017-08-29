@@ -46,6 +46,7 @@ setMethod("show", "GroupedGRanges", function(object) {
 })
 
 
+#' @importFrom rlang quo_name quos syms
 group_by.GRanges <- function(.data, ...) {
   capture_groups <- quos(...)
   groups <- lapply(capture_groups, function(x) quo_name(x))

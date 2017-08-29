@@ -6,12 +6,14 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "README-"
 )
+library(dplyr)
+devtools::load_all()
 ```
 
 # plyranges
@@ -29,3 +31,35 @@ chainable. As a consequence, users familiar with
 difficulty.
 
 *Note this package is under heavy development*
+
+# Installation
+
+Currently only the development version is available
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("sa-lee/plyranges")
+```
+
+# Constructing Ranges
+
+Ranges can be easily constructed from a data.frame or tibble. To construct an
+`IRanges` we require there are at least two columns that represent at either a 
+starting coordinate, finishing coordinate or the width of the interval. To
+construct a `GRanges` we require a column that represents that sequence name (
+contig or chromosome id), and an optional column to represent the strandedness
+of an interval. 
+
+```{r}
+library(dplyr)
+df <- data.frame(start=c(2:-1, 13:15), 
+                 width=c(0:3, 2:0))
+
+df %>% Ranges()
+
+df %>% 
+  mutate(seqnames = sample(c("chr1", "chr2"), nrow(df), replace = TRUE),
+         strand = "*") %>% 
+  Ranges()
+```
+
+
