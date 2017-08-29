@@ -15,8 +15,8 @@
 #' @return a \link[IRanges][Ranges] object.
 #' @seealso \link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
 #'
-#' @importFrom rlang quos
-#' @exportMethod
+#' @importFrom rlang quos eval_tidy
+#' @export
 Ranges <- function(.data, ..., keep_mcols) UseMethod("Ranges")
 
 Ranges.default <- function(.data, ..., keep_mcols = TRUE) {
