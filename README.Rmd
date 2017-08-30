@@ -17,7 +17,6 @@ devtools::load_all()
 ```
 
 # plyranges
-
 The `plyranges` ^[tentative title] package provides a 
 [fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for 
 performing common genomic data analysis tasks. One goal of this package is to 
@@ -50,16 +49,29 @@ contig or chromosome id), and an optional column to represent the strandedness
 of an interval. 
 
 ```{r}
-library(dplyr)
+set.seed(100)
 df <- data.frame(start=c(2:-1, 13:15), 
                  width=c(0:3, 2:0))
 
+# produces IRanges
 df %>% Ranges()
 
+# produces GRanges
 df %>% 
-  mutate(seqnames = sample(c("chr1", "chr2"), nrow(df), replace = TRUE),
-         strand = "*") %>% 
+  mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE)) %>% 
   Ranges()
+
+df  %>% 
+  mutate(strand = sample(c("+", "-"), 7, replace = TRUE)) %>% 
+  Ranges()
+
+# seqname is required for GRanges, metadata is automatically kept
+df %>% 
+  mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
+         strand = sample(c("+", "-"), 7, replace = TRUE),
+         gc = runif(7)) %>% 
+  Ranges()
+
 ```
 
 

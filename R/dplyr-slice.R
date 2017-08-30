@@ -1,3 +1,5 @@
+#this conflicts with IRanges::slice, and perhaps should do something else
+
 #' Subset a GRanges by row
 #'
 #' @param .data a \code{GRanges} object
@@ -5,7 +7,7 @@
 #' @param coverage slice based on coverage values? default = FALSE
 #'
 #' @return a \code{GRanges} object
-#' this conflicts with IRanges::slice, and perhaps should do something else
+#' @importFrom dplyr slice
 slice.GRanges <- function(.data, row_values, coverage = FALSE) {
 
   row_values <- enquo(row_values)

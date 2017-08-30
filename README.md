@@ -24,10 +24,11 @@ Constructing Ranges
 Ranges can be easily constructed from a data.frame or tibble. To construct an `IRanges` we require there are at least two columns that represent at either a starting coordinate, finishing coordinate or the width of the interval. To construct a `GRanges` we require a column that represents that sequence name ( contig or chromosome id), and an optional column to represent the strandedness of an interval.
 
 ``` r
-library(dplyr)
+set.seed(100)
 df <- data.frame(start=c(2:-1, 13:15), 
                  width=c(0:3, 2:0))
 
+# produces IRanges
 df %>% Ranges()
 #> IRanges object with 7 ranges and 0 metadata columns:
 #>           start       end     width
@@ -40,20 +41,53 @@ df %>% Ranges()
 #>   [6]        14        14         1
 #>   [7]        15        14         0
 
+# produces GRanges
 df %>% 
-  mutate(seqnames = sample(c("chr1", "chr2"), nrow(df), replace = TRUE),
-         strand = "*") %>% 
+  mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE)) %>% 
   Ranges()
 #> GRanges object with 7 ranges and 0 metadata columns:
 #>       seqnames    ranges strand
 #>          <Rle> <IRanges>  <Rle>
-#>   [1]     chr2  [ 2,  1]      *
+#>   [1]     chr1  [ 2,  1]      *
 #>   [2]     chr1  [ 1,  1]      *
 #>   [3]     chr2  [ 0,  1]      *
 #>   [4]     chr1  [-1,  1]      *
 #>   [5]     chr1  [13, 14]      *
-#>   [6]     chr2  [14, 14]      *
-#>   [7]     chr1  [15, 14]      *
+#>   [6]     chr1  [14, 14]      *
+#>   [7]     chr2  [15, 14]      *
+#>   -------
+#>   seqinfo: 2 sequences from an unspecified genome; no seqlengths
+
+df  %>% 
+  mutate(strand = sample(c("+", "-"), 7, replace = TRUE)) %>% 
+  Ranges()
+#> IRanges object with 7 ranges and 1 metadata column:
+#>           start       end     width |      strand
+#>       <integer> <integer> <integer> | <character>
+#>   [1]         2         1         0 |           +
+#>   [2]         1         1         1 |           -
+#>   [3]         0         1         2 |           +
+#>   [4]        -1         1         3 |           -
+#>   [5]        13        14         2 |           -
+#>   [6]        14        14         1 |           +
+#>   [7]        15        14         0 |           +
+
+# seqname is required for GRanges, metadata is automatically kept
+df %>% 
+  mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
+         strand = sample(c("+", "-"), 7, replace = TRUE),
+         gc = runif(7)) %>% 
+  Ranges()
+#> GRanges object with 7 ranges and 1 metadata column:
+#>       seqnames    ranges strand |                gc
+#>          <Rle> <IRanges>  <Rle> |         <numeric>
+#>   [1]     chr2  [ 2,  1]      - | 0.549096710281447
+#>   [2]     chr2  [ 1,  1]      - | 0.277723756618798
+#>   [3]     chr1  [ 0,  1]      - | 0.488305994076654
+#>   [4]     chr1  [-1,  1]      + | 0.928505074931309
+#>   [5]     chr1  [13, 14]      + | 0.348691981751472
+#>   [6]     chr2  [14, 14]      - | 0.954157707514241
+#>   [7]     chr2  [15, 14]      - | 0.695274139055982
 #>   -------
 #>   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 ```

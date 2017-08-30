@@ -1,6 +1,6 @@
 # dplyr and magrittr exports, we export S3 generics to modify
 
-#' @importFrom magrittr `%>%`
+#' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`
 
