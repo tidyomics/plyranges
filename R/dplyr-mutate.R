@@ -3,6 +3,7 @@
 #' @param .data a \code{GRanges} object
 #' @param ... dots!
 #'
+#' @importFrom dplyr mutate
 #' @return a GRanges object
 mutate.GRanges <- function(.data, ...) {
   dots <- quos(...)

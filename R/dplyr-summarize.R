@@ -5,8 +5,8 @@
 #'
 #' @return a \link[tibble]{tibble}
 #' @importFrom tibble as_tibble
-#' @export
-summarise.GRanges <- function(.data, ...) {
+#' @importFrom dplyr summarize
+summarize.GRanges <- function(.data, ...) {
 
   dots <- quos(...)
 
@@ -22,7 +22,7 @@ summarise.GRanges <- function(.data, ...) {
 
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
-summarise.GroupedGRanges <- function(.data, ...) {
+summarize.GroupedGRanges <- function(.data, ...) {
 
   groups <- groups(.data)
   gr_env <- as.env(.data, parent.frame())

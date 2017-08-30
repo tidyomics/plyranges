@@ -8,6 +8,7 @@
 #' # @param drop drop the GRanges column and return the metadata columns only?
 #' @return a GRanges object
 #' @seealso \link[dplyr]{select}
+#' @importFrom dplyr select
 select.GRanges <- function(.data, ...) {
   dots <- quos(...)
 
