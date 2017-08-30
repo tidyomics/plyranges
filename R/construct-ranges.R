@@ -12,10 +12,15 @@
 #' object. By default other columns in .data are placed into the mcols (
 #' metadata columns) slot of the returned object.
 #'
-#' @return a \link[IRanges][Ranges] object.
+#' @return a \link[IRanges]{Ranges} object.
 #' @seealso \link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
 #'
 #' @importFrom rlang quos eval_tidy
+#'
+#' @examples
+#' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0))
+#' Ranges(df)
+#'
 #' @export
 Ranges <- function(.data, ..., keep_mcols) UseMethod("Ranges")
 
@@ -85,6 +90,27 @@ Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
     ir <- GRanges(seqnames = unlist(eval_tidy(core_g[1], .data)),
                   ranges = ir,
                   strand = rd[["strand"]])
+  } else if (any(match_core_g)) {
+    if (match_core_g[1]) {
+      ir <- GRanges(seqnames = unlist(eval_tidy(core_g[1], .data)),
+                    ranges = ir)
+    }
+
+    else if (match_core_g[2]) {
+      mcols(ir) <- unlist(eval_tidy(core_g[2], .data))
+      names(mcols(ir)) <- "strand"
+    }
+
+  } else if (any(match_dots_g)) {
+    if (match_dots_g[1]) {
+      ir <- GRanges(seqnames = rd[["seqnames"]],
+                    ranges = ir)
+    }
+
+    else if (match_dots_g[2]) {
+      mcols(ir) <- rd[["strand"]]
+      names(mcols(ir)) <- "strand"
+    }
   }
 
   if (keep_mcols) {
@@ -92,10 +118,13 @@ Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
     remain_cols <- !(col_names %in%
                        c(old_cols, names(core_i), names(core_g)))
 
-    mcols(ir) <- .data[, remain_cols]
-    names(mcols(ir)) <- col_names[remain_cols]
-
+    if (length(names(mcols(ir))) == 0) {
+      mcols(ir) <- .data[, remain_cols]
+      names(mcols(ir)) <- col_names[remain_cols]
+    } else {
+      mcols(ir) <- cbind(mcols(ir), .data[, remain_cols])
+      names(mcols(ir)) <- c(names(mcols(ir)), col_names[remain_cols])
+    }
   }
-
   ir
 }
