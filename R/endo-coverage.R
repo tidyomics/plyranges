@@ -24,3 +24,12 @@ setMethod("compute_coverage", "GRanges",
             GRanges(coverage(x, shift, width, weight, method))
           })
 
+setMethod("compute_coverage", "IRanges",
+          function(x, shift = 0L, width = NULL, weight = 1L,
+                   method = c("auto", "sort", "hash")) {
+            cvg <- coverage(x, shift, width, weight, method)
+            rng <- ranges(cvg)
+            mcols(rng)[["score"]] <- runValue(cvg)
+            rng
+          })
+
