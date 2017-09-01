@@ -8,7 +8,6 @@
 #' @importFrom dplyr group_by
 #' @importFrom rlang quo_name quos syms
 #' @return a \code{GroupedGRanges} object
-#' @export
 #' @rdname group_by
 group_by.GRanges <- function(.data, ...) {
   capture_groups <- quos(...)
