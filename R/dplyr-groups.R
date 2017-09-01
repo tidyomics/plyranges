@@ -29,3 +29,12 @@ group_by.IRanges <- function(.data, ...) {
 #' @importFrom dplyr groups
 groups.GRangesGrouped <- function(x) { x@groups }
 groups.IRangesGrouped <- function(x) { x@groups }
+
+# returns groups as split as GRangesList or RangesList
+split_groups <- function(.data_grouped) {
+  groups <- groups(.data_grouped)
+  rng_env <- as.env(.data_grouped, parent.frame())
+  rle_groups <- lapply(groups, eval_bare, env = rng_env)
+  rle_groups <- as(rle_groups, "RleList")
+  S4Vectors::splitAsList(.data_grouped, rle_groups)
+}

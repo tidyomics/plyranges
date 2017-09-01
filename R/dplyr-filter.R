@@ -1,21 +1,6 @@
 # filter.R
-#' Subset a \code{GRanges} object
-#'
-#' @param .data A \code{GRanges} object
-#' @param expr a valid logical expression to act on .data
-#'
-#' @return a GRanges object
-#'
-#' @description Unlike \pkg{dplyr}'s filter, the filter for \code{GRanges}
-#' is only valid for a single logical expression.
-#' @importFrom dplyr filter
-#' @importFrom IRanges as.env
-#' @importFrom S4Vectors runValue
-#' @importFrom rlang enexpr new_overscope overscope_eval_next overscope_clean eval_bare
-#' @seealso \link[dplyr]{filter}
-filter.GRanges <- function(.data, expr) {
-
-  expr <- enexpr(expr)
+filter_rng <- function(.data, expr) {
+  expr <- UQ(expr)
   gr_env <- as.env(.data, parent.frame())
   overscope <- new_overscope(gr_env, parent.env(gr_env))
 
@@ -32,16 +17,47 @@ filter.GRanges <- function(.data, expr) {
 }
 
 
-filter.GroupedGRanges <- function(.data, expr) {
+#' Subset a \code{Ranges} object
+#'
+#' @param .data A \code{Ranges} object
+#' @param expr a valid logical expression to act on .data
+#
+#' @description Unlike \pkg{dplyr}'s filter, the filter for a \code{Ranges}
+#' is only valid for a single logical expression. For any Ranges objects
+#' filter can act on all core components of the class including start, end,
+#' width (for IRanges) or seqnames and strand (for GRanges) in addition to
+#' metadaat columns. If the Ranges object is grouped filter will act on each
+#' parition of the data.
+#'
+#' @return a Ranges object
+#'
+#' @importFrom dplyr filter
+#' @importFrom IRanges as.env
+#' @importFrom S4Vectors runValue endoapply
+#' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
+#' @seealso \code{\link[dplyr]{filter}}
+#' @rdname filter
+filter.GRanges <- function(.data, expr) {
+  expr <- enquo(expr)
+  filter_rng(.data, expr)
+}
 
-    expr <- enexpr(expr)
-    groups <- groups(.data)
-    gr_env <- as.env(.data, parent.frame())
-    value <- lapply(groups, eval_bare, env = gr_env)
-    value <- as(value, "RleList")
-    split_ranges <- GRangesList(splitAsList(GRanges(.data), value, drop = TRUE))
-    split_ranges
-    by_group <- endoapply(split_ranges, filter.GRanges, !!expr)
-    new("GroupedGRanges", unlist(by_group), groups = groups)
+filter.IRanges <- function(.data, expr) {
 
+  expr <- enquo(expr)
+  filter_rng(.data, expr)
+
+}
+
+filter.GRangesGrouped <- function(.data, expr) {
+    expr <- enquo(expr)
+    split_ranges <- split_groups(.data)
+    unlist(endoapply(split_ranges, filter_rng, expr), use.names = FALSE)
+
+}
+
+filter.IRangesGrouped <- function(.data, expr) {
+  expr <- enquo(expr)
+  split_ranges <- split_groups(.data)
+  unlist(endoapply(split_ranges, filter_rng, expr), use.names = FALSE)
 }

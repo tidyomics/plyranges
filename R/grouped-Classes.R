@@ -1,9 +1,9 @@
 
-#' An S4 class to represent grouped Ranges
+#' An S4 class to represent grouped GRanges
 #'
 #' @slot groups a list of names
 #' @seealso \code{\link{group_by}}
-#' @rdname GroupedRanges-class
+#' @rdname GRangesGrouped-class
 setClass("GRangesGrouped",
          slot = c(groups = "list"),
          contains = "GRanges")
@@ -34,7 +34,6 @@ validGRangesGrouped <- function(object) {
 
 setValidity("GRangesGrouped", validGRangesGrouped)
 
-#' @rdname GroupedRanges-class
 setMethod("show", "GRangesGrouped", function(object) {
   groups <- unlist(lapply(object@groups, as.character))
   groups <- paste(groups, collapse = ", ")
@@ -48,7 +47,11 @@ setMethod("show", "GRangesGrouped", function(object) {
 
 })
 
-#' @rdname GroupedRanges-class
+#' An S4 class to represent grouped IRanges
+#'
+#' @slot groups a list of names
+#' @seealso \code{\link{group_by}}
+#' @rdname IRangesGrouped-class
 setClass("IRangesGrouped",
          slot = c(groups = "list"),
          contains = "IRanges")

@@ -1,6 +1,9 @@
 # rlang-utils
 
 #' @export
+rlang::enquo
+
+#' @export
 rlang::quos
 
 #' @export
@@ -8,9 +11,6 @@ rlang::UQS
 
 #' @export
 rlang::UQ
-
-#' @export
-rlang::enexpr
 
 #' @export
 rlang::overscope_clean
