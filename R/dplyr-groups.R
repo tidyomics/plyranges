@@ -30,10 +30,17 @@ groups.GRangesGrouped <- function(x) { x@groups }
 groups.IRangesGrouped <- function(x) { x@groups }
 
 # returns groups as split as GRangesList or RangesList
-split_groups <- function(.data_grouped) {
+split_groups <- function(.data_grouped, populate_mcols = FALSE) {
   groups <- groups(.data_grouped)
   rng_env <- as.env(.data_grouped, parent.frame())
-  rle_groups <- lapply(groups, eval_bare, env = rng_env)
-  rle_groups <- as(rle_groups, "RleList")
-  S4Vectors::splitAsList(.data_grouped, rle_groups)
+  list_groups <- lapply(groups, eval_bare, env = rng_env)
+  names(list_groups) <- as.character(groups)
+
+  rle_groups <- as(list_groups, "RleList")
+  rng_list <- IRanges::splitAsList(.data_grouped, rle_groups)
+  if (populate_mcols) {
+    df_groups <- expand.grid(lapply(list_groups, group_levels))
+    mcols(rng_list) <- df_groups
+  }
+  rng_list
 }

@@ -23,5 +23,9 @@ dplyr::select
 dplyr::slice
 
 #' @export
+dplyr::summarise
+
+#' @export
 dplyr::summarize
+
 

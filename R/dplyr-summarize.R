@@ -1,3 +1,13 @@
+summarize_rng <- function(.data, ...) {
+  dots <- UQS(...)
+
+  gr_env <- as.env(.data, parent.frame())
+  overscope <- new_overscope(gr_env, parent.env(gr_env))
+  on.exit(overscope_clean(overscope))
+  summarised <- lapply(dots, overscope_eval_next, overscope = overscope)
+  summarised
+}
+
 #' Aggregate a GenomicRanges
 #'
 #' @param .data a GRanges object
@@ -6,36 +16,26 @@
 #' @return a \link[tibble]{tibble}
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr summarize
-summarize.GRanges <- function(.data, ...) {
+#' @importFrom dplyr summarise
+summarise.GRanges <- function(.data, ...) {
 
   dots <- quos(...)
-
-  gr_env <- as.env(.data, parent.frame())
-  overscope <- new_overscope(gr_env, parent.env(gr_env))
-  on.exit(overscope_clean(overscope))
-  summarised <- lapply(dots, overscope_eval_next, overscope = overscope)
-
-  as_tibble(summarised)
+  as_tibble(summarize_rng(.data, dots))
 
 }
 
 
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
-summarize.GroupedGRanges <- function(.data, ...) {
+summarise.GRangesGrouped <- function(.data, ...) {
 
-  groups <- groups(.data)
-  gr_env <- as.env(.data, parent.frame())
-  value <- lapply(groups, eval_bare, env = gr_env)
-  value <- as(value, "RleList")
-  split_ranges <- GRangesList(splitAsList(GRanges(.data), value, drop = FALSE))
+  dots <- quos(...)
 
+  split_ranges <- split_groups(.data, populate_mcols = TRUE)
+  groups_summary <- bind_rows(lapply(split_ranges, summarize_rng, dots))
+  groups_df <- as.data.frame(mcols(split_ranges))
+  as_tibble(bind_cols(groups_df, groups_summary))
 
-  groups_data <- expand.grid(lapply(value, group_levels))
-  names(groups_data) <- unlist(lapply(groups, as.character))
-
-  by_group <- lapply(split_ranges, summarise.GRanges, !!!quos(...))
-  group_by(bind_cols(groups_data, bind_rows(by_group)), !!!groups)
 }
 
 group_levels <- function(x) {
