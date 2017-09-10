@@ -14,11 +14,29 @@ read_wig <- function(file,  genome = NULL, seqinfo = NULL, which = NULL) {
   import.wig(file, genome = genome, seqinfo = NULL, which = NULL)
 }
 
+#' Read a BED file
+#'
+#' @param file A path to a file or a connection.
+#' @param col_names An optional character vector for including additional
+#' columns in \code{file} that are not part of the BED specification.
+#' @param genome_info An optional character string or a Ranges object
+#' that contains information about the genome build. For example the USSC identifier
+#'"hg19".
+#' @param overlap_ranges An optional Ranges object. Only the intervals in the file
+#' that overlap the Ranges will be returned.
+#'
+#' @description This is a lightweight wrapper to the import family
+#' of functions defined in \pkg{rtracklayer}.
+#'
 #' @importFrom rtracklayer import.bed
-read_bed <- function(file, col_names = NULL, genome = NULL, seqinfo = NULL,
-                     which = NULL, col_extra = NULL) {
-  import.bed(file, genome = genome, colnames = col_names, genome = genome,
-             seqinfo = seqinfo, which = which, extraCols = col_extra)
+#' @seealso \code{\link[rtracklayer]{BEDFile}}
+#' @export
+read_bed <- function(file, col_names = NULL, genome_info = NULL,
+                     overlap_ranges = NULL) {
+  if (is.null(genome_info)) { genome_info <- NA }
+  import.bed(file, colnames = col_names,
+             genome = genome_info,
+             which = overlap_ranges)
 }
 
 #' @importFrom rtracklayer import.bedGraph
