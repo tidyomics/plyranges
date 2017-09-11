@@ -13,8 +13,13 @@ mutate_mcols <- function(.data, .mutated) {
   }
 
   if (!all(idx_mcols)) {
-    mcols(.data) <- do.call("DataFrame",
-                            list(mcols(.data), .mutated[!idx_mcols]))
+    if (is.null(mcols(.data))) {
+      mcols(.data) <- do.call("DataFrame", .mutated[!idx_mcols])
+    } else {
+      mcols(.data) <- do.call("DataFrame",
+                              list(mcols(.data), .mutated[!idx_mcols]))
+    }
+
   }
 
   .data
@@ -36,24 +41,16 @@ mutate_core <- function(.data, .mutated) {
   .data
 }
 
-#' modify a GenomicRanges object
-#'
-#' @param .data a \code{GRanges} object
-#' @param ... dots!
-#'
-#' @importFrom dplyr mutate
-#' @return a GRanges object
-mutate.GRanges <- function(.data, ...) {
-  dots <- UQS(quos(...))
 
-  print(dots)
+mutate_rng <- function(.data, dots) {
+  dots <- UQS(dots)
   col_names <- names(dots)
   if (any(col_names %in% "")) {
-     stop("mutate must have name-variable pairs as input", .call = FALSE)
+    stop("mutate must have name-variable pairs as input", .call = FALSE)
   }
 
-  gr_env <- as.env(.data, parent.frame())
-  overscope <- new_overscope(gr_env, parent.env(gr_env))
+  rng_env <- as.env(.data, parent.frame())
+  overscope <- new_overscope(rng_env, parent.env(rng_env))
 
   .mutated <- lapply(dots, overscope_eval_next, overscope = overscope)
   on.exit(overscope_clean(overscope))
@@ -62,7 +59,20 @@ mutate.GRanges <- function(.data, ...) {
   mutate_mcols(.data, .mutated)
 
 }
+#' modify a GenomicRanges object
+#'
+#' @param .data a \code{GRanges} object
+#' @param ... dots!
+#'
+#' @importFrom dplyr mutate
+#' @return a GRanges object
+mutate.GRanges <- function(.data, ...) {
+  dots <- quos(...)
+  mutate_rng(.data, dots)
+
+}
 
 mutate.IRanges <- function(.data, ...) {
-
+  dots <- quos(...)
+  mutate_rng(.data, dots)
 }
