@@ -3,3 +3,6 @@
 ^README\.Rmd$
 ^README-.*\.png$
 examples/
+.travis.yml
+notes/
+TODO.md

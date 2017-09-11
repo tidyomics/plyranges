@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 devtools::load_all()
 ```
+[![Build Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
 
 # plyranges
 The `plyranges` ^[tentative title] package provides a 

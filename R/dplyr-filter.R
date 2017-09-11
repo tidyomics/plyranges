@@ -36,12 +36,17 @@ filter_rng <- function(.data, expr) {
 #' @importFrom S4Vectors runValue endoapply
 #' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
 #' @seealso \code{\link[dplyr]{filter}}
+#' @method filter GRanges
 #' @rdname filter
+#' @export
 filter.GRanges <- function(.data, expr) {
   expr <- enquo(expr)
   filter_rng(.data, expr)
 }
 
+#' @rdname filter
+#' @method filter GRanges
+#' @export
 filter.IRanges <- function(.data, expr) {
 
   expr <- enquo(expr)
@@ -49,6 +54,9 @@ filter.IRanges <- function(.data, expr) {
 
 }
 
+#' @rdname filter
+#' @method filter GRanges
+#' @export
 filter.GRangesGrouped <- function(.data, expr) {
     expr <- enquo(expr)
     split_ranges <- split_groups(.data)
@@ -56,6 +64,9 @@ filter.GRangesGrouped <- function(.data, expr) {
 
 }
 
+#' @rdname filter
+#' @method filter GRanges
+#' @export
 filter.IRangesGrouped <- function(.data, expr) {
   expr <- enquo(expr)
   split_ranges <- split_groups(.data)

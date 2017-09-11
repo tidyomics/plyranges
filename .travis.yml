@@ -1,0 +1,23 @@
+warnings_are_errors: false
+
+language: r
+
+cache: packages
+
+sudo: false
+
+r:
+  - bioc-devel
+  - bioc-release
+
+bioc_packages:
+  - HelloRangesData
+
+r_packages:
+  - rlang
+  - dplyr
+  - magrittr
+  - covr
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'

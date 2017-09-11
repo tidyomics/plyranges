@@ -24,10 +24,12 @@
 #' @export
 Ranges <- function(.data, ..., keep_mcols) UseMethod("Ranges")
 
+#' @export
 Ranges.default <- function(.data, ..., keep_mcols = TRUE) {
   Ranges.data.frame(as.data.frame(.data), ...)
 }
 
+#' @export
 Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
 
   dots <- quos(...)

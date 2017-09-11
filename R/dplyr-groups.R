@@ -1,4 +1,3 @@
-
 #' Group a Ranges by one or more variables
 #'
 #' @param .data a Ranges object
@@ -7,8 +6,12 @@
 #'
 #' @importFrom dplyr group_by
 #' @importFrom rlang quo_name quos syms
-#' @return a \code{GroupedGRanges} object
-#' @rdname group_by
+#' @importFrom methods new
+#' @method group_by GRanges
+#' @return a \code{GroupedRanges} object
+#' @name group_by-ranges
+#' @rdname group_by-ranges
+#' @export
 group_by.GRanges <- function(.data, ...) {
   capture_groups <- quos(...)
   groups <- lapply(capture_groups, function(x) quo_name(x))
@@ -17,7 +20,9 @@ group_by.GRanges <- function(.data, ...) {
 
 }
 
-#' @rdname group_by
+#' @rdname group_by-ranges
+#' @method group_by IRanges
+#' @export
 group_by.IRanges <- function(.data, ...) {
   capture_groups <- quos(...)
   groups <- lapply(capture_groups, function(x) quo_name(x))
@@ -25,8 +30,18 @@ group_by.IRanges <- function(.data, ...) {
   new("IRangesGrouped", .data, groups = groups)
 }
 
+
+#' Extract groupings from a RangesGrouped object
+#' @param x a RangesGrouped object
 #' @importFrom dplyr groups
+#' @method groups GRangesGrouped
+#' @rdname groups-ranges
+#' @export
 groups.GRangesGrouped <- function(x) { x@groups }
+
+#' @method groups GRangesGrouped
+#' @rdname groups-ranges
+#' @export
 groups.IRangesGrouped <- function(x) { x@groups }
 
 # returns groups as split as GRangesList or RangesList

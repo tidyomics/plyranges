@@ -59,19 +59,26 @@ mutate_rng <- function(.data, dots) {
   mutate_mcols(.data, .mutated)
 
 }
-#' modify a GenomicRanges object
+#' Modify a Ranges object
 #'
-#' @param .data a \code{GRanges} object
-#' @param ... dots!
+#' @param .data a \code{Ranges} object
+#' @param ... Pairs of name-value expressions, either creating new columns
+#' or modifying existing ones.
 #'
 #' @importFrom dplyr mutate
-#' @return a GRanges object
+#' @method mutate GRanges
+#' @rdname mutate-ranges
+#' @return a Ranges object
+#' @export
 mutate.GRanges <- function(.data, ...) {
   dots <- quos(...)
   mutate_rng(.data, dots)
 
 }
 
+#' @method mutate IRanges
+#' @rdname mutate-ranges
+#' @export
 mutate.IRanges <- function(.data, ...) {
   dots <- quos(...)
   mutate_rng(.data, dots)
