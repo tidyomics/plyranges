@@ -4,6 +4,8 @@
 #' @slot groups a list of names
 #' @seealso \code{\link{group_by}}
 #' @rdname GRangesGrouped-class
+#' @importFrom methods setClass setValidity setMethod
+#' @export
 setClass("GRangesGrouped",
          slot = c(groups = "list"),
          contains = "GRanges")
@@ -52,6 +54,7 @@ setMethod("show", "GRangesGrouped", function(object) {
 #' @slot groups a list of names
 #' @seealso \code{\link{group_by}}
 #' @rdname IRangesGrouped-class
+#' @export
 setClass("IRangesGrouped",
          slot = c(groups = "list"),
          contains = "IRanges")

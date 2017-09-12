@@ -37,15 +37,16 @@ filter_rng <- function(.data, expr) {
 #' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
 #' @seealso \code{\link[dplyr]{filter}}
 #' @method filter GRanges
-#' @rdname filter
+#' @name filter-ranges
+#' @rdname filter-ranges
 #' @export
 filter.GRanges <- function(.data, expr) {
   expr <- enquo(expr)
   filter_rng(.data, expr)
 }
 
-#' @rdname filter
-#' @method filter GRanges
+#' @rdname filter-ranges
+#' @method filter IRanges
 #' @export
 filter.IRanges <- function(.data, expr) {
 
@@ -54,8 +55,8 @@ filter.IRanges <- function(.data, expr) {
 
 }
 
-#' @rdname filter
-#' @method filter GRanges
+#' @rdname filter-ranges
+#' @method filter GRangesGrouped
 #' @export
 filter.GRangesGrouped <- function(.data, expr) {
     expr <- enquo(expr)
@@ -64,8 +65,8 @@ filter.GRangesGrouped <- function(.data, expr) {
 
 }
 
-#' @rdname filter
-#' @method filter GRanges
+#' @rdname filter-ranges
+#' @method filter IRangesGrouped
 #' @export
 filter.IRangesGrouped <- function(.data, expr) {
   expr <- enquo(expr)
