@@ -75,4 +75,36 @@ df %>%
 
 ```
 
+### Modifying Genomic Intervals
+
+Sometimes you want to modify a genomic interval by altering it's coordinateswidth and
+leave the start, end or midpoint of the coordinates unaltered. This is achieved
+with the `set_width` verb along with `anchor_*` adverbs.
+```{r}
+rng <- Ranges(df)
+set_width(rng, 100L)
+set_width(anchor_start(rng), 100L)
+set_width(anchor_end(rng), 100L)
+set_width(anchor_center(rng), 100L)
+```
+
+Similarly, you can modify the width of an interval using the `stretch` verb.
+Without anchoring, this function will extend the interval in either direction
+by an integer amount. With anchoring, either the start, end or midpoint are
+preserved. 
+
+```{r}
+rng2 <- stretch(anchor_center(rng), 10)
+rng2
+stretch(anchor_end(rng2), 1L)
+stretch(anchor_start(rng2), 10L)
+```
+
+_Ranges_ can be shifted left or right.
+
+```{r}
+shift_left(rng, 10L)
+shift_right(rng, 10L)
+```
+
 
