@@ -55,37 +55,31 @@ df <- data.frame(start=c(2:-1, 13:15),
                  width=c(0:3, 2:0))
 
 # produces IRanges
-df %>% Ranges()
-
-# produces GRanges
-df %>% 
-  mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE)) %>% 
-  Ranges()
-
-df  %>% 
-  mutate(strand = sample(c("+", "-"), 7, replace = TRUE)) %>% 
-  Ranges()
+rng <- df %>% Ranges()
+rng
 
 # seqname is required for GRanges, metadata is automatically kept
-df %>% 
+grng <- df %>% 
   mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
          strand = sample(c("+", "-"), 7, replace = TRUE),
          gc = runif(7)) %>% 
   Ranges()
 
+grng
 ```
 
 ### Modifying Genomic Intervals
 
-Sometimes you want to modify a genomic interval by altering it's coordinateswidth and
-leave the start, end or midpoint of the coordinates unaltered. This is achieved
-with the `set_width` verb along with `anchor_*` adverbs.
+Sometimes you want to modify a genomic interval by altering the width of the 
+interval while leaving the start, end or midpoint of the coordinates unaltered. 
+This is achieved with the `set_width` verb along with `anchor_*` adverbs.
 ```{r}
-rng <- Ranges(df)
-set_width(rng, 100L)
-set_width(anchor_start(rng), 100L)
-set_width(anchor_end(rng), 100L)
-set_width(anchor_center(rng), 100L)
+set_width(rng, 100)
+set_width(anchor_start(rng), 100)
+set_width(anchor_end(rng), 100)
+set_width(anchor_center(rng), 100)
+set_width(anchor_3p(grng), 100) # leave negative strand fixed
+set_width(anchor_5p(grng), 100) # leave positve strand fixed
 ```
 
 Similarly, you can modify the width of an interval using the `stretch` verb.
@@ -96,15 +90,20 @@ preserved.
 ```{r}
 rng2 <- stretch(anchor_center(rng), 10)
 rng2
-stretch(anchor_end(rng2), 1L)
-stretch(anchor_start(rng2), 10L)
+stretch(anchor_end(rng2), 10)
+stretch(anchor_start(rng2), 10)
+stretch(anchor_3p(grng), 10)
+stretch(anchor_5p(grng), 10)
 ```
 
-_Ranges_ can be shifted left or right.
+_Ranges_ can be shifted left or right. If strand information is available 
+we can also shift upstream or downstream. 
 
 ```{r}
-shift_left(rng, 10L)
-shift_right(rng, 10L)
+shift_left(rng, 10)
+shift_right(rng, 10)
+shift_upstream(grng, 10)
+shift_downstream(grng, 10)
 ```
 
 

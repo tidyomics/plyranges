@@ -1,21 +1,36 @@
 # arithemtic-ranges.R
-anchor_start <- function(x) {
-  cl <- match.call()
-  cl$x <- enquo(x)
-  list(cl = cl, x = x)
+is_ranges <- function(x) {
+  is(class(x), "IRanges") || is(class(x), "GRanges")
+}
 
+anchor_start <- function(x) {
+  stopifnot(!is_ranges(x))
+  metadata(x) <- list(anchor = "start")
+  x
 }
 
 anchor_end <- function(x) {
-  cl <- match.call()
-  cl$x <- enquo(x)
-  list(cl = cl, x = x)
+  stopifnot(!is_ranges(x))
+  metadata(x) <- list(anchor = "end")
+  x
 }
 
 anchor_center <- function(x) {
-  cl <- match.call()
-  cl$x <- enquo(x)
-  list(cl = cl, x = x)
+  stopifnot(!is_ranges(x))
+  metadata(x) <- list(anchor = "center")
+  x
+}
+
+anchor_3p <- function(x) {
+  stopifnot(!is_ranges(x))
+  metadata(x) <- list(anchor = "3p")
+  x
+}
+
+anchor_5p <- function(x) {
+  stopifnot(!is_ranges(x))
+  metadata(x) <- list(anchor = "5p")
+  x
 }
 
 #' Set the width of a genomic interval
@@ -36,23 +51,46 @@ anchor_center <- function(x) {
 #' set_width(anchor_center(rng), 10L)
 set_width <- function(x, width = 0L) {
 
-  expr <- enquo(x)
-  qexpr <- eval_tidy(UQ(expr))
-  if (!inherits(qexpr, "Ranges")) {
-    fun_name <- gsub("\\(.*", "",qexpr$cl[[1]])
-    x <- qexpr$x
-  } else {
-    x <- qexpr
+  anchor <- metadata(x)[["anchor"]]
+  if (is.null(anchor)) {
     width(x) <- width
     return(x)
   }
 
-  resize_expr <- switch(fun_name,
-                        anchor_start = quo(resize(!!x, width = !!width, fix = "start")),
-                        anchor_end = quo(resize(!!x, width = !!width, fix = "end")),
-                        anchor_center = quo(resize(!!x, width = !!width, fix = "center"))
-                        )
-  eval_tidy(resize_expr)
+  if (inherits(x,"IRanges")) {
+    return(
+      switch(anchor,
+                start = resize(x, width = width, fix = "start"),
+                end = resize(x, width = width, fix = "end"),
+                center = resize(x, width = width, fix = "center"),
+                "3p" = stop("Unable to anchor by strand for IRanges", call. = FALSE),
+                "5p" = stop("Unable to anchor by strand for IRanges", call. = FALSE)
+             )
+      )
+  }
+
+  if (inherits(x, "GRanges")) {
+    return(
+      switch(anchor,
+           start = resize(x, width = width, fix = "start", ignore.strand = TRUE),
+           end = resize(x, width = width, fix = "end", ignore.strand = TRUE),
+           center = resize(x, width = width, fix = "center", ignore.strand = TRUE),
+           "3p" = {
+             x_5p <- x[strand(x) == "+"]
+             x_5p <- resize(x_5p, width = width)
+             x[strand(x) == "+"] <- x_5p
+             x
+           },
+           "5p" = {
+             x_3p <- x[strand(x) == "-"]
+             x_3p <- resize(x_3p, width = width)
+             x[strand(x) == "-"] <- x_3p
+             x
+
+           }
+           )
+    )
+  }
 
 }
 
@@ -72,26 +110,52 @@ set_width <- function(x, width = 0L) {
 #' stretch(anchor_start(rng2), 10)
 #' stretch(anchor_end(rng2), 10)
 stretch <- function(x, extend = 0L) {
-  expr <- enquo(x)
-  qexpr <- eval_tidy(UQ(expr))
 
-  if (!inherits(qexpr, "Ranges")) {
-    fun_name <- gsub("\\(.*", "",qexpr$cl[[1]])
-    x <- qexpr$x
-  } else {
-    x <- qexpr
+  anchor <- metadata(x)[["anchor"]]
+  if (is.null(anchor)) {
     start(x) <- start(x) - extend
     end(x) <- end(x) + extend
     return(x)
   }
 
-  resize_expr <- switch(fun_name,
-                        anchor_start = quo(mutate(!!x, end = end + !!extend)),
-                        anchor_end = quo(mutate(!!x, start = start + !!extend)),
-                        anchor_center = quo(stretch_center(!!x, !!extend))
-  )
 
-  eval_tidy(resize_expr)
+  if (inherits(x,"IRanges")) {
+    return(
+      switch(anchor,
+                start = mutate(x, end = end + extend),
+                end = mutate(x, start = start + extend),
+                center = stretch_center(x, extend),
+                "3p" = stop("Unable to anchor by strand for IRanges", call. = FALSE),
+                "5p" = stop("Unable to anchor by strand for IRanges", call. = FALSE)
+             )
+      )
+  }
+
+  if (inherits(x,"GRanges")) {
+    return(
+      switch(anchor,
+                start = mutate(x, end = end + extend),
+                end = mutate(x, start = start + extend),
+                center = stretch_center(x, extend),
+                "3p" = {
+                  x_5p <- x[strand(x) == "+"]
+                  start(x_5p) <- start(x_5p) - extend
+                  end(x_5p) <- end(x_5p) + extend
+                  x[strand(x) == "+"] <- x_5p
+                  x
+                },
+                "5p" = {
+                  x_3p <- x[strand(x) == "-"]
+                  start(x_3p) <- start(x_3p) - extend
+                  end(x_3p) <- end(x_3p) + extend
+                  x[strand(x) == "-"] <- x_3p
+                  x
+
+                }
+             )
+    )
+  }
+
 
 }
 
@@ -101,11 +165,11 @@ stretch_center <- function(x, extend) {
   ne <- ceiling(m + extend)
   start(x) <- ns
   end(x) <- ne
-  x
+  return(x)
 }
 
 
-#' Shift all coordinates in a genomic interval either left or right
+#' Shift all coordinates in a genomic interval left or right, upstream or downstream
 #'
 #' @param x a Ranges object .
 #' @param shift the amount to move the genomic interval in the Ranges object by.
@@ -124,5 +188,23 @@ shift_left <- function(x, shift = 0L) {
 shift_right <- function(x, shift = 0L) {
   stopifnot(all(shift > 0) && is.numeric(shift))
   shift(x, shift)
+}
+
+#' @rdname shift-ranges
+#' @export
+shift_upstream <- function(x, shift = 0L) {
+  x_3p <- x[strand(x) == "-"]
+  x_3p <- shift(x_3p, shift)
+  x[strand(x) == "-"] <- x_3p
+  x
+}
+
+#' @rdname shift-ranges
+#' @export
+shift_downstream <- function(x, shift = 0L) {
+  x_5p <- x[strand(x) == "+"]
+  x_5p <- shift(x_5p, shift)
+  x[strand(x) == "+"] <- x_5p
+  x
 }
 
