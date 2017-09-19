@@ -79,18 +79,18 @@ cvg <- exons %>%
 
 cvg_hist_by_seq <- cvg %>%   
   group_by(seqnames, score) %>%
-  summarise(count = length(score),
-            .seqlengths = unique(.seqlengths)) %>% 
+  summarise(count = sum(as.numeric(width)),
+            .seqlengths = unique(.seqlengths)) %>%
   mutate(fraction = count / .seqlengths)
 
 cvg_hist_total <- cvg %>%
   mutate(.seqlengths = sum(unique(as.numeric(.seqlengths)))) %>% 
   group_by(.seqlengths, score) %>% 
-  summarise(count = length(score)) %>% 
+  summarise(count = sum(as.numeric(width))) %>% 
   mutate(fraction = count / .seqlengths,
          seqnames = "genome")
 
-cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)
+cvg_hist <- dplyr::bind_rows(cvg_hist_by_seq, cvg_hist_total)
 cvg_hist
 ```
 
