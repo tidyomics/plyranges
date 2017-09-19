@@ -1,6 +1,5 @@
 summarize_rng <- function(.data, ...) {
   dots <- UQS(...)
-
   gr_env <- as.env(.data, parent.frame())
   overscope <- new_overscope(gr_env, parent.env(gr_env))
   on.exit(overscope_clean(overscope))
@@ -30,18 +29,11 @@ summarise.GRanges <- function(.data, ...) {
 summarise.GRangesGrouped <- function(.data, ...) {
 
   dots <- quos(...)
+  split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
+  groups_summary <- lapply(split_ranges, summarize_rng, dots)
+  groups_summary <- lapply(groups_summary, as_tibble)
+  groups_df <- as_tibble(as.data.frame(mcols(split_ranges)))
+  groups_summary <- bind_rows(groups_summary)
+  bind_cols(groups_df, groups_summary)
 
-  split_ranges <- split_groups(.data, populate_mcols = TRUE)
-  groups_summary <- bind_rows(lapply(split_ranges, summarize_rng, dots))
-  groups_df <- as.data.frame(mcols(split_ranges))
-  as_tibble(bind_cols(groups_df, groups_summary))
-
-}
-
-group_levels <- function(x) {
-  if (is.factor(unique(x))) {
-    levels(x)
-  } else {
-    unique(x)
-  }
 }

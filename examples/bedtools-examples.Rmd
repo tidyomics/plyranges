@@ -66,48 +66,32 @@ cvg
 
 ## Coverage histogram
 
-
 We can construct a histogram over all seqeunces 
-using the `group_by` and `summarise` operations. In order to get the total
-coverage we evaluate the query and then resummarise it using `dplyr`.
+using the `group_by` and `summarise` operations. First, we compute the 
+coverage and add the sequence lengths as a column.  
 
+To summarise the coverage histogram within each chromosome we use the 
+`group_by` and `summarise` operations. 
 ```{r cv-hist}
-exons %>% 
+cvg <- exons %>% 
   compute_coverage() %>% 
-  group_by(seqnames, score) %>% 
-  summarize(count = sum(score))
-```
+  set_genome_info(seqlengths)
 
-A disadvantage of this approach is having to perform a join within the first
-mutate in order to keep the length of the sequences for downstream computation.
+cvg_hist_by_seq <- cvg %>%   
+  group_by(seqnames, score) %>%
+  summarise(count = length(score),
+            .seqlengths = unique(.seqlengths)) %>% 
+  mutate(fraction = count / .seqlengths)
 
-```{r query-cvhist}
-genome <- import(paste0(data_dir, "hg19.genome"))
+cvg_hist_total <- cvg %>%
+  mutate(.seqlengths = sum(unique(as.numeric(.seqlengths)))) %>% 
+  group_by(.seqlengths, score) %>% 
+  summarise(count = length(score)) %>% 
+  mutate(fraction = count / .seqlengths,
+         seqnames = "genome")
 
-exons_query <- BEDFileQuery(paste0(data_dir, "exons.bed")) %>% 
-  import(genome = genome) %>% 
-  mutate(cov = compute_coverages(gr_a))
-exons_query
-
-
-covhist <- left_join(exons_query, genome) %>%
-  group_by(seqnames, seqlengths, score) %>% 
-  summarise(count = sum(score)) %>% 
-  mutate(fraction = count / seqlengths) %>% 
-  ungroup()
-
-# genome-wide  
-covhist_total <- covhist %>% 
-  group_by(score) %>% 
-  summarise(count = sum(as.numeric(count)), 
-            seqlengths = sum(as.numeric(seqlengths)))  %>% 
-  mutate(seqnames = "genome", fraction = count / seqlengths)
-
-
-covhist <- bind_rows(covhist, covhist_total)
-
-head(covhist)
-tail(covhist)
+cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)
+cvg_hist
 ```
 
 ## Chaining example 
