@@ -45,20 +45,20 @@ exons
 
 Often we are interested in counting the number of features over
 an entire genome that overlap each other. In `plyranges` this is
-done with the `compute_coverage` function in combination with other functions
+done with the `set_coverage` function in combination with other functions
 to manipulate the results. This function will always return a new _Ranges_ 
 object with a column called score. Any other variables associated with the
 input _Ranges_ will be dropped.
 
 ## Coverage Vector
 
-By default, `compute_coverage` is equivalent to `bedtools genomecov -bga` and
+By default, `set_coverage` is equivalent to `bedtools genomecov -bga` and
 hence will return scores equal to zero. Filtering all scores above zero
 is equivalent to `bedtools genomecov -bg`:
 ```{r cv}
 
 cvg <- exons %>% 
-  compute_coverage() %>% 
+  set_coverage() %>% 
   filter(score > 0)
 
 cvg
@@ -66,21 +66,24 @@ cvg
 
 ## Coverage histogram
 
-We can construct a histogram over all seqeunces 
+We can construct a histogram over all seqeunces in a genome 
 using the `group_by` and `summarise` operations. First, we compute the 
 coverage and add the sequence lengths as a column.  
 
-To summarise the coverage histogram within each chromosome we use the 
-`group_by` and `summarise` operations. 
+Then to count the number of bases corresponding to a score we sum over
+the width of each range in each chromosome. Similarly for the genome-wide 
+coverage histogram, we compute the entire size of the sequence length  and 
+perform the same operation. Finally we bind the result `tibbles` together.
+Note that in the sums we have coerced integer variables to doubles to avoid 
+overlfow.
 ```{r cv-hist}
 cvg <- exons %>% 
-  compute_coverage() %>% 
+  set_coverage() %>% 
   set_genome_info(seqlengths)
 
 cvg_hist_by_seq <- cvg %>%   
-  group_by(seqnames, score) %>%
-  summarise(count = sum(as.numeric(width)),
-            .seqlengths = unique(.seqlengths)) %>%
+  group_by(seqnames, .seqlengths, score) %>%
+  summarise(count = sum(as.numeric(width))) %>%
   mutate(fraction = count / .seqlengths)
 
 cvg_hist_total <- cvg %>%
@@ -94,23 +97,22 @@ cvg_hist <- dplyr::bind_rows(cvg_hist_by_seq, cvg_hist_total)
 cvg_hist
 ```
 
-## Chaining example 
+## Overlaps example
 
-Here we perform another example where we chain a filter with a mutate. In
-this example we are performing a filtering step and then find overlap pairs
-between the input exon ranges and the cpg islands. 
+Here we perform another example where we chain a filter and then
+find overlapping ranges between two ranges. In
+this example we reduce the exons to have zero and then find the ranges that
+overlap between the filtered exon ranges and the cpg islands. 
 
 ```{r}
-genome <- import(paste0(data_dir, "hg19.genome"))
+cpg <- read_bed(cpg_bed, genome_info = "hg19")
 
-cpg_query <- BEDFileQuery(paste0(data_dir, "cpg.bed")) %>% 
-  import(genome = NA_character_) 
-exons_query <- BEDFileQuery(paste0(data_dir, "exons.bed")) %>% 
-  import(genome = genome) %>% 
-  filter(score == 0L)
-
-overlaps <- inner_ojoin(exons_query, cpg_query) 
-overlaps
+overlaps <- ojoin_inner(exons %>% filter(score == 0L), 
+                        cpg) 
+overlaps %>% 
+  set_coverage() %>% 
+  mutate(count = sum(as.numeric(width)))
+  
 ```
 
 ## Examples from Lawrence and Morgan 2014
