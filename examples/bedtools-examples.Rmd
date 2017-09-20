@@ -109,10 +109,27 @@ cpg <- read_bed(cpg_bed, genome_info = "hg19")
 
 overlaps <- ojoin_inner(exons %>% filter(score == 0L), 
                         cpg) 
-overlaps %>% 
-  set_coverage() %>% 
-  mutate(count = sum(as.numeric(width)))
+
+overlaps
   
+```
+
+We can also compute the coverage histogram of exons over cpg islands
+and then plot results as an ecdf. 
+```{r}
+cvg_over_exons <- exons %>% 
+  set_coverage() %>%
+  ojoin_inner(., cpg) %>%
+  mutate(total = sum(as.numeric(width))) %>% 
+  group_by(score) %>%
+  summarise(count = sum(as.numeric(width)),
+            fraction = sum(as.numeric(width)) / unique(total)) #overscope not quite working
+library(ggplot2)
+ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
+  geom_step() +
+  xlim(c(0,25))  +
+  xlab("coverage") +
+  ylab("fraction of bp > coverage")
 ```
 
 ## Examples from Lawrence and Morgan 2014
