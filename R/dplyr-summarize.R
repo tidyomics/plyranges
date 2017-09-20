@@ -3,7 +3,17 @@ summarize_rng <- function(.data, ...) {
   gr_env <- as.env(.data, parent.frame())
   overscope <- new_overscope(gr_env, parent.env(gr_env))
   on.exit(overscope_clean(overscope))
-  summarised <- lapply(dots, overscope_eval_next, overscope = overscope)
+  summarised <- vector("list", length(dots))
+  names(summarised) <- names(dots)
+
+  for (i in seq_along(summarised)) {
+    summarised[[i]] <- overscope_eval_next(overscope, dots[[i]])
+    # sometimes we want to compute on previously constructed columns
+    # we can do this by binding the evaluated expression to
+    # the overscope environment
+    new_col <- names(dots)[[i]]
+    rlang::env_bind(overscope$.env, !!new_col := summarised[[i]])
+  }
   summarised
 }
 

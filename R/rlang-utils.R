@@ -32,6 +32,12 @@ rlang::eval_tidy
 #' @export
 rlang::syms
 
+#' @export
+rlang::`:=`
+
+#' @export
+rlang::env_bind
+
 is_empty_quos <- function(quos) {
   length(quos) == 0L
 }

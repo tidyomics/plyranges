@@ -123,7 +123,8 @@ cvg_over_exons <- exons %>%
   mutate(total = sum(as.numeric(width))) %>% 
   group_by(score) %>%
   summarise(count = sum(as.numeric(width)),
-            fraction = sum(as.numeric(width)) / unique(total)) #overscope not quite working
+            fraction = count / unique(total)) 
+
 library(ggplot2)
 ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
   geom_step() +
