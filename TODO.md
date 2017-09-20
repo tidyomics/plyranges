@@ -1,6 +1,5 @@
-- [ ] `anchor_*` family use metadata slot in Ranges
 - [ ] binary comparison operators
-
+- [ ] implement sensible join operators
 
 
 DeferredGRanges class?
