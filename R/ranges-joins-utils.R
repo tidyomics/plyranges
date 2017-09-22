@@ -1,4 +1,25 @@
-# between-joins-utils.R
+# ranges-joins-utils.R
+common_mcols <- function(x, y, by = NULL) {
+  x_names <- names(mcols(x))
+  y_names <- names(mcols(y))
+  if (is.null(by)) {
+    common_mcols <- intersect(x_names,  y_names)
+    if (length(common_mcols) == 0) {
+      stop("No common columns between x & y", call. = FALSE)
+    }
+    return(common_mcols)
+  } else {
+    named_by <- names(by)
+    if (length(named_by) > 0) {
+      stopifnot(named_by %in% x_names || by %in% y_names)
+      by
+
+    } else {
+      stopifnot(by %in% x_names || by %in% y_names)
+      by
+    }
+  }
+}
 
 map_common <- function(x, y, x_name, y_name) {
   if (is(x, "GRanges") & is(y, "DataFrame")) {
