@@ -1,36 +1,77 @@
 # less error prone to just import dplyr's joins here?
 join_left <- function(x, y, by = NULL) {
-  join_by <- common_mcols(x,y, by)
+  join_by <- common_cols(x,y, by)
   is_named_by <- length(names(join_by)) > 0
 
+  x_os <- overscope_ranges(x)
+  on.exit(overscope_clean(x_os))
+  y_os <- overscope_ranges(y)
+  on.exit(overscope_clean(y_os), add = TRUE)
+
   if (is_named_by) {
-    y_col <- join_by
-    x_col <- names(join_by)
-    mcols(x) <- merge(mcols(x), mcols(y), by.x = x_col, by.y = y_col,
-                      by = NULL, all.x = TRUE, sort = FALSE)
+    y_col <- syms(join_by)
+    names(y_col) <- join_by
+    x_col <- syms(names(join_by))
+    names(x_col) <- names(join_by)
+
   } else {
-    mcols(x) <- merge(mcols(x), mcols(y), by = join_by, all.x = TRUE, sort = FALSE)
+    x_col <- y_col <- syms(join_by)
+    names(x_col) <- names(y_col) <- join_by
   }
+
+  x_list <- lapply(x_col, overscope_eval_next,  overscope = x_os)
+  y_list <- lapply(y_col, overscope_eval_next, overscope = y_os)
+  inx <- lapply(seq_along(join_by), function(i) {
+    x_col <- as.character(x_col[[i]])
+    y_col <- as.character(y_col[[i]])
+    x <- BiocGenerics::match(x_list[[x_col]], y_list[[y_col]])
+    x[!is.na(x)]
+  })
+  inx <- Reduce(intersect, inx)
+  if (length(inx) == 0) {
+    message("No common keys between x & y")
+    return(x)
+  }
+  mcols(x) <- cbind(mcols(x), mcols(y[inx]))
   return(x)
 }
 
 join_inner <- function(x, y, by = NULL) {
-  join_by <- common_mcols(x,y, by)
+  join_by <- common_cols(x,y, by)
   is_named_by <- length(names(join_by)) > 0
 
-  ranges_common <- x[filter_common(join_by, x, y)]
+  x_os <- overscope_ranges(x)
+  on.exit(overscope_clean(x_os))
+  y_os <- overscope_ranges(y)
+  on.exit(overscope_clean(y_os), add = TRUE)
 
   if (is_named_by) {
-    y_col <- join_by
-    x_col <- names(join_by)
-    mcols(ranges_common) <- merge(mcols(x),
-                                  mcols(y),
-                                  by.x = x_col, by.y = y_col,
-                                  by = NULL, sort = FALSE)
+    y_col <- syms(join_by)
+    names(y_col) <- join_by
+    x_col <- syms(names(join_by))
+    names(x_col) <- names(join_by)
+
   } else {
-    mcols(ranges_common) <- merge(mcols(x), mcols(y), by = join_by, sort = FALSE)
+    x_col <- y_col <- syms(join_by)
+    names(x_col) <- names(y_col) <- join_by
   }
-  return(ranges_common)
+
+  x_list <- lapply(x_col, overscope_eval_next,  overscope = x_os)
+  y_list <- lapply(y_col, overscope_eval_next, overscope = y_os)
+  inx <- lapply(seq_along(join_by), function(i) {
+    x_col <- as.character(x_col[[i]])
+    y_col <- as.character(y_col[[i]])
+    list(lhs = BiocGenerics::match(x_list[[x_col]], y_list[[y_col]]),
+         rhs = BiocGenerics::match(y_list[[y_col]], x_list[[x_col]]))
+  })
+
+  inx_x <- Reduce(intersect, lapply(inx, function(x) x$lhs[!is.na(x$lhs)]))
+  inx_y <- Reduce(intersect, lapply(inx, function(x) x$rhs[!is.na(x$rhs)]))
+
+  ranges_common <- x[inx_x][inx_y]
+  mcols(ranges_common) <- cbind(mcols(ranges_common), mcols(y[seq_along(inx_y)]))
+  ranges_common
+
 }
 
 

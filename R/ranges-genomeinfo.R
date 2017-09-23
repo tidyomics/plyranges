@@ -82,10 +82,7 @@ get_genome_info.Seqinfo <- function(.data) {
   if (any(is.na(seqlengths(.data)))) {
     stop("seqlengths must be non-missing to convert to GRanges")
   }
-  gr <- as(.data, "GRanges")
-  mcols(gr)$seqlengths <- seqlengths(.data)
-  mcols(gr)$is_circular <- isCircular(.data)
-  mcols(gr)$genome <- genome(.data)
-  gr
+  as(.data, "GRanges")
+
 }
 

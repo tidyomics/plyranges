@@ -67,31 +67,39 @@ cvg
 ## Coverage histogram
 
 We can construct a histogram over all seqeunces in a genome 
-using the `group_by` and `summarise` operations. First, we compute the 
-coverage and add the sequence lengths as a column.  
+using the `group_by` and `summarise` operations along with
+`left_join`. First, we compute the 
+coverage over the exons and construct a `tibble` with sequence lengths 
+as a column.  
 
 Then to count the number of bases corresponding to a score we sum over
-the width of each range in each chromosome. Similarly for the genome-wide 
-coverage histogram, we compute the entire size of the sequence length  and 
-perform the same operation. Finally we bind the result `tibbles` together.
-Note that in the sums we have coerced integer variables to doubles to avoid 
-overlfow.
+the width of each range in each chromosome. Then we join the resulting `tibble`
+to the annotation `tibble` called `hg19`. Note that in the sums we have coerced integer variables to doubles to avoid 
+overflow.
+
+Similarly for the genome-wide 
+coverage histogram, we perform the same operation but do not group over
+`seqnames`. Finally we bind the resulting `tibbles` together.
+
 ```{r cv-hist}
-cvg <- exons %>% 
-  set_coverage() %>% 
-  set_genome_info(seqlengths)
+cvg <- exons %>% set_coverage()
+hg19 <- get_genome_info(cvg) %>% 
+  select(seqnames, width)
 
-cvg_hist_by_seq <- cvg %>%   
-  group_by(seqnames, .seqlengths, score) %>%
-  summarise(count = sum(as.numeric(width))) %>%
-  mutate(fraction = count / .seqlengths)
+cvg_hist_by_seq <- left_join(cvg %>%   
+                               group_by(seqnames, score) %>%
+                               summarise(count = sum(as.numeric(width))),
+                             hg19,
+                             by = "seqnames") %>% 
+  mutate(fraction = count / lengths)
 
-cvg_hist_total <- cvg %>%
-  mutate(.seqlengths = sum(unique(as.numeric(.seqlengths)))) %>% 
-  group_by(.seqlengths, score) %>% 
-  summarise(count = sum(as.numeric(width))) %>% 
-  mutate(fraction = count / .seqlengths,
-         seqnames = "genome")
+cvg_hist_total <- left_join(cvg %>%
+                              group_by(score) %>% 
+                              summarise(count = sum(as.numeric(width))) %>% 
+                              mutate(seqnames = "genome"),
+                            hg19 %>% 
+                              summarise(width = sum(as.numeric(width))) %>% 
+                              mutate(seqnames = "genome"))
 
 cvg_hist <- dplyr::bind_rows(cvg_hist_by_seq, cvg_hist_total)
 cvg_hist
