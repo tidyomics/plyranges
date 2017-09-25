@@ -1,29 +1,46 @@
-#' Select metadata variables by name
+#' Select parts of the GRanges by name
 #'
-#' @param .data a \code{GRanges} object
-#' @param ... One or more column names. Note that these act on the
-#' metadata slot of the GRanges object and preserve the
-#' structure of the GRanges object, hence the names strand, start, end,
-#' width are invalid.
-#' # @param drop drop the GRanges column and return the metadata columns only?
-#' @return a GRanges object
+#' @param .data a \code{Ranges} object
+#' @param ... One or more column names including the core components
+#' of the Ranges object - if possible select will preserve the Ranges object,
+#' however in cases where this is not possible select will return a tibble.
+#' @details Note that if a core component of a Ranges is dropped or selected
+#' without the other required components (this includes the seqnames, strand, start, end,
+#' width names), then select will return a tibble.
+#' @note select doesn't currently support slicing syntax or integer based selection.
+#' @return a Ranges object or a tibble
 #' @seealso \link[dplyr]{select}
 #' @importFrom dplyr select
-select.GRanges <- function(.data, ...) {
+select.GenomicRanges <- function(.data, ...) {
+
   dots <- quos(...)
 
-  col_names <- unlist(lapply(dots, quo_name))
-
-  invalid_cols <- any(grepl("strand|start|end|width", col_names))
-  if (invalid_cols) {
-    stop("Invalid selection, only metadata columns may be selected.")
+  # no selection? - return .data
+  if (length(dots) == 0) {
+    return(.data)
   }
 
-  # coerce to a data.frame
-  mcols(.data) <- select(as.data.frame(mcols(.data)),
-                         UQS(dots))
+  # if the quo is named
+  stopifnot(length(names(dots)) != 0)
 
-  .data
+  col_names <- unlist(lapply(dots, quo_name))
+  col_syms <- syms(col_names)
+  names(col_syms) <- col_names
+
+  rng_os <- overscope_ranges(.data)
+
+  rng_df <- lapply(col_syms, overscope_eval_next, overscope = rng_os)
+  print(rng_df)
+  rng_df <- as_tibble(as.data.frame(rng_df))
+
+  rng <- try(Ranges(rng_df), silent = TRUE)
+
+  if (is(rng, "try-error")) {
+    return(rng_df)
+  } else {
+    return(rng)
+  }
+
   # col_slice <- grep(":", col_names)
   #
   # if (length(col_slice) > 0) {
