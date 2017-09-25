@@ -11,7 +11,8 @@
 #' the coverage value over that interval. Note that compute_coverage
 #' drops metadata associated with the orginal ranges.
 #' @seealso \link[IRanges]{coverage}
-#' @importFrom IRanges coverage ranges runValue
+#' @importFrom IRanges coverage ranges
+#' @importFrom S4Vectors runValue
 #' @export
 #' @rdname set_coverage
 set_coverage <- function(x, shift, width, weight) {
@@ -22,6 +23,14 @@ set_coverage <- function(x, shift, width, weight) {
 #' @export
 set_coverage.GenomicRanges <- function(x, shift = 0L, width = NULL, weight = 1L) {
   GRanges(coverage(x, shift, width, weight, method = "auto"))
+}
+
+set_coverage.GRangesGrouped <- function(x, shift = 0L, width = NULL, weight = 1L) {
+  gr_groups <- split_groups(x)
+  # this will drop grouping
+  unlist(endoapply(gr_groups, function(x) {
+    set_coverage.GenomicRanges(x, shift, width, weight)
+    }))
 }
 
 set_coverage.Ranges <- function(x, shift = 0L, width = NULL, weight = 1L) {
