@@ -1,20 +1,20 @@
 summarize_rng <- function(.data, ...) {
   dots <- UQS(...)
-  gr_env <- as.env(.data, parent.frame())
-  overscope <- new_overscope(gr_env, parent.env(gr_env))
+  overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
-  summarised <- vector("list", length(dots))
-  names(summarised) <- names(dots)
-
-  for (i in seq_along(summarised)) {
-    summarised[[i]] <- overscope_eval_next(overscope, dots[[i]])
-    # sometimes we want to compute on previously constructed columns
-    # we can do this by binding the evaluated expression to
-    # the overscope environment
-    new_col <- names(dots)[[i]]
-    rlang::env_bind(overscope$.env, !!new_col := summarised[[i]])
-  }
-  summarised
+  overscope_eval_update(overscope, dots)
+  # summarised <- vector("list", length(dots))
+  # names(summarised) <- names(dots)
+  #
+  # for (i in seq_along(summarised)) {
+  #   summarised[[i]] <- overscope_eval_next(overscope, dots[[i]])
+  #   # sometimes we want to compute on previously constructed columns
+  #   # we can do this by binding the evaluated expression to
+  #   # the overscope environment
+  #   new_col <- names(dots)[[i]]
+  #   rlang::env_bind(overscope$.env, !!new_col := summarised[[i]])
+  # }
+  #summarised
 }
 
 #' Aggregate a GenomicRanges
@@ -26,13 +26,19 @@ summarize_rng <- function(.data, ...) {
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr summarize
 #' @importFrom dplyr summarise
-summarise.GRanges <- function(.data, ...) {
+summarise.GenomicRanges <- function(.data, ...) {
 
   dots <- quos(...)
   as_tibble(summarize_rng(.data, dots))
 
 }
 
+summarise.Ranges <- function(.data, ...) {
+
+  dots <- quos(...)
+  as_tibble(summarize_rng(.data, dots))
+
+}
 
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows

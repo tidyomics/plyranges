@@ -5,6 +5,22 @@ overscope_ranges <- function(x, envir = parent.frame()) {
   new_overscope(x_env, top = parent.env(x_env))
 }
 
+#' @importFrom rlang env_bind :=
+overscope_eval_update <- function(overscope, dots) {
+  update <- vector("list", length(dots))
+
+  names(update) <- names(dots)
+  for (i in seq_along(update)) {
+    update[[i]] <- overscope_eval_next(overscope, dots[[i]])
+    # sometimes we want to compute on previously constructed columns
+    # we can do this by binding the evaluated expression to
+    # the overscope environment
+    new_col <- names(dots)[[i]]
+    rlang::env_bind(overscope, !!new_col := update[[i]])
+  }
+  return(update)
+}
+
 ranges_vars <- function(x) {
   x_env <- as.env(x, parent.frame())
   vars_rng <-ls(x_env)

@@ -82,7 +82,7 @@ join_inner <- function(x, y, by = NULL) {
 #' on combinations of Ranges objects and/or table-like objects.
 #' For Ranges objects these joins do not take into account
 #' genomic intervals but merely join the metadata columns in a sensible way.
-#' @param x,y
+#' @param x,y Ranges objects to join together
 #' @param by a character vector of variables to join. The default is to perform
 #' a natural join. Use a named vector to join by different variables on x and y.
 #'

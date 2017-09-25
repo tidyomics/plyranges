@@ -49,11 +49,9 @@ mutate_rng <- function(.data, dots) {
     stop("mutate must have name-variable pairs as input", .call = FALSE)
   }
 
-  rng_env <- as.env(.data, parent.frame())
-  overscope <- new_overscope(rng_env, parent.env(rng_env))
-
-  .mutated <- lapply(dots, overscope_eval_next, overscope = overscope)
+  overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
+  .mutated <- overscope_eval_update(overscope, dots)
 
   .data <- mutate_core(.data, .mutated)
   mutate_mcols(.data, .mutated)
@@ -66,20 +64,18 @@ mutate_rng <- function(.data, dots) {
 #' or modifying existing ones.
 #'
 #' @importFrom dplyr mutate
-#' @method mutate GRanges
 #' @rdname mutate-ranges
 #' @return a Ranges object
 #' @export
-mutate.GRanges <- function(.data, ...) {
+mutate.GenomicRanges <- function(.data, ...) {
   dots <- quos(...)
   mutate_rng(.data, dots)
 
 }
 
-#' @method mutate IRanges
 #' @rdname mutate-ranges
 #' @export
-mutate.IRanges <- function(.data, ...) {
+mutate.Ranges <- function(.data, ...) {
   dots <- quos(...)
   mutate_rng(.data, dots)
 }
