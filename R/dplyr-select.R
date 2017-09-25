@@ -30,7 +30,6 @@ select.GenomicRanges <- function(.data, ...) {
   rng_os <- overscope_ranges(.data)
 
   rng_df <- lapply(col_syms, overscope_eval_next, overscope = rng_os)
-  print(rng_df)
   rng_df <- as_tibble(as.data.frame(rng_df))
 
   rng <- try(Ranges(rng_df), silent = TRUE)
