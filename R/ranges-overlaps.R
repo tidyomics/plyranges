@@ -89,3 +89,21 @@ find_overlaps_within.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
   mcols_overlaps_update(x,y, hits)
 }
+
+#' @importFrom IRanges countOverlaps
+#' @rdname ranges-overlaps.Rd
+#' @export
+count_overlaps <- function(x, y, maxgap, minoverlap) {
+  UseMethod("count_overlaps")
+}
+
+#' @rdname ranges-overlaps.Rd
+#' @export
+count_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
+  countOverlaps(x,y, maxgap, minoverlap, type = "any")
+}
+
+count_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
+  countOverlaps(x,y, maxgap, minoverlap, type = "any", ignore.strand = TRUE)
+}
+

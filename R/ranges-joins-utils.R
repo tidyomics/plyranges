@@ -8,7 +8,7 @@ common_cols <- function(x, y, by = NULL) {
 
   if (is.null(by)) {
     common_cols <- intersect(x_names, y_names)
-    if (length(common_mcols) == 0) {
+    if (length(common_cols) == 0) {
       stop("No common columns between x & y", call. = FALSE)
     }
     return(common_cols)

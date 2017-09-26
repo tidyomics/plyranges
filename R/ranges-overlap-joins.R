@@ -18,6 +18,7 @@ ojoin_inner.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L) {
                             minoverlap = minoverlap,
                             ignore.strand = TRUE)
   pintersect(pairs, ignore.strand = TRUE)
+
 }
 
 

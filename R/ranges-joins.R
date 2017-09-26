@@ -29,9 +29,9 @@ join_left <- function(x, y, by = NULL) {
   })
   inx <- Reduce(intersect, inx)
   if (length(inx) == 0) {
-    message("No common keys between x & y")
-    return(x)
+    stop("No common keys between x & y", .call = FALSE)
   }
+  # suffix here
   mcols(x) <- cbind(mcols(x), mcols(y[inx]))
   return(x)
 }

@@ -20,7 +20,17 @@ devtools::load_all("../")
 Here we introduce the `plyranges` API for manipulating genomic data. 
 The examples follow the [HelloRanges tutorial](http://bioconductor.org/packages/release/bioc/vignettes/HelloRanges/inst/doc/tutorial.pdf). The aim is to show how common analysis 
 tasks that are usually undertaken using `bedtools` can be performed interactively
-using the `plyranges` API.
+using the `plyranges` API. Throughout this tutorial we will highlight how
+the `bedtools`, `HelloRanges` and `plyranges` API differ. 
+
+The `plyranges` API attempts to be type-consistent, that is if you apply
+a `plyranges` function to a _Ranges_ object it should return a _Ranges_ object.
+This means that intermittant Bioconductor classes such as `Rle` objects are
+hidden away from the user, and the user can focus on the table-like structure
+of ordinary _Ranges_ objects. A _Ranges_ object, in particular a _GRanges_ object
+resembles a BED file and has columns to represent the chromomsome, start, end,
+and strand information. It can also contain additional columns called metadata
+containing information about the rows (i.e an exon name or a measurement).
 
 ## Data
 The data we use for these examples are exported by the `HelloRangesData` 
@@ -35,11 +45,69 @@ cpg_bed <- system.file("extdata", "cpg.bed", package = "HelloRangesData")
 ## Reading BED files
 
 To load the exons file as a _GRanges_ object we use the `read_bed` function.
-We supply the genome build as an additional argument to this function.
+We supply the genome build as an additional argument to this function, allowing
+us to obtain annotation information about each chromosome.
 ```{r}
 exons <- read_bed(exons_bed, genome_info = "hg19")
 exons
+
+cpg <- read_bed(cpg_bed, genome_info = "hg19")
+cpg
 ```
+
+# Intersections and Overlaps
+
+A useful operation on two _Ranges_ is to identify where they intersect. By 
+default `bedtools` will return the region of intersection between two genomic
+tracks. In `plyranges` the intersect operation is a type of overlap join, that is
+we are finding the common genomic intervals that overlap between the two tracks.
+
+In `plyranges` this is termed an inner overlap join:
+```{r}
+intersect <- ojoin_inner(cpg, exons)
+intersect
+```
+
+In the `HelloRanges` API (we also see the `bedtools` code here) the equivalent 
+operation is:
+```{r}
+library(HelloRanges)
+code <- bedtools_intersect("-a cpg.bed -b exons.bed -g hg19")
+code
+```
+
+## Keeping the original features
+To maintain the original features of exons on the intersect ranges, we can
+perform a `left_join` on the overlapped ranges object with the exons
+
+```{r}
+# need to add suffix operation here
+intersect_features <- left_join(intersect, exons, by = "seqnames")
+intersect_features 
+```
+
+## Computing the amount of overlap
+To compute the amount of overlap we store the width of the intersecting ranges
+as an additional column using the `mutate` operator.
+```{r}
+intersect_features <- intersect_features %>% 
+  mutate(overlap_width = width)
+```
+
+The equivalent bedtools/HelloRanges command is:
+```{r}
+bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -wo")
+```
+
+## Counting the number of overlaps
+To add the count of the number of times each cpg island overlaps an exon we can
+use `mutate` with the `count_overlaps` function.
+
+```{r}
+cpg %>% 
+  mutate(overlaps = count_overlaps(., exons))
+```
+
 
 # Computing Genomic Coverage
 
