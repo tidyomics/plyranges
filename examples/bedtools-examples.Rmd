@@ -7,12 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
-library(dplyr)
-library(magrittr)
-
-
-devtools::load_all(".")
+devtools::load_all("../")
 ```
 
 # Introduction
@@ -245,7 +240,3 @@ ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
   xlab("coverage") +
   ylab("fraction of bp > coverage")
 ```
-
-## Examples from Lawrence and Morgan 2014
-
-Lawrence, M. & Morgan, M. Scalable Genomics with R and Bioconductor. Stat. Sci. 29, 214–226 (2014).
