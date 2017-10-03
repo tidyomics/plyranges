@@ -12,7 +12,7 @@ library(dplyr)
 library(magrittr)
 
 
-devtools::load_all("../")
+devtools::load_all(".")
 ```
 
 # Introduction
@@ -62,7 +62,7 @@ default `bedtools` will return the region of intersection between two genomic
 tracks. In `plyranges` the intersect operation is a type of overlap join, that is
 we are finding the common genomic intervals that overlap between the two tracks.
 
-In `plyranges` this is termed an inner overlap join:
+In `plyranges` this is termed an left overlap join:
 ```{r}
 intersect <- ojoin_inner(cpg, exons)
 intersect
@@ -77,12 +77,10 @@ code
 ```
 
 ## Keeping the original features
-To maintain the original features of exons on the intersect ranges, we can
-perform a `left_join` on the overlapped ranges object with the exons
-
+Using a `left_join` keeps the features present in both ranges.
 ```{r}
 # need to add suffix operation here
-intersect_features <- left_join(intersect, exons, by = "seqnames")
+intersect_features <- left_join(intersect, exons)
 intersect_features 
 ```
 
@@ -108,6 +106,45 @@ cpg %>%
   mutate(overlaps = count_overlaps(., exons))
 ```
 
+The equivalent bedtools operation is
+
+```{r}
+bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -c")
+```
+
+## Excluding by overlaps
+
+We can use `filter` along with the infix operator `%over` to only
+include CpG islands that do not overlap any exons.
+```{r}
+cpg %>% 
+  filter(!(. %over% exons))
+
+```
+
+The equivalent bedtools operation is
+```{r}
+bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -v")
+```
+
+## Excluding by fraction of overlap
+
+A common operation is to filter ranges by the fraction they overlap a
+given query or subject. We can achieve this with a left overlap join
+an inner overlap join and a filter.
+
+```{r}
+# not happy with accessor use here
+overlap_intersect <- ojoin_inner(cpg, exons) %>% 
+  mutate(olap_width = width(ojoin_left(cpg, exons))) %>% 
+  filter(width / olap_width >= 0.5)
+
+```
+
+The equivalent bedtools code is
+```{r}
+bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -f 0.5 -wo")
+```
 
 # Computing Genomic Coverage
 
