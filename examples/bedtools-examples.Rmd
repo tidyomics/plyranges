@@ -2,7 +2,10 @@
 title: "Using plyranges to analyse bed files."
 author: "Stuart Lee"
 date: "`r Sys.Date()`"
-output: html_document
+output:  
+  md_document:
+    variant: markdown_github
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -66,7 +69,7 @@ intersect
 In the `HelloRanges` API (we also see the `bedtools` code here) the equivalent 
 operation is:
 ```{r}
-library(HelloRanges)
+suppressPackageStartupMessages(library(HelloRanges))
 code <- bedtools_intersect("-a cpg.bed -b exons.bed -g hg19")
 code
 ```
@@ -75,7 +78,7 @@ code
 Using a `left_join` keeps the features present in both ranges.
 ```{r}
 # need to add suffix operation here
-intersect_features <- left_join(intersect, exons)
+intersect_features <- left_join(intersect, exons, by = "seqnames")
 intersect_features 
 ```
 
@@ -156,7 +159,6 @@ By default, `set_coverage` is equivalent to `bedtools genomecov -bga` and
 hence will return scores equal to zero. Filtering all scores above zero
 is equivalent to `bedtools genomecov -bg`:
 ```{r cv}
-
 cvg <- exons %>% 
   set_coverage() %>% 
   filter(score > 0)
@@ -182,17 +184,19 @@ coverage histogram, we perform the same operation but do not group over
 `seqnames`. Finally we bind the resulting `tibbles` together.
 
 ```{r cv-hist}
+suppressPackageStartupMessages(library(dplyr))
 cvg <- exons %>% set_coverage()
-hg19 <- get_genome_info(cvg) %>% 
-  select(seqnames, width)
+hg19 <- get_genome_info(cvg) %>%  
+ select(seqnames, width)
 
 cvg_hist_by_seq <- left_join(cvg %>%   
                                group_by(seqnames, score) %>%
                                summarise(count = sum(as.numeric(width))),
                              hg19,
                              by = "seqnames") %>% 
-  mutate(fraction = count / lengths)
+  mutate(fraction = count / width)
 
+# overlap join
 cvg_hist_total <- left_join(cvg %>%
                               group_by(score) %>% 
                               summarise(count = sum(as.numeric(width))) %>% 
@@ -201,7 +205,7 @@ cvg_hist_total <- left_join(cvg %>%
                               summarise(width = sum(as.numeric(width))) %>% 
                               mutate(seqnames = "genome"))
 
-cvg_hist <- dplyr::bind_rows(cvg_hist_by_seq, cvg_hist_total)
+cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)
 cvg_hist
 ```
 
