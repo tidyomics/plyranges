@@ -33,6 +33,8 @@ select_rng <- function(.data, ...) {
 #' @return a Ranges object or a tibble
 #' @seealso \link[dplyr]{select}
 #' @importFrom dplyr select
+#' @rdname ranges-select
+#' @export
 select.GenomicRanges <- function(.data, ...) {
 
   dots <- quos(...)
@@ -49,6 +51,8 @@ select.GenomicRanges <- function(.data, ...) {
 
 }
 
+#' @rdname ranges-select
+#' @export
 select.Ranges <- function(.data, ...) {
   dots <- quos(...)
 
