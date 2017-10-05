@@ -105,7 +105,7 @@ inner_join.GenomicRanges <- function(x, y, by = NULL) {
 
 
 #' @importFrom S4Vectors merge
-#' @importFrom dplyr inner_join
+#' @importFrom dplyr left_join
 #' @export
 left_join.Ranges <- function(x, y, by = NULL) {
   stopifnot(is_ranges(y))

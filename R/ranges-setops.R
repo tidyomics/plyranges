@@ -1,13 +1,14 @@
 # Element wise set operations
 
 #' Row-wise set operations on Ranges objects
+#'
 #' @param x,y Ranges objects
 #' @details Each of these functions acts on the rows of Ranges object.
-#' \code{%union%} will return the entire range between two ranges assuming there
-#' are no gaps, if there are gaps use
-#' \code{span} instead. \code{%intersect%} will update the Ranges object
+#' \code{%union%}  will return the entire range between two ranges assuming there
+#' are no gaps, if there are gaps use \code{span} instead.
+#' \code{%intersect%} will update the Ranges object
 #' with a hit column indicating whether or not the two ranges intersect.
-#' \code{%setdiff} will return the ranges for each row in x that are not in
+#' \code{%setdiff%} will return the ranges for each row in x that are not in
 #' the corresponding row of y. \code{between} will return the gaps between
 #' two ranges.
 #' @return A Ranges object
