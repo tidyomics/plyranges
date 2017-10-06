@@ -7,10 +7,8 @@ is kept
 - [ ] group_by_overlaps (group_by(ranges, query_hits)) and an `nranges` method for grouping
 - [ ] find_overlaps should allow grouping
 - [ ] nest/unest operators
-- [ ] allow mutate to take grouped classes as input
 - [ ] sorting methods (i.e. `arrange`)
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
-- [ ] whole range set operators
 - [ ] binary comparison operators
 - [ ] vignette examples for all function suites
 
