@@ -1,3 +1,31 @@
+bind_nearest <- function(x, y, type = "nearest") {
+
+  if (ncol(y) > 1) {
+    names(y) <- c(type, paste0(names(y)[-1], ".y"))
+  } else {
+    names(y) <- type
+  }
+
+  if (is.null(mcols(x)) & is(x, "IRanges")) {
+    mcols(x) <- y
+  } else {
+    mcols(x) <- cbind(mcols(x), y)
+  }
+  return(x)
+}
+
+nearest_rng <- function(x, y, hits, type = "nearest") {
+  no_hits_id <- !is.na(hits)
+  expand_y <- as(y[hits[no_hits_id]], "DataFrame")
+  reduce_x <- x[no_hits_id]
+  bind_nearest(reduce_x, expand_y, type)
+}
+
+nearest_rng_all <- function(x, y, hits, type = "nearest") {
+  reduce_x <- x[queryHits(hits)]
+  expand_y <- as(y[subjectHits(hits)], "DataFrame")
+  bind_nearest(reduce_x, expand_y, type)
+}
 #' Find nearest neighbours between two Ranges objects
 #'
 #' @param x,y Ranges objects, add the nearest neighbours of ranges in x to
@@ -18,38 +46,13 @@ join_nearest <- function(x, y) {
 #' @export
 join_nearest.Ranges <- function(x,y) {
   hits <- nearest(x,y, select = "arbitrary")
-  no_hits_id <- !is.na(hits)
-  expand_y <- as(y[hits[no_hits_id]], "DataFrame")
-
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
-
-  reduce_x <- x[no_hits_id]
-  if (is.null(mcols(reduce_x))) {
-    mcols(reduce_x) <- expand_y
-  } else {
-    mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  }
-
-  return(reduce_x)
+  nearest_rng(x,y, hits)
 }
 
 #' @export
 join_nearest.GenomicRanges <- function(x,y) {
   hits <- nearest(x,y, select = "arbitrary", ignore.strand = FALSE)
-  no_hits_id <- !is.na(hits)
-  expand_y <- as(y[hits[no_hits_id]], "DataFrame")
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
-  reduce_x <- x[no_hits_id]
-  mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  return(reduce_x)
+  nearest_rng(x,y, hits)
 }
 
 #' Find nearest neighbours on the left between two Ranges objects
@@ -75,21 +78,7 @@ join_nearest_left.Ranges <- function(x,y) {
   mcols(hits)$is_left <- start(x[queryHits(hits)]) >= start(y[subjectHits(hits)]) &
     end(x[queryHits(hits)]) > start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_left]
-  # should we keep all hits here or select arbitary?
-  reduce_x <- x[queryHits(hits)]
-  expand_y <- as(y[subjectHits(hits)], "DataFrame")
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
-
-  if (is.null(mcols(reduce_x))) {
-    mcols(reduce_x) <- expand_y
-  } else {
-    mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  }
-  reduce_x
+  nearest_rng_all(x,y, hits)
 }
 
 #' @export
@@ -97,17 +86,8 @@ join_nearest_left.GenomicRanges <- function(x,y) {
   hits <- nearest(x,y, select = "all", ignore.strand = TRUE)
   mcols(hits)$is_left <- start(x[queryHits(hits)]) >= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_left]
-  # should we keep all hits here or select arbitary?
-  reduce_x <- x[queryHits(hits)]
-  expand_y <- as(y[subjectHits(hits)], "DataFrame")
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
+  nearest_rng_all(x,y, hits)
 
-  mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  reduce_x
 }
 
 #' Find nearest neighbours on the right between two Ranges objects
@@ -132,21 +112,8 @@ join_nearest_right.Ranges <- function(x, y) {
   hits <- nearest(x,y, select = "all")
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]
-  # should we keep all hits here or select arbitary?
-  reduce_x <- x[queryHits(hits)]
-  expand_y <- as(y[subjectHits(hits)], "DataFrame")
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
+  nearest_rng_all(x, y, hits)
 
-  if (is.null(mcols(reduce_x))) {
-    mcols(reduce_x) <- expand_y
-  } else {
-    mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  }
-  reduce_x
 }
 
 #' @export
@@ -154,18 +121,7 @@ join_nearest_right.GenomicRanges <- function(x, y) {
   hits <- nearest(x,y, select = "all", ignore.strand = TRUE)
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]
-  # should we keep all hits here or select arbitary?
-  reduce_x <- x[queryHits(hits)]
-  expand_y <- as(y[subjectHits(hits)], "DataFrame")
-
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
-
-  mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  reduce_x
+  nearest_rng_all(x,y, hits)
 }
 
 #' Find nearest neighbours that are upstream between two Ranges objects
@@ -196,17 +152,7 @@ join_nearest_upstream.GenomicRanges <- function(x, y) {
                                     mcols(hits)$is_left,
                                     mcols(hits)$is_right)
   hits <- hits[mcols(hits)$is_upstream]
-  reduce_x <- x[queryHits(hits)]
-  expand_y <- as(y[subjectHits(hits)], "DataFrame")
-
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
-
-  mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  reduce_x
+  nearest_rng_all(x,y, hits)
 
 }
 
@@ -242,15 +188,5 @@ join_nearest_downstream.GenomicRanges <- function(x, y) {
                                     mcols(hits)$is_right)
 
   hits <- hits[mcols(hits)$is_downstream]
-  reduce_x <- x[queryHits(hits)]
-  expand_y <- as(y[subjectHits(hits)], "DataFrame")
-
-  if (ncol(expand_y) > 1) {
-    names(expand_y) <- c("nearest", paste0(names(expand_y)[-1], ".y"))
-  } else {
-    names(expand_y) <- c("nearest")
-  }
-
-  mcols(reduce_x) <- cbind(mcols(reduce_x), expand_y)
-  reduce_x
+  nearest_rng_all(x,y,hits)
 }
