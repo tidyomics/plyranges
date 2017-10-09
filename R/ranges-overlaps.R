@@ -1,33 +1,37 @@
 # ranges-overlaps.R
 
 # workhorse funciton for copying metadata columns in y
-# probably should be deleted once the left join is implemented.
-mcols_overlaps_update <- function(x, y, hits) {
-  hits_y <- subjectHits(hits)
-  hits_x <- queryHits(hits)
-  expand_y <- y[hits_y]
-  # update start, end, width columns
-  mcols(x)[["start.y"]] <- NA_integer_
-  mcols(x)[["start.y"]][hits_x] <- start(expand_y)
-  mcols(x)[["end.y"]] <- NA_integer_
-  mcols(x)[["end.y"]][hits_x] <- end(expand_y)
-  mcols(x)[["width.y"]] <- NA_integer_
-  mcols(x)[["width.y"]][hits_x] <- width(expand_y)
-  # copy metadata columns from y to x
-  cols_to_add <- names(mcols(expand_y))
-  for (col in cols_to_add) {
-    cls <- class(mcols(expand_y)[[col]])
-    if (col %in% names(mcols(x))) {
-      col_x <- paste0(col, ".y")
-    } else {
-      col_x <- col
-    }
-    # this won't work if the column is not an S3 class or an atomic vector
-    mcols(x)[[col_x]] <- vector(cls, length(x))
-    mcols(x)[[col_x]][hits_x] <- mcols(expand_y)[[col]]
-    mcols(x)[[col_x]][-hits_x] <- NA
+mcols_overlaps_update <- function(x, y, hits, suffix) {
+
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  left_names <- names(mcols(left))
+  right_names <- names(mcols(right))
+  common_name <- intersect(left_names, right_names)
+  lname_inx <- left_names %in% common_name
+  rname_inx <- right_names %in% common_name
+  if (any(lname_inx)) {
+    names(mcols(left))[lname_inx] <- paste0(left_names[lname_inx], suffix[1])
   }
-  return(x)
+
+  if (any(rname_inx)) {
+    names(mcols(right))[rname_inx] <- paste0(right_names[rname_inx], suffix[2])
+  }
+
+  additional_cols <- DataFrame(start.y = start(right),
+                               end.y = end(right),
+                               width.y = width(right))
+
+  if (!is.null(mcols(left))) {
+    additional_cols <- cbind(additional_cols, mcols(left))
+  }
+
+  if (!is.null(mcols(right))) {
+    additional_cols <- cbind(additional_cols, mcols(right))
+  }
+  mcols(left) <- additional_cols
+
+  left
 }
 
 
@@ -51,43 +55,43 @@ mcols_overlaps_update <- function(x, y, hits) {
 #' @importFrom IRanges findOverlaps
 #' @importFrom S4Vectors queryHits subjectHits
 #' @export
-find_overlaps <- function(x, y, maxgap, minoverlap) {
+find_overlaps <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("find_overlaps")
 }
 
 #' @rdname ranges-overlaps.Rd
 #' @export
-find_overlaps.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L) {
+find_overlaps.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
-  mcols_overlaps_update(x,y, hits)
+  mcols_overlaps_update(x,y, hits, suffix)
 }
 
 #' @rdname ranges-overlaps.Rd
 #' @export
-find_overlaps.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L) {
+find_overlaps.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap,
                        type = "any", select = "all", ignore.strand = TRUE)
-  mcols_overlaps_update(x,y,hits)
+  mcols_overlaps_update(x,y,hits, suffix)
 }
 
 #' @rdname ranges-overlaps.Rd
 #' @export
-find_overlaps_within <- function(x, y, maxgap, minoverlap) {
+find_overlaps_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("find_overlaps_within")
 }
 
 #' @rdname ranges-overlaps.Rd
 #' @export
-find_overlaps_within.Ranges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
+find_overlaps_within.Ranges <- function(x,y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
-  mcols_overlaps_update(x,y, hits)
+  mcols_overlaps_update(x,y, hits, suffix = c(".x", ".y"))
 }
 
 #' @rdname ranges-overlaps.Rd
 #' @export
-find_overlaps_within.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
+find_overlaps_within.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
-  mcols_overlaps_update(x,y, hits)
+  mcols_overlaps_update(x,y, hits, suffix = c(".x", ".y"))
 }
 
 #' @importFrom IRanges countOverlaps

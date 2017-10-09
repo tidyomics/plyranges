@@ -62,8 +62,8 @@ we are finding the common genomic intervals that overlap between the two tracks.
 
 In `plyranges` this is termed an left overlap join:
 ```{r}
-intersect <- ojoin_inner(cpg, exons)
-intersect
+intersect_rng <- join_overlap_inner(cpg, exons)
+intersect_rng
 ```
 
 In the `HelloRanges` API (we also see the `bedtools` code here) the equivalent 
@@ -75,18 +75,15 @@ code
 ```
 
 ## Keeping the original features
-Using a `left_join` keeps the features present in both ranges.
-```{r}
-# need to add suffix operation here
-intersect_features <- left_join(intersect, exons, by = "seqnames")
-intersect_features 
-```
+By default an overlap join will keep the information in both the query and
+subject ranges.
 
 ## Computing the amount of overlap
 To compute the amount of overlap we store the width of the intersecting ranges
 as an additional column using the `mutate` operator.
+
 ```{r}
-intersect_features <- intersect_features %>% 
+intersect_rng <- intersect_rng %>% 
   mutate(overlap_width = width)
 ```
 
@@ -128,14 +125,14 @@ bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -v")
 ## Excluding by fraction of overlap
 
 A common operation is to filter ranges by the fraction they overlap a
-given query or subject. We can achieve this with a left overlap join
-an inner overlap join and a filter.
+given query or subject. We can achieve this with an overlap inner join and mutate. Since an overlap inner join will keep the width of the original query
+ranges we can combine it with filter. In this example we filter
+ranges where the proportion of overlap on cpg islands is less than half.
 
 ```{r}
 # not happy with accessor use here
-overlap_intersect <- ojoin_inner(cpg, exons) %>% 
-  mutate(olap_width = width(ojoin_left(cpg, exons))) %>% 
-  filter(width / olap_width >= 0.5)
+overlap_intersect <- join_overlap_inner(cpg, exons) %>%  %>% 
+  filter(width / width.x  >= 0.5)
 
 ```
 
@@ -219,7 +216,7 @@ overlap between the filtered exon ranges and the cpg islands.
 ```{r}
 cpg <- read_bed(cpg_bed, genome_info = "hg19")
 
-overlaps <- ojoin_inner(exons %>% filter(score == 0L), 
+overlaps <- join_overlap_inner(exons %>% filter(score == 0L), 
                         cpg) 
 
 overlaps
@@ -231,7 +228,7 @@ and then plot results as an ecdf.
 ```{r}
 cvg_over_exons <- exons %>% 
   set_coverage() %>%
-  ojoin_inner(., cpg) %>%
+  join_overlap_inner(., cpg) %>%
   mutate(total = sum(as.numeric(width))) %>% 
   group_by(score) %>%
   summarise(count = sum(as.numeric(width)),

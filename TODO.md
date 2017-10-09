@@ -1,8 +1,5 @@
 high to low priority
 
-- [ ] implement sensible join operators - rename ojoin to *join_overlap to keep consitency
-- [ ] update overlap join methods so that corresponding range information
-is kept
 - [ ] self_join_overlap function
 - [ ] group_by_overlaps (group_by(ranges, query_hits)) and an `nranges` method for grouping
 - [ ] find_overlaps should allow grouping
