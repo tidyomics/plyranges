@@ -131,7 +131,7 @@ ranges where the proportion of overlap on cpg islands is less than half.
 
 ```{r}
 # not happy with accessor use here
-overlap_intersect <- join_overlap_inner(cpg, exons) %>%  %>% 
+overlap_intersect <- join_overlap_inner(cpg, exons) %>% 
   filter(width / width.x  >= 0.5)
 
 ```
