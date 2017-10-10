@@ -8,7 +8,7 @@ high to low priority
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
 - [ ] binary comparison operators
 - [ ] vignette examples for all function suites
-
+- [ ] add S4Vectors as depends, add tidyselect to imports
 
 
 

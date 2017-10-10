@@ -1,4 +1,3 @@
-
 #' @export
 tidyr::nest
 
@@ -9,8 +8,10 @@ tidyr::nest
 #' @param .key The name of the resulting nested column.
 #'
 #' @importFrom tidyr nest
-#' @importFrom S4Vectors splitAsList
+#' @importFrom IRanges splitAsList
+#' @importFrom tidyselect vars_select
 #' @importFrom GenomicRanges granges
+#' @rdname ranges-nest
 #' @export
 nest.GenomicRanges <- function(data, ..., .key = ".data") {
 
