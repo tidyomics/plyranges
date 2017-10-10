@@ -78,13 +78,15 @@ unnest.GenomicRanges <- function(data, ..., .drop, .id, .sep) {
 
   # possible to use as(., List)
   mcols_list <- as(mcols(data)[, which_unnest], "List")
+  which_unnest <- names(mcols_list)
+  print(mcols_list)
   # this is slow
   rle_inx <-  lapply(mcols_list, lengths)
   # this is wrong if there a different groupings within each list-col
   rle_inx <- Rle(seq_along(data), Reduce(unique, rle_inx))
 
   # also slow
-  list_vals <- Map(function(.) unlist(mcols(data)[[.]]), which_unnest)
+  list_vals <- Map(function(.) unlist(mcols_list[[.]]), which_unnest)
   list_vals <- do.call("DataFrame", list_vals)
 
   expand_rng <- granges(data)[rle_inx]
