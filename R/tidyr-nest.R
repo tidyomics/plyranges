@@ -2,9 +2,39 @@
 #' @export
 tidyr::nest
 
+#' Nest a GenomicRanges object
+#'
+#' @param data A Ranges object
+#' @param ... A selection of metadata column variables to nest by.
+#' @param .key The name of the resulting nested column.
+#'
 #' @importFrom tidyr nest
+#' @importFrom S4Vectors splitAsList
+#' @importFrom GenomicRanges granges
 #' @export
-nest.GenomicRanges <- function(data, ..., .key) {
+nest.GenomicRanges <- function(data, ..., .key = ".data") {
+
+  dots <- quos(...)
+  dot_names <- unlist(Map(function(.) quo_name(.), dots))
+
+  if (length(dot_names) == 0L) {
+    stop("Unable to fully nest a GenomicRanges object.")
+  }
+
+  selected_mcols <- tidyselect::vars_select(names(mcols(data)), !!! dots)
+
+  groups_mcols <- setdiff(names(mcols(data)), selected_mcols)
+  print(groups_mcols)
+  groups_rle <- as(lapply(groups_mcols, function(.) Rle(mcols(data)[[.]])), "RleList")
+
+  groups_split <- splitAsList(mcols(data)[, selected_mcols], groups_rle)
+
+  nest_rng <- unique(granges(data))
+  mcols(nest_rng) <- do.call("DataFrame",
+                             lapply(groups_mcols, function(.) unique(mcols(data)[[.]])))
+  names(mcols(nest_rng)) <- groups_mcols
+  mcols(nest_rng)[[.key]] <- as(groups_split, "DataFrame")
+  nest_rng
 
 }
 
@@ -14,7 +44,7 @@ tidyr::unnest
 
 #' Expand list-columns in a Ranges object
 #'
-#' @param data
+#' @param data A Ranges object
 #' @param ... list-column names to unnest
 #' @param .drop not implemented
 #' @param .id not implemented
@@ -46,8 +76,10 @@ unnest.GenomicRanges <- function(data, ..., .drop, .id, .sep) {
                paste0(dot_names, collapse = ","), "not found"), call. = FALSE)
   }
 
+  # possible to use as(., List)
+  mcols_list <- as(mcols(data)[, which_unnest], "List")
   # this is slow
-  rle_inx <-  lapply(which_unnest, function(x) lengths(mcols(data)[[x]]))
+  rle_inx <-  lapply(mcols_list, lengths)
   # this is wrong if there a different groupings within each list-col
   rle_inx <- Rle(seq_along(data), Reduce(unique, rle_inx))
 
