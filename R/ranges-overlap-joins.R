@@ -40,7 +40,7 @@ mcols_overlaps_inner_update <- function(left, right, suffix) {
 #' that overlap ranges in y.
 #'
 #' @importFrom S4Vectors first second DataFrame
-#' @importFrom GenomicRanges findOverlapPairs
+#' @importFrom IRanges findOverlapPairs
 #' @rdname overlap-joins
 #' @export
 join_overlap_inner <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) UseMethod("join_overlap_inner")
