@@ -76,10 +76,8 @@ unnest.GenomicRanges <- function(data, ..., .drop, .id, .sep) {
                paste0(dot_names, collapse = ","), "not found"), call. = FALSE)
   }
 
-  # possible to use as(., List)
   mcols_list <- as(mcols(data)[, which_unnest], "List")
   which_unnest <- names(mcols_list)
-  print(mcols_list)
   # this is slow
   rle_inx <-  lapply(mcols_list, lengths)
   # this is wrong if there a different groupings within each list-col
@@ -94,6 +92,5 @@ unnest.GenomicRanges <- function(data, ..., .drop, .id, .sep) {
   mcols(expand_rng)  <- mcols(data)[rle_inx, !list_cols_pos]
   names(mcols(expand_rng)) <- names(list_cols_pos[!list_cols_pos])
   mcols(expand_rng) <- cbind(mcols(expand_rng), list_vals)
-  mcols(expand_rng) <- mcols(expand_rng)[, names(list_cols_pos)]
   expand_rng
 }
