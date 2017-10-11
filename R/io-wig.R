@@ -17,7 +17,7 @@
 #' @export
 #' @rdname bed-files-read
 #' @importFrom rtracklayer import.wig
-#' @importFrom GenomeInfoDB seqinfo
+#' @importFrom GenomeInfoDb seqinfo
 read_wig <- function(file,  genome_info = NULL, overlap_ranges = NULL) {
 
   if (is.null(genome_info)) { genome_info <- NA }
