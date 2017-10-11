@@ -23,6 +23,14 @@
 read_narrowpeaks <- function(file, genome_info = NULL,
                      overlap_ranges = NULL) {
   if (is.null(genome_info)) { genome_info <- NA }
+
+  if (is(genome_info, "GRanges")) {
+    seq_info <- seqinfo(genome_info)
+    genome_info <- NA
+  } else {
+    seq_info <- NULL
+  }
+
   extra_cols <- c(rep("numeric", 3), "integer")
   col_names <- c("signalValue", "pvalue", "qvalue", "peak")
   import.bed(file, colnames = col_names,

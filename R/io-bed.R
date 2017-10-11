@@ -17,14 +17,22 @@
 #' @return A GRanges object
 #'
 #' @importFrom rtracklayer import.bed
+#' @importFrom GenomeInfoDb seqinfo
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
 #' @rdname bed-files-read
 read_bed <- function(file, col_names = NULL, genome_info = NULL,
                      overlap_ranges = NULL) {
   if (is.null(genome_info)) { genome_info <- NA }
+  if (is(genome_info, "GRanges")) {
+    seq_info <- seqinfo(genome_info)
+    genome_info <- NA
+  } else {
+    seq_info <- NULL
+  }
   import.bed(file, colnames = col_names,
              genome = genome_info,
+             seqinfo = seq_info,
              which = overlap_ranges)
 }
 

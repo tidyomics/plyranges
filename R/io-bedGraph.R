@@ -5,6 +5,12 @@
 read_bed_graph <- function(file, col_names = NULL, genome_info = NULL,
                            overlap_ranges = NULL) {
   if (is.null(genome_info)) { genome_info <- NA }
+  if (is(genome_info, "GRanges")) {
+    seq_info <- seqinfo(genome_info)
+    genome_info <- NA
+  } else {
+    seq_info <- NULL
+  }
   import.bedGraph(file, colnames = col_names,
              genome = genome_info,
              which = overlap_ranges)
