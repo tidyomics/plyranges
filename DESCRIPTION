@@ -9,9 +9,9 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     and consistent way of manipulating these classes their accessiblity for new
     Bioconductor users is hopefully increased.
 Depends: 
-  R (>= 3.4.0), 
-  BiocGenerics,
+  R (>= 3.4.0),
   methods,
+  BiocGenerics,
   GenomicRanges (>= 1.28.4),
   IRanges
 Imports: 
@@ -20,6 +20,8 @@ Imports:
   magrittr,
   tibble,
   rtracklayer,
+  GenomicAlignments,
+  Rsamtools,
   S4Vectors
 biocViews: Infrastructure, Data Representation, WorkflowStep
 License: Artistic-2.0
