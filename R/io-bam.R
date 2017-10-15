@@ -71,7 +71,7 @@ bam_select <- function(fields = NULL, tags = NULL) {
   if (is.null(fields)) {
     fields <- character(0)
   } else {
-    if (!(fields %in% Rsamtools::scanBamWhat())) {
+    if (any(!(fields %in% Rsamtools::scanBamWhat()))) {
       stop("Invalid field identifier.", call. = FALSE)
     }
   }
@@ -117,7 +117,7 @@ read_bam <- function(file, index = file,
                      ) {
 
   if (paired) {
-    io_bam <- GenomicAlignments::readGAlignmentPairs
+    io_bam <- GenomicAlignments::readGAlignmentsList
   } else {
     io_bam <- GenomicAlignments::readGAlignments
   }
