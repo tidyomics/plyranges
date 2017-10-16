@@ -1,6 +1,6 @@
 high to low priority
 
-- [ ] group_by_overlaps (group_by(ranges, query_hits)) and an `nranges` method for grouping
+- [ ] `nranges` method for grouping
 - [ ] find_overlaps should allow grouping
 - [ ] sorting methods (i.e. `arrange`)
 - [ ] update select method to use tidyselect::vars_select
