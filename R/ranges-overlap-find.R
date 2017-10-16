@@ -18,9 +18,10 @@ mcols_overlaps_update <- function(x, y, hits, suffix) {
     names(mcols(right))[rname_inx] <- paste0(right_names[rname_inx], suffix[2])
   }
 
-  additional_cols <- DataFrame(start.y = start(right),
-                               end.y = end(right),
-                               width.y = width(right))
+  additional_cols <- DataFrame(start = start(right),
+                               end = end(right),
+                               width = width(right))
+  names(additional_cols) <- paste0(names(additional_cols), suffix[2])
 
   if (!is.null(mcols(left))) {
     additional_cols <- cbind(additional_cols, mcols(left))
@@ -93,21 +94,3 @@ find_overlaps_within.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
   mcols_overlaps_update(x,y, hits, suffix = c(".x", ".y"))
 }
-
-#' @importFrom IRanges countOverlaps
-#' @rdname ranges-overlaps.Rd
-#' @export
-count_overlaps <- function(x, y, maxgap, minoverlap) {
-  UseMethod("count_overlaps")
-}
-
-#' @rdname ranges-overlaps.Rd
-#' @export
-count_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
-  countOverlaps(x,y, maxgap, minoverlap, type = "any")
-}
-
-count_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
-  countOverlaps(x,y, maxgap, minoverlap, type = "any", ignore.strand = TRUE)
-}
-

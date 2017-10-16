@@ -1,6 +1,5 @@
 high to low priority
 
-- [ ] self_join_overlap function
 - [ ] group_by_overlaps (group_by(ranges, query_hits)) and an `nranges` method for grouping
 - [ ] find_overlaps should allow grouping
 - [ ] sorting methods (i.e. `arrange`)
@@ -8,7 +7,7 @@ high to low priority
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
 - [ ] binary comparison operators
 - [ ] vignette examples for all function suites
-- [ ] add S4Vectors as depends, add tidyselect to imports
+- [ ] add tidyselect to imports
 
 
 

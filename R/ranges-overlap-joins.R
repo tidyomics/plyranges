@@ -16,6 +16,9 @@ mcols_overlaps_inner_update <- function(left, right, suffix) {
 
   additional_mcols <- DataFrame(width.x = width(left),
                                 width.y = width(right))
+
+  names(additional_mcols) <- paste0("width", suffix)
+
   if (!is.null(mcols(left))) {
     additional_mcols <- cbind(additional_mcols, mcols(left))
   }
@@ -37,7 +40,8 @@ mcols_overlaps_inner_update <- function(left, right, suffix) {
 #' @details Inner overlaps finds intersecting intervals between x and y
 #' while keeping information about the width from x and y.
 #' Left overlaps is equivalent to find_overlaps, it keeps all ranges in x
-#' that overlap ranges in y.
+#' that overlap ranges in y. Self overlaps find all overlaps within a ranges
+#' object x.
 #'
 #' @importFrom S4Vectors first second DataFrame
 #' @importFrom IRanges findOverlapPairs
@@ -77,9 +81,10 @@ join_overlap_inner.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L,
 }
 
 #' @rdname overlap-joins
+#' @export
 join_overlap_within_inner <- function(x, y, maxgap, minoverlap,
                                       suffix = c(".x", ".y")) {
-  UseMethod("join_overlap_inner")
+  UseMethod("join_overlap_within_inner")
 }
 
 join_overlap_within_inner.Ranges <- function(x, y, maxgap, minoverlap,
@@ -116,12 +121,23 @@ join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) 
 }
 
 join_overlap_left.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
-  find_overlaps(x,y,maxgap, mingap,suffix)
+  find_overlaps(x,y,maxgap, minoverlap,suffix)
 }
 
 join_overlap_left.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
-  find_overlaps(x,y,maxgap, mingap,suffix)
+  find_overlaps(x,y,maxgap, minoverlap,suffix)
 }
 
+#' @rdname overlap-joins
+#' @export
+join_overlap_within_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+  UseMethod("join_overlap_within_left")
+}
 
+join_overlap_within_left.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
+  find_overlaps_within(x,y,maxgap, minoverlap,suffix)
+}
 
+join_overlap_within_left.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
+  find_overlaps_within(x,y,maxgap, minoverlap,suffix)
+}
