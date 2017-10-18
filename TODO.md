@@ -2,6 +2,7 @@ high to low priority
 
 - [ ] `nranges` method for grouping
 - [ ] find_overlaps should allow grouping
+- [ ] overlaps directed methods
 - [ ] sorting methods (i.e. `arrange`)
 - [ ] update select method to use tidyselect::vars_select
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
