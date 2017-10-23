@@ -8,13 +8,13 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     classes GRanges and SummarizedExperiment. By providing a grammatical
     and consistent way of manipulating these classes their accessiblity for new
     Bioconductor users is hopefully increased.
-Depends: 
+Depends:
   R (>= 3.4.0),
   methods,
   BiocGenerics,
   GenomicRanges (>= 1.28.4),
   IRanges
-Imports: 
+Imports:
   dplyr, 
   rlang, 
   magrittr,
@@ -28,6 +28,7 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

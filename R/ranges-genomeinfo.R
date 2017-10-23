@@ -14,9 +14,10 @@
 #' @export
 genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_circular = NULL) {
 
-  seqlengths <- ifelse(length(seqlengths) == 0, NA, seqlengths)
-  is_circular <- ifelse(length(is_circular) == 0, NA, is_circular)
-  genome <- ifelse(length(genome) == 0, NA, genome)
+  if (length(seqlengths) == 0L) seqlengths <- NA
+  if (length(is_circular) == 0L) is_circular <- NA
+  if (length(genome) == 0L) genome <- NA
+
   seqinfo_res <- Seqinfo(seqnames, seqlengths, is_circular, genome)
   get_genome_info(seqinfo_res)
 
