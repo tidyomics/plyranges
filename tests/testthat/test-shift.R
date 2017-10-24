@@ -1,6 +1,5 @@
 # test-shift.R
 # Adapted from HelloRanges tests.
-
 context("shift")
 stopifnot(requireNamespace("HelloRanges"))
 oldwd <- getwd()
