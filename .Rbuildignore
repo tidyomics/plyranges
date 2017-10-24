@@ -6,3 +6,4 @@ examples/
 .travis.yml
 notes/
 TODO.md
+^codecov\.yml$

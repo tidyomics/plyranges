@@ -1,7 +1,7 @@
 # test-coverage.R
+# adapted from HelloRanges tests
 context("coverage")
 stopifnot(requireNamespace("HelloRanges"))
-
 oldwd <- getwd()
 setwd(system.file("unitTests", "data", "genomecov", package="HelloRanges"))
 
