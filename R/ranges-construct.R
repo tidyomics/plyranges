@@ -12,13 +12,21 @@
 #' object. By default other columns in .data are placed into the mcols (
 #' metadata columns) slot of the returned object.
 #'
-#' @return a \link[IRanges]{Ranges} object.
+#' @return a \link[IRanges]{Ranges} or a \link[GenomicRanges]{GRanges} object.
 #' @seealso \link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
 #'
 #' @importFrom rlang quos eval_tidy
 #'
 #' @examples
 #' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0))
+#' Ranges(df)
+#'
+#' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0), strand = "+")
+#' # will return an IRanges object
+#' Ranges(df)
+#'
+#' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0),
+#' strand = "+", seqnames = "chr1")
 #' Ranges(df)
 #'
 #' @export
