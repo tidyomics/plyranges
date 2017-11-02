@@ -1,5 +1,5 @@
 # test-construction.R
-context("Ranges consturction")
+context("Ranges construction")
 
 test_that("invalid data.frame call throws an error", {
   expect_error(Ranges(data.frame()))
