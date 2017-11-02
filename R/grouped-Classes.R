@@ -29,8 +29,6 @@ validGRangesGrouped <- function(object) {
           "not found in data.")
   }
 
-  TRUE
-
 }
 
 
@@ -76,9 +74,6 @@ validIRangesGrouped <- function(object) {
           paste(group_names[check_valid_groups], collapse = ","),
           "not found in data.")
   }
-
-  TRUE
-
 }
 
 setValidity("IRangesGrouped", validIRangesGrouped)

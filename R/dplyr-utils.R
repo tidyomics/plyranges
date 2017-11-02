@@ -13,6 +13,12 @@ dplyr::group_by
 #'@export
 dplyr::groups
 
+#'@export
+dplyr::ungroup
+
+#'@export
+dplyr::group_vars
+
 #' @export
 dplyr::mutate
 
