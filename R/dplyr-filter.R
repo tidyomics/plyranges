@@ -36,7 +36,7 @@ filter_rng <- function(.data, expr) {
 #' @importFrom S4Vectors runValue endoapply
 #' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
 #' @seealso \code{\link[dplyr]{filter}}
-#' @method filter GRanges
+#' @method filter GenomicRanges
 #' @name filter-ranges
 #' @rdname filter-ranges
 #'
@@ -50,15 +50,15 @@ filter_rng <- function(.data, expr) {
 #' rng %>% group_by(strand) %>% filter(gc > mean(gc))
 #'
 #' @export
-filter.GRanges <- function(.data, expr) {
+filter.GenomicRanges <- function(.data, expr) {
   expr <- enquo(expr)
   filter_rng(.data, expr)
 }
 
 #' @rdname filter-ranges
-#' @method filter IRanges
+#' @method filter Ranges
 #' @export
-filter.IRanges <- function(.data, expr) {
+filter.Ranges <- function(.data, expr) {
 
   expr <- enquo(expr)
   filter_rng(.data, expr)

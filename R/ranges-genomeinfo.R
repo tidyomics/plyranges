@@ -10,7 +10,7 @@
 #' @param is_circular An optional logical vector indicating whether a sequence is ciruclar.
 #'
 #' @return a GRanges object
-#' @importFrom GenomeInfoDb Seqinfo
+#' @importFrom GenomeInfoDb Seqinfo seqnames seqlengths isCircular genome seqinfo
 #' @export
 genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_circular = NULL) {
 

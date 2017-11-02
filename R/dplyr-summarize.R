@@ -24,8 +24,10 @@ summarize_rng <- function(.data, ...) {
 #'
 #' @return a \link[tibble]{tibble}
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr summarize
-#' @importFrom dplyr summarise
+#' @importFrom dplyr summarise summarize
+#' @method summarise GenomicRanges
+#' @rdname summarise-ranges
+#' @export
 summarise.GenomicRanges <- function(.data, ...) {
 
   dots <- quos(...)
@@ -33,6 +35,9 @@ summarise.GenomicRanges <- function(.data, ...) {
 
 }
 
+#' @method summarise Ranges
+#' @rdname summarise-ranges
+#' @export
 summarise.Ranges <- function(.data, ...) {
 
   dots <- quos(...)
@@ -42,6 +47,9 @@ summarise.Ranges <- function(.data, ...) {
 
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
+#' @method summarise GRangesGrouped
+#' @rdname summarise-ranges
+#' @export
 summarise.GRangesGrouped <- function(.data, ...) {
 
   dots <- quos(...)

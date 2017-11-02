@@ -16,6 +16,10 @@
 #' @seealso \link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
 #'
 #' @importFrom rlang quos eval_tidy
+#' @importFrom S4Vectors mcols metadata
+#' @importFrom BiocGenerics start end width strand score
+#' @importFrom GenomeInfoDb seqnames
+
 #'
 #' @examples
 #' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0))
