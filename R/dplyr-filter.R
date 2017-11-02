@@ -26,7 +26,7 @@ filter_rng <- function(.data, expr) {
 #' is only valid for a single logical expression. For any Ranges objects
 #' filter can act on all core components of the class including start, end,
 #' width (for IRanges) or seqnames and strand (for GRanges) in addition to
-#' metadaat columns. If the Ranges object is grouped filter will act on each
+#' metadata columns. If the Ranges object is grouped filter will act on each
 #' parition of the data.
 #'
 #' @return a Ranges object
@@ -39,6 +39,16 @@ filter_rng <- function(.data, expr) {
 #' @method filter GRanges
 #' @name filter-ranges
 #' @rdname filter-ranges
+#'
+#' @examples
+#' set.seed(100)
+#' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
+#' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
+#' rng <- Ranges(df)
+#' rng %>% filter(strand == "+")
+#' rng %>% filter(gc > mean(gc))
+#' rng %>% group_by(strand) %>% filter(gc > mean(gc))
+#'
 #' @export
 filter.GRanges <- function(.data, expr) {
   expr <- enquo(expr)
