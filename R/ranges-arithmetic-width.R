@@ -23,6 +23,7 @@
 #' set_width(anchor_5p(grng), 10)
 set_width <- function(x, width) UseMethod("set_width")
 
+#' @export
 set_width.Ranges <- function(x, width = 0L) {
 
   anchor <- anchors(x)
@@ -48,6 +49,7 @@ set_width.Ranges <- function(x, width = 0L) {
 }
 
 
+#' @export
 set_width.GenomicRanges <- function(x, width = 0L) {
   anchor <- anchors(x)
   if (length(anchor) == 0) {

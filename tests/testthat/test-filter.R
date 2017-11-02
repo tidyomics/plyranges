@@ -18,6 +18,8 @@ gr_gfilter <- c(gr0[strand(gr0) == "+" & score(gr0) > 3],
                 gr0[strand(gr0) == "-" & score(gr0) > 8],
                 gr0[strand(gr0) == "*" & score(gr0) > 4])
 test_that("grouped filter checks", {
-  expect_identical(gr0 %>% group_by(score) %>% filter(score > mean(score)),
+  expect_identical(gr0 %>% group_by(strand) %>%
+                     filter(score > mean(score)) %>%
+                     ungroup(),
                    gr_gfilter)
 })
