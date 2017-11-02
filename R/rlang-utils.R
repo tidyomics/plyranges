@@ -4,8 +4,6 @@
 rlang::enquo
 
 #' @export
-rlang::quo
-#' @export
 rlang::quos
 
 #' @export

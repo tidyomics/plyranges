@@ -25,7 +25,7 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 
 #' Add annotation information to a Ranges object
 #'
-#' @param .data
+#' @param .data A Ranges object to annotate
 #' @param genome A character vector of length one indicating the genome build.
 #' @param seqnames A character vector containing the name of sequences.
 #' @param seqlengths An optional integer vector containg the lengths of sequences.

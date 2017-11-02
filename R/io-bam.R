@@ -64,7 +64,7 @@ bam_flag_reads <- function(is_paired = NULL,
 #' @param tags a character vector of tags (optional fields associated
 #' with each read), these are two letter codes.
 #' @seealso \code{\link[Rsamtools]{ScanBamParam}}
-#' @importFrom Rsamtools scanBamParam
+#' @importFrom Rsamtools ScanBamParam
 #' @export
 bam_select <- function(fields = NULL, tags = NULL) {
 
@@ -106,7 +106,7 @@ bam_select <- function(fields = NULL, tags = NULL) {
 #' read_bam will select reads that are mapped. This function is wrapper to
 #' the \code{readGAlignment} functions in \pkg{GenomicAlignemnts}.
 #' @seealso \code{\link[GenomicAlignments]{readGAlignments}}
-#' @importFrom Rsamtools bamFlag bamWhich scanBamParam
+#' @importFrom Rsamtools bamFlag bamWhich ScanBamParam
 #' @importFrom GenomicAlignments readGAlignments readGAlignmentPairs
 #' @export
 read_bam <- function(file, index = file,

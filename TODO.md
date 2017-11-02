@@ -2,7 +2,6 @@ high to low priority
 
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
   - [ ] test-select
-  - [ ] test-grouped classes
   - [ ] test-mutate
   - [ ] test-summarise
   - [ ] test-set-width
