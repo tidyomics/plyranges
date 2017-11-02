@@ -115,6 +115,9 @@ groups.IRangesGrouped <- function(x) { x@groups }
 group_vars.IRangesGrouped <- function(x) { as.character(unlist(x@groups)) }
 
 # returns groups as split as GRangesList or RangesList
+#' @importFrom methods as
+#' @importFrom S4Vectors Rle
+#' @importFrom rlang eval_bare
 split_groups <- function(.data_grouped, populate_mcols = FALSE, drop = TRUE) {
   groups <- groups(.data_grouped)
   rng_env <- as.env(.data_grouped, parent.frame())

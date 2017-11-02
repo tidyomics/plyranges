@@ -25,6 +25,7 @@ mutate_mcols <- function(.data, .mutated) {
   .data
 }
 
+#' @importFrom methods selectMethod
 mutate_core <- function(.data, .mutated) {
   all_cols <- names(.mutated)
   core_cols <- all_cols[all_cols %in%
@@ -66,6 +67,7 @@ mutate_rng <- function(.data, dots) {
 #' @importFrom dplyr mutate
 #' @rdname mutate-ranges
 #' @return a Ranges object
+#' @method mutate GenomicRanges
 #' @export
 mutate.GenomicRanges <- function(.data, ...) {
   dots <- quos(...)
@@ -74,6 +76,7 @@ mutate.GenomicRanges <- function(.data, ...) {
 }
 
 #' @rdname mutate-ranges
+#' @method mutate Ranges
 #' @export
 mutate.Ranges <- function(.data, ...) {
   dots <- quos(...)
@@ -81,6 +84,7 @@ mutate.Ranges <- function(.data, ...) {
 }
 
 #' @rdname mutate-ranges
+#' @method mutate GRangesGrouped
 #' @export
 mutate.GRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
@@ -89,6 +93,7 @@ mutate.GRangesGrouped <- function(.data, ...) {
 }
 
 #' @rdname mutate-ranges
+#' @method mutate IRangesGrouped
 #' @export
 mutate.IRangesGrouped <- function(.data, ...) {
   dots <- quos(...)

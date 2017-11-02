@@ -44,10 +44,10 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 #' @description This is a lightweight wrapper to the export family
 #' of functions defined in \pkg{rtracklayer}.
 #'
-#' @importFrom rtracklayer export.bed
+#' @importFrom rtracklayer export.bw
 #' @seealso \code{\link[rtracklayer]{BigWigFile}}
 #' @export
 #' @rdname bigwig-files-write
-write_bed <- function(x, path) {
-  export.bed(x, path)
+write_bigwig <- function(x, path) {
+  export.bw(x, path)
 }

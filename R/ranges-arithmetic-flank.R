@@ -8,6 +8,7 @@
 #' length as x. The width can be negative in which case the flanking region
 #' is reversed.
 #' @seealso \code{\link[IRanges]{flank}}
+#' @importFrom IRanges flank
 #' @rdname flank-ranges
 #' @export
 flank_left <- function(x, width = 0L) {

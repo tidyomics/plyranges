@@ -18,10 +18,11 @@
 #'                          strand = c("+", "-", "-", "+", "+", "-", "+"),
 #'                          start=c(2:-1, 13:15),
 #'                          width=c(0:3, 2:0)))
-#' strech(anchor_3p(grng), 10)
-#' strech(anchor_5p(grng), 10)
+#' stretch(anchor_3p(grng), 10)
+#' stretch(anchor_5p(grng), 10)
 stretch <- function(x, extend) UseMethod("stretch")
 
+#' @export
 stretch.Ranges <- function(x, extend = 0L) {
 
   anchor <- metadata(x)[["anchor"]]
@@ -46,7 +47,7 @@ stretch.Ranges <- function(x, extend = 0L) {
   return(x)
 }
 
-
+#' @export
 stretch.GenomicRanges <- function(x, extend = 0L) {
   anchor <- metadata(x)[["anchor"]]
   if (length(anchor) == 0) {

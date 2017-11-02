@@ -53,6 +53,6 @@ read_narrowpeaks <- function(file, genome_info = NULL,
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
 #' @rdname bedxy-files-read
-write_bed <- function(x, path, col_names) {
+write_narrowpeaks <- function(x, path, col_names) {
   export.bed(x, path, expNames = col_names)
 }

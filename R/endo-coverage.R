@@ -34,7 +34,7 @@ set_coverage.GRangesGrouped <- function(x, shift = 0L, width = NULL, weight = 1L
 }
 
 set_coverage.Ranges <- function(x, shift = 0L, width = NULL, weight = 1L) {
-  cvg <- coverage(x, shift, width, weight, method)
+  cvg <- coverage(x, shift, width, weight, method = "auto")
   rng <- ranges(cvg)
   mcols(rng)[["score"]] <- runValue(cvg)
   rng
