@@ -19,8 +19,11 @@ Imports:
   rlang, 
   magrittr,
   tibble,
+  tidyr,
+  tidyselect,
   rtracklayer,
   GenomicAlignments,
+  GenomeInfoDb,
   Rsamtools,
   S4Vectors
 biocViews: Infrastructure, Data Representation, WorkflowStep
