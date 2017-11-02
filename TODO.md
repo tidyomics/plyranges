@@ -8,7 +8,8 @@ high to low priority
   - [ ] test-stretch
   - [ ] test-joins
   - [ ] test-nest
-- [ ] include examples in docs
+- [ ] include examples in docs for all exported functions
+- [ ] fix errors and warnings in R CMD CHECK
 - [ ] vignette examples for all function suites
 - [ ] paper outline
 - [ ] `nranges` method for grouping
