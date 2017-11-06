@@ -7,8 +7,8 @@ cache: packages
 sudo: false
 
 r:
-  - bioc-devel
   - bioc-release
+  - bioc-devel
 
 bioc_packages:
   - HelloRanges

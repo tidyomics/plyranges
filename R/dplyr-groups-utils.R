@@ -1,4 +1,7 @@
 #' Split a Grouped Ranges object into a RangesList
+#' @param .data_grouped A grouped ranges object
+#' @param populate_mcols add grouping to metadata slot of RangesList
+#' @param drop drop unused group levels
 #'
 #' @importFrom methods as
 #' @importFrom S4Vectors Rle
