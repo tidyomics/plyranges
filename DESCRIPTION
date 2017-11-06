@@ -33,6 +33,7 @@ LazyData: true
 Suggests: knitr,
     rmarkdown,
     testthat,
+    HelloRanges,
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

@@ -1,7 +1,6 @@
 high to low priority
 
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
-  - [ ] test-select
   - [ ] test-mutate
   - [ ] test-summarise
   - [ ] test-set-width
@@ -17,7 +16,6 @@ high to low priority
 - [ ] overlaps directed methods
 - [ ] reduce/disjoin methods
 - [ ] sorting methods (i.e. `arrange`)
-- [ ] update select method to use tidyselect::vars_select
 - [ ] binary comparison operators
 - [ ] add tidyselect to imports
 

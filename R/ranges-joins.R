@@ -91,7 +91,24 @@ join_inner <- function(x, y, by = NULL) {
 #' @importFrom GenomicRanges mcols
 #' @importFrom S4Vectors merge
 #' @importFrom dplyr inner_join
+#'
+#' @examples
+#' set.seed(100)
+#' df_a <- data.frame(start = 1:10, width = 5,
+#'                  id = rep(letters[1:2], 5),
+#'                  id2 = sample(letters[1:2], 10, replace = TRUE))
+#' df_b <- data.frame(end = 5:14, width = 10,
+#'                    id = sort(rep(letters[1:2], 5)),
+#'                    z = rnorm(10))
+#' rng_a <- Ranges(df_a)
+#' rng_b <- Ranges(df_b)
+#' inner_join(rng_a, rng_b, by = "id")
+#' inner_join(rng_a, rng_b, by = c("id2" = "id"))
+#' left_join(rng_a, rng_b, by = "id")
+#' left_join(rng_b, rng_a, by = "id")
 #' @export
+#'
+#'
 inner_join.Ranges <- function(x, y, by = NULL) {
   stopifnot(is_ranges(y))
   join_inner(x, y, by)

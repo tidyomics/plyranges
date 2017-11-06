@@ -11,6 +11,7 @@ r:
   - bioc-release
 
 bioc_packages:
+  - HelloRanges
   - HelloRangesData
 
 r_packages:
