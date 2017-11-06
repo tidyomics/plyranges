@@ -61,3 +61,13 @@ summarise.GRangesGrouped <- function(.data, ...) {
   bind_cols(groups_df, groups_summary)
 
 }
+
+summarise.IRangesGrouped <- function(.data, ...) {
+  dots <- quos(...)
+  split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
+  groups_summary <- lapply(split_ranges, summarize_rng, dots)
+  groups_summary <- lapply(groups_summary, as_tibble)
+  groups_df <- as_tibble(as.data.frame(mcols(split_ranges)))
+  groups_summary <- bind_rows(groups_summary)
+  bind_cols(groups_df, groups_summary)
+}
