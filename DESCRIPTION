@@ -34,6 +34,7 @@ Suggests: knitr,
     rmarkdown,
     testthat,
     HelloRanges,
+    HelloRangesData,
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
