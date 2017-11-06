@@ -7,3 +7,4 @@ examples/
 notes/
 TODO.md
 ^codecov\.yml$
+Makefile
