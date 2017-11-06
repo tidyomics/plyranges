@@ -3,30 +3,24 @@ summarize_rng <- function(.data, ...) {
   overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
   overscope_eval_update(overscope, dots)
-  # summarised <- vector("list", length(dots))
-  # names(summarised) <- names(dots)
-  #
-  # for (i in seq_along(summarised)) {
-  #   summarised[[i]] <- overscope_eval_next(overscope, dots[[i]])
-  #   # sometimes we want to compute on previously constructed columns
-  #   # we can do this by binding the evaluated expression to
-  #   # the overscope environment
-  #   new_col <- names(dots)[[i]]
-  #   rlang::env_bind(overscope$.env, !!new_col := summarised[[i]])
-  # }
-  #summarised
 }
 
-#' Aggregate a GenomicRanges
+#' Aggregate a Ranges object
 #'
-#' @param .data a GRanges object
+#' @param .data a Ranges object
 #' @param ... Name-value pairs of summary functions.
 #'
 #' @return a \link[tibble]{tibble}
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr summarise summarize
 #' @method summarise GenomicRanges
-#' @rdname summarise-ranges
+#' @rdname ranges-summarise
+#' @examples
+#' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
+#' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
+#' rng <- Ranges(df)
+#' rng %>% summarise(gc = mean(gc))
+#' rng %>% group_by(strand) %>% summarise(gc = mean(gc))
 #' @export
 summarise.GenomicRanges <- function(.data, ...) {
 
@@ -36,7 +30,7 @@ summarise.GenomicRanges <- function(.data, ...) {
 }
 
 #' @method summarise Ranges
-#' @rdname summarise-ranges
+#' @rdname ranges-summarise
 #' @export
 summarise.Ranges <- function(.data, ...) {
 
@@ -48,7 +42,7 @@ summarise.Ranges <- function(.data, ...) {
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
 #' @method summarise GRangesGrouped
-#' @rdname summarise-ranges
+#' @rdname ranges-summarise
 #' @export
 summarise.GRangesGrouped <- function(.data, ...) {
 
@@ -62,6 +56,9 @@ summarise.GRangesGrouped <- function(.data, ...) {
 
 }
 
+#' @method summarise IRangesGrouped
+#' @rdname ranges-summarise
+#' @export
 summarise.IRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
   split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
