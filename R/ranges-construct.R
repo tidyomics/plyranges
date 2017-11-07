@@ -46,6 +46,7 @@ Ranges.default <- function(.data, ..., keep_mcols = TRUE) {
 Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
 
   dots <- quos(...)
+
   col_names <- names(.data)
 
   if (!is_empty_quos(dots)) {
@@ -55,14 +56,40 @@ Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
       stop("Named arguments must be start, end, width, seqnames, strand",
            .call = FALSE)
     }
-    rd <- eval_tidy(dots, .data)
+    rd <- lapply(dots, eval_tidy, data = .data)
   } else {
     rd <- NULL
   }
 
-  core_i <- quos(start = .data$start, end = .data$end, width = .data$width)
-  match_cols_i <- names(core_i) %in% col_names
-  match_dots_i <- names(core_i) %in% names(rd)
+  # IRanges constructor generate quos for core parts of class
+  core_ir <- quos(start = .data$start, end = .data$end, width = .data$width)
+
+  ir <- irng_construct(.data, rd, col_names, core_ir)
+
+  # Creating a GRanges object requires a seqnames column
+  core_gr <- quos(seqnames = .data$seqnames, strand = .data$strand)
+  ir <- grng_construct(.data, rd, ir, col_names, core_gr)
+
+  if (keep_mcols) {
+    old_cols <- unlist(lapply(dots, quo_name))
+    remain_cols <- !(col_names %in%
+                       c(old_cols, names(core_ir), names(core_gr)))
+
+    if (length(names(mcols(ir))) == 0) {
+      mcols(ir) <- .data[, remain_cols]
+      names(mcols(ir)) <- col_names[remain_cols]
+    } else {
+      mcols(ir) <- cbind(mcols(ir), .data[, remain_cols])
+      names(mcols(ir)) <- c(names(mcols(ir)), col_names[remain_cols])
+    }
+  }
+  ir
+}
+
+irng_construct <- function(.data, rd, col_names, core_ir) {
+
+  match_cols_i <- names(core_ir) %in% col_names
+  match_dots_i <- names(core_ir) %in% names(rd)
 
   if (sum(c(match_cols_i, match_dots_i)) < 2) {
     stop("Unable to construct IRanges from .data must have at least two of
@@ -70,12 +97,13 @@ Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
          call. = FALSE)
   } else {
     remain_cols <- match_cols_i & !match_dots_i
-    remain_core <- core_i[remain_cols]
+    remain_core <- core_ir[remain_cols]
     if (length(remain_core) > 0) {
-      ir <- c(eval_tidy(core_i[match_cols_i], .data),
-              rd[names(rd) %in% names(core_i)])
+      ir <- lapply(core_ir[match_cols_i], eval_tidy, data = .data)
+
+      ir <- c(ir, rd[names(rd) %in% names(core_ir)])
     } else {
-      ir <- rd[names(rd) %in% names(core_i)]
+      ir <- rd[names(rd) %in% names(core_ir)]
     }
 
     ir <- IRanges(start = ir[["start"]],
@@ -83,36 +111,40 @@ Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
                   width = ir[["width"]])
   }
 
-  # Creating a GRanges object requires a seqnames column
-  core_g <- quos(seqnames = .data$seqnames, strand = .data$strand)
-  match_core_g <- names(core_g) %in% col_names
-  match_dots_g <- names(core_g) %in% names(rd)
+  return(ir)
+
+}
+
+grng_construct <- function(.data, rd, ir, col_names, core_gr) {
+
+  match_core_g <- names(core_gr) %in% col_names
+  match_dots_g <- names(core_gr) %in% names(rd)
 
   if (all(match_dots_g)) {
     ir <- GRanges(seqnames = rd[["seqnames"]],
                   ranges = ir,
                   strand = rd[["strand"]])
   } else if (all(match_core_g)) {
-    gr <- eval_tidy(core_g, .data)
+    gr <- lapply(core_gr, eval_tidy, data = .data)
     ir <- GRanges(seqnames = gr[["seqnames"]],
                   ranges = ir,
                   strand = gr[["strand"]])
   } else if (match_dots_g[1] & match_core_g[2]) {
     ir <- GRanges(seqnames = rd[["seqnames"]],
                   ranges = ir,
-                  strand = unlist(eval_tidy(core_g[2], .data)))
+                  strand = unlist(eval_tidy(core_gr[[2]], .data)))
   } else if (match_core_g[1] & match_dots_g[2]) {
-    ir <- GRanges(seqnames = unlist(eval_tidy(core_g[1], .data)),
+    ir <- GRanges(seqnames = unlist(eval_tidy(core_gr[[1]], .data)),
                   ranges = ir,
                   strand = rd[["strand"]])
   } else if (any(match_core_g)) {
     if (match_core_g[1]) {
-      ir <- GRanges(seqnames = unlist(eval_tidy(core_g[1], .data)),
+      ir <- GRanges(seqnames = unlist(eval_tidy(core_gr[[1]], .data)),
                     ranges = ir)
     }
 
     else if (match_core_g[2]) {
-      mcols(ir) <- unlist(eval_tidy(core_g[2], .data))
+      mcols(ir) <- unlist(eval_tidy(core_gr[[2]], .data))
       names(mcols(ir)) <- "strand"
     }
 
@@ -128,18 +160,6 @@ Ranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
     }
   }
 
-  if (keep_mcols) {
-    old_cols <- unlist(lapply(dots, quo_name))
-    remain_cols <- !(col_names %in%
-                       c(old_cols, names(core_i), names(core_g)))
+  return(ir)
 
-    if (length(names(mcols(ir))) == 0) {
-      mcols(ir) <- .data[, remain_cols]
-      names(mcols(ir)) <- col_names[remain_cols]
-    } else {
-      mcols(ir) <- cbind(mcols(ir), .data[, remain_cols])
-      names(mcols(ir)) <- c(names(mcols(ir)), col_names[remain_cols])
-    }
-  }
-  ir
 }
