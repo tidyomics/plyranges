@@ -31,6 +31,7 @@ License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 Suggests: knitr,
+    BiocStyle,
     rmarkdown,
     testthat,
     HelloRanges,

@@ -1,4 +1,3 @@
-# constructor-ranges.R
 #' Contstruct a I/GRanges object from a tibble or data.frame
 #'
 #' @param .data the object to construct a Ranges object from

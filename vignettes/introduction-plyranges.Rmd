@@ -1,0 +1,124 @@
+---
+title: "Introduction the plyranges package"
+author: "Stuart Lee"
+package: plyranges
+date: "`r Sys.Date()`"
+output: 
+  BiocStyle::html_document:
+toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction
+
+The `plyranges` package provides a 
+[fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for 
+performing common genomic data analysis tasks. One goal of this package is to 
+decrease the learning curve for Bioconductor and S4 classes 
+(especially for new users) by providing a consistent interface to 
+common classes, `IRanges` and `GRanges` classes. 
+
+This document provides an overview of some of the features of the `plyranges`
+grammar for analysing genomic data. I give a brief introduction
+to the `Ranges` and `GenomicRanges` classes and then detail each feature of
+the `plyranges` library: construction, arithmetic, restriction, summarisation,
+joins, and data import/output.
+
+# Ranges revisted
+
+`Ranges` objects can either represent intervals of integers as `IRanges`
+(which have start, end and width attributes)
+or represent genomic intervals (which have additional attributes, sequence name,
+and strand) as `GRanges`. In addition, both types of Ranges can store information
+about their intervals as metadata columns (for example GC content 
+over a genomic interval). 
+
+`Ranges` objects follow the tidy data principle: each row
+of a Ranges object corresponds to an interval, while each column will represent
+a variable about that interval, and generally each object will represent a
+single unit of observation (like gene annotations). 
+
+Consequently, `Ranges` objects provide a powerful representation for reasoning
+about genomic data. In this vignette, you will learn more about `Ranges` objects
+and how via grouping, restriction and summarisation you can perform common data
+tasks. 
+
+
+# Constructing Ranges
+To construct an `IRanges` we require there are at least two columns that represent at either a 
+starting coordinate, finishing coordinate or the width of the interval. To
+construct a `GRanges` we require a column that represents that sequence name (
+contig or chromosome id), and an optional column to represent the strandedness
+of an interval. 
+
+```{r}
+library(plyranges)
+set.seed(100)
+df <- data.frame(start=c(2:-1, 13:15), 
+                 width=c(0:3, 2:0))
+
+# produces IRanges
+rng <- df %>% Ranges()
+rng
+
+# seqname is required for GRanges, metadata is automatically kept
+grng <- df %>% 
+  mutate(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
+         strand = sample(c("+", "-"), 7, replace = TRUE),
+         gc = runif(7)) %>% 
+  Ranges()
+
+grng
+```
+
+# Arithmetic on Ranges
+
+Sometimes you want to modify a genomic interval by altering the width of the 
+interval while leaving the start, end or midpoint of the coordinates unaltered. 
+This is achieved with the `set_width` verb along with `anchor_*` adverbs.
+```{r}
+set_width(rng, 100)
+set_width(anchor_start(rng), 100)
+set_width(anchor_end(rng), 100)
+set_width(anchor_center(rng), 100)
+set_width(anchor_3p(grng), 100) # leave negative strand fixed
+set_width(anchor_5p(grng), 100) # leave positve strand fixed
+```
+
+Similarly, you can modify the width of an interval using the `stretch` verb.
+Without anchoring, this function will extend the interval in either direction
+by an integer amount. With anchoring, either the start, end or midpoint are
+preserved. 
+
+```{r}
+rng2 <- stretch(anchor_center(rng), 10)
+rng2
+stretch(anchor_end(rng2), 10)
+stretch(anchor_start(rng2), 10)
+stretch(anchor_3p(grng), 10)
+stretch(anchor_5p(grng), 10)
+```
+
+`Ranges` can be shifted left or right. If strand information is available 
+we can also shift upstream or downstream. 
+
+```{r}
+shift_left(rng, 10)
+shift_right(rng, 10)
+shift_upstream(grng, 10)
+shift_downstream(grng, 10)
+```
+
+# Grouping Ranges
+
+# Restricting Ranges
+
+# Joins, or another way at looking at overlaps between Ranges
+
+# Summarising Ranges
+
+# Data Import/Output
+
