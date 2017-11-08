@@ -1,7 +1,6 @@
 high to low priority
 
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
-  - [ ] test-stretch
   - [ ] test-overlaps
   - [ ] test-nest
 - [ ] include examples in docs for all exported functions
