@@ -1,7 +1,6 @@
 high to low priority
 
 - [ ] gather tests from HelloRanges/IRanges/GRanges and port to plyranges
-  - [ ] test-set-width
   - [ ] test-stretch
   - [ ] test-overlaps
   - [ ] test-nest
