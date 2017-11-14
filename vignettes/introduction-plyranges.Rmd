@@ -32,12 +32,12 @@ joins, and data import/output.
 `Ranges` objects can either represent intervals of integers as `IRanges`
 (which have start, end and width attributes)
 or represent genomic intervals (which have additional attributes, sequence name,
-and strand) as `GRanges`. In addition, both types of Ranges can store information
+and strand) as `GRanges`. In addition, both types of `Ranges` can store information
 about their intervals as metadata columns (for example GC content 
 over a genomic interval). 
 
 `Ranges` objects follow the tidy data principle: each row
-of a Ranges object corresponds to an interval, while each column will represent
+of a `Ranges` object corresponds to an interval, while each column will represent
 a variable about that interval, and generally each object will represent a
 single unit of observation (like gene annotations). 
 
@@ -102,7 +102,7 @@ stretch(anchor_3p(grng), 10)
 stretch(anchor_5p(grng), 10)
 ```
 
-`Ranges` can be shifted left or right. If strand information is available 
+`*Ranges` can be shifted left or right. If strand information is available 
 we can also shift upstream or downstream. 
 
 ```{r}
@@ -114,9 +114,10 @@ shift_downstream(grng, 10)
 
 # Grouping Ranges
 
-`plyranges` introduces the concept of _Grouped*Ranges_, this is a similiar idea
-to the grouped data.frame in dplyr. Note that grouping does not change the 
-structure of a Ranges object only how certain functions act on it.
+`plyranges` introduces a new class of `Ranges` called `RangesGrouped`, 
+this is a similiar idea to the grouped `data.frame\tibble` in `dplyr`. 
+Note that grouping does not change the 
+structure of a `Ranges` object only how certain functions act on it.
 
 Grouping can act on either the core components or the metadata columns.
 
@@ -129,7 +130,8 @@ grng_by_strand
 # Restricting Ranges
 
 The verb `filter` can be used to restrict rows in the Ranges.
-
+Note that grouping will cause the `filter` to act within each group 
+of the data.
 ```{r}
 grng %>% filter(gc < 0.3)
 # filtering by group 
@@ -147,15 +149,15 @@ ir1 <- data.frame(start = 2:6, width = 3:7) %>%
 ir0
 ir1
 ir0 %>% filter_by_overlaps(ir1)
-ir0 %>% filter_by_non_overlaps(ir1) 
+#ir0 %>% filter_by_non_overlaps(ir1) 
 ```
 
 # Joins, or another way at looking at overlaps between Ranges
 
-We can think about finding overlaps as a type of join between two _*Ranges_
+We can think about finding overlaps as a type of join between two `*Ranges`
 where we are using the intervals as keys. Of most use are the 
 `join_overlap_inner` and `join_overlap_left` functions. The former will return
-a Ranges object where the start, end, and width coordinates correspond to the amount
+a `Ranges` object where the start, end, and width coordinates correspond to the amount
 of  any overlap. By default, the width of the input ranges is added as metadata.
 This allows downstreaming filtering by the amount of overlap.
 
@@ -200,7 +202,7 @@ grp_by_olap %>%
   mutate(n_overlaps = length(query))
 ```
 
-Of course we can also add overlap counts via the `count_overlaps`.
+Of course we can also add overlap counts via the `count_overlaps` function.
 
 ```{r}
 ir0 %>%
