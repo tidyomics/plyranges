@@ -15,13 +15,13 @@ count_overlaps <- function(x, y, maxgap, minoverlap) {
 
 #' @rdname ranges-count-overlaps.Rd
 #' @export
-count_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
+count_overlaps.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "any")
 }
 
 #' @rdname ranges-count-overlaps.Rd
 #' @export
-count_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
+count_overlaps.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "any", ignore.strand = TRUE)
 }
 

@@ -51,7 +51,7 @@ join_overlap_inner <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_inner.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L,
+join_overlap_inner.Ranges <- function(x, y, maxgap = -1L, minoverlap = 1L,
                                       suffix = c(".x", ".y")) {
   pairs <- findOverlapPairs(x, y,
                             type = "any",
@@ -68,7 +68,7 @@ join_overlap_inner.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L,
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_inner.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L,
+join_overlap_inner.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                              suffix = c(".x", ".y")) {
   pairs <- findOverlapPairs(x, y,
                             type = "any",
@@ -93,7 +93,7 @@ join_overlap_within_inner <- function(x, y, maxgap, minoverlap,
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_within_inner.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L,
+join_overlap_within_inner.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                              suffix = c(".x", ".y")) {
   pairs <- findOverlapPairs(x, y,
                             type = "within",
@@ -106,7 +106,7 @@ join_overlap_within_inner.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L,
   inner_rng
 }
 
-join_overlap_within_inner.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L,
+join_overlap_within_inner.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                              suffix = c(".x", ".y")) {
   pairs <- findOverlapPairs(x, y,
                             type = "within",
@@ -128,13 +128,13 @@ join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) 
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_left.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
+join_overlap_left.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   find_overlaps(x,y,maxgap, minoverlap,suffix)
 }
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_left.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
+join_overlap_left.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   find_overlaps(x,y,maxgap, minoverlap,suffix)
 }
 
@@ -146,12 +146,12 @@ join_overlap_within_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", 
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_within_left.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
+join_overlap_within_left.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   find_overlaps_within(x,y,maxgap, minoverlap,suffix)
 }
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_within_left.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap = 1L, suffix = c(".x", ".y")) {
+join_overlap_within_left.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   find_overlaps_within(x,y,maxgap, minoverlap,suffix)
 }
