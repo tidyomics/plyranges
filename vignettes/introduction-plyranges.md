@@ -579,7 +579,7 @@ sessionInfo()
     ## Running under: macOS Sierra 10.12.6
     ## 
     ## Matrix products: default
-    ## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
+    ## BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
     ## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
     ## 
     ## locale:
@@ -590,30 +590,36 @@ sessionInfo()
     ## [8] methods   base     
     ## 
     ## other attached packages:
-    ## [1] plyranges_0.1.0      GenomicRanges_1.30.0 GenomeInfoDb_1.14.0 
-    ## [4] IRanges_2.12.0       S4Vectors_0.16.0     BiocGenerics_0.24.0 
-    ## [7] BiocStyle_2.6.0     
+    ## [1] plyranges_0.1.0      BiocStyle_2.6.0      GenomicRanges_1.30.0
+    ## [4] GenomeInfoDb_1.14.0  IRanges_2.12.0       S4Vectors_0.16.0    
+    ## [7] BiocGenerics_0.24.0 
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_0.12.13               compiler_3.4.2            
-    ##  [3] XVector_0.18.0             bindr_0.1                 
-    ##  [5] bitops_1.0-6               tools_3.4.2               
-    ##  [7] zlibbioc_1.24.0            digest_0.6.12             
-    ##  [9] tibble_1.3.4               evaluate_0.10.1           
-    ## [11] lattice_0.20-35            pkgconfig_2.0.1           
-    ## [13] rlang_0.1.4                Matrix_1.2-11             
-    ## [15] DelayedArray_0.4.1         yaml_2.1.14               
-    ## [17] bindrcpp_0.2               GenomeInfoDbData_0.99.1   
-    ## [19] rtracklayer_1.38.0         stringr_1.2.0             
-    ## [21] dplyr_0.7.4                knitr_1.17                
-    ## [23] Biostrings_2.46.0          tidyselect_0.2.3          
-    ## [25] rprojroot_1.2              grid_3.4.2                
-    ## [27] glue_1.2.0                 Biobase_2.38.0            
-    ## [29] R6_2.2.2                   XML_3.98-1.9              
-    ## [31] BiocParallel_1.12.0        rmarkdown_1.7             
-    ## [33] purrr_0.2.4                tidyr_0.7.2               
-    ## [35] magrittr_1.5               backports_1.1.1           
-    ## [37] Rsamtools_1.30.0           htmltools_0.3.6           
-    ## [39] matrixStats_0.52.2         GenomicAlignments_1.14.0  
-    ## [41] assertthat_0.2.0           SummarizedExperiment_1.8.0
-    ## [43] stringi_1.1.5              RCurl_1.95-4.8
+    ##  [1] SummarizedExperiment_1.8.0 tidyselect_0.2.3          
+    ##  [3] purrr_0.2.4                lattice_0.20-35           
+    ##  [5] testthat_1.0.2             htmltools_0.3.6           
+    ##  [7] rtracklayer_1.38.0         yaml_2.1.14               
+    ##  [9] XML_3.98-1.9               rlang_0.1.4               
+    ## [11] glue_1.2.0                 withr_2.1.0               
+    ## [13] BiocParallel_1.12.0        bindrcpp_0.2              
+    ## [15] matrixStats_0.52.2         GenomeInfoDbData_0.99.1   
+    ## [17] bindr_0.1                  stringr_1.2.0             
+    ## [19] zlibbioc_1.24.0            Biostrings_2.46.0         
+    ## [21] commonmark_1.4             devtools_1.13.4           
+    ## [23] memoise_1.1.0              evaluate_0.10.1           
+    ## [25] Biobase_2.38.0             knitr_1.17                
+    ## [27] BiocInstaller_1.28.0       Rcpp_0.12.13              
+    ## [29] backports_1.1.1            DelayedArray_0.4.1        
+    ## [31] desc_1.1.1                 XVector_0.18.0            
+    ## [33] Rsamtools_1.30.0           digest_0.6.12             
+    ## [35] stringi_1.1.5              bookdown_0.5              
+    ## [37] dplyr_0.7.4                grid_3.4.2                
+    ## [39] rprojroot_1.2              tools_3.4.2               
+    ## [41] bitops_1.0-6               magrittr_1.5              
+    ## [43] RCurl_1.95-4.8             tibble_1.3.4              
+    ## [45] crayon_1.3.4               tidyr_0.7.2               
+    ## [47] pkgconfig_2.0.1            Matrix_1.2-11             
+    ## [49] xml2_1.1.1                 assertthat_0.2.0          
+    ## [51] rmarkdown_1.7              roxygen2_6.0.1            
+    ## [53] rstudioapi_0.7             R6_2.2.2                  
+    ## [55] GenomicAlignments_1.14.0   compiler_3.4.2

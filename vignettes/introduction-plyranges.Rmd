@@ -4,10 +4,10 @@ author: "Stuart Lee"
 package: plyranges
 date: "`r Sys.Date()`"
 output:
-  BiocStyle::md_document:
-    variant: markdown_github
   BiocStyle::html_document:
     toc_float: true
+  BiocStyle::md_document:
+    variant: markdown_github
 abstract: A fluent interface to `Ranges` classes.
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
