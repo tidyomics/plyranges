@@ -15,11 +15,11 @@ join_overlap_self <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_self")
 }
 
-join_overlap_self.Ranges <- function(x, maxgap = 0L, minoverlap = 1L) {
+join_overlap_self.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
-join_overlap_self.GenomicRanges <- function(x, maxgap = 0L, minoverlap = 1L) {
+join_overlap_self.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
@@ -29,11 +29,11 @@ join_overlap_within_self <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_within_self")
 }
 
-join_overlap_within_self.Ranges <- function(x, maxgap = 0L, minoverlap = 1L) {
+join_overlap_within_self.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
-join_overlap_within_self.GenomicRanges <- function(x, maxgap = 0L, minoverlap = 1L) {
+join_overlap_within_self.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 

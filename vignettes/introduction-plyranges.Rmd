@@ -1,11 +1,12 @@
 ---
-title: "Introduction the plyranges package"
+title: "Introduction to the plyranges package"
 author: "Stuart Lee"
 package: plyranges
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document:
     toc_float: true
+abstract: A fluent interface to `Ranges` classes.
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}
@@ -80,12 +81,16 @@ Sometimes you want to modify a genomic interval by altering the width of the
 interval while leaving the start, end or midpoint of the coordinates unaltered. 
 This is achieved with the `set_width` verb along with `anchor_*` adverbs.
 ```{r}
-set_width(rng, 100)
-set_width(anchor_start(rng), 100)
-set_width(anchor_end(rng), 100)
-set_width(anchor_center(rng), 100)
-set_width(anchor_3p(grng), 100) # leave negative strand fixed
-set_width(anchor_5p(grng), 100) # leave positve strand fixed
+rng <- Ranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8)))
+grng <- Ranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8), 
+                          seqnames = "seq1",
+                          strand = c("+", "*", "-")))
+set_width(rng, 10)
+set_width(anchor_start(rng), 10)
+set_width(anchor_end(rng), 10)
+set_width(anchor_center(rng), 10)
+set_width(anchor_3p(grng), 10) # leave negative strand fixed
+set_width(anchor_5p(grng), 10) # leave positve strand fixed
 ```
 
 Similarly, you can modify the width of an interval using the `stretch` verb.
@@ -239,6 +244,6 @@ for reading/writing the following data formats from/to _*Ranges_ objects.
 # Appendix
 
 ```{r}
-devtools::session_info()
+sessionInfo()
 ```
 
