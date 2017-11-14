@@ -13,10 +13,14 @@ filter_by_overlaps <- function(x,y, maxgap, minoverlap) {
   UseMethod("filter_by_overlaps")
 }
 
+#' @export
+#' @rdname filter-overlaps.rd
 filter_by_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap =1L) {
   subsetByOverlaps(x,y,maxgap, minoverlap, type = "any")
 }
 
+#' @export
+#' @rdname filter-overlaps.rd
 filter_by_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap =1L) {
   subsetByOverlaps(x,y,maxgap, minoverlap, type = "any", ignore.strand = TRUE)
 }
@@ -27,10 +31,14 @@ filter_by_non_overlaps <- function(x,y, maxgap, minoverlap) {
   UseMethod("filter_by_non_overlaps")
 }
 
+#' @export
+#' @rdname filter-overlaps.rd
 filter_by_non_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap =1L) {
   subsetByOverlaps(x,y,maxgap, minoverlap, type = "any",invert = TRUE)
 }
 
+#' @export
+#' @rdname filter-overlaps.rd
 filter_by_non_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap =1L) {
   subsetByOverlaps(x,y,maxgap, minoverlap, type = "any",
                    invert = TRUE,

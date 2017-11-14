@@ -3,13 +3,13 @@ title: "Introduction the plyranges package"
 author: "Stuart Lee"
 package: plyranges
 date: "`r Sys.Date()`"
-output: 
+output:
   BiocStyle::html_document:
-toc_float: true
+    toc_float: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 # Introduction
@@ -56,6 +56,7 @@ of an interval.
 
 ```{r}
 library(plyranges)
+library(dplyr)
 set.seed(100)
 df <- data.frame(start=c(2:-1, 13:15), 
                  width=c(0:3, 2:0))
@@ -114,11 +115,130 @@ shift_downstream(grng, 10)
 
 # Grouping Ranges
 
+`plyranges` introduces the concept of _Grouped*Ranges_, this is a similiar idea
+to the grouped data.frame in dplyr. Note that grouping does not change the 
+structure of a Ranges object only how certain functions act on it.
+
+Grouping can act on either the core components or the metadata columns.
+
+```{r}
+grng_by_strand <- grng %>%
+  group_by(strand)
+grng_by_strand
+```
+
 # Restricting Ranges
+
+The verb `filter` can be used to restrict rows in the Ranges.
+
+```{r}
+grng %>% filter(gc < 0.3)
+# filtering by group 
+grng_by_strand %>% filter(gc == max(gc)) 
+```
+
+We also provide the convience methods `filter_by_overlaps` and 
+`filter_by_non_overlaps` for restricting by overlapping ranges.
+
+```{r}
+ir0 <- data.frame(start = c(5,10, 15,20), width = 5) %>%
+  Ranges()
+ir1 <- data.frame(start = 2:6, width = 3:7) %>%
+  Ranges()
+ir0
+ir1
+ir0 %>% filter_by_overlaps(ir1)
+ir0 %>% filter_by_non_overlaps(ir1) 
+```
 
 # Joins, or another way at looking at overlaps between Ranges
 
+We can think about finding overlaps as a type of join between two _*Ranges_
+where we are using the intervals as keys. Of most use are the 
+`join_overlap_inner` and `join_overlap_left` functions. The former will return
+a Ranges object where the start, end, and width coordinates correspond to the amount
+of  any overlap. By default, the width of the input ranges is added as metadata.
+This allows downstreaming filtering by the amount of overlap.
+
+```{r}
+join_overlap_inner(ir0, ir1)
+```
+
+The `join_overlap_left` method will add the coordinates of the right hand
+ranges that overlap those ranges on the left. Compared with `filter_by_overlaps`
+above, the overlap join expands the ranges to give information about each range
+on the right hand side that overlaps those on the left. We also provide
+a convienence method called `find_overlaps` that computes the same result.
+
+```{r}
+join_overlap_left(ir0, ir1)
+```
+
+We also provide methods for finding, nearest, preceding or following ranges.
+These methods nest a ranges column upon returning (maybe better to return just
+coordinates?).
+
+```{r}
+join_nearest(ir0, ir1)
+join_follow(ir0, ir1)
+join_precede(ir0, ir1) # nothing precedes returns empty ranges
+join_precede(ir1, ir0)
+```
+
+For `GRanges` objects by default strand is not considered when performing
+overlap joins. To include strand when finding overlaps use append the prefix
+`directed`. To restrict overlapping ranges to those within the query range
+use the prefix `within`.
+
+It's also possible to group by overlaps. Using this approach we can count the
+number of overlaps that are greater than 0. 
+
+```{r}
+grp_by_olap <- ir0 %>% 
+  group_by_overlaps(ir1)
+grp_by_olap
+grp_by_olap %>%
+  mutate(n_overlaps = length(query))
+```
+
+Of course we can also add overlap counts via the `count_overlaps`.
+
+```{r}
+ir0 %>%
+  mutate(n_overlaps = count_overlaps(., ir1))
+
+```
+
 # Summarising Ranges
 
+The `summarise` function will return a tibble because the information required
+to return a _*Ranges_ object is lost. It is often most useful to use `summarise`
+in combination with the `group_by` family of functions. 
+
+```{r}
+ir1 <- ir1 %>%
+  mutate(gc = runif(length(.)))
+
+ir0 %>% 
+  group_by_overlaps(ir1) %>%
+  summarise(gc = mean(gc))
+```
+
 # Data Import/Output
+
+We provide convienence functions via `rtracklayer` 
+for reading/writing the following data formats from/to _*Ranges_ objects.
+
+* BED: `read/write_bed`
+* BEDGraph: `read/write_bedgraph`
+* GFF(1-3): `read/write_gff(1-3)`
+* BigWig: `read/write_bw`
+* Wig: `read/write_wig`
+* narrowPeaks: `read/write_narrowpeaks`
+
+# Appendix
+
+```{r}
+devtools::session_info()
+```
 
