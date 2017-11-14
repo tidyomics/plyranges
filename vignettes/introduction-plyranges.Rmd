@@ -207,7 +207,6 @@ Of course we can also add overlap counts via the `count_overlaps` function.
 ```{r}
 ir0 %>%
   mutate(n_overlaps = count_overlaps(., ir1))
-
 ```
 
 # Summarising Ranges
