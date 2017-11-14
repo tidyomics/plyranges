@@ -127,8 +127,16 @@ structure of a `Ranges` object only how certain functions act on it.
 Grouping can act on either the core components or the metadata columns.
 
 ```{r}
+grng <- data.frame(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
+         strand = sample(c("+", "-"), 7, replace = TRUE),
+         gc = runif(7),
+         start = 1:7,
+         width = 10) %>%
+  Ranges()
+
 grng_by_strand <- grng %>%
   group_by(strand)
+
 grng_by_strand
 ```
 
