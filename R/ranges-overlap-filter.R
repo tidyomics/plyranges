@@ -34,13 +34,13 @@ filter_by_non_overlaps <- function(x,y, maxgap, minoverlap) {
 #' @export
 #' @rdname filter-overlaps.rd
 filter_by_non_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
-  subsetByOverlaps(x,y,maxgap, minoverlap, type = "any",invert = TRUE)
+  subsetByOverlaps(x,y, maxgap, minoverlap, invert = TRUE)
 }
 
 #' @export
 #' @rdname filter-overlaps.rd
 filter_by_non_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
-  subsetByOverlaps(x,y,maxgap, minoverlap, type = "any",
+  subsetByOverlaps(x,y,maxgap, minoverlap,
                    invert = TRUE,
                    ignore.strand = TRUE)
 }
