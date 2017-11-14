@@ -15,14 +15,14 @@ filter_by_overlaps <- function(x,y, maxgap, minoverlap) {
 
 #' @export
 #' @rdname filter-overlaps.rd
-filter_by_overlaps.Ranges <- function(x,y, maxgap = 0L, minoverlap =1L) {
-  subsetByOverlaps(x,y,maxgap, minoverlap, type = "any")
+filter_by_overlaps.Ranges <- function(x, y, maxgap = 0L, minoverlap = 1L) {
+  subsetByOverlaps(x,y,maxgap, minoverlap)
 }
 
 #' @export
 #' @rdname filter-overlaps.rd
-filter_by_overlaps.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap =1L) {
-  subsetByOverlaps(x,y,maxgap, minoverlap, type = "any", ignore.strand = TRUE)
+filter_by_overlaps.GenomicRanges <- function(x, y, maxgap = 0L, minoverlap =1L) {
+  subsetByOverlaps(x,y,maxgap, minoverlap, ignore.strand = TRUE)
 }
 
 #' @export

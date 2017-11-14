@@ -149,7 +149,7 @@ ir1 <- data.frame(start = 2:6, width = 3:7) %>%
 ir0
 ir1
 ir0 %>% filter_by_overlaps(ir1)
-#ir0 %>% filter_by_non_overlaps(ir1) 
+ir0 %>% filter_by_non_overlaps(ir1) 
 ```
 
 # Joins, or another way at looking at overlaps between Ranges
