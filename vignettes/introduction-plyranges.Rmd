@@ -4,6 +4,8 @@ author: "Stuart Lee"
 package: plyranges
 date: "`r Sys.Date()`"
 output:
+  BiocStyle::md_document:
+    variant: markdown_github
   BiocStyle::html_document:
     toc_float: true
 abstract: A fluent interface to `Ranges` classes.
@@ -56,7 +58,7 @@ contig or chromosome id), and an optional column to represent the strandedness
 of an interval. 
 
 ```{r}
-library(plyranges)
+suppressPackageStartupMessages(library(plyranges))
 set.seed(100)
 df <- data.frame(start=c(2:-1, 13:15), 
                  width=c(0:3, 2:0))

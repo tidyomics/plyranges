@@ -32,4 +32,4 @@ install_github("sa-lee/plyranges")
 Getting started
 ===============
 
-See the [introduction vignette](vignettes/introduction-plyranges.Rmd).
+See the [introduction vignette](vignettes/introduction-plyranges.md).
