@@ -8,3 +8,4 @@ notes/
 TODO.md
 ^codecov\.yml$
 Makefile
+^docs$

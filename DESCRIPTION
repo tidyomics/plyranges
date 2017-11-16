@@ -2,7 +2,11 @@ Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges/SummarizedExperiment
 Version: 0.1.0
-Author: Stuart Lee, Michael Lawrence
+Authors@R: c(
+      person("Stuart", "Lee", email = "stuart.lee1@monash.edu", role = c("aut", "cre")),
+      person("Michael", "Lawrence", role = c("aut", "ctb")),
+      person("Dianne", "Cook", role = c("aut", "ctb"))
+    )
 Maintainer: Stuart Lee <stuart.lee1@monash.edu>
 Description: A dplyr-like interface for interacting with the common Bioconductor 
     classes GRanges and SummarizedExperiment. By providing a grammatical
