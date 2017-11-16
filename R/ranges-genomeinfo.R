@@ -34,6 +34,7 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #' @return An annotated GRanges object. To see the annotations use
 #' \code{get_genome_info}
 #' @export
+#' @rdname ranges-info
 set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
                             seqlengths = NULL, is_circular = NULL) {
 
@@ -48,13 +49,18 @@ set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
 #'
 #' @return A GRanges object
 #' @export
+#' @rdname ranges-info
 get_genome_info <- function(.data)  UseMethod("get_genome_info")
 
+#' @rdname ranges-info
+#' @export
 get_genome_info.GenomicRanges <- function(.data) {
   info <- seqinfo(.data)
   get_genome_info(info)
 }
 
+#' @rdname ranges-info
+#' @export
 get_genome_info.Seqinfo <- function(.data) {
 
   if (any(is.na(seqlengths(.data)))) {

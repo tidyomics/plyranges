@@ -6,7 +6,7 @@
 #'
 #' @details These are usual set-operations that act on the sets of the
 #' ranges represented in x and y. By default these operations will ignore
-#' any strand information. The anchored versions of these functions will
+#' any strand information. The directedd versions of these functions will
 #' take into account strand.
 #'
 #' @export
@@ -25,10 +25,10 @@ intersect_ranges.GenomicRanges <- function(x,y) {
 
 #' @export
 #' @rdname ranges-setops
-intersect_ranges_anchored <- function(x,y) { UseMethod("intersect_ranges_anchored") }
+intersect_ranges_directed <- function(x,y) { UseMethod("intersect_ranges_directed") }
 
 #' @importFrom GenomicRanges intersect
-intersect_ranges_anchored.GenomicRanges <- function(x,y) {
+intersect_ranges_directed.GenomicRanges <- function(x,y) {
   intersect(x,y, ignore.strand = FALSE)
 }
 
@@ -48,10 +48,10 @@ union_ranges.GenomicRanges <- function(x,y) {
 
 #' @export
 #' @rdname ranges-setops
-union_ranges_anchored <- function(x,y) { UseMethod("union_ranges_anchored") }
+union_ranges_directed <- function(x,y) { UseMethod("union_ranges_directed") }
 
 #' @importFrom GenomicRanges union
-union_ranges_anchored.GenomicRanges <- function(x,y) {
+union_ranges_directed.GenomicRanges <- function(x,y) {
   union(x,y, ignore.strand = FALSE)
 }
 
@@ -71,9 +71,9 @@ setdiff_ranges.Ranges <- function(x,y) {
 
 #' @export
 #' @rdname ranges-setops
-setdiff_ranges_anchored <- function(x,y) { UseMethod("setdiff_ranges_anchored") }
+setdiff_ranges_directed <- function(x,y) { UseMethod("setdiff_ranges_directed") }
 
 #' @importFrom GenomicRanges setdiff
-setdiff_ranges_anchored.GenomicRanges <- function(x,y) {
+setdiff_ranges_directed.GenomicRanges <- function(x,y) {
   setdiff(x,y, ignore.strand = FALSE)
 }

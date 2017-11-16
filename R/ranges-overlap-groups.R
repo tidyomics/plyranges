@@ -7,6 +7,7 @@
 #' as an integer greater than zero, accounting for the maximum gap.
 #'
 #' @rdname ranges-overlaps.Rd
+#' @importFrom rlang syms
 #' @export
 group_by_overlaps <- function(x, y, maxgap, minoverlap) { UseMethod("group_by_overlaps") }
 
@@ -29,7 +30,7 @@ group_by_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L)
                        type = "any", select = "all", ignore.strand = TRUE)
   rng <- mcols_overlaps_update(x,y,hits, suffix = c(".query", ".subject"))
   mcols(rng)$query <- queryHits(hits)
-  new("IRangesGrouped", rng, groups = syms("query"))
+  new("GRangesGrouped", rng, groups = syms("query"))
 }
 
 

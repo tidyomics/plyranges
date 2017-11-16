@@ -36,6 +36,7 @@ Suggests: knitr,
     testthat,
     HelloRanges,
     HelloRangesData,
+    ggplot2,
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

@@ -6,7 +6,7 @@ select_rng <- function(.data, .drop_ranges, ...) {
   } else {
     var_names <- names(mcols(.data))
     if (length(var_names) == 0L) {
-      stop("No metadta columns to select", call. = FALSE)
+      stop("No metadata columns to select", call. = FALSE)
     }
 
     if (is(.data, "Ranges")) {
