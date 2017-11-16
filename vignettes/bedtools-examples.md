@@ -423,7 +423,7 @@ cvg_hist_total <- cvg %>%
             hg19 %>% 
               summarise(width = sum(as.numeric(width))) %>% 
               mutate(seqnames = "genome")) %>%
-  mutate(fraction = width / count)
+  mutate(fraction = count / width)
 ```
 
     ## Joining, by = "seqnames"
@@ -433,18 +433,18 @@ cvg_hist_total
 ```
 
     ## # A tibble: 45 x 5
-    ##    score      count seqnames      width    fraction
-    ##    <int>      <dbl>    <chr>      <dbl>       <dbl>
-    ##  1     0 3062406951   genome 3137161264     1.02441
-    ##  2     1   44120515   genome 3137161264    71.10437
-    ##  3     2   15076446   genome 3137161264   208.08361
-    ##  4     3    7294047   genome 3137161264   430.09886
-    ##  5     4    3650324   genome 3137161264   859.41995
-    ##  6     5    1926397   genome 3137161264  1628.51233
-    ##  7     6    1182623   genome 3137161264  2652.71457
-    ##  8     7     574102   genome 3137161264  5464.46670
-    ##  9     8     353352   genome 3137161264  8878.28925
-    ## 10     9     152653   genome 3137161264 20550.93096
+    ##    score      count seqnames      width     fraction
+    ##    <int>      <dbl>    <chr>      <dbl>        <dbl>
+    ##  1     0 3062406951   genome 3137161264 0.9761713515
+    ##  2     1   44120515   genome 3137161264 0.0140638339
+    ##  3     2   15076446   genome 3137161264 0.0048057606
+    ##  4     3    7294047   genome 3137161264 0.0023250469
+    ##  5     4    3650324   genome 3137161264 0.0011635755
+    ##  6     5    1926397   genome 3137161264 0.0006140574
+    ##  7     6    1182623   genome 3137161264 0.0003769723
+    ##  8     7     574102   genome 3137161264 0.0001830005
+    ##  9     8     353352   genome 3137161264 0.0001126343
+    ## 10     9     152653   genome 3137161264 0.0000486596
     ## # ... with 35 more rows
 
 ``` r

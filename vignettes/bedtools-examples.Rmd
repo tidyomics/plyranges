@@ -217,7 +217,7 @@ cvg_hist_total <- cvg %>%
             hg19 %>% 
               summarise(width = sum(as.numeric(width))) %>% 
               mutate(seqnames = "genome")) %>%
-  mutate(fraction = width / count)
+  mutate(fraction = count / width)
 
 cvg_hist_total
 
