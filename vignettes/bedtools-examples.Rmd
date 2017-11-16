@@ -122,7 +122,6 @@ include CpG islands that do not overlap any exons.
 ```{r}
 cpg %>% 
   filter_by_non_overlaps(., exons)
-
 ```
 
 The equivalent bedtools operation is
@@ -138,13 +137,12 @@ ranges we can combine it with filter. In this example we filter
 ranges where the proportion of overlap on cpg islands is less than half.
 
 ```{r}
-# not happy with accessor use here
-overlap_intersect <- join_overlap_inner(cpg, exons) %>% 
+olap <- join_overlap_inner(cpg, exons) %>% 
   filter(width / width.x  >= 0.5)
-
+olap
 ```
 
-The equivalent bedtools code is
+The equivalent bedtools code is:
 ```{r}
 bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -f 0.5 -wo")
 ```
@@ -167,54 +165,66 @@ is equivalent to `bedtools genomecov -bg`:
 cvg <- exons %>% 
   set_coverage() %>% 
   filter(score > 0)
-
 cvg
+
+bedtools_genomecov("-i exons.bed -g hg19.genome -bg")
 ```
 
 ## Coverage histogram
 
 We can construct a histogram over all seqeunces in a genome 
 using the `group_by` and `summarise` operations along with
-`left_join`. First, we compute the 
-coverage over the exons and construct a `tibble` with sequence lengths 
-as a column.  
+`left_join`. 
 
-Then to count the number of bases corresponding to a score we sum over
-the width of each range in each chromosome. Then we join the resulting `tibble`
-to the annotation `tibble` called `hg19`. Note that in the sums we have coerced integer variables to doubles to avoid 
-overflow.
+First, we compute the 
+coverage over the exons and construct a `tibble` from the genome build 
+information using `select` with `.drop_ranges = FALSE`.
 
-Similarly for the genome-wide 
-coverage histogram, we perform the same operation but do not group over
-`seqnames`. Finally we bind the resulting `tibbles` together.
-
-```{r cv-hist}
+```{r cv-hist0}
 suppressPackageStartupMessages(library(dplyr))
 cvg <- exons %>% set_coverage()
 # convert the sequence annotation to a tibble
 hg19 <- get_genome_info(cvg) %>%  
  select(seqnames, width, .drop_ranges = TRUE)
+```
 
-cvg_hist_by_seq <- left_join(cvg %>%   
-                               group_by(seqnames, score) %>%
-                               summarise(count = sum(as.numeric(width))),
-                             hg19,
-                             by = "seqnames") %>% 
+Then to count the number of bases corresponding to a score we sum over
+the width of each range in each chromosome. Then we join the resulting `tibble`
+to the annotation `tibble` called `hg19`. Note that in the sums we have coerced integer variables to doubles to avoid overflow.
+
+```{r cv-hist1}
+
+cvg_hist_by_seq <- cvg %>%
+  group_by(seqnames, score) %>%
+  summarise(count = sum(as.numeric(width))) %>%  
+  left_join(., hg19, by = "seqnames") %>% 
   mutate(fraction = count / width)
+```
 
-# overlap join
-cvg_hist_total <- left_join(cvg %>%
-                              group_by(score) %>% 
-                              summarise(count = sum(as.numeric(width))) %>% 
-                              mutate(seqnames = "genome"),
-                            hg19 %>% 
-                              summarise(width = sum(as.numeric(width))) %>% 
-                              mutate(seqnames = "genome"))
+Similarly for the genome-wide 
+coverage histogram, we perform the same operation but do not group over
+`seqnames`. Finally we bind the resulting `tibbles` together.
+
+```{r cvhist2}
+cvg_hist_total <- cvg %>%
+  group_by(score) %>% 
+  summarise(count = sum(as.numeric(width))) %>% 
+  mutate(seqnames = "genome") %>%
+  left_join(.,
+            hg19 %>% 
+              summarise(width = sum(as.numeric(width))) %>% 
+              mutate(seqnames = "genome"))
 
 cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)
 cvg_hist
 ```
 
+Although this is slightly more verbose than the `bedtools` or `HelloRanges` approach the `plyranges` code makes the actions being performed on the input
+`Ranges` explicit:
+
+```{r}
+bedtools_genomecov("-i exons.bed -g hg19.genome")
+```
 # Composing pipelines 
 
 ## Yet another overlaps example
@@ -233,7 +243,8 @@ overlaps
 ```
 
 We can also compute the coverage histogram of exons over cpg islands
-and then plot results as an ecdf. 
+and then plot results as an ecdf.
+
 ```{r}
 cvg_over_exons <- exons %>% 
   set_coverage() %>%
@@ -243,10 +254,13 @@ cvg_over_exons <- exons %>%
   summarise(count = sum(as.numeric(width)),
             fraction = count / unique(total)) 
 
+cvg_over_exons
+
 library(ggplot2)
 ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
   geom_step() +
   xlim(c(0,25))  +
   xlab("coverage") +
   ylab("fraction of bp > coverage")
+
 ```
