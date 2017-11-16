@@ -52,7 +52,9 @@ install_github("sa-lee/plyranges")
 
 # Getting started
 
-See the [introduction vignette](vignettes/introduction-plyranges.md).
+See the [introduction vignette](vignettes/introduction-plyranges.md) for an
+overview of `plyranges` features. For mapping between `plyranges`, `bedtools`
+and `GenomicRanges` see the [data wrangling vignette](vignettes/bedtools-examples.md).
 
 
 
