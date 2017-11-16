@@ -15,6 +15,14 @@
 -   [Joins, or another way at looking at overlaps between Ranges](#joins-or-another-way-at-looking-at-overlaps-between-ranges)
 -   [Summarising Ranges](#summarising-ranges)
 -   [Data Import/Output](#data-importoutput)
+-   [Mapping to GenomicRanges/IRanges](#mapping-to-genomicrangesiranges)
+    -   [Operations on range width](#operations-on-range-width)
+    -   [Operations on range width (invariant)](#operations-on-range-width-invariant)
+    -   [Set operations (vector wise)](#set-operations-vector-wise)
+    -   [Set operations (element wise)](#set-operations-element-wise)
+    -   [Restrictions](#restrictions)
+    -   [Aggregation](#aggregation)
+    -   [Overlaps](#overlaps)
 -   [Appendix](#appendix)
 {:toc}
 
@@ -568,6 +576,193 @@ We provide convienence functions via `rtracklayer` for reading/writing the follo
 -   Wig: `read/write_wig`
 -   narrowPeaks: `read/write_narrowpeaks`
 
+## Mapping to GenomicRanges/IRanges
+
+For users already familiar with the `IRanges` and `GenomicRanges` we provide mappings to `plyranges` functions.
+
+### Operations on range width
+
+For `GRanges` objects all functions ignore any strandedness, unless the strand of the range is anchored.
+
+<table>
+<colgroup>
+<col width="33%" />
+<col width="19%" />
+<col width="47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>plyranges</code> functions</th>
+<th>Description</th>
+<th><code>GenomicRanges/IRanges</code> command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>anchor_(start/end/center/3p/5p)</code></td>
+<td>Fix the <code>start/end/center/</code> coordinates or positive/negative strand of range. Can be used in combination with any of the following</td>
+<td>Available in functions that have a <code>fix</code> argument.</td>
+</tr>
+<tr class="even">
+<td><code>set_width(x, width)</code></td>
+<td>Modify the width of a <code>Range</code></td>
+<td><code>resize</code></td>
+</tr>
+<tr class="odd">
+<td><code>stretch(x, extend)</code></td>
+<td>Extend the start and end coordinates in opposite directions by a fixed amount.</td>
+<td><code>start(x)&lt;- start(x) + extend%/%2</code>, <code>end(x) &lt;- end(x) -extend%/%2</code></td>
+</tr>
+</tbody>
+</table>
+
+### Operations on range width (invariant)
+
+<table>
+<colgroup>
+<col width="33%" />
+<col width="19%" />
+<col width="47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>plyranges</code> functions</th>
+<th>Description</th>
+<th><code>GenomicRanges/IRanges</code> command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>shift_[left/right/downstream/upstream](x, shift)</code></td>
+<td>Shift the coordinates of the interval (left/right/downstream/upstream) by an integer amount.</td>
+<td><code>shift_right</code> corresponds to <code>shift</code></td>
+</tr>
+<tr class="even">
+<td><code>flank_[left/right/downstream/upstream](x, width)</code></td>
+<td>Generates flanking regions of size width <code>left/right/downstream/upstream/</code></td>
+<td>corresponds to <code>flank</code></td>
+</tr>
+</tbody>
+</table>
+
+### Set operations (vector wise)
+
+These are usual set-operations that act on the sets of the ranges represented in x and y. By default these operations will ignore any strand information. The directed versions of these functions will take into account strand.
+
+<table>
+<colgroup>
+<col width="33%" />
+<col width="19%" />
+<col width="47%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>plyranges</code> functions</th>
+<th>Description</th>
+<th><code>GenomicRanges/IRanges</code> command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>[intersect/setdiff/union/]_ranges</code></td>
+<td>Set operations between two ranges, ignoring strand.</td>
+<td><code>intersect/setdiff/union/</code> with <code>ignore.strand = FALSE</code></td>
+</tr>
+<tr class="even">
+<td><code>[intersect/setdiff/union/]_anchored_ranges</code></td>
+<td>As above taking into account strandedness.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### Set operations (element wise)
+
+We provide infix operators and the verbs between and span to the represent element wise range operations. These map to the `pintersect/punion/psetdiff/pgap/punion(fill.gap = FALSE)` functions.
+
+### Restrictions
+
+The verb `filter` corresponds to `subset`, while `filter_by_[overlaps/non_overlaps]` corresponds to `subsetByOverlaps`.
+
+### Aggregation
+
+The `summarise` verb is most similar to the `aggregate` methods defined in `GenomicRanges/IRanges`.
+
+The `reduce_ranges/disjoin_ranges` correspond to the `reduce/disjoin` methods. However, the former methods allow additional summarisation.
+
+The `set_coverage(x)` method corresponds to `[I/G]ranges(coverage(x))`.
+
+### Overlaps
+
+For `GRanges` objects all functions ignore any strandedness, unless the suffix `directed` is added to the funciton call
+
+<table style="width:100%;">
+<colgroup>
+<col width="25%" />
+<col width="54%" />
+<col width="19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><code>plyranges</code> function</th>
+<th>Description</th>
+<th><code>GenomicRanges/IRanges</code> command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>find_overlaps(x, y, maxgap, minoverlap)</code></td>
+<td>Returns a <code>Ranges</code> object with any range in <code>y</code> that overlaps <code>x</code>. Appends the metadata in <code>y</code> and its genomic intervals to the returning <code>Ranges</code>.</td>
+<td><code>findOverlaps(x,y, maxgap, minoverlap, type = &quot;any&quot;)</code> with expanding <code>x</code> and <code>y</code> by their hits and appending the <code>mcols</code> in <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td><code>group_by_overlaps(x, y, maxgap, minoverlap)</code></td>
+<td>Returns a GroupedRanges object grouped by the query hits.</td>
+<td>Same as above with an additional column called <code>query</code> which contains the queryHits.</td>
+</tr>
+<tr class="odd">
+<td><code>count_overlaps(x, y, maxgap, minoverlap)</code></td>
+<td>Returns an integer vector (used with <code>mutate</code>)</td>
+<td><code>countOverlaps(x, y, maxgap, minoverlap, type = &quot;any&quot;)</code></td>
+</tr>
+<tr class="even">
+<td><code>join_overlap_self(x, maxgap, minoverlap)</code></td>
+<td>Returns a <code>Ranges</code> object with any range that overlaps itself.</td>
+<td><code>findOverlaps(x,x, maxgap, minoverlap, type = &quot;any&quot;)</code></td>
+</tr>
+<tr class="odd">
+<td><code>join_overlap_inner(x, y, maxgap, minoverlap)</code></td>
+<td>Finds the intersecting ranges that overlap in <code>x</code> and <code>y</code>. Returns a <code>Ranges</code> object with the metadata from <code>x</code> and <code>y</code>.</td>
+<td><code>findOverlapsPairs(x,y, maxgap, minoverlap, type = &quot;any&quot;)</code> + <code>pintersect</code>.</td>
+</tr>
+<tr class="even">
+<td><code>*_within</code></td>
+<td>Adding suffix <code>within</code> will find overlaps</td>
+<td>Makes <code>type = &quot;within&quot;</code></td>
+</tr>
+<tr class="odd">
+<td><code>*_includes</code></td>
+<td>inverse of within functions</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><code>join_nearest[_left/right/up/downstream](x,y)</code></td>
+<td>Finds nearest neighbour ranges between <code>x</code> and <code>y</code>.</td>
+<td><code>nearest</code> + reindexing to return a <code>Ranges</code> object.</td>
+</tr>
+<tr class="odd">
+<td><code>join_precede[_left/right/up/downstream](x,y)</code></td>
+<td>Finds ranges in <code>x</code> that preced <code>y</code></td>
+<td><code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
+</tr>
+<tr class="even">
+<td><code>join_follow[_left/right/up/downstream](x,y)</code></td>
+<td>Finds ranges in <code>x</code> that follow <code>y</code></td>
+<td><code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
+</tr>
+</tbody>
+</table>
+
 ## Appendix
 
 ``` r
@@ -590,9 +785,9 @@ sessionInfo()
     ## [8] methods   base     
     ## 
     ## other attached packages:
-    ## [1] plyranges_0.1.0      BiocStyle_2.6.0      GenomicRanges_1.30.0
-    ## [4] GenomeInfoDb_1.14.0  IRanges_2.12.0       S4Vectors_0.16.0    
-    ## [7] BiocGenerics_0.24.0 
+    ## [1] plyranges_0.1.0      GenomicRanges_1.30.0 GenomeInfoDb_1.14.0 
+    ## [4] IRanges_2.12.0       S4Vectors_0.16.0     BiocGenerics_0.24.0 
+    ## [7] BiocStyle_2.6.0     
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.8.0 tidyselect_0.2.3          
@@ -619,7 +814,7 @@ sessionInfo()
     ## [43] RCurl_1.95-4.8             tibble_1.3.4              
     ## [45] crayon_1.3.4               tidyr_0.7.2               
     ## [47] pkgconfig_2.0.1            Matrix_1.2-11             
-    ## [49] xml2_1.1.1                 assertthat_0.2.0          
-    ## [51] rmarkdown_1.7              roxygen2_6.0.1            
-    ## [53] rstudioapi_0.7             R6_2.2.2                  
+    ## [49] xml2_1.1.1                 rstudioapi_0.7            
+    ## [51] assertthat_0.2.0           rmarkdown_1.7             
+    ## [53] roxygen2_6.0.1             R6_2.2.2                  
     ## [55] GenomicAlignments_1.14.0   compiler_3.4.2
