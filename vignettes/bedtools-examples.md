@@ -33,64 +33,6 @@ The `plyranges` API attempts to be type-consistent, that is if you apply a `plyr
 The data we use for these examples are exported by the `HelloRangesData` package. For more details see that [package's vignette](http://bioconductor.org/packages/release/data/experiment/vignettes/HelloRangesData/inst/doc/intro.pdf). For most examples in this tutorial we will use the RefSeq exons and CpG island annotations from the hg19 genome build.
 
 ``` r
-library(plyranges)
-```
-
-    ## Loading required package: BiocGenerics
-
-    ## Loading required package: parallel
-
-    ## 
-    ## Attaching package: 'BiocGenerics'
-
-    ## The following objects are masked from 'package:parallel':
-    ## 
-    ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
-    ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
-    ##     parLapplyLB, parRapply, parSapply, parSapplyLB
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     IQR, mad, sd, var, xtabs
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     anyDuplicated, append, as.data.frame, cbind, colMeans, colnames,
-    ##     colSums, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
-    ##     grepl, intersect, is.unsorted, lapply, lengths, Map, mapply, match,
-    ##     mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
-    ##     rbind, Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
-    ##     table, tapply, union, unique, unsplit, which, which.max, which.min
-
-    ## Loading required package: GenomicRanges
-
-    ## Loading required package: stats4
-
-    ## Loading required package: S4Vectors
-
-    ## 
-    ## Attaching package: 'S4Vectors'
-
-    ## The following object is masked from 'package:base':
-    ## 
-    ##     expand.grid
-
-    ## Loading required package: IRanges
-
-    ## Loading required package: GenomeInfoDb
-
-    ## 
-    ## Attaching package: 'plyranges'
-
-    ## The following object is masked from 'package:IRanges':
-    ## 
-    ##     slice
-
-    ## The following object is masked from 'package:stats':
-    ## 
-    ##     filter
-
-``` r
 exons_bed <- system.file("extdata", "exons.bed", package="HelloRangesData")
 cpg_bed <- system.file("extdata", "cpg.bed", package = "HelloRangesData")
 ```
@@ -100,6 +42,7 @@ cpg_bed <- system.file("extdata", "cpg.bed", package = "HelloRangesData")
 To load the exons file as a *GRanges* object we use the `read_bed` function. We supply the genome build as an additional argument to this function, allowing us to obtain annotation information about each chromosome.
 
 ``` r
+suppressPackageStartupMessages(library(plyranges))
 cpg <- read_bed(cpg_bed, genome_info = "hg19")
 cpg
 ```
@@ -450,7 +393,24 @@ cvg_hist_by_seq <- cvg %>%
   summarise(count = sum(as.numeric(width))) %>%  
   left_join(., hg19, by = "seqnames") %>% 
   mutate(fraction = count / width)
+
+cvg_hist_by_seq
 ```
+
+    ## # A tibble: 608 x 5
+    ##    seqnames score     count     width  fraction
+    ##      <fctr> <int>     <dbl>     <int>     <dbl>
+    ##  1     chr1     0 241996316 249250621 0.9708955
+    ##  2     chr2     0 238060317 243199373 0.9788690
+    ##  3     chr3     0 193800642 198022430 0.9786803
+    ##  4     chr4     0 188206114 191154276 0.9845771
+    ##  5     chr5     0 177466741 180915260 0.9809385
+    ##  6     chr6     0 167349524 171115067 0.9779941
+    ##  7     chr7     0 155623839 159138663 0.9779135
+    ##  8     chr8     0 143743330 146364022 0.9820947
+    ##  9     chr9     0 138299162 141213431 0.9793627
+    ## 10    chr10     0 132497709 135534747 0.9775922
+    ## # ... with 598 more rows
 
 Similarly for the genome-wide coverage histogram, we perform the same operation but do not group over `seqnames`. Finally we bind the resulting `tibbles` together.
 
@@ -462,10 +422,30 @@ cvg_hist_total <- cvg %>%
   left_join(.,
             hg19 %>% 
               summarise(width = sum(as.numeric(width))) %>% 
-              mutate(seqnames = "genome"))
+              mutate(seqnames = "genome")) %>%
+  mutate(fraction = width / count)
 ```
 
     ## Joining, by = "seqnames"
+
+``` r
+cvg_hist_total
+```
+
+    ## # A tibble: 45 x 5
+    ##    score      count seqnames      width    fraction
+    ##    <int>      <dbl>    <chr>      <dbl>       <dbl>
+    ##  1     0 3062406951   genome 3137161264     1.02441
+    ##  2     1   44120515   genome 3137161264    71.10437
+    ##  3     2   15076446   genome 3137161264   208.08361
+    ##  4     3    7294047   genome 3137161264   430.09886
+    ##  5     4    3650324   genome 3137161264   859.41995
+    ##  6     5    1926397   genome 3137161264  1628.51233
+    ##  7     6    1182623   genome 3137161264  2652.71457
+    ##  8     7     574102   genome 3137161264  5464.46670
+    ##  9     8     353352   genome 3137161264  8878.28925
+    ## 10     9     152653   genome 3137161264 20550.93096
+    ## # ... with 35 more rows
 
 ``` r
 cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)

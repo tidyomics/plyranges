@@ -42,7 +42,6 @@ The data we use for these examples are exported by the `HelloRangesData`
 package. For more details see that [package's vignette](http://bioconductor.org/packages/release/data/experiment/vignettes/HelloRangesData/inst/doc/intro.pdf). For most examples in this tutorial we will use 
 the RefSeq exons and CpG island annotations from the hg19 genome build.
 ```{r}
-library(plyranges)
 exons_bed <- system.file("extdata", "exons.bed", package="HelloRangesData")
 cpg_bed <- system.file("extdata", "cpg.bed", package = "HelloRangesData")
 
@@ -53,7 +52,8 @@ cpg_bed <- system.file("extdata", "cpg.bed", package = "HelloRangesData")
 To load the exons file as a _GRanges_ object we use the `read_bed` function.
 We supply the genome build as an additional argument to this function, allowing
 us to obtain annotation information about each chromosome.
-```{r, cache = FALSE}
+```{r}
+suppressPackageStartupMessages(library(plyranges))
 cpg <- read_bed(cpg_bed, genome_info = "hg19")
 cpg
 
@@ -199,6 +199,9 @@ cvg_hist_by_seq <- cvg %>%
   summarise(count = sum(as.numeric(width))) %>%  
   left_join(., hg19, by = "seqnames") %>% 
   mutate(fraction = count / width)
+
+cvg_hist_by_seq
+
 ```
 
 Similarly for the genome-wide 
@@ -213,7 +216,10 @@ cvg_hist_total <- cvg %>%
   left_join(.,
             hg19 %>% 
               summarise(width = sum(as.numeric(width))) %>% 
-              mutate(seqnames = "genome"))
+              mutate(seqnames = "genome")) %>%
+  mutate(fraction = width / count)
+
+cvg_hist_total
 
 cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)
 cvg_hist
