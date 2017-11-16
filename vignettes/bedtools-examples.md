@@ -34,6 +34,63 @@ The data we use for these examples are exported by the `HelloRangesData` package
 
 ``` r
 library(plyranges)
+```
+
+    ## Loading required package: BiocGenerics
+
+    ## Loading required package: parallel
+
+    ## 
+    ## Attaching package: 'BiocGenerics'
+
+    ## The following objects are masked from 'package:parallel':
+    ## 
+    ##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+    ##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+    ##     parLapplyLB, parRapply, parSapply, parSapplyLB
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     IQR, mad, sd, var, xtabs
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     anyDuplicated, append, as.data.frame, cbind, colMeans, colnames,
+    ##     colSums, do.call, duplicated, eval, evalq, Filter, Find, get, grep,
+    ##     grepl, intersect, is.unsorted, lapply, lengths, Map, mapply, match,
+    ##     mget, order, paste, pmax, pmax.int, pmin, pmin.int, Position, rank,
+    ##     rbind, Reduce, rowMeans, rownames, rowSums, sapply, setdiff, sort,
+    ##     table, tapply, union, unique, unsplit, which, which.max, which.min
+
+    ## Loading required package: GenomicRanges
+
+    ## Loading required package: stats4
+
+    ## Loading required package: S4Vectors
+
+    ## 
+    ## Attaching package: 'S4Vectors'
+
+    ## The following object is masked from 'package:base':
+    ## 
+    ##     expand.grid
+
+    ## Loading required package: IRanges
+
+    ## Loading required package: GenomeInfoDb
+
+    ## 
+    ## Attaching package: 'plyranges'
+
+    ## The following object is masked from 'package:IRanges':
+    ## 
+    ##     slice
+
+    ## The following object is masked from 'package:stats':
+    ## 
+    ##     filter
+
+``` r
 exons_bed <- system.file("extdata", "exons.bed", package="HelloRangesData")
 cpg_bed <- system.file("extdata", "cpg.bed", package = "HelloRangesData")
 ```
@@ -271,13 +328,42 @@ bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -v")
 A common operation is to filter ranges by the fraction they overlap a given query or subject. We can achieve this with an overlap inner join and mutate. Since an overlap inner join will keep the width of the original query ranges we can combine it with filter. In this example we filter ranges where the proportion of overlap on cpg islands is less than half.
 
 ``` r
-
-## not happy with accessor use here
-overlap_intersect <- join_overlap_inner(cpg, exons) %>% 
+olap <- join_overlap_inner(cpg, exons) %>% 
   filter(width / width.x  >= 0.5)
+olap
 ```
 
-The equivalent bedtools code is
+    ## GRanges object with 12669 ranges and 5 metadata columns:
+    ##           seqnames               ranges strand |   width.x   width.y
+    ##              <Rle>            <IRanges>  <Rle> | <integer> <integer>
+    ##       [1]     chr1     [135125, 135563]      * |       439      4924
+    ##       [2]     chr1     [327791, 328229]      * |       439      4143
+    ##       [3]     chr1     [327791, 328229]      * |       439      4143
+    ##       [4]     chr1     [327791, 328229]      * |       439      1546
+    ##       [5]     chr1     [788864, 789211]      * |       348      6056
+    ##       ...      ...                  ...    ... .       ...       ...
+    ##   [12665]     chrY [26979967, 26980116]      * |       227       310
+    ##   [12666]     chrY [26979967, 26980116]      * |       227       310
+    ##   [12667]     chrY [26979967, 26980116]      * |       227       310
+    ##   [12668]     chrY [26979990, 26980116]      * |       227       287
+    ##   [12669]     chrY [26979990, 26980116]      * |       227       287
+    ##                name.x                                name.y     score
+    ##           <character>                           <character> <numeric>
+    ##       [1]     CpG:_30      NR_039983_exon_0_0_chr1_134773_r         0
+    ##       [2]     CpG:_29      NR_028322_exon_2_0_chr1_324439_f         0
+    ##       [3]     CpG:_29      NR_028325_exon_2_0_chr1_324439_f         0
+    ##       [4]     CpG:_29      NR_028327_exon_3_0_chr1_327036_f         0
+    ##       [5]     CpG:_28      NR_047519_exon_5_0_chr1_788771_f         0
+    ##       ...         ...                                   ...       ...
+    ##   [12665]     CpG:_21 NM_001005375_exon_0_0_chrY_26979967_f         0
+    ##   [12666]     CpG:_21    NM_020364_exon_0_0_chrY_26979967_f         0
+    ##   [12667]     CpG:_21    NM_020420_exon_0_0_chrY_26979967_f         0
+    ##   [12668]     CpG:_21 NM_001005785_exon_0_0_chrY_26979990_f         0
+    ##   [12669]     CpG:_21 NM_001005786_exon_0_0_chrY_26979990_f         0
+    ##   -------
+    ##   seqinfo: 93 sequences from hg19 genome
+
+The equivalent bedtools code is:
 
 ``` r
 bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -f 0.5 -wo")
@@ -308,7 +394,6 @@ By default, `set_coverage` is equivalent to `bedtools genomecov -bga` and hence 
 cvg <- exons %>% 
   set_coverage() %>% 
   filter(score > 0)
-
 cvg
 ```
 
@@ -329,13 +414,24 @@ cvg
     ##   -------
     ##   seqinfo: 93 sequences from an unspecified genome
 
+``` r
+bedtools_genomecov("-i exons.bed -g hg19.genome -bg")
+```
+
+    ## {
+    ##     genome <- import("hg19.genome")
+    ##     gr_a <- import("exons.bed", genome = genome)
+    ##     cov <- coverage(gr_a)
+    ##     ans <- GRanges(cov)
+    ##     ans <- subset(ans, score > 0)
+    ##     ans
+    ## }
+
 ### Coverage histogram
 
-We can construct a histogram over all seqeunces in a genome using the `group_by` and `summarise` operations along with `left_join`. First, we compute the coverage over the exons and construct a `tibble` with sequence lengths as a column.
+We can construct a histogram over all seqeunces in a genome using the `group_by` and `summarise` operations along with `left_join`.
 
-Then to count the number of bases corresponding to a score we sum over the width of each range in each chromosome. Then we join the resulting `tibble` to the annotation `tibble` called `hg19`. Note that in the sums we have coerced integer variables to doubles to avoid overflow.
-
-Similarly for the genome-wide coverage histogram, we perform the same operation but do not group over `seqnames`. Finally we bind the resulting `tibbles` together.
+First, we compute the coverage over the exons and construct a `tibble` from the genome build information using `select` with `.drop_ranges = FALSE`.
 
 ``` r
 suppressPackageStartupMessages(library(dplyr))
@@ -344,22 +440,29 @@ cvg <- exons %>% set_coverage()
 ## convert the sequence annotation to a tibble
 hg19 <- get_genome_info(cvg) %>%  
  select(seqnames, width, .drop_ranges = TRUE)
+```
 
-cvg_hist_by_seq <- left_join(cvg %>%   
-                               group_by(seqnames, score) %>%
-                               summarise(count = sum(as.numeric(width))),
-                             hg19,
-                             by = "seqnames") %>% 
+Then to count the number of bases corresponding to a score we sum over the width of each range in each chromosome. Then we join the resulting `tibble` to the annotation `tibble` called `hg19`. Note that in the sums we have coerced integer variables to doubles to avoid overflow.
+
+``` r
+cvg_hist_by_seq <- cvg %>%
+  group_by(seqnames, score) %>%
+  summarise(count = sum(as.numeric(width))) %>%  
+  left_join(., hg19, by = "seqnames") %>% 
   mutate(fraction = count / width)
+```
 
-## overlap join
-cvg_hist_total <- left_join(cvg %>%
-                              group_by(score) %>% 
-                              summarise(count = sum(as.numeric(width))) %>% 
-                              mutate(seqnames = "genome"),
-                            hg19 %>% 
-                              summarise(width = sum(as.numeric(width))) %>% 
-                              mutate(seqnames = "genome"))
+Similarly for the genome-wide coverage histogram, we perform the same operation but do not group over `seqnames`. Finally we bind the resulting `tibbles` together.
+
+``` r
+cvg_hist_total <- cvg %>%
+  group_by(score) %>% 
+  summarise(count = sum(as.numeric(width))) %>% 
+  mutate(seqnames = "genome") %>%
+  left_join(.,
+            hg19 %>% 
+              summarise(width = sum(as.numeric(width))) %>% 
+              mutate(seqnames = "genome"))
 ```
 
     ## Joining, by = "seqnames"
@@ -383,6 +486,26 @@ cvg_hist
     ##  9     chr9     0 138299162 141213431 0.9793627
     ## 10    chr10     0 132497709 135534747 0.9775922
     ## # ... with 643 more rows
+
+Although this is slightly more verbose than the `bedtools` or `HelloRanges` approach the `plyranges` code makes the actions being performed on the input `Ranges` explicit:
+
+``` r
+bedtools_genomecov("-i exons.bed -g hg19.genome")
+```
+
+    ## {
+    ##     genome <- import("hg19.genome")
+    ##     gr_a <- import("exons.bed", genome = genome)
+    ##     cov <- coverage(gr_a)
+    ##     tablist <- List(lapply(cov, table))
+    ##     mcols(tablist)$len <- lengths(cov, use.names = FALSE)
+    ##     covhist <- stack(tablist, "seqnames", "count", "coverage")
+    ##     margin <- aggregate(covhist, ~coverage, count = sum(NumericList(count)))[-1L]
+    ##     margin <- DataFrame(seqnames = Rle("genome"), margin, len = sum(as.numeric(lengths(cov))))
+    ##     covhist <- rbind(covhist, margin)
+    ##     ans <- within(covhist, fraction <- count/len)
+    ##     ans
+    ## }
 
 ## Composing pipelines
 
@@ -439,6 +562,25 @@ cvg_over_exons <- exons %>%
   summarise(count = sum(as.numeric(width)),
             fraction = count / unique(total)) 
 
+cvg_over_exons
+```
+
+    ## # A tibble: 28 x 3
+    ##    score    count     fraction
+    ##    <int>    <dbl>        <dbl>
+    ##  1     0 14607020 0.6687356377
+    ##  2     1  4644079 0.2126142862
+    ##  3     2  1431318 0.0655283114
+    ##  4     3   581001 0.0265992704
+    ##  5     4   245183 0.0112249186
+    ##  6     5   137255 0.0062837807
+    ##  7     6    84053 0.0038480975
+    ##  8     7    41162 0.0018844704
+    ##  9     8    32327 0.0014799882
+    ## 10     9     9186 0.0004205516
+    ## # ... with 18 more rows
+
+``` r
 library(ggplot2)
 ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
   geom_step() +
@@ -447,4 +589,4 @@ ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
   ylab("fraction of bp > coverage")
 ```
 
-![](bedtools-examples_files/figure-markdown_github/unnamed-chunk-14-1.png)
+![](bedtools-examples_files/figure-markdown_github/unnamed-chunk-15-1.png)
