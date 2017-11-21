@@ -21,6 +21,7 @@ mcols_overlaps_update <- function(x, y, hits, suffix) {
   additional_cols <- DataFrame(start = start(right),
                                end = end(right),
                                width = width(right))
+  if (is(right, "GRanges")) additional_cols$strand <- strand(right)
   names(additional_cols) <- paste0(names(additional_cols), suffix[2])
 
   if (!is.null(mcols(left))) {
