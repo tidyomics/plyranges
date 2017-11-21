@@ -51,7 +51,7 @@ join_nearest.Ranges <- function(x,y) {
 
 #' @export
 join_nearest.GenomicRanges <- function(x,y) {
-  hits <- nearest(x,y, select = "arbitrary", ignore.strand = FALSE)
+  hits <- nearest(x,y, select = "arbitrary", ignore.strand = TRUE)
   nearest_rng(x,y, hits)
 }
 
@@ -75,8 +75,8 @@ join_nearest_left <- function(x, y) { UseMethod("join_nearest_left")}
 #' @export
 join_nearest_left.Ranges <- function(x,y) {
   hits <- nearest(x,y, select = "all")
-  mcols(hits)$is_left <- start(x[queryHits(hits)]) >= start(y[subjectHits(hits)]) &
-    end(x[queryHits(hits)]) > start(y[subjectHits(hits)])
+  mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
+    end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
   nearest_rng_all(x,y, hits)
 }
@@ -84,7 +84,8 @@ join_nearest_left.Ranges <- function(x,y) {
 #' @export
 join_nearest_left.GenomicRanges <- function(x,y) {
   hits <- nearest(x,y, select = "all", ignore.strand = TRUE)
-  mcols(hits)$is_left <- start(x[queryHits(hits)]) >= start(y[subjectHits(hits)])
+  mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
+    end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
   nearest_rng_all(x,y, hits)
 
