@@ -26,17 +26,8 @@ dplyr::mutate
 dplyr::select
 
 #' @export
-dplyr::slice
-
-#' @export
 dplyr::summarise
 
 #' @export
 dplyr::summarize
-
-#' @export
-dplyr::inner_join
-
-#' @export
-dplyr::left_join
 
