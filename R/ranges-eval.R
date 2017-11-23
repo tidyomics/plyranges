@@ -6,7 +6,7 @@ overscope_ranges <- function(x, envir = parent.frame()) {
 }
 
 #' @importFrom rlang env_bind :=
-overscope_eval_update <- function(overscope, dots) {
+overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
 
   names(update) <- names(dots)
@@ -15,8 +15,11 @@ overscope_eval_update <- function(overscope, dots) {
     # sometimes we want to compute on previously constructed columns
     # we can do this by binding the evaluated expression to
     # the overscope environment
-    new_col <- names(dots)[[i]]
-    rlang::env_bind(overscope, !!new_col := update[[i]])
+    if (bind_envir) {
+      new_col <- names(dots)[[i]]
+      rlang::env_bind(overscope, !!new_col := update[[i]])
+    }
+
   }
   return(update)
 }
