@@ -6,7 +6,7 @@ reduce_rng <- function(.data, reduced, ...) {
 
   revmap <- mcols(reduced)$revmap
 
-  ranges_list <- relist(.data[unlist(revmap)], revmap)
+  ranges_list <- IRanges::relist(.data[unlist(revmap)], revmap)
 
   reduced_summary <- as(lapply(ranges_list, summarize_rng, dots), "List")
 
@@ -31,6 +31,12 @@ reduce_rng <- function(.data, reduced, ...) {
 #' rng %>% reduce_ranges()
 #' rng %>% reduce_ranges(gc = mean(gc))
 #' rng %>% reduce_ranges_directed(gc = mean(gc))
+#'
+#' x <- data.frame(start = c(11:13, 2, 7:6), width=3, id=letters[1:6],
+#' score=1:6)
+#' x <- Ranges(x)
+#' x %>% reduce_ranges()
+#' x %>% reduce_ranges(score = sum(score))
 #' @export
 reduce_ranges <- function(.data, ...) { UseMethod("reduce_ranges") }
 
