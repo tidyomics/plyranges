@@ -1,3 +1,4 @@
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![Build Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges) [![Coverage Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
 
@@ -32,4 +33,4 @@ install_github("sa-lee/plyranges")
 Getting started
 ===============
 
-See the [introduction vignette](vignettes/introduction-plyranges.md) for an overview of `plyranges` features. For mapping between `plyranges`, `bedtools` and `GenomicRanges` see the [data wrangling vignette](vignettes/bedtools-examples.md).
+See the [introduction vignette](articles/introduction-plyranges.md) for an overview of `plyranges` features. For mapping between `plyranges`, `bedtools` and `GenomicRanges` see the [data wrangling vignette](articles/bedtools-examples.md).

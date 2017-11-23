@@ -1,7 +1,5 @@
 ---
-output:
-  md_document:
-    variant: markdown_github
+output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -52,9 +50,9 @@ install_github("sa-lee/plyranges")
 
 # Getting started
 
-See the [introduction vignette](vignettes/introduction-plyranges.md) for an
+See the [introduction vignette](articles/introduction-plyranges.md) for an
 overview of `plyranges` features. For mapping between `plyranges`, `bedtools`
-and `GenomicRanges` see the [data wrangling vignette](vignettes/bedtools-examples.md).
+and `GenomicRanges` see the [data wrangling vignette](articles/bedtools-examples.md).
 
 
 
