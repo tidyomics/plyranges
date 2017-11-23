@@ -38,3 +38,21 @@ test_that("ungrouping works as expected", {
   expect_identical(ungroup(gr_by_strand_score), gr1)
   expect_equivalent(gr_by_strand_score %>% ungroup(strand), gr_by_score)
 })
+
+test_that("group by matches HelloRanges", {
+  oldwd <- getwd()
+  setwd(system.file("unitTests", "data", "groupby", package="HelloRanges"))
+
+  a <- read_bed("values3.header.bed")
+  exp <- aggregate(unstrand(a), score.sum = sum(score)) %>%
+    select(-grouping)
+
+  result <- a %>%
+    group_by(seqnames, start, end) %>%
+    summarise(score.sum = sum(score)) %>%
+    Ranges() %>%
+    sort()
+
+  expect_identical(exp, result)
+  setwd(oldwd)
+})
