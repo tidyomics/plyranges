@@ -262,11 +262,10 @@ cvg_over_exons <- exons %>%
 
 cvg_over_exons
 
-library(ggplot2)
-ggplot(cvg_over_exons, aes(x = score, y = 1 - cumsum(fraction))) +
-  geom_step() +
-  xlim(c(0,25))  +
-  xlab("coverage") +
-  ylab("fraction of bp > coverage")
+plot(1 - cumsum(fraction) ~ score, data = cvg_over_exons, 
+     xlim = c(0,25), 
+     type= "l", 
+     xlab = "coverage", 
+     ylab = "fraction of bp > coverage")
 
 ```
