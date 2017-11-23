@@ -23,16 +23,16 @@ flank_right <- function(x, width = 0L) {
   flank(x, width, start = FALSE)
 }
 
-#' @rdname shift-ranges
+#' @rdname flank-ranges
 #' @export
 flank_upstream <- function(x, width = 0L) {
   stopifnot(is.numeric(width))
   flank(x, width, start = TRUE, ignore.strand = FALSE)
 }
 
-#' @rdname shift-ranges
+#' @rdname flank-ranges
 #' @export
-flank_downstream <- function(x, shift = 0L) {
+flank_downstream <- function(x, width = 0L) {
   stopifnot(is.numeric(width))
   flank(x, width, start = FALSE, ignore.strand = FALSE)
 }

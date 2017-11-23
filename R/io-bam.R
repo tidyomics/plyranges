@@ -17,13 +17,13 @@ to_camel <- function(x) {
 #' @param is_paired	Select either unpaired (FALSE) or paired (TRUE) reads.
 #' @param is_proper_pair Select either improperly paired (FALSE) or properly paired (TRUE) reads. This is dependent on the alignment software used.
 #' @param is_unmapped_query	Select unmapped (TRUE) or mapped (FALSE) reads.
-#' @param has_unmapped_mates Select reads with mapped (FALSE) or unmapped (TRUE)  mates.
+#' @param has_unmapped_mate Select reads with mapped (FALSE) or unmapped (TRUE)  mates.
 #' @param is_minus_strand	Select reads aligned to plus (FALSE) or minus (TRUE) strand.
 #' @param is_mate_minus_strand	Select reads where mate is aligned to plus (FALSE) or minus (TRUE) strand.
 #' @param is_first_mate_read	Select reads if they are the first mate (TRUE) or not (FALSE).
 #' @param is_second_mate_read	Select reads if they are the second mate (TRUE) or not (FALSE).
 #' @param is_secondary_alignment Select reads if their alignment status is secondary (TRUE) or not (FALSE). This might be relevant if there are multimapping reads.
-#' @param is_not_passing_quality_controls Select reads that either pass quality controls (FALSE) or that do not (TRUE).
+#' @param is_not_passing_quality_control Select reads that either pass quality controls (FALSE) or that do not (TRUE).
 #' @param is_duplicate	Select reads that are unduplicated (FALSE) or duplicated (TRUE). This may represent reads that are PCR or optical duplicates.
 #'
 #' @details By default all arguments are set to NULL which means any read can

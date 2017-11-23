@@ -2,9 +2,7 @@
 
 #' Read a narrowPeaks file
 #'
-#' @param file A path to a file or a connection.
-#' @param col_names An optional character vector for including additional
-#' columns in \code{file} that are not part of the narrowPeaks specification.
+#' @param file A path to a file or a connection..
 #' @param genome_info An optional character string or a Ranges object
 #' that contains information about the genome build. For example the USSC identifier
 #'"hg19" will add build information to the returned GRanges.
@@ -52,7 +50,7 @@ read_narrowpeaks <- function(file, genome_info = NULL,
 #' @importFrom rtracklayer export.bed
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
-#' @rdname bedxy-files-read
+#' @rdname bedxy-files-write
 write_narrowpeaks <- function(x, path, col_names) {
   export.bed(x, path, expNames = col_names)
 }

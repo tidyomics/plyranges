@@ -12,7 +12,7 @@ tidyr::nest
 #' @importFrom tidyselect vars_select
 #' @importFrom GenomicRanges granges
 #' @rdname ranges-nest
-#' @method unnest GenomicRanges
+#' @method nest GenomicRanges
 #' @export
 nest.GenomicRanges <- function(data, ..., .key = ".data") {
 
@@ -53,9 +53,9 @@ tidyr::unnest
 #' @param .sep not implemented
 #'
 #' @importFrom tidyr unnest
-#' @method nest GenomicRanges
-#' @export
+#' @method unnest GenomicRanges
 #' @rdname ranges-unnest
+#' @export
 unnest.GenomicRanges <- function(data, ..., .drop, .id, .sep) {
 
   dots <- quos(...)

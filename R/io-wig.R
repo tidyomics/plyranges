@@ -15,7 +15,7 @@
 #' @importFrom rtracklayer import.wig
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
-#' @rdname bed-files-read
+#' @rdname wig-files-read
 #' @importFrom rtracklayer import.wig
 #' @importFrom GenomeInfoDb seqinfo
 read_wig <- function(file,  genome_info = NULL, overlap_ranges = NULL) {

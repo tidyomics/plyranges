@@ -32,9 +32,9 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #' @param is_circular An optional logical vector indicating whether a sequence is ciruclar.
 #'
 #' @return An annotated GRanges object. To see the annotations use
-#' \code{get_genome_info}
+#' \code{get_genome_info}.
 #' @export
-#' @rdname ranges-info
+#' @rdname ranges-info-set
 set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
                             seqlengths = NULL, is_circular = NULL) {
 
@@ -49,17 +49,17 @@ set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
 #'
 #' @return A GRanges object
 #' @export
-#' @rdname ranges-info
+#' @rdname ranges-info-get
 get_genome_info <- function(.data)  UseMethod("get_genome_info")
 
-#' @rdname ranges-info
+#' @rdname ranges-info-get
 #' @export
 get_genome_info.GenomicRanges <- function(.data) {
   info <- seqinfo(.data)
   get_genome_info(info)
 }
 
-#' @rdname ranges-info
+#' @rdname ranges-info-get
 #' @export
 get_genome_info.Seqinfo <- function(.data) {
 

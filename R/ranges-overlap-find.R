@@ -1,5 +1,4 @@
 # ranges-overlaps.R
-
 # workhorse funciton for copying metadata columns in y
 mcols_overlaps_update <- function(x, y, hits, suffix) {
 
@@ -39,12 +38,14 @@ mcols_overlaps_update <- function(x, y, hits, suffix) {
 
 #' Find overlap between two Ranges
 #'
-#' @rdname ranges-overlaps.Rd
+#' @rdname ranges-overlaps
 #'
 #' @param x,y Objects representing ranges
 #' @param maxgap,minoverlap The maximimum gap between intervals as an integer
-#' greater than or equal to zero. The minimum amount of overlap between intervals
+#' greater than or equal to negative one. The minimum amount of overlap between intervals
 #' as an integer greater than zero, accounting for the maximum gap.
+#' @param suffix A character vector length two used to identify metadata columns
+#' coming from x and y
 #'
 #' @details \code{find_overlaps} will search for any overlaps between ranges
 #' x and y and return a ranges object of the same length as x but with additional
@@ -53,6 +54,10 @@ mcols_overlaps_update <- function(x, y, hits, suffix) {
 #' the same but will only search for overlaps within y. For GRanges strand is
 #' ignored.
 #'
+#' @return A Ranges object with rows corresponding to the
+#' ranges in x that overlap y. In the case of \code{group_by_overlaps}, returns
+#' a GroupedRanges object, grouped by the number of overlaps
+#' of ranges in x that overlap y (stored in a column called query).
 #' @seealso \link[GenomicRanges]{setops-methods}, \link[IRanges]{findOverlaps-methods}
 #' @importFrom IRanges findOverlaps
 #' @importFrom S4Vectors queryHits subjectHits
@@ -61,14 +66,14 @@ find_overlaps <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("find_overlaps")
 }
 
-#' @rdname ranges-overlaps.Rd
+#' @rdname ranges-overlaps
 #' @export
 find_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
   mcols_overlaps_update(x,y, hits, suffix)
 }
 
-#' @rdname ranges-overlaps.Rd
+#' @rdname ranges-overlaps
 #' @export
 find_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap,
@@ -76,20 +81,20 @@ find_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suf
   mcols_overlaps_update(x,y,hits, suffix)
 }
 
-#' @rdname ranges-overlaps.Rd
+#' @rdname ranges-overlaps
 #' @export
 find_overlaps_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("find_overlaps_within")
 }
 
-#' @rdname ranges-overlaps.Rd
+#' @rdname ranges-overlaps
 #' @export
 find_overlaps_within.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
   mcols_overlaps_update(x,y, hits, suffix = c(".x", ".y"))
 }
 
-#' @rdname ranges-overlaps.Rd
+#' @rdname ranges-overlaps
 #' @export
 find_overlaps_within.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
