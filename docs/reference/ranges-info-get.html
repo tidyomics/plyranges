@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modify a Ranges object — mutate.GenomicRanges • plyranges</title>
+<title>Extract annotation as a Ranges object — get_genome_info • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,42 +90,33 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modify a Ranges object</h1>
+    <h1>Extract annotation as a Ranges object</h1>
     </div>
 
     
-    <p>Modify a Ranges object</p>
+    <p>Extract annotation as a Ranges object</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)
 
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
+<span class='co'># S3 method for GenomicRanges</span>
+<span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)
 
-<span class='co'># S3 method for GRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for IRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='co'># S3 method for Seqinfo</span>
+<span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>a <code>Ranges</code> object</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Pairs of name-value expressions, either creating new columns
-or modifying existing ones.</p></td>
+      <td><p>a Seqinfo object or a GRanges with a seqinfo slot</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a Ranges object</p>
+    <p>A GRanges object</p>
     
 
   </div>

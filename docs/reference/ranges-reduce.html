@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -141,7 +141,21 @@
 #&gt;   [3]     seq1  [ 3,  8]      * |  0.769781925715506
 #&gt;   [4]     seq1  [10, 14]      * | 0.0915102786384523
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>:<span class='fl'>13</span>, <span class='fl'>2</span>, <span class='fl'>7</span>:<span class='fl'>6</span>), <span class='kw'>width</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>id</span><span class='kw'>=</span><span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>],
+<span class='kw'>score</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>6</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Ranges.html'>Ranges</a></span>(<span class='no'>x</span>)
+<span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>()</div><div class='output co'>#&gt; IRanges object with 3 ranges and 0 metadata columns:
+#&gt;           start       end     width
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]         2         4         3
+#&gt;   [2]         6         9         4
+#&gt;   [3]        11        15         5</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>(<span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>score</span>))</div><div class='output co'>#&gt; IRanges object with 3 ranges and 1 metadata column:
+#&gt;           start       end     width |     score
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt;
+#&gt;   [1]         2         4         3 |         4
+#&gt;   [2]         6         9         4 |        11
+#&gt;   [3]        11        15         5 |         6</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

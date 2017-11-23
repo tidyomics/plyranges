@@ -45,10 +45,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -114,7 +114,7 @@ cpg</code></pre></div>
 ##   [28691]     chrY [59349267, 59349574]      * |     CpG:_29
 ##   -------
 ##   seqinfo: 93 sequences from hg19 genome</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bed-files-read.html">read_bed</a></span>(exons_bed, <span class="dt">genome_info =</span> <span class="kw"><a href="../reference/ranges-info.html">get_genome_info</a></span>(cpg))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons &lt;-<span class="st"> </span><span class="kw"><a href="../reference/bed-files-read.html">read_bed</a></span>(exons_bed, <span class="dt">genome_info =</span> <span class="kw"><a href="../reference/ranges-info-get.html">get_genome_info</a></span>(cpg))
 exons</code></pre></div>
 <pre><code>## GRanges object with 459752 ranges and 2 metadata columns:
 ##            seqnames               ranges strand |
@@ -379,7 +379,7 @@ cvg</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(dplyr))
 cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/set_coverage.html">set_coverage</a></span>()
 <span class="co"># convert the sequence annotation to a tibble</span>
-hg19 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-info.html">get_genome_info</a></span>(cvg) <span class="op">%&gt;%</span><span class="st">  </span>
+hg19 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-info-get.html">get_genome_info</a></span>(cvg) <span class="op">%&gt;%</span><span class="st">  </span>
 <span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(seqnames, width, <span class="dt">.drop_ranges =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Then to count the number of bases corresponding to a score we sum over the width of each range in each chromosome. Then we join the resulting <code>tibble</code> to the annotation <code>tibble</code> called <code>hg19</code>. Note that in the sums we have coerced integer variables to doubles to avoid overflow.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist_by_seq &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span>
@@ -532,7 +532,7 @@ cvg_over_exons</code></pre></div>
      <span class="dt">type=</span> <span class="st">"l"</span>, 
      <span class="dt">xlab =</span> <span class="st">"coverage"</span>, 
      <span class="dt">ylab =</span> <span class="st">"fraction of bp &gt; coverage"</span>)</code></pre></div>
-<p><img src="bedtools-examples_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="02-bedtools-examples_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 </div>
 </div>

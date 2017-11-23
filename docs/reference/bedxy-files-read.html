@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -96,20 +96,16 @@
     
     <p>This is a lightweight wrapper to the import family
 of functions defined in <span class="pkg">rtracklayer</span>.</p>
-<p>This is a lightweight wrapper to the import family
-of functions defined in <span class="pkg">rtracklayer</span>.</p>
     
 
-    <pre class="usage"><span class='fu'>read_narrowpeaks</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>write_narrowpeaks</span>(<span class='no'>x</span>, <span class='no'>path</span>, <span class='no'>col_names</span>)</pre>
+    <pre class="usage"><span class='fu'>read_narrowpeaks</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>file</th>
-      <td><p>A path to a file or a connection.</p></td>
+      <td><p>A path to a file or a connection..</p></td>
     </tr>
     <tr>
       <th>genome_info</th>
@@ -122,24 +118,6 @@ that contains information about the genome build. For example the USSC identifie
       <td><p>An optional Ranges object. Only the intervals in the file
 that overlap the Ranges will be returned.</p></td>
     </tr>
-    <tr>
-      <th>x</th>
-      <td><p>A GRanges object</p></td>
-    </tr>
-    <tr>
-      <th>path</th>
-      <td><p>Path or connection to write to</p></td>
-    </tr>
-    <tr>
-      <th>col_names</th>
-      <td><p>An optional character vector for including additional
-columns in <code>file</code> that are not part of the narrowPeaks specification.</p></td>
-    </tr>
-    <tr>
-      <th>col_names</th>
-      <td><p>A character vector indicating which columns
-in the Ranges object represent columns in the narrowPeaks spec</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -148,8 +126,7 @@ in the Ranges object represent columns in the narrowPeaks spec</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BEDFile-class'>BEDFile</a></code>
-    <code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BEDFile-class'>BEDFile</a></code></p>
+    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BEDFile-class'>BEDFile</a></code></p>
     
 
   </div>

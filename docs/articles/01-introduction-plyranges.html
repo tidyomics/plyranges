@@ -45,10 +45,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -408,7 +408,7 @@ ir0</code></pre></div>
 <p>For <code>GRanges</code> objects by default strand is not considered when performing overlap joins. To include strand when finding overlaps use append the prefix <code>directed</code>. To restrict overlapping ranges to those within the query range use the prefix <code>within</code>.</p>
 <p>It’s also possible to group by overlaps. Using this approach we can count the number of overlaps that are greater than 0.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grp_by_olap &lt;-<span class="st"> </span>ir0 <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.Rd.html">group_by_overlaps</a></span>(ir1)
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1)
 grp_by_olap</code></pre></div>
 <pre><code>## IRangesGrouped object with 6 ranges and 4 metadata columns:
 ## Groups: query
@@ -467,7 +467,7 @@ grp_by_olap</code></pre></div>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gc =</span> <span class="kw">runif</span>(<span class="kw">length</span>(.)))
 
 ir0 <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.Rd.html">group_by_overlaps</a></span>(ir1) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">gc =</span> <span class="kw">mean</span>(gc))</code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   query        gc
@@ -640,13 +640,13 @@ ir0 <span class="op">%&gt;%</span><span class="st"> </span>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code><a href="../reference/ranges-overlaps.Rd.html">find_overlaps(x, y, maxgap, minoverlap)</a></code></td>
+<td><code><a href="../reference/ranges-overlaps.html">find_overlaps(x, y, maxgap, minoverlap)</a></code></td>
 <td>Returns a <code>Ranges</code> object with any range in <code>y</code> that overlaps <code>x</code>. Appends the metadata in <code>y</code> and its genomic intervals to the returning <code>Ranges</code>.</td>
 <td>
 <code>findOverlaps(x,y, maxgap, minoverlap, type = "any")</code> with expanding <code>x</code> and <code>y</code> by their hits and appending the <code>mcols</code> in <code>y</code>.</td>
 </tr>
 <tr class="even">
-<td><code><a href="../reference/ranges-overlaps.Rd.html">group_by_overlaps(x, y, maxgap, minoverlap)</a></code></td>
+<td><code><a href="../reference/ranges-overlaps.html">group_by_overlaps(x, y, maxgap, minoverlap)</a></code></td>
 <td>Returns a GroupedRanges object grouped by the query hits.</td>
 <td>Same as above with an additional column called <code>query</code> which contains the queryHits.</td>
 </tr>

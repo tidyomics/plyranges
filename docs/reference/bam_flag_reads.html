@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -120,6 +120,10 @@
       <td><p>Select unmapped (TRUE) or mapped (FALSE) reads.</p></td>
     </tr>
     <tr>
+      <th>has_unmapped_mate</th>
+      <td><p>Select reads with mapped (FALSE) or unmapped (TRUE)  mates.</p></td>
+    </tr>
+    <tr>
       <th>is_minus_strand</th>
       <td><p>Select reads aligned to plus (FALSE) or minus (TRUE) strand.</p></td>
     </tr>
@@ -140,16 +144,12 @@
       <td><p>Select reads if their alignment status is secondary (TRUE) or not (FALSE). This might be relevant if there are multimapping reads.</p></td>
     </tr>
     <tr>
+      <th>is_not_passing_quality_control</th>
+      <td><p>Select reads that either pass quality controls (FALSE) or that do not (TRUE).</p></td>
+    </tr>
+    <tr>
       <th>is_duplicate</th>
       <td><p>Select reads that are unduplicated (FALSE) or duplicated (TRUE). This may represent reads that are PCR or optical duplicates.</p></td>
-    </tr>
-    <tr>
-      <th>has_unmapped_mates</th>
-      <td><p>Select reads with mapped (FALSE) or unmapped (TRUE)  mates.</p></td>
-    </tr>
-    <tr>
-      <th>is_not_passing_quality_controls</th>
-      <td><p>Select reads that either pass quality controls (FALSE) or that do not (TRUE).</p></td>
     </tr>
     </table>
     

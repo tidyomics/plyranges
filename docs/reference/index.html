@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -132,7 +132,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bed-files-read.html">read_bed</a></code> <code><a href="bed-files-read.html">read_bed_graph</a></code> <code><a href="bed-files-read.html">read_wig</a></code> </p>
+            <p><code><a href="bed-files-read.html">read_bed</a></code> <code><a href="bed-files-read.html">read_bed_graph</a></code> </p>
           </td>
           <td><p>Read a BED file</p></td>
         </tr><tr>
@@ -144,9 +144,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bedxy-files-read.html">read_narrowpeaks</a></code> <code><a href="bedxy-files-read.html">write_narrowpeaks</a></code> </p>
+            <p><code><a href="bedxy-files-read.html">read_narrowpeaks</a></code> </p>
           </td>
           <td><p>Read a narrowPeaks file</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="bedxy-files-write.html">write_narrowpeaks</a></code> </p>
+          </td>
+          <td><p>Write a narrowPeaks file</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -180,7 +186,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="flank-ranges.html">flank_left</a></code> <code><a href="flank-ranges.html">flank_right</a></code> </p>
+            <p><code><a href="flank-ranges.html">flank_left</a></code> <code><a href="flank-ranges.html">flank_right</a></code> <code><a href="flank-ranges.html">flank_upstream</a></code> <code><a href="flank-ranges.html">flank_downstream</a></code> </p>
           </td>
           <td><p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p></td>
         </tr><tr>
@@ -294,19 +300,25 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="ranges-info.html">set_genome_info</a></code> <code><a href="ranges-info.html">get_genome_info</a></code> </p>
+            <p><code><a href="ranges-info-get.html">get_genome_info</a></code> </p>
+          </td>
+          <td><p>Extract annotation as a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-info-set.html">set_genome_info</a></code> </p>
           </td>
           <td><p>Add annotation information to a Ranges object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="ranges-nest.html">unnest</a></code> </p>
+            <p><code><a href="ranges-nest.html">nest</a></code> </p>
           </td>
           <td><p>Nest a GenomicRanges object</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="ranges-overlaps.Rd.html">find_overlaps</a></code> <code><a href="ranges-overlaps.Rd.html">find_overlaps_within</a></code> <code><a href="ranges-overlaps.Rd.html">group_by_overlaps</a></code> </p>
+            <p><code><a href="ranges-overlaps.html">find_overlaps</a></code> <code><a href="ranges-overlaps.html">find_overlaps_within</a></code> <code><a href="ranges-overlaps.html">group_by_overlaps</a></code> </p>
           </td>
           <td><p>Find overlap between two Ranges</p></td>
         </tr><tr>
@@ -336,7 +348,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="ranges-unnest.html">nest</a></code> </p>
+            <p><code><a href="ranges-unnest.html">unnest</a></code> </p>
           </td>
           <td><p>Expand list-columns in a Ranges object</p></td>
         </tr><tr>
@@ -372,7 +384,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="shift-ranges.html">flank_upstream</a></code> <code><a href="shift-ranges.html">flank_downstream</a></code> <code><a href="shift-ranges.html">shift_left</a></code> <code><a href="shift-ranges.html">shift_right</a></code> <code><a href="shift-ranges.html">shift_upstream</a></code> <code><a href="shift-ranges.html">shift_downstream</a></code> </p>
+            <p><code><a href="shift-ranges.html">shift_left</a></code> <code><a href="shift-ranges.html">shift_right</a></code> <code><a href="shift-ranges.html">shift_upstream</a></code> <code><a href="shift-ranges.html">shift_downstream</a></code> </p>
           </td>
           <td><p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p></td>
         </tr><tr>
@@ -387,6 +399,12 @@
             <p><code><a href="stretch.html">stretch</a></code> </p>
           </td>
           <td><p>Stretch a genomic interval</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="wig-files-read.html">read_wig</a></code> </p>
+          </td>
+          <td><p>Read a WIG file</p></td>
         </tr>
       </tbody>
       </table>

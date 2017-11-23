@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -95,8 +95,6 @@
 
     
     <p>Find preceding Ranges</p>
-<p>Find all preceding Ranges</p>
-<p>Find all preceding Ranges downstream</p>
     
 
     <pre class="usage"><span class='fu'>join_precede</span>(<span class='no'>x</span>, <span class='no'>y</span>)
@@ -112,36 +110,23 @@
       <th>x, y</th>
       <td><p>Ranges objects, which ranges in x precede those in y.</p></td>
     </tr>
-    <tr>
-      <th>x, y</th>
-      <td><p>Ranges objects, which ranges y precede those on x.</p></td>
-    </tr>
-    <tr>
-      <th>x, y</th>
-      <td><p>Ranges objects, which ranges y precede those on x.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A Ranges object with a metadata column called precede that
-contains the corresponding Ranges that is precedes the ranges x.</p>
-<p>A Ranges object with a metadata column called precedes that
-contains the corresponding Ranges that is precedes the ranges x.</p>
-<p>A Ranges object with a metadata column called precedes that
-contains the corresponding Ranges that is precedes the ranges x.</p>
+contains the corresponding Ranges from y that are preceded by the ranges in x.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default <code>join_precede</code> will find abritrary ranges
-in y that are preceded by ranges in x and ignore any strand information.</p>
-<p>By definition,  <code>join_precede_right</code> will find all ranges in y
+    <p>By default <code>join_precede</code> will return the ranges
+in x that come before the ranges in y and ignore any strand information.
+The function <code>join_precede_right</code> will find all ranges in y
 that are on the right-hand side of the ranges in x ignoring any strand
-information.</p>
-<p>By definition,  <code>join_precede_right</code> will find all ranges in y
+information. Finally, <code>join_precede_downstream</code> will find all ranges in y
 that are that are downstream of the ranges in x. On the positive strand this
 will result in ranges in y that are right of those in x and on the negative
-strand it will result in ranges in y that left of those in x.</p>
+strand it will result in ranges in y that are left of those in x.</p>
     
 
   </div>

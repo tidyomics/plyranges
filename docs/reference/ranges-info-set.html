@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -95,19 +95,10 @@
 
     
     <p>Add annotation information to a Ranges object</p>
-<p>Extract annotation as a Ranges object</p>
     
 
     <pre class="usage"><span class='fu'>set_genome_info</span>(<span class='no'>.data</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
-
-<span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)
-
-<span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)
-
-<span class='co'># S3 method for Seqinfo</span>
-<span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)</pre>
+  <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -132,17 +123,12 @@
       <th>is_circular</th>
       <td><p>An optional logical vector indicating whether a sequence is ciruclar.</p></td>
     </tr>
-    <tr>
-      <th>.data</th>
-      <td><p>a Seqinfo object or a GRanges with a seqinfo slot</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An annotated GRanges object. To see the annotations use
-<code>get_genome_info</code></p>
-<p>A GRanges object</p>
+<code>get_genome_info</code>.</p>
     
 
   </div>
