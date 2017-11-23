@@ -33,4 +33,4 @@ install_github("sa-lee/plyranges")
 Getting started
 ===============
 
-See the [introduction vignette](articles/introduction-plyranges.md) for an overview of `plyranges` features. For mapping between `plyranges`, `bedtools` and `GenomicRanges` see the [data wrangling vignette](articles/bedtools-examples.md).
+See the [introduction vignette](http://stuartlee.org/plyranges/articles/introduction-plyranges.html) for an overview of `plyranges` features. For mapping between `plyranges`, `bedtools` and `GenomicRanges` see the [data wrangling vignette](http://stuartlee.org/plyranges/articles/bedtools-examples.html).
