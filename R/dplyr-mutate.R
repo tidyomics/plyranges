@@ -50,7 +50,10 @@ mutate_rng <- function(.data, dots) {
     stop("mutate must have name-variable pairs as input", .call = FALSE)
   }
 
-  overscope <- overscope_ranges(.data)
+  found_n <- is_n(dots)
+  dots <- check_n(dots)
+
+  overscope <- overscope_ranges(.data, bind_data = found_n)
   on.exit(overscope_clean(overscope))
   .mutated <- overscope_eval_update(overscope, dots)
 

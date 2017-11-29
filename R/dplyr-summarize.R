@@ -1,6 +1,8 @@
 summarize_rng <- function(.data, ...) {
   dots <- UQS(...)
-  overscope <- overscope_ranges(.data)
+  found_n <- is_n(dots)
+  dots <- check_n(dots)
+  overscope <- overscope_ranges(.data, bind_data = found_n)
   on.exit(overscope_clean(overscope))
   overscope_eval_update(overscope, dots)
 }

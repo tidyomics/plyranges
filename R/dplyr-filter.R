@@ -1,15 +1,22 @@
 # filter.R
 filter_rng <- function(.data, expr) {
   expr <- UQ(expr)
-  gr_env <- as.env(.data, parent.frame())
-  overscope <- new_overscope(gr_env, parent.env(gr_env))
+  found_n <- is_n(expr)
+  expr <- check_n(expr)
+  overscope <- overscope_ranges(.data, bind_data = found_n)
 
   r <- overscope_eval_next(overscope, expr)
   on.exit(overscope_clean(overscope))
-
   if (!is.logical(r)) {
-    if (!(is(r, "Rle") & is.logical(runValue(r)))) {
-      stop("expr must be evaluate to a logical vector or logical-Rle")
+    if (!is(r, "Rle")) {
+      stop("Argument to filter condition must evaluate to a logical vector or logical-Rle")
+    }
+  }
+  if (length(r) == 1) {
+    if (r) {
+      return(.data)
+    } else {
+      new(class(.data))
     }
   }
   # drop missing values in r
