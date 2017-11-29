@@ -10,7 +10,7 @@ output:
     variant: markdown_github
 abstract: A fluent interface to `Ranges` classes.
 vignette: >
-  %\VignetteIndexEntry{introduction}
+  %\VignetteIndexEntry{Introduction}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
@@ -167,6 +167,21 @@ ir0 %>% filter_by_overlaps(ir1)
 ir0 %>% filter_by_non_overlaps(ir1) 
 ```
 
+# Summarising Ranges
+
+The `summarise` function will return a tibble because the information required
+to return a _*Ranges_ object is lost. It is often most useful to use `summarise`
+in combination with the `group_by` family of functions. 
+
+```{r}
+ir1 <- ir1 %>%
+  mutate(gc = runif(length(.)))
+
+ir0 %>% 
+  group_by_overlaps(ir1) %>%
+  summarise(gc = mean(gc))
+```
+
 # Joins, or another way at looking at overlaps between Ranges
 
 We can think about finding overlaps as a type of join between two `*Ranges`
@@ -190,7 +205,55 @@ a convienence method called `find_overlaps` that computes the same result.
 join_overlap_left(ir0, ir1)
 ```
 
-We also provide methods for finding, nearest, preceding or following ranges.
+## Example: dealing with multimapping
+This example is taken from the Bioconductor support [site](https://support.bioconductor.org/p/100046/).
+
+We have two Ranges objects. The first contains single nucleotide positions
+corresponding to an intensity measurement, 
+while the other contains coordinates for two genes of interest. 
+We want to identify which positions in the `intensties` ranges overlap the
+genes, where each row corresponds to a position that overlaps a single gene.
+
+First we create the two Ranges objects
+```{r ex1}
+intensities <- data.frame(seqnames = "VI",
+                          start = c(3320:3321,3330:3331,3341:3342),
+                          width = 1)
+intensities <- Ranges(intensities)
+
+intensities 
+
+genes <- data.frame(seqnames = "VI", 
+                    start = c(3322, 3030),
+                    end = c(3846, 3338),
+                    gene_id=c("YFL064C", "YFL065C"))
+                    
+                    
+genes <- Ranges(genes)
+genes
+
+```
+
+Now to find where the positions overlap each gene, we can perform an overlap
+join. This will automatically carry over the gene_id information as well as
+their coordinates (we can drop those by only selecting the gene_id). 
+```{r}
+olap <- join_overlap_left(intensities, genes) %>%
+  select(gene_id)
+olap
+```
+
+Several positions match to both genes. We can count them using `summarise`
+and grouping by the `start` position:
+
+```{r}
+olap %>% 
+  group_by(start) %>%
+  summarise(n = n())
+```
+
+## Finding your neighbours
+We also provide methods for finding nearest, preceding or following ranges.
 These methods nest a ranges column upon returning (maybe better to return just
 coordinates?).
 
@@ -206,6 +269,8 @@ overlap joins. To include strand when finding overlaps use append the prefix
 `directed`. To restrict overlapping ranges to those within the query range
 use the prefix `within`.
 
+## Grouping by overlaps
+
 It's also possible to group by overlaps. Using this approach we can count the
 number of overlaps that are greater than 0. 
 
@@ -214,7 +279,7 @@ grp_by_olap <- ir0 %>%
   group_by_overlaps(ir1)
 grp_by_olap
 grp_by_olap %>%
-  mutate(n_overlaps = length(query))
+  mutate(n_overlaps = n())
 ```
 
 Of course we can also add overlap counts via the `count_overlaps` function.
@@ -222,21 +287,6 @@ Of course we can also add overlap counts via the `count_overlaps` function.
 ```{r}
 ir0 %>%
   mutate(n_overlaps = count_overlaps(., ir1))
-```
-
-# Summarising Ranges
-
-The `summarise` function will return a tibble because the information required
-to return a _*Ranges_ object is lost. It is often most useful to use `summarise`
-in combination with the `group_by` family of functions. 
-
-```{r}
-ir1 <- ir1 %>%
-  mutate(gc = runif(length(.)))
-
-ir0 %>% 
-  group_by_overlaps(ir1) %>%
-  summarise(gc = mean(gc))
 ```
 
 # Data Import/Output
