@@ -33,10 +33,25 @@ nearest_rng_all <- function(x, y, hits, type = "nearest") {
 #'
 #' @details By default \code{join_nearest} will find abritrary nearest
 #' neighbours in either direction and ignore any strand information.
+#' The \code{join_nearest_left} and \code{join_nearest_right}  methods
+#' will find abritrary nearest neighbour ranges on x that are left/right of
+#' those on y and ignore any strand information.
+#'
+#' The \code{join_nearest_upstream} method will find abritrary nearest
+#' neighbour ranges on x that are upstream of those on y. This takes into
+#' account strandedness of the ranges.
+#' On the positive strand nearest upstream will be on the
+#' left and on the negative strand nearest upstream will be on the right.
+#'
+#' The \code{join_nearest_downstream} method will find abritrary nearest
+#' neighbour ranges on x that are upstream of those on y. This takes into
+#' account strandedness of the ranges.On the positive strand nearest downstream
+#' will be on the right and on the negative strand nearest upstream will be on
+#' the left.
 #'
 #' @return A Ranges object with a metadata column called nearest that
 #' contains the corresponding nearest Ranges.
-#' @rdname nearest-ranges
+#' @rdname ranges-nearest
 #' @importFrom IRanges nearest
 #' @export
 join_nearest <- function(x, y) {
@@ -55,20 +70,7 @@ join_nearest.GenomicRanges <- function(x,y) {
   nearest_rng(x,y, hits)
 }
 
-#' Find nearest neighbours on the left between two Ranges objects
-#'
-#' @param x,y Ranges objects, add the nearest neighbours of ranges in x that
-#' are left of those in y.
-#'
-#' @details By default \code{join_nearest_left} will find abritrary nearest
-#' neighbour ranges on x that are left of those on y and ignore any
-#' strand information.
-#'
-#' @return A Ranges object with a metadata column called nearest that
-#' contains the corresponding nearest Ranges.
-#' @rdname nearest-left-ranges
-#' @importFrom IRanges nearest
-#' @export
+#' @rdname ranges-nearest
 #' @export
 join_nearest_left <- function(x, y) { UseMethod("join_nearest_left")}
 
@@ -91,20 +93,8 @@ join_nearest_left.GenomicRanges <- function(x,y) {
 
 }
 
-#' Find nearest neighbours on the right between two Ranges objects
-#'
-#' @param x,y Ranges objects, add the nearest neighbours of ranges in x that
-#' are right of those in y.
-#'
-#' @details By default \code{join_nearest_right} will find abritrary nearest
-#' neighbour ranges on x that are right of those on y and ignore any
-#' strand information.
-#'
-#' @return A Ranges object with a metadata column called nearest that
-#' contains the corresponding nearest Ranges.
-#' @rdname nearest-right-ranges
 #' @importFrom IRanges nearest
-#' @export
+#' @rdname ranges-nearest
 #' @export
 join_nearest_right <- function(x, y) { UseMethod("join_nearest_right")}
 
@@ -125,21 +115,8 @@ join_nearest_right.GenomicRanges <- function(x, y) {
   nearest_rng_all(x,y, hits)
 }
 
-#' Find nearest neighbours that are upstream between two Ranges objects
-#'
-#' @param x,y GRanges objects, add the nearest neighbours of ranges in x that
-#' are upstream of those in y.
-#'
-#' @details \code{join_nearest_upstream} will find abritrary nearest
-#' neighbour ranges on x that are upstream of those on y. This takes into
-#' account strandedness of the ranges.
-#' On the positive strand nearest upstream will be on the
-#' left and on the negative strand nearest upstream will be on the right.
-#'
-#' @return A Ranges object with a metadata column called nearest that
-#' contains the corresponding nearest Ranges.
-#' @rdname nearest-upstream-ranges
-#' @importFrom IRanges nearest
+
+#' @rdname ranges-nearest
 #' @export
 join_nearest_upstream <- function(x, y) { UseMethod("join_nearest_upstream")}
 
@@ -157,21 +134,7 @@ join_nearest_upstream.GenomicRanges <- function(x, y) {
 
 }
 
-
-#' Find nearest neighbours that are downstream between two Ranges objects
-#'
-#' @param x,y GRanges objects, add the nearest neighbours of ranges in x that
-#' are downstream of those in y.
-#'
-#' @details \code{join_nearest_downstream} will find abritrary nearest
-#' neighbour ranges on x that are upstream of those on y. This takes into
-#' account strandedness of the ranges.On the positive strand nearest downstream
-#' will be on the right and on the negative strand nearest upstream will be on
-#' the left.
-#'
-#' @return A Ranges object with a metadata column called nearest that
-#' contains the corresponding nearest Ranges.
-#' @rdname nearest-downstream-ranges
+#' @rdname ranges-nearest
 #' @importFrom IRanges nearest
 #' @export
 join_nearest_downstream <- function(x, y) { UseMethod("join_nearest_downstream")}

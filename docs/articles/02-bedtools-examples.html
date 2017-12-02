@@ -68,7 +68,7 @@
       <h1>Using plyranges to perform common genomic data wrangling tasks</h1>
                         <h4 class="author">Stuart Lee</h4>
             
-            <h4 class="date">2017-11-29</h4>
+            <h4 class="date">2017-12-02</h4>
           </div>
 
     
@@ -150,36 +150,49 @@ exons</code></pre></div>
 <h1 class="hasAnchor">
 <a href="#intersections-and-overlaps" class="anchor"></a>Intersections and Overlaps</h1>
 <p>A useful operation on two <em>Ranges</em> is to identify where they intersect. By default <code>bedtools</code> will return the region of intersection between two genomic tracks. In <code>plyranges</code> the intersect operation is a type of overlap join, that is we are finding the common genomic intervals that overlap between the two tracks.</p>
-<p>In <code>plyranges</code> this is termed an left overlap join:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">intersect_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(cpg, exons)
+<p>In <code>plyranges</code> this is termed an intersect overlap join:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">intersect_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(cpg, exons)
 intersect_rng</code></pre></div>
 <pre><code>## GRanges object with 45500 ranges and 5 metadata columns:
-##           seqnames               ranges strand |   width.x   width.y
-##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt;
-##       [1]     chr1     [ 29321,  29370]      * |      1075        50
-##       [2]     chr1     [135125, 135563]      * |       439      4924
-##       [3]     chr1     [327791, 328229]      * |       439      4143
-##       [4]     chr1     [327791, 328229]      * |       439      4143
-##       [5]     chr1     [327791, 328229]      * |       439      1546
-##       ...      ...                  ...    ... .       ...       ...
-##   [45496]     chrY [59213949, 59214117]      * |       389       169
-##   [45497]     chrY [59213949, 59214117]      * |       389       169
-##   [45498]     chrY [59213949, 59214117]      * |       389       169
-##   [45499]     chrY [59213949, 59214117]      * |       389       169
-##   [45500]     chrY [59213949, 59214117]      * |       389       169
-##                name.x                                name.y     score
-##           &lt;character&gt;                           &lt;character&gt; &lt;numeric&gt;
-##       [1]    CpG:_116      NR_024540_exon_10_0_chr1_29321_r         0
-##       [2]     CpG:_30      NR_039983_exon_0_0_chr1_134773_r         0
-##       [3]     CpG:_29      NR_028322_exon_2_0_chr1_324439_f         0
-##       [4]     CpG:_29      NR_028325_exon_2_0_chr1_324439_f         0
-##       [5]     CpG:_29      NR_028327_exon_3_0_chr1_327036_f         0
-##       ...         ...                                   ...       ...
-##   [45496]     CpG:_36 NM_001145149_exon_0_0_chrY_59213949_f         0
-##   [45497]     CpG:_36 NM_001185183_exon_0_0_chrY_59213949_f         0
-##   [45498]     CpG:_36    NM_005638_exon_0_0_chrY_59213949_f         0
-##   [45499]     CpG:_36    NR_033714_exon_0_0_chrY_59213949_f         0
-##   [45500]     CpG:_36    NR_033715_exon_0_0_chrY_59213949_f         0
+##           seqnames               ranges strand |              granges.x
+##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; |              &lt;GRanges&gt;
+##       [1]     chr1     [ 29321,  29370]      * |       chr1:28736-29810
+##       [2]     chr1     [135125, 135563]      * |     chr1:135125-135563
+##       [3]     chr1     [327791, 328229]      * |     chr1:327791-328229
+##       [4]     chr1     [327791, 328229]      * |     chr1:327791-328229
+##       [5]     chr1     [327791, 328229]      * |     chr1:327791-328229
+##       ...      ...                  ...    ... .                    ...
+##   [45496]     chrY [59213949, 59214117]      * | chrY:59213795-59214183
+##   [45497]     chrY [59213949, 59214117]      * | chrY:59213795-59214183
+##   [45498]     chrY [59213949, 59214117]      * | chrY:59213795-59214183
+##   [45499]     chrY [59213949, 59214117]      * | chrY:59213795-59214183
+##   [45500]     chrY [59213949, 59214117]      * | chrY:59213795-59214183
+##                          granges.y      name.x
+##                          &lt;GRanges&gt; &lt;character&gt;
+##       [1]       chr1:29321-29370:-    CpG:_116
+##       [2]     chr1:134773-139696:-     CpG:_30
+##       [3]     chr1:324439-328581:+     CpG:_29
+##       [4]     chr1:324439-328581:+     CpG:_29
+##       [5]     chr1:327036-328581:+     CpG:_29
+##       ...                      ...         ...
+##   [45496] chrY:59213949-59214117:+     CpG:_36
+##   [45497] chrY:59213949-59214117:+     CpG:_36
+##   [45498] chrY:59213949-59214117:+     CpG:_36
+##   [45499] chrY:59213949-59214117:+     CpG:_36
+##   [45500] chrY:59213949-59214117:+     CpG:_36
+##                                          name.y     score
+##                                     &lt;character&gt; &lt;numeric&gt;
+##       [1]      NR_024540_exon_10_0_chr1_29321_r         0
+##       [2]      NR_039983_exon_0_0_chr1_134773_r         0
+##       [3]      NR_028322_exon_2_0_chr1_324439_f         0
+##       [4]      NR_028325_exon_2_0_chr1_324439_f         0
+##       [5]      NR_028327_exon_3_0_chr1_327036_f         0
+##       ...                                   ...       ...
+##   [45496] NM_001145149_exon_0_0_chrY_59213949_f         0
+##   [45497] NM_001185183_exon_0_0_chrY_59213949_f         0
+##   [45498]    NM_005638_exon_0_0_chrY_59213949_f         0
+##   [45499]    NR_033714_exon_0_0_chrY_59213949_f         0
+##   [45500]    NR_033715_exon_0_0_chrY_59213949_f         0
 ##   -------
 ##   seqinfo: 93 sequences from hg19 genome</code></pre>
 <p>In the <code>HelloRanges</code> API (we also see the <code>bedtools</code> code here) the equivalent operation is:</p>
@@ -253,7 +266,7 @@ code</code></pre></div>
 <div id="excluding-by-overlaps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#excluding-by-overlaps" class="anchor"></a>Excluding by overlaps</h2>
-<p>We can use <code>filter</code> along with the infix operator <code>%over</code> to only include CpG islands that do not overlap any exons.</p>
+<p>We can use <code>filter_by_non_overlaps</code> to include CpG islands that do not overlap any exons.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_non_overlaps</a></span>(., exons)</code></pre></div>
 <pre><code>## GRanges object with 9846 ranges and 1 metadata column:
@@ -284,37 +297,50 @@ code</code></pre></div>
 <div id="excluding-by-fraction-of-overlap" class="section level2">
 <h2 class="hasAnchor">
 <a href="#excluding-by-fraction-of-overlap" class="anchor"></a>Excluding by fraction of overlap</h2>
-<p>A common operation is to filter ranges by the fraction they overlap a given query or subject. We can achieve this with an overlap inner join and mutate. Since an overlap inner join will keep the width of the original query ranges we can combine it with filter. In this example we filter ranges where the proportion of overlap on cpg islands is less than half.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(cpg, exons) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(width <span class="op">/</span><span class="st"> </span>width.x  <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.5</span>)
+<p>A common operation is to filter ranges by the fraction they overlap a given query or subject. We can achieve this with an intersect overlap join and mutate. Since an overlap inner join will keep the the original query and subject ranges as metadata columns we can combine it with filter. In this example we filter intersecting ranges where the proportion of overlap on cpg islands is less than half.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(cpg, exons) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(width <span class="op">/</span><span class="st"> </span><span class="kw">width</span>(granges.x) <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.5</span>)
 olap</code></pre></div>
 <pre><code>## GRanges object with 12669 ranges and 5 metadata columns:
-##           seqnames               ranges strand |   width.x   width.y
-##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt;
-##       [1]     chr1     [135125, 135563]      * |       439      4924
-##       [2]     chr1     [327791, 328229]      * |       439      4143
-##       [3]     chr1     [327791, 328229]      * |       439      4143
-##       [4]     chr1     [327791, 328229]      * |       439      1546
-##       [5]     chr1     [788864, 789211]      * |       348      6056
-##       ...      ...                  ...    ... .       ...       ...
-##   [12665]     chrY [26979967, 26980116]      * |       227       310
-##   [12666]     chrY [26979967, 26980116]      * |       227       310
-##   [12667]     chrY [26979967, 26980116]      * |       227       310
-##   [12668]     chrY [26979990, 26980116]      * |       227       287
-##   [12669]     chrY [26979990, 26980116]      * |       227       287
-##                name.x                                name.y     score
-##           &lt;character&gt;                           &lt;character&gt; &lt;numeric&gt;
-##       [1]     CpG:_30      NR_039983_exon_0_0_chr1_134773_r         0
-##       [2]     CpG:_29      NR_028322_exon_2_0_chr1_324439_f         0
-##       [3]     CpG:_29      NR_028325_exon_2_0_chr1_324439_f         0
-##       [4]     CpG:_29      NR_028327_exon_3_0_chr1_327036_f         0
-##       [5]     CpG:_28      NR_047519_exon_5_0_chr1_788771_f         0
-##       ...         ...                                   ...       ...
-##   [12665]     CpG:_21 NM_001005375_exon_0_0_chrY_26979967_f         0
-##   [12666]     CpG:_21    NM_020364_exon_0_0_chrY_26979967_f         0
-##   [12667]     CpG:_21    NM_020420_exon_0_0_chrY_26979967_f         0
-##   [12668]     CpG:_21 NM_001005785_exon_0_0_chrY_26979990_f         0
-##   [12669]     CpG:_21 NM_001005786_exon_0_0_chrY_26979990_f         0
+##           seqnames               ranges strand |              granges.x
+##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; |              &lt;GRanges&gt;
+##       [1]     chr1     [135125, 135563]      * |     chr1:135125-135563
+##       [2]     chr1     [327791, 328229]      * |     chr1:327791-328229
+##       [3]     chr1     [327791, 328229]      * |     chr1:327791-328229
+##       [4]     chr1     [327791, 328229]      * |     chr1:327791-328229
+##       [5]     chr1     [788864, 789211]      * |     chr1:788864-789211
+##       ...      ...                  ...    ... .                    ...
+##   [12665]     chrY [26979967, 26980116]      * | chrY:26979890-26980116
+##   [12666]     chrY [26979967, 26980116]      * | chrY:26979890-26980116
+##   [12667]     chrY [26979967, 26980116]      * | chrY:26979890-26980116
+##   [12668]     chrY [26979990, 26980116]      * | chrY:26979890-26980116
+##   [12669]     chrY [26979990, 26980116]      * | chrY:26979890-26980116
+##                          granges.y      name.x
+##                          &lt;GRanges&gt; &lt;character&gt;
+##       [1]     chr1:134773-139696:-     CpG:_30
+##       [2]     chr1:324439-328581:+     CpG:_29
+##       [3]     chr1:324439-328581:+     CpG:_29
+##       [4]     chr1:327036-328581:+     CpG:_29
+##       [5]     chr1:788771-794826:+     CpG:_28
+##       ...                      ...         ...
+##   [12665] chrY:26979967-26980276:+     CpG:_21
+##   [12666] chrY:26979967-26980276:+     CpG:_21
+##   [12667] chrY:26979967-26980276:+     CpG:_21
+##   [12668] chrY:26979990-26980276:+     CpG:_21
+##   [12669] chrY:26979990-26980276:+     CpG:_21
+##                                          name.y     score
+##                                     &lt;character&gt; &lt;numeric&gt;
+##       [1]      NR_039983_exon_0_0_chr1_134773_r         0
+##       [2]      NR_028322_exon_2_0_chr1_324439_f         0
+##       [3]      NR_028325_exon_2_0_chr1_324439_f         0
+##       [4]      NR_028327_exon_3_0_chr1_327036_f         0
+##       [5]      NR_047519_exon_5_0_chr1_788771_f         0
+##       ...                                   ...       ...
+##   [12665] NM_001005375_exon_0_0_chrY_26979967_f         0
+##   [12666]    NM_020364_exon_0_0_chrY_26979967_f         0
+##   [12667]    NM_020420_exon_0_0_chrY_26979967_f         0
+##   [12668] NM_001005785_exon_0_0_chrY_26979990_f         0
+##   [12669] NM_001005786_exon_0_0_chrY_26979990_f         0
 ##   -------
 ##   seqinfo: 93 sequences from hg19 genome</code></pre>
 <p>The equivalent bedtools code is:</p>
@@ -468,39 +494,40 @@ cvg_hist</code></pre></div>
 <div id="yet-another-overlaps-example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#yet-another-overlaps-example" class="anchor"></a>Yet another overlaps example</h2>
-<p>Here we perform another example where we chain a filter and then find overlapping ranges between two ranges. In this example we reduce the exons to have zero and then find the ranges that overlap between the filtered exon ranges and the cpg islands.</p>
+<p>Here we perform another example where we find exons with no coverage that overlap cpg islands. To compose a chain first we compute the coverage then use a filter to restrict to zero coverage ranges. Then we perfrom an inner overlap join to find which cpg islands overlap the exonic regions with zero coverage.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">overlaps &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/set_coverage.html">set_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(score <span class="op">==</span><span class="st"> </span>0L) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(.,  cpg) 
+<span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(.,  cpg) 
 
 overlaps</code></pre></div>
-<pre><code>## GRanges object with 45500 ranges and 5 metadata columns:
-##           seqnames               ranges strand |   width.x   width.y
-##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;integer&gt;
-##       [1]     chr1     [ 29321,  29370]      - |        50      1075
-##       [2]     chr1     [135125, 135563]      - |      4924       439
-##       [3]     chr1     [327791, 328229]      + |      4143       439
-##       [4]     chr1     [327791, 328229]      + |      4143       439
-##       [5]     chr1     [327791, 328229]      + |      1546       439
-##       ...      ...                  ...    ... .       ...       ...
-##   [45496]     chrY [59213949, 59214117]      + |       169       389
-##   [45497]     chrY [59213949, 59214117]      + |       169       389
-##   [45498]     chrY [59213949, 59214117]      + |       169       389
-##   [45499]     chrY [59213949, 59214117]      + |       169       389
-##   [45500]     chrY [59213949, 59214117]      + |       169       389
-##                                          name.x     score      name.y
-##                                     &lt;character&gt; &lt;numeric&gt; &lt;character&gt;
-##       [1]      NR_024540_exon_10_0_chr1_29321_r         0    CpG:_116
-##       [2]      NR_039983_exon_0_0_chr1_134773_r         0     CpG:_30
-##       [3]      NR_028322_exon_2_0_chr1_324439_f         0     CpG:_29
-##       [4]      NR_028325_exon_2_0_chr1_324439_f         0     CpG:_29
-##       [5]      NR_028327_exon_3_0_chr1_327036_f         0     CpG:_29
-##       ...                                   ...       ...         ...
-##   [45496] NM_001145149_exon_0_0_chrY_59213949_f         0     CpG:_36
-##   [45497] NM_001185183_exon_0_0_chrY_59213949_f         0     CpG:_36
-##   [45498]    NM_005638_exon_0_0_chrY_59213949_f         0     CpG:_36
-##   [45499]    NR_033714_exon_0_0_chrY_59213949_f         0     CpG:_36
-##   [45500]    NR_033715_exon_0_0_chrY_59213949_f         0     CpG:_36
+<pre><code>## GRanges object with 40913 ranges and 4 metadata columns:
+##                 seqnames           ranges strand |              granges.x
+##                    &lt;Rle&gt;        &lt;IRanges&gt;  &lt;Rle&gt; |              &lt;GRanges&gt;
+##       [1]           chr1 [ 28736,  29320]      * |       chr1:24892-29320
+##       [2]           chr1 [ 29371,  29810]      * |       chr1:29371-34610
+##       [3]           chr1 [437152, 438164]      * |     chr1:368598-621095
+##       [4]           chr1 [449274, 450544]      * |     chr1:368598-621095
+##       [5]           chr1 [533220, 534114]      * |     chr1:368598-621095
+##       ...            ...              ...    ... .                    ...
+##   [40909] chrUn_gl000237   [10508, 10819]      * | chrUn_gl000237:1-45867
+##   [40910] chrUn_gl000240   [39225, 39430]      * | chrUn_gl000240:1-41933
+##   [40911] chrUn_gl000241   [36462, 37273]      * | chrUn_gl000241:1-42152
+##   [40912] chrUn_gl000242   [12843, 13099]      * | chrUn_gl000242:1-43523
+##   [40913] chrUn_gl000243   [30420, 30715]      * | chrUn_gl000243:1-43341
+##                            granges.y     score        name
+##                            &lt;GRanges&gt; &lt;integer&gt; &lt;character&gt;
+##       [1]           chr1:28736-29810         0    CpG:_116
+##       [2]           chr1:28736-29810         0    CpG:_116
+##       [3]         chr1:437152-438164         0     CpG:_84
+##       [4]         chr1:449274-450544         0     CpG:_99
+##       [5]         chr1:533220-534114         0     CpG:_94
+##       ...                        ...       ...         ...
+##   [40909] chrUn_gl000237:10508-10819         0     CpG:_30
+##   [40910] chrUn_gl000240:39225-39430         0     CpG:_17
+##   [40911] chrUn_gl000241:36462-37273         0     CpG:_71
+##   [40912] chrUn_gl000242:12843-13099         0     CpG:_20
+##   [40913] chrUn_gl000243:30420-30715         0     CpG:_31
 ##   -------
 ##   seqinfo: 93 sequences from hg19 genome</code></pre>
 <p>We can also compute the coverage histogram of exons over cpg islands and then plot results as an ecdf.</p>
@@ -514,22 +541,22 @@ overlaps</code></pre></div>
 
 cvg_over_exons</code></pre></div>
 <pre><code>## # A tibble: 28 x 3
-##    score    count     fraction
-##    &lt;int&gt;    &lt;dbl&gt;        &lt;dbl&gt;
-##  1     0 14607020 0.6687356377
-##  2     1  4644079 0.2126142862
-##  3     2  1431318 0.0655283114
-##  4     3   581001 0.0265992704
-##  5     4   245183 0.0112249186
-##  6     5   137255 0.0062837807
-##  7     6    84053 0.0038480975
-##  8     7    41162 0.0018844704
-##  9     8    32327 0.0014799882
-## 10     9     9186 0.0004205516
+##    score      count     fraction
+##    &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+##  1     0 3275850528 9.961117e-01
+##  2     1    8565943 2.604709e-03
+##  3     2    2429912 7.388810e-04
+##  4     3     915394 2.783505e-04
+##  5     4     373081 1.134455e-04
+##  6     5     217128 6.602369e-05
+##  7     6     119064 3.620466e-05
+##  8     7      52058 1.582965e-05
+##  9     8      45402 1.380572e-05
+## 10     9      13880 4.220592e-06
 ## # ... with 18 more rows</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">cumsum</span>(fraction) <span class="op">~</span><span class="st"> </span>score, <span class="dt">data =</span> cvg_over_exons, 
      <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">25</span>), 
-     <span class="dt">type=</span> <span class="st">"l"</span>, 
+     <span class="dt">type=</span> <span class="st">"s"</span>, 
      <span class="dt">xlab =</span> <span class="st">"coverage"</span>, 
      <span class="dt">ylab =</span> <span class="st">"fraction of bp &gt; coverage"</span>)</code></pre></div>
 <p><img src="02-bedtools-examples_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>

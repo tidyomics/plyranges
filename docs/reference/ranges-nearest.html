@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find nearest neighbours that are upstream between two Ranges objects — join_nearest_upstream • plyranges</title>
+<title>Find nearest neighbours between two Ranges objects — join_nearest • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,22 +90,30 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find nearest neighbours that are upstream between two Ranges objects</h1>
+    <h1>Find nearest neighbours between two Ranges objects</h1>
     </div>
 
     
-    <p>Find nearest neighbours that are upstream between two Ranges objects</p>
+    <p>Find nearest neighbours between two Ranges objects</p>
     
 
-    <pre class="usage"><span class='fu'>join_nearest_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+    <pre class="usage"><span class='fu'>join_nearest</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+
+<span class='fu'>join_nearest_left</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+
+<span class='fu'>join_nearest_right</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+
+<span class='fu'>join_nearest_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+
+<span class='fu'>join_nearest_downstream</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x, y</th>
-      <td><p>GRanges objects, add the nearest neighbours of ranges in x that
-are upstream of those in y.</p></td>
+      <td><p>Ranges objects, add the nearest neighbours of ranges in x to
+those in y.</p></td>
     </tr>
     </table>
     
@@ -116,11 +124,21 @@ contains the corresponding nearest Ranges.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>join_nearest_upstream</code> will find abritrary nearest
+    <p>By default <code>join_nearest</code> will find abritrary nearest
+neighbours in either direction and ignore any strand information.
+The <code>join_nearest_left</code> and <code>join_nearest_right</code>  methods
+will find abritrary nearest neighbour ranges on x that are left/right of
+those on y and ignore any strand information.</p>
+<p>The <code>join_nearest_upstream</code> method will find abritrary nearest
 neighbour ranges on x that are upstream of those on y. This takes into
 account strandedness of the ranges.
 On the positive strand nearest upstream will be on the
 left and on the negative strand nearest upstream will be on the right.</p>
+<p>The <code>join_nearest_downstream</code> method will find abritrary nearest
+neighbour ranges on x that are upstream of those on y. This takes into
+account strandedness of the ranges.On the positive strand nearest downstream
+will be on the right and on the negative strand nearest upstream will be on
+the left.</p>
     
 
   </div>

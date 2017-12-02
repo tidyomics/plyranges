@@ -16,7 +16,7 @@
 #' @return A Ranges object with a metadata column called follows that
 #' contains the corresponding Ranges in y that are followed by the ranges in x.
 #'
-#' @rdname follow-ranges
+#' @rdname ranges-follow
 #' @importFrom IRanges follow
 #' @export
 join_follow <- function(x,y) { UseMethod("join_follow") }
@@ -35,7 +35,7 @@ join_follow.GenomicRanges <- function(x,y) {
 
 
 
-#' @rdname follow-ranges
+#' @rdname ranges-follow
 #' @importFrom IRanges follow
 #' @export
 join_follow_left <- function(x,y) { UseMethod("join_follow_left") }
@@ -52,7 +52,7 @@ join_follow_left.GenomicRanges <- function(x,y) {
   nearest_rng_all(x,y, hits, type = "follows")
 }
 
-#' @rdname follow-ranges
+#' @rdname ranges-follow
 #' @importFrom IRanges follow
 #' @export
 join_follow_upstream <- function(x,y) {UseMethod("join_follow_upstream")}

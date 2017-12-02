@@ -68,14 +68,10 @@
       <h1>Introduction to the plyranges package</h1>
                         <h4 class="author">Stuart Lee</h4>
             
-            <h4 class="date">2017-11-29</h4>
+            <h4 class="date">2017-12-02</h4>
           </div>
 
     
-        <div class="abstract">
-      <p class="abstract">Abstract</p>
-      A fluent interface to <code>Ranges</code> classes.
-    </div>
     
 <div class="contents">
 <div id="introduction" class="section level1">
@@ -86,14 +82,15 @@
 </div>
 <div id="ranges-revisted" class="section level1">
 <h1 class="hasAnchor">
-<a href="#ranges-revisted" class="anchor"></a>Ranges revisted</h1>
+<a href="#ranges-revisted" class="anchor"></a><code>Ranges</code> revisted</h1>
 <p><code>Ranges</code> objects can either represent intervals of integers as <code>IRanges</code> (which have start, end and width attributes) or represent genomic intervals (which have additional attributes, sequence name, and strand) as <code>GRanges</code>. In addition, both types of <code>Ranges</code> can store information about their intervals as metadata columns (for example GC content over a genomic interval).</p>
 <p><code>Ranges</code> objects follow the tidy data principle: each row of a <code>Ranges</code> object corresponds to an interval, while each column will represent a variable about that interval, and generally each object will represent a single unit of observation (like gene annotations).</p>
 <p>Consequently, <code>Ranges</code> objects provide a powerful representation for reasoning about genomic data. In this vignette, you will learn more about <code>Ranges</code> objects and how via grouping, restriction and summarisation you can perform common data tasks.</p>
 </div>
 <div id="constructing-ranges" class="section level1">
 <h1 class="hasAnchor">
-<a href="#constructing-ranges" class="anchor"></a>Constructing Ranges</h1>
+<a href="#constructing-ranges" class="anchor"></a>Constructing <code>Ranges</code>
+</h1>
 <p>To construct an <code>IRanges</code> we require there are at least two columns that represent at either a starting coordinate, finishing coordinate or the width of the interval. To construct a <code>GRanges</code> we require a column that represents that sequence name ( contig or chromosome id), and an optional column to represent the strandedness of an interval.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(plyranges))
 <span class="kw">set.seed</span>(<span class="dv">100</span>)
@@ -265,7 +262,8 @@ rng2</code></pre></div>
 </div>
 <div id="grouping-ranges" class="section level1">
 <h1 class="hasAnchor">
-<a href="#grouping-ranges" class="anchor"></a>Grouping Ranges</h1>
+<a href="#grouping-ranges" class="anchor"></a>Grouping <code>Ranges</code>
+</h1>
 <p><code>plyranges</code> introduces a new class of <code>Ranges</code> called <code>RangesGrouped</code>, this is a similiar idea to the grouped <code>data.frame\tibble</code> in <code>dplyr</code>. Note that grouping does not change the structure of a <code>Ranges</code> object only how certain functions act on it.</p>
 <p>Grouping can act on either the core components or the metadata columns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grng &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
@@ -295,8 +293,9 @@ grng_by_strand</code></pre></div>
 </div>
 <div id="restricting-ranges" class="section level1">
 <h1 class="hasAnchor">
-<a href="#restricting-ranges" class="anchor"></a>Restricting Ranges</h1>
-<p>The verb <code>filter</code> can be used to restrict rows in the Ranges. Note that grouping will cause the <code>filter</code> to act within each group of the data.</p>
+<a href="#restricting-ranges" class="anchor"></a>Restricting <code>Ranges</code>
+</h1>
+<p>The verb <code>filter</code> can be used to restrict rows in the <code>Ranges</code>. Note that grouping will cause the <code>filter</code> to act within each group of the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grng <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gc <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.3</span>)</code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |                gc
@@ -315,7 +314,7 @@ grng_by_strand <span class="op">%&gt;%</span><span class="st"> </span><span clas
 ##   [2]     chr1   [4, 13]      - | 0.989564136601985
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-<p>We also provide the convience methods <code>filter_by_overlaps</code> and <code>filter_by_non_overlaps</code> for restricting by overlapping ranges.</p>
+<p>We also provide the convience methods <code>filter_by_overlaps</code> and <code>filter_by_non_overlaps</code> for restricting by overlapping <code>Ranges</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir0 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">10</span>, <span class="dv">15</span>,<span class="dv">20</span>), <span class="dt">width =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="../reference/Ranges.html">Ranges</a></span>()
 ir1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">width =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">7</span>) <span class="op">%&gt;%</span>
@@ -352,8 +351,9 @@ ir0</code></pre></div>
 </div>
 <div id="summarising-ranges" class="section level1">
 <h1 class="hasAnchor">
-<a href="#summarising-ranges" class="anchor"></a>Summarising Ranges</h1>
-<p>The <code>summarise</code> function will return a tibble because the information required to return a _*Ranges_ object is lost. It is often most useful to use <code>summarise</code> in combination with the <code>group_by</code> family of functions.</p>
+<a href="#summarising-ranges" class="anchor"></a>Summarising <code>Ranges</code>
+</h1>
+<p>The <code>summarise</code> function will return a tibble because the information required to return a <code>Ranges</code> object is lost. It is often most useful to use <code>summarise</code> in combination with the <code>group_by</code> family of functions.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir1 &lt;-<span class="st"> </span>ir1 <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gc =</span> <span class="kw">runif</span>(<span class="kw">length</span>(.)))
 
@@ -368,51 +368,52 @@ ir0 <span class="op">%&gt;%</span><span class="st"> </span>
 </div>
 <div id="joins-or-another-way-at-looking-at-overlaps-between-ranges" class="section level1">
 <h1 class="hasAnchor">
-<a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges" class="anchor"></a>Joins, or another way at looking at overlaps between Ranges</h1>
-<p>We can think about finding overlaps as a type of join between two <code>*Ranges</code> where we are using the intervals as keys. Of most use are the <code>join_overlap_inner</code> and <code>join_overlap_left</code> functions. The former will return a <code>Ranges</code> object where the start, end, and width coordinates correspond to the amount of any overlap. By default, the width of the input ranges is added as metadata. This allows downstreaming filtering by the amount of overlap.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(ir0, ir1)</code></pre></div>
+<a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges" class="anchor"></a>Joins, or another way at looking at overlaps between <code>Ranges</code>
+</h1>
+<p>We can think about finding overlaps as a type of join between two <code>Ranges</code> where we are using the intervals as keys. Of most use are the <code>join_overlap_intersect</code>, <code>join_overlap_inner</code> and <code>join_overlap_left</code> functions.</p>
+<p>The first function, <code>join_overlap_intersect</code> will return a <code>Ranges`` object  where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input</code>Ranges<code>.  These coordinates correspond to the intervals that are the intersecting</code>Ranges<code>.  By default, the input</code>Ranges` (and any other metadata) will be carried over as metadata columns. The names of the columsn</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(ir0, ir1, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">".left"</span>, <span class="st">".right"</span>))</code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 3 metadata columns:
-##           start       end     width |   width.x   width.y
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt; &lt;integer&gt;
-##   [1]         5         6         2 |         5         4
-##   [2]         5         8         4 |         5         5
-##   [3]         5         9         5 |         5         6
-##   [4]         6         9         4 |         5         7
-##   [5]        10        10         1 |         5         6
-##   [6]        10        12         3 |         5         7
-##                      gc
-##               &lt;numeric&gt;
-##   [1] 0.827303449623287
-##   [2] 0.603324356488883
-##   [3] 0.491231821943074
-##   [4] 0.780358511023223
-##   [5] 0.491231821943074
-##   [6] 0.780358511023223</code></pre>
-<p>The <code>join_overlap_left</code> method will add the coordinates of the right hand ranges that overlap those ranges on the left. Compared with <code>filter_by_overlaps</code> above, the overlap join expands the ranges to give information about each range on the right hand side that overlaps those on the left. We also provide a convienence method called <code>find_overlaps</code> that computes the same result.</p>
+##           start       end     width | ranges.left ranges.right        gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |   &lt;IRanges&gt;    &lt;IRanges&gt; &lt;numeric&gt;
+##   [1]         5         6         2 |    [ 5,  9]      [3,  6] 0.8273034
+##   [2]         5         8         4 |    [ 5,  9]      [4,  8] 0.6033244
+##   [3]         5         9         5 |    [ 5,  9]      [5, 10] 0.4912318
+##   [4]         6         9         4 |    [ 5,  9]      [6, 12] 0.7803585
+##   [5]        10        10         1 |    [10, 14]      [5, 10] 0.4912318
+##   [6]        10        12         3 |    [10, 14]      [6, 12] 0.7803585</code></pre>
+<p>The <code>join_overlap_inner</code> function will return the <code>Ranges</code> on the left that overlap any <code>Ranges</code> on the right. By default, it returns the <code>Ranges</code> on the right that overlap (and any other metadata columns belonging to the left or right) as a metadata column.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(ir0, ir1, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">".left"</span>, <span class="st">".right"</span>))</code></pre></div>
+<pre><code>## IRanges object with 6 ranges and 2 metadata columns:
+##           start       end     width | ranges.right        gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |    &lt;IRanges&gt; &lt;numeric&gt;
+##   [1]         5         9         5 |      [3,  6] 0.8273034
+##   [2]         5         9         5 |      [4,  8] 0.6033244
+##   [3]         5         9         5 |      [5, 10] 0.4912318
+##   [4]         5         9         5 |      [6, 12] 0.7803585
+##   [5]        10        14         5 |      [5, 10] 0.4912318
+##   [6]        10        14         5 |      [6, 12] 0.7803585</code></pre>
+<p>We also provide a convienence method called <code>find_overlaps</code> that computes the same result as <code>join_overlap_inner</code>.</p>
+<p>The <code>join_overlap_left</code> method will perform an outer left join. First any overlaps that are found will be returned similar to <code>join_overlap_inner</code>. Then any non-overlapping ranges will be returned, with missing values on the metadata columns. A ‘missing’ value for an <code>IRanges</code> column is interval with zero width, with <code>start=0</code> and <code>end=-1</code>. A ‘missing’ value for a <code>GRanges</code> column is the same as the <code>IRanges</code> but with <code>seqnames='.'</code> and <code>strand='*'</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(ir0, ir1)</code></pre></div>
-<pre><code>## IRanges object with 6 ranges and 4 metadata columns:
-##           start       end     width |   start.y     end.y   width.y
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-##   [1]         5         9         5 |         3         6         4
-##   [2]         5         9         5 |         4         8         5
-##   [3]         5         9         5 |         5        10         6
-##   [4]         5         9         5 |         6        12         7
-##   [5]        10        14         5 |         5        10         6
-##   [6]        10        14         5 |         6        12         7
-##                      gc
-##               &lt;numeric&gt;
-##   [1] 0.827303449623287
-##   [2] 0.603324356488883
-##   [3] 0.491231821943074
-##   [4] 0.780358511023223
-##   [5] 0.491231821943074
-##   [6] 0.780358511023223</code></pre>
+<pre><code>## IRanges object with 8 ranges and 2 metadata columns:
+##           start       end     width |  ranges.y        gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;IRanges&gt; &lt;numeric&gt;
+##   [1]         5         9         5 |   [3,  6] 0.8273034
+##   [2]         5         9         5 |   [4,  8] 0.6033244
+##   [3]         5         9         5 |   [5, 10] 0.4912318
+##   [4]         5         9         5 |   [6, 12] 0.7803585
+##   [5]        10        14         5 |   [5, 10] 0.4912318
+##   [6]        10        14         5 |   [6, 12] 0.7803585
+##   [7]        15        19         5 |   [0, -1]      &lt;NA&gt;
+##   [8]        20        24         5 |   [0, -1]      &lt;NA&gt;</code></pre>
+<p>Compared with <code>filter_by_overlaps</code> above, the overlap left join expands the <code>Ranges</code> to give information about each interval on the left hand side that overlap those on the right as well as the intervals on the left that do not overlap any range on the right.</p>
 <div id="example-dealing-with-multimapping" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-dealing-with-multimapping" class="anchor"></a>Example: dealing with multimapping</h2>
 <p>This example is taken from the Bioconductor support <a href="https://support.bioconductor.org/p/100046/">site</a>.</p>
-<p>We have two Ranges objects. The first contains single nucleotide positions corresponding to an intensity measurement, while the other contains coordinates for two genes of interest. We want to identify which positions in the <code>intensties</code> ranges overlap the genes, where each row corresponds to a position that overlaps a single gene.</p>
-<p>First we create the two Ranges objects</p>
+<p>We have two <code>Ranges</code> objects. The first contains single nucleotide positions corresponding to an intensity measurement, while the other contains coordinates for two genes of interest. We want to identify which positions in the <code>intensties</code> <code>Ranges</code> overlap the genes, where each row corresponds to a position that overlaps a single gene.</p>
+<p>First we create the two <code>Ranges</code> objects</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">intensities &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>,
                           <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3320</span><span class="op">:</span><span class="dv">3321</span>,<span class="dv">3330</span><span class="op">:</span><span class="dv">3331</span>,<span class="dv">3341</span><span class="op">:</span><span class="dv">3342</span>),
                           <span class="dt">width =</span> <span class="dv">1</span>)
@@ -446,7 +447,7 @@ genes</code></pre></div>
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Now to find where the positions overlap each gene, we can perform an overlap join. This will automatically carry over the gene_id information as well as their coordinates (we can drop those by only selecting the gene_id).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(intensities, genes) <span class="op">%&gt;%</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(intensities, genes) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(gene_id)
 olap</code></pre></div>
 <pre><code>## GRanges object with 8 ranges and 1 metadata column:
@@ -479,8 +480,8 @@ olap</code></pre></div>
 <div id="finding-your-neighbours" class="section level2">
 <h2 class="hasAnchor">
 <a href="#finding-your-neighbours" class="anchor"></a>Finding your neighbours</h2>
-<p>We also provide methods for finding nearest, preceding or following ranges. These methods nest a ranges column upon returning (maybe better to return just coordinates?).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/nearest-ranges.html">join_nearest</a></span>(ir0, ir1)</code></pre></div>
+<p>We also provide methods for finding nearest, preceding or following <code>Ranges</code>. These methods nest a <code>Ranges</code> column upon returning (maybe better to return just coordinates?).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ranges-nearest.html">join_nearest</a></span>(ir0, ir1)</code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 2 metadata columns:
 ##           start       end     width |   nearest      gc.y
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;IRanges&gt; &lt;numeric&gt;
@@ -488,7 +489,7 @@ olap</code></pre></div>
 ##   [2]        10        14         5 |   [6, 12] 0.7803585
 ##   [3]        15        19         5 |   [6, 12] 0.7803585
 ##   [4]        20        24         5 |   [6, 12] 0.7803585</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/follow-ranges.html">join_follow</a></span>(ir0, ir1)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ranges-follow.html">join_follow</a></span>(ir0, ir1)</code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 2 metadata columns:
 ##           start       end     width |   follows      gc.y
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;IRanges&gt; &lt;numeric&gt;
@@ -496,7 +497,7 @@ olap</code></pre></div>
 ##   [2]        10        14         5 |   [4,  8] 0.6033244
 ##   [3]        15        19         5 |   [6, 12] 0.7803585
 ##   [4]        20        24         5 |   [6, 12] 0.7803585</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty ranges</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></code></pre></div>
 <pre><code>## IRanges object with 0 ranges and 2 metadata columns:
 ##        start       end     width |  precedes      gc.y
 ##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;IRanges&gt; &lt;numeric&gt;</code></pre>
@@ -509,7 +510,7 @@ olap</code></pre></div>
 ##   [3]         4         8         5 | 0.6033244  [10, 14]
 ##   [4]         5        10         6 | 0.4912318  [15, 19]
 ##   [5]         6        12         7 | 0.7803585  [15, 19]</code></pre>
-<p>For <code>GRanges</code> objects by default strand is not considered when performing overlap joins. To include strand when finding overlaps use append the prefix <code>directed</code>. To restrict overlapping ranges to those within the query range use the prefix <code>within</code>.</p>
+<p>For <code>GRanges</code> objects by default strand is not considered when performing overlap joins. To include strand when finding overlaps use append the prefix <code>directed</code>. To restrict overlapping <code>Ranges</code> to those within the query range use the prefix <code>within</code>.</p>
 </div>
 <div id="grouping-by-overlaps" class="section level2">
 <h2 class="hasAnchor">
@@ -518,44 +519,36 @@ olap</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grp_by_olap &lt;-<span class="st"> </span>ir0 <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1)
 grp_by_olap</code></pre></div>
-<pre><code>## IRangesGrouped object with 6 ranges and 5 metadata columns:
+<pre><code>## IRangesGrouped object with 6 ranges and 3 metadata columns:
 ## Groups: query
-##           start       end     width | start.subject end.subject
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |     &lt;integer&gt;   &lt;integer&gt;
-##   [1]         5         9         5 |             3           6
-##   [2]         5         9         5 |             4           8
-##   [3]         5         9         5 |             5          10
-##   [4]         5         9         5 |             6          12
-##   [5]        10        14         5 |             5          10
-##   [6]        10        14         5 |             6          12
-##       width.subject                gc     query
-##           &lt;integer&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]             4 0.827303449623287         1
-##   [2]             5 0.603324356488883         1
-##   [3]             6 0.491231821943074         1
-##   [4]             7 0.780358511023223         1
-##   [5]             6 0.491231821943074         2
-##   [6]             7 0.780358511023223         2</code></pre>
+##           start       end     width | ranges.subject        gc     query
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |      &lt;IRanges&gt; &lt;numeric&gt; &lt;integer&gt;
+##   [1]         5         9         5 |        [3,  6] 0.8273034         1
+##   [2]         5         9         5 |        [4,  8] 0.6033244         1
+##   [3]         5         9         5 |        [5, 10] 0.4912318         1
+##   [4]         5         9         5 |        [6, 12] 0.7803585         1
+##   [5]        10        14         5 |        [5, 10] 0.4912318         2
+##   [6]        10        14         5 |        [6, 12] 0.7803585         2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grp_by_olap <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw">n</span>())</code></pre></div>
-<pre><code>## IRangesGrouped object with 6 ranges and 6 metadata columns:
+<pre><code>## IRangesGrouped object with 6 ranges and 4 metadata columns:
 ## Groups: query
-##           start       end     width | start.subject end.subject
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |     &lt;integer&gt;   &lt;integer&gt;
-##   [1]         5         9         5 |             3           6
-##   [2]         5         9         5 |             4           8
-##   [3]         5         9         5 |             5          10
-##   [4]         5         9         5 |             6          12
-##   [5]        10        14         5 |             5          10
-##   [6]        10        14         5 |             6          12
-##       width.subject                gc     query n_overlaps
-##           &lt;integer&gt;         &lt;numeric&gt; &lt;integer&gt;  &lt;integer&gt;
-##   [1]             4 0.827303449623287         1          4
-##   [2]             5 0.603324356488883         1          4
-##   [3]             6 0.491231821943074         1          4
-##   [4]             7 0.780358511023223         1          4
-##   [5]             6 0.491231821943074         2          2
-##   [6]             7 0.780358511023223         2          2</code></pre>
+##           start       end     width | ranges.subject        gc     query
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |      &lt;IRanges&gt; &lt;numeric&gt; &lt;integer&gt;
+##   [1]         5         9         5 |        [3,  6] 0.8273034         1
+##   [2]         5         9         5 |        [4,  8] 0.6033244         1
+##   [3]         5         9         5 |        [5, 10] 0.4912318         1
+##   [4]         5         9         5 |        [6, 12] 0.7803585         1
+##   [5]        10        14         5 |        [5, 10] 0.4912318         2
+##   [6]        10        14         5 |        [6, 12] 0.7803585         2
+##       n_overlaps
+##        &lt;integer&gt;
+##   [1]          4
+##   [2]          4
+##   [3]          4
+##   [4]          4
+##   [5]          2
+##   [6]          2</code></pre>
 <p>Of course we can also add overlap counts via the <code>count_overlaps</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir0 <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.Rd.html">count_overlaps</a></span>(., ir1))</code></pre></div>
@@ -571,7 +564,7 @@ grp_by_olap</code></pre></div>
 <div id="data-importoutput" class="section level1">
 <h1 class="hasAnchor">
 <a href="#data-importoutput" class="anchor"></a>Data Import/Output</h1>
-<p>We provide convienence functions via <code>rtracklayer</code> for reading/writing the following data formats from/to _*Ranges_ objects.</p>
+<p>We provide convienence functions via <code>rtracklayer</code> for reading/writing the following data formats from/to <code>Ranges</code> objects.</p>
 <ul>
 <li>BED: <code>read/write_bed</code>
 </li>
@@ -594,7 +587,7 @@ grp_by_olap</code></pre></div>
 <div id="operations-on-range-width" class="section level2">
 <h2 class="hasAnchor">
 <a href="#operations-on-range-width" class="anchor"></a>Operations on range width</h2>
-<p>For <code>GRanges</code> objects all functions ignore any strandedness, unless the strand of the range is anchored.</p>
+<p>For <code>G</code>Ranges`` objects all functions ignore any strandedness, unless the strand of the range is anchored.</p>
 <table class="table">
 <colgroup>
 <col width="33%">
@@ -616,7 +609,7 @@ grp_by_olap</code></pre></div>
 </tr>
 <tr class="even">
 <td><code><a href="../reference/set_width.html">set_width(x, width)</a></code></td>
-<td>Modify the width of a <code>Range</code>
+<td>Modify the width of a <code>Ranges</code>
 </td>
 <td><code>resize</code></td>
 </tr>
@@ -667,7 +660,7 @@ grp_by_olap</code></pre></div>
 <div id="set-operations-vector-wise" class="section level2">
 <h2 class="hasAnchor">
 <a href="#set-operations-vector-wise" class="anchor"></a>Set operations (vector wise)</h2>
-<p>These are usual set-operations that act on the sets of the ranges represented in x and y. By default these operations will ignore any strand information. The directed versions of these functions will take into account strand.</p>
+<p>These are usual set-operations that act on the sets of the <code>Ranges</code> represented in x and y. By default these operations will ignore any strand information. The directed versions of these functions will take into account strand.</p>
 <table class="table">
 <colgroup>
 <col width="33%">
@@ -683,14 +676,14 @@ grp_by_olap</code></pre></div>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code>[intersect/setdiff/union/]_ranges</code></td>
-<td>Set operations between two ranges, ignoring strand.</td>
+<td><code>[intersect/setdiff/union/]_Ranges</code></td>
+<td>Set operations between two <code>Ranges</code>, ignoring strand.</td>
 <td>
 <code>intersect/setdiff/union/</code> with <code>ignore.strand = FALSE</code>
 </td>
 </tr>
 <tr class="even">
-<td><code>[intersect/setdiff/union/]_anchored_ranges</code></td>
+<td><code>[intersect/setdiff/union/]_anchored_Ranges</code></td>
 <td>As above taking into account strandedness.</td>
 <td></td>
 </tr>
@@ -712,7 +705,7 @@ grp_by_olap</code></pre></div>
 <a href="#aggregation" class="anchor"></a>Aggregation</h2>
 <p>The <code>summarise</code> verb is most similar to the <code>aggregate</code> methods defined in <code>GenomicRanges/IRanges</code>.</p>
 <p>The <code>reduce_ranges/disjoin_ranges</code> correspond to the <code>reduce/disjoin</code> methods. However, the former methods allow additional summarisation.</p>
-<p>The <code><a href="../reference/set_coverage.html">set_coverage(x)</a></code> method corresponds to <code>[I/G]ranges(coverage(x))</code>.</p>
+<p>The <code><a href="../reference/set_coverage.html">set_coverage(x)</a></code> method corresponds to <code>[I/G]Ranges(coverage(x))</code>.</p>
 </div>
 <div id="overlaps" class="section level2">
 <h2 class="hasAnchor">
@@ -755,7 +748,7 @@ grp_by_olap</code></pre></div>
 </tr>
 <tr class="odd">
 <td><code><a href="../reference/overlap-joins.html">join_overlap_inner(x, y, maxgap, minoverlap)</a></code></td>
-<td>Finds the intersecting ranges that overlap in <code>x</code> and <code>y</code>. Returns a <code>Ranges</code> object with the metadata from <code>x</code> and <code>y</code>.</td>
+<td>Finds the intersecting <code>Ranges</code> that overlap in <code>x</code> and <code>y</code>. Returns a <code>Ranges</code> object with the metadata from <code>x</code> and <code>y</code>.</td>
 <td>
 <code>findOverlapsPairs(x,y, maxgap, minoverlap, type = "any")</code> + <code>pintersect</code>.</td>
 </tr>
@@ -772,20 +765,20 @@ grp_by_olap</code></pre></div>
 </tr>
 <tr class="even">
 <td><code>join_nearest[_left/right/up/downstream](x,y)</code></td>
-<td>Finds nearest neighbour ranges between <code>x</code> and <code>y</code>.</td>
+<td>Finds nearest neighbour <code>Ranges</code> between <code>x</code> and <code>y</code>.</td>
 <td>
 <code>nearest</code> + reindexing to return a <code>Ranges</code> object.</td>
 </tr>
 <tr class="odd">
 <td><code>join_precede[_left/right/up/downstream](x,y)</code></td>
-<td>Finds ranges in <code>x</code> that preced <code>y</code>
+<td>Finds <code>Ranges</code> in <code>x</code> that preced <code>y</code>
 </td>
 <td>
 <code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
 </tr>
 <tr class="even">
 <td><code>join_follow[_left/right/up/downstream](x,y)</code></td>
-<td>Finds ranges in <code>x</code> that follow <code>y</code>
+<td>Finds <code>Ranges</code> in <code>x</code> that follow <code>y</code>
 </td>
 <td>
 <code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
@@ -850,14 +843,14 @@ grp_by_olap</code></pre></div>
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li><a href="#ranges-revisted">Ranges revisted</a></li>
-      <li><a href="#constructing-ranges">Constructing Ranges</a></li>
+      <li><a href="#ranges-revisted"><code>Ranges</code> revisted</a></li>
+      <li><a href="#constructing-ranges">Constructing <code>Ranges</code></a></li>
       <li><a href="#arithmetic-on-ranges">Arithmetic on Ranges</a></li>
-      <li><a href="#grouping-ranges">Grouping Ranges</a></li>
-      <li><a href="#restricting-ranges">Restricting Ranges</a></li>
-      <li><a href="#summarising-ranges">Summarising Ranges</a></li>
+      <li><a href="#grouping-ranges">Grouping <code>Ranges</code></a></li>
+      <li><a href="#restricting-ranges">Restricting <code>Ranges</code></a></li>
+      <li><a href="#summarising-ranges">Summarising <code>Ranges</code></a></li>
       <li>
-<a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges">Joins, or another way at looking at overlaps between Ranges</a><ul class="nav nav-pills nav-stacked">
+<a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges">Joins, or another way at looking at overlaps between <code>Ranges</code></a><ul class="nav nav-pills nav-stacked">
 <li><a href="#example-dealing-with-multimapping">Example: dealing with multimapping</a></li>
       <li><a href="#finding-your-neighbours">Finding your neighbours</a></li>
       <li><a href="#grouping-by-overlaps">Grouping by overlaps</a></li>
