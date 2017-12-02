@@ -9,9 +9,14 @@ group_by_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
 
   hits <- findOverlaps(x, y, maxgap, minoverlap,
                        type = "any", select = "all")
-  rng <- mcols_overlaps_update(x,y,hits, suffix = c(".query", ".subject"))
-  mcols(rng)$query <- queryHits(hits)
-  new("IRangesGrouped", rng, groups = syms("query"))
+
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right,
+                                       suffix = c(".query", ".subject"),
+                                       copy_left = FALSE)
+  mcols(left)$query <- queryHits(hits)
+  new("IRangesGrouped", left, groups = syms("query"))
 }
 
 #' @rdname ranges-overlaps
@@ -20,9 +25,13 @@ group_by_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L)
 
   hits <- findOverlaps(x,y, maxgap, minoverlap,
                        type = "any", select = "all", ignore.strand = TRUE)
-  rng <- mcols_overlaps_update(x,y,hits, suffix = c(".query", ".subject"))
-  mcols(rng)$query <- queryHits(hits)
-  new("GRangesGrouped", rng, groups = syms("query"))
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right,
+                                       suffix = c(".query", ".subject"),
+                                       copy_left = FALSE)
+  mcols(left)$query <- queryHits(hits)
+  new("GRangesGrouped", left,  groups = syms("query"))
 }
 
 

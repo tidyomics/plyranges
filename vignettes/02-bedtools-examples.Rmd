@@ -68,9 +68,9 @@ default `bedtools` will return the region of intersection between two genomic
 tracks. In `plyranges` the intersect operation is a type of overlap join, that is
 we are finding the common genomic intervals that overlap between the two tracks.
 
-In `plyranges` this is termed an left overlap join:
+In `plyranges` this is termed an intersect overlap join:
 ```{r}
-intersect_rng <- join_overlap_inner(cpg, exons)
+intersect_rng <- join_overlap_intersect(cpg, exons)
 intersect_rng
 ```
 
@@ -117,8 +117,8 @@ bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -c")
 
 ## Excluding by overlaps
 
-We can use `filter` along with the infix operator `%over` to only
-include CpG islands that do not overlap any exons.
+We can use `filter_by_non_overlaps` to include CpG islands that do not overlap 
+any exons.
 ```{r}
 cpg %>% 
   filter_by_non_overlaps(., exons)
@@ -132,13 +132,15 @@ bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -v")
 ## Excluding by fraction of overlap
 
 A common operation is to filter ranges by the fraction they overlap a
-given query or subject. We can achieve this with an overlap inner join and mutate. Since an overlap inner join will keep the width of the original query
-ranges we can combine it with filter. In this example we filter
-ranges where the proportion of overlap on cpg islands is less than half.
+given query or subject. We can achieve this with an intersect overlap join 
+and mutate. Since an overlap inner join will keep the the original query and
+subject ranges as metadata columns we can combine it with filter. 
+In this example we filter intersecting ranges where the proportion of overlap 
+on cpg islands is less than half.
 
 ```{r}
-olap <- join_overlap_inner(cpg, exons) %>% 
-  filter(width / width.x  >= 0.5)
+olap <- join_overlap_intersect(cpg, exons) %>%
+  filter(width / width(granges.x) >= 0.5)
 olap
 ```
 
@@ -231,19 +233,22 @@ Although this is slightly more verbose than the `bedtools` or `HelloRanges` appr
 ```{r}
 bedtools_genomecov("-i exons.bed -g hg19.genome")
 ```
+
 # Composing pipelines 
 
 ## Yet another overlaps example
 
-Here we perform another example where we chain a filter and then
-find overlapping ranges between two ranges. In
-this example we reduce the exons to have zero and then find the ranges that
-overlap between the filtered exon ranges and the cpg islands. 
+Here we perform another example where we find exons with no coverage that
+overlap cpg islands. To compose a chain first we compute the coverage
+then use a filter to restrict to zero coverage ranges. Then we
+perfrom an inner overlap join to find which cpg islands overlap the exonic
+regions with zero coverage.
 
 ```{r}
 overlaps <- exons %>% 
+  set_coverage() %>% 
   filter(score == 0L) %>% 
-  join_overlap_inner(.,  cpg) 
+  join_overlap_intersect(.,  cpg) 
 
 overlaps
 ```
@@ -264,7 +269,7 @@ cvg_over_exons
 
 plot(1 - cumsum(fraction) ~ score, data = cvg_over_exons, 
      xlim = c(0,25), 
-     type= "l", 
+     type= "s", 
      xlab = "coverage", 
      ylab = "fraction of bp > coverage")
 

@@ -1,9 +1,6 @@
-# ranges-overlaps.R
 # workhorse funciton for copying metadata columns in y
-mcols_overlaps_update <- function(x, y, hits, suffix) {
+mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
 
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
   left_names <- names(mcols(left))
   right_names <- names(mcols(right))
   common_name <- intersect(left_names, right_names)
@@ -17,24 +14,42 @@ mcols_overlaps_update <- function(x, y, hits, suffix) {
     names(mcols(right))[rname_inx] <- paste0(right_names[rname_inx], suffix[2])
   }
 
-  additional_cols <- DataFrame(start = start(right),
-                               end = end(right),
-                               width = width(right))
-  if (is(right, "GRanges")) additional_cols$strand <- strand(right)
-  names(additional_cols) <- paste0(names(additional_cols), suffix[2])
+  if (is(left, "GenomicRanges")) {
+    if (copy_left) {
+      additional_mcols <- DataFrame(granges.x = granges(left),
+                                    granges.y = granges(right))
+    } else {
+      additional_mcols <- DataFrame(granges.y = granges(right))
+
+    }
+
+  } else {
+    if (copy_left) {
+      additional_mcols <- DataFrame(ranges.x = ranges(left),
+                                    ranges.y = ranges(right))
+    } else {
+      additional_mcols <- DataFrame(ranges.y = ranges(right))
+    }
+  }
+
+  if (copy_left) {
+    names(additional_mcols) <- paste0(gsub("\\..*", "" , names(additional_mcols)),
+                                      suffix)
+  } else {
+    names(additional_mcols) <- paste0(gsub("\\..*", "" , names(additional_mcols)),
+                                      suffix[2])
+  }
+
 
   if (!is.null(mcols(left))) {
-    additional_cols <- cbind(additional_cols, mcols(left))
+    additional_mcols <- cbind(additional_mcols, mcols(left))
   }
 
   if (!is.null(mcols(right))) {
-    additional_cols <- cbind(additional_cols, mcols(right))
+    additional_mcols <- cbind(additional_mcols, mcols(right))
   }
-  mcols(left) <- additional_cols
-
-  left
+  additional_mcols
 }
-
 
 #' Find overlap between two Ranges
 #'
@@ -52,10 +67,10 @@ mcols_overlaps_update <- function(x, y, hits, suffix) {
 #' metadata colums indicating the start, end, width of the overlap range in y
 #' and any additional metadata columns in y. \code{find_overlaps_within} is
 #' the same but will only search for overlaps within y. For GRanges strand is
-#' ignored.
+#' ignored, unless \code{find_overlaps_directed} is used.
 #'
 #' @return A Ranges object with rows corresponding to the
-#' ranges in x that overlap y. In the case of \code{group_by_overlaps}, returns
+#' ranges in x that overlap y. A metadata column containing  In the case of \code{group_by_overlaps}, returns
 #' a GroupedRanges object, grouped by the number of overlaps
 #' of ranges in x that overlap y (stored in a column called query).
 #' @seealso \link[GenomicRanges]{setops-methods}, \link[IRanges]{findOverlaps-methods}
@@ -70,7 +85,10 @@ find_overlaps <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
 #' @export
 find_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
-  mcols_overlaps_update(x,y, hits, suffix)
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  left
 }
 
 #' @rdname ranges-overlaps
@@ -78,7 +96,10 @@ find_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c
 find_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap,
                        type = "any", select = "all", ignore.strand = TRUE)
-  mcols_overlaps_update(x,y,hits, suffix)
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  left
 }
 
 #' @rdname ranges-overlaps
@@ -91,12 +112,36 @@ find_overlaps_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"
 #' @export
 find_overlaps_within.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
-  mcols_overlaps_update(x,y, hits, suffix = c(".x", ".y"))
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  left
 }
 
 #' @rdname ranges-overlaps
 #' @export
 find_overlaps_within.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
-  hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
-  mcols_overlaps_update(x,y, hits, suffix = c(".x", ".y"))
+  hits <- findOverlaps(x,y, maxgap, minoverlap,
+                       type = "within", select = "all", ignore.strand = TRUE)
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  left
+}
+
+#' @rdname ranges-overlaps
+#' @export
+find_overlaps_directed <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+  UseMethod("find_overlaps_directed")
+}
+
+#' @rdname ranges-overlaps
+#' @export
+find_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+  hits <- findOverlaps(x,y, maxgap, minoverlap,
+                       type = "any", select = "all", ignore.strand = FALSE)
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  left
 }

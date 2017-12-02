@@ -8,7 +8,6 @@ output:
     toc_float: true
   BiocStyle::md_document:
     variant: markdown_github
-abstract: A fluent interface to `Ranges` classes.
 vignette: >
   %\VignetteIndexEntry{Introduction}
   %\VignetteEncoding{UTF-8}
@@ -30,7 +29,7 @@ to the `Ranges` and `GenomicRanges` classes and then detail each feature of
 the `plyranges` library: construction, arithmetic, restriction, summarisation,
 joins, and data import/output.
 
-# Ranges revisted
+# `Ranges` revisted
 
 `Ranges` objects can either represent intervals of integers as `IRanges`
 (which have start, end and width attributes)
@@ -50,7 +49,7 @@ and how via grouping, restriction and summarisation you can perform common data
 tasks. 
 
 
-# Constructing Ranges
+# Constructing `Ranges`
 To construct an `IRanges` we require there are at least two columns that represent at either a 
 starting coordinate, finishing coordinate or the width of the interval. To
 construct a `GRanges` we require a column that represents that sequence name (
@@ -119,7 +118,7 @@ shift_upstream(grng, 10)
 shift_downstream(grng, 10)
 ```
 
-# Grouping Ranges
+# Grouping `Ranges`
 
 `plyranges` introduces a new class of `Ranges` called `RangesGrouped`, 
 this is a similiar idea to the grouped `data.frame\tibble` in `dplyr`. 
@@ -142,9 +141,9 @@ grng_by_strand <- grng %>%
 grng_by_strand
 ```
 
-# Restricting Ranges
+# Restricting `Ranges`
 
-The verb `filter` can be used to restrict rows in the Ranges.
+The verb `filter` can be used to restrict rows in the `Ranges`.
 Note that grouping will cause the `filter` to act within each group 
 of the data.
 ```{r}
@@ -154,7 +153,7 @@ grng_by_strand %>% filter(gc == max(gc))
 ```
 
 We also provide the convience methods `filter_by_overlaps` and 
-`filter_by_non_overlaps` for restricting by overlapping ranges.
+`filter_by_non_overlaps` for restricting by overlapping `Ranges`.
 
 ```{r}
 ir0 <- data.frame(start = c(5,10, 15,20), width = 5) %>%
@@ -167,10 +166,10 @@ ir0 %>% filter_by_overlaps(ir1)
 ir0 %>% filter_by_non_overlaps(ir1) 
 ```
 
-# Summarising Ranges
+# Summarising `Ranges`
 
 The `summarise` function will return a tibble because the information required
-to return a _*Ranges_ object is lost. It is often most useful to use `summarise`
+to return a `Ranges` object is lost. It is often most useful to use `summarise`
 in combination with the `group_by` family of functions. 
 
 ```{r}
@@ -182,39 +181,59 @@ ir0 %>%
   summarise(gc = mean(gc))
 ```
 
-# Joins, or another way at looking at overlaps between Ranges
+# Joins, or another way at looking at overlaps between `Ranges`
 
-We can think about finding overlaps as a type of join between two `*Ranges`
+We can think about finding overlaps as a type of join between two `Ranges`
 where we are using the intervals as keys. Of most use are the 
-`join_overlap_inner` and `join_overlap_left` functions. The former will return
-a `Ranges` object where the start, end, and width coordinates correspond to the amount
-of  any overlap. By default, the width of the input ranges is added as metadata.
-This allows downstreaming filtering by the amount of overlap.
+`join_overlap_intersect`, `join_overlap_inner` and `join_overlap_left` functions. 
+
+The first function, `join_overlap_intersect` will return a `Ranges`` object 
+where the start, end, and width coordinates correspond to the amount of any overlap
+between the left and right input `Ranges`. 
+These coordinates correspond to the intervals that are the intersecting `Ranges`. 
+By default, the input `Ranges` (and any other metadata) will be carried over as 
+metadata columns. The names of the columsn
 
 ```{r}
-join_overlap_inner(ir0, ir1)
+join_overlap_intersect(ir0, ir1, suffix = c(".left", ".right"))
 ```
 
-The `join_overlap_left` method will add the coordinates of the right hand
-ranges that overlap those ranges on the left. Compared with `filter_by_overlaps`
-above, the overlap join expands the ranges to give information about each range
-on the right hand side that overlaps those on the left. We also provide
-a convienence method called `find_overlaps` that computes the same result.
+The `join_overlap_inner` function will return the `Ranges` on the left that
+overlap any `Ranges` on the right. By default, it returns the `Ranges` on the right
+that overlap (and any other metadata columns belonging to the left or right)
+as a metadata column.
+
+```{r}
+join_overlap_inner(ir0, ir1, suffix = c(".left", ".right"))
+```
+
+We also provide a convienence method called `find_overlaps` that computes the 
+same result as `join_overlap_inner`.
+
+The `join_overlap_left` method will perform an outer left join. 
+First any overlaps that are found will be returned similar to `join_overlap_inner`. 
+Then any non-overlapping ranges will be returned, with missing values on the metadata columns. A 'missing' value for an `IRanges` column is interval with zero width,
+with `start=0` and `end=-1`. A 'missing' value for a `GRanges` column is the same
+as the `IRanges` but with `seqnames='.'` and `strand='*'`.
 
 ```{r}
 join_overlap_left(ir0, ir1)
 ```
 
+Compared with `filter_by_overlaps` above, the overlap left join expands the
+`Ranges` to give information about each interval on the left hand side that 
+overlap those on the right as well as the intervals on the left that do not overlap any range on the right.
+
 ## Example: dealing with multimapping
 This example is taken from the Bioconductor support [site](https://support.bioconductor.org/p/100046/).
 
-We have two Ranges objects. The first contains single nucleotide positions
+We have two `Ranges` objects. The first contains single nucleotide positions
 corresponding to an intensity measurement, 
 while the other contains coordinates for two genes of interest. 
-We want to identify which positions in the `intensties` ranges overlap the
+We want to identify which positions in the `intensties` `Ranges` overlap the
 genes, where each row corresponds to a position that overlaps a single gene.
 
-First we create the two Ranges objects
+First we create the two `Ranges` objects
 ```{r ex1}
 intensities <- data.frame(seqnames = "VI",
                           start = c(3320:3321,3330:3331,3341:3342),
@@ -238,7 +257,7 @@ Now to find where the positions overlap each gene, we can perform an overlap
 join. This will automatically carry over the gene_id information as well as
 their coordinates (we can drop those by only selecting the gene_id). 
 ```{r}
-olap <- join_overlap_left(intensities, genes) %>%
+olap <- join_overlap_inner(intensities, genes) %>%
   select(gene_id)
 olap
 ```
@@ -253,20 +272,20 @@ olap %>%
 ```
 
 ## Finding your neighbours
-We also provide methods for finding nearest, preceding or following ranges.
-These methods nest a ranges column upon returning (maybe better to return just
+We also provide methods for finding nearest, preceding or following `Ranges`.
+These methods nest a `Ranges` column upon returning (maybe better to return just
 coordinates?).
 
 ```{r}
 join_nearest(ir0, ir1)
 join_follow(ir0, ir1)
-join_precede(ir0, ir1) # nothing precedes returns empty ranges
+join_precede(ir0, ir1) # nothing precedes returns empty `Ranges`
 join_precede(ir1, ir0)
 ```
 
 For `GRanges` objects by default strand is not considered when performing
 overlap joins. To include strand when finding overlaps use append the prefix
-`directed`. To restrict overlapping ranges to those within the query range
+`directed`. To restrict overlapping `Ranges` to those within the query range
 use the prefix `within`.
 
 ## Grouping by overlaps
@@ -292,7 +311,7 @@ ir0 %>%
 # Data Import/Output
 
 We provide convienence functions via `rtracklayer` 
-for reading/writing the following data formats from/to _*Ranges_ objects.
+for reading/writing the following data formats from/to `Ranges` objects.
 
 * BED: `read/write_bed`
 * BEDGraph: `read/write_bedgraph`
@@ -308,13 +327,13 @@ mappings to `plyranges` functions.
 
 ## Operations on range width 
 
- For `GRanges` objects all functions ignore
+ For `G`Ranges`` objects all functions ignore
 any strandedness, unless the strand of the range is anchored.
 
 | `plyranges` functions | Description | `GenomicRanges/IRanges` command |
 |-----------------------|-------------|---------------------------------|
 | `anchor_(start/end/center/3p/5p)` | Fix the `start/end/center/` coordinates or positive/negative strand of range. Can be used in combination with any of the following   | Available in functions that have a `fix` argument. |
-| `set_width(x, width)` | Modify the width of a `Range` | `resize` |
+| `set_width(x, width)` | Modify the width of a `Ranges` | `resize` |
 | `stretch(x, extend)` | Extend the start and end coordinates in opposite directions by a fixed amount. | `start(x)<- start(x) + extend%/%2`, `end(x) <- end(x) -extend%/%2` |
 
 ## Operations on range width (invariant) 
@@ -327,14 +346,14 @@ any strandedness, unless the strand of the range is anchored.
 ## Set operations (vector wise)
 
 These are usual set-operations that act on the sets of the
-ranges represented in x and y. By default these operations will ignore
+`Ranges` represented in x and y. By default these operations will ignore
 any strand information. The directed versions of these functions will
 take into account strand.
 
 | `plyranges` functions | Description | `GenomicRanges/IRanges` command |
 |-----------------------|-------------|---------------------------------|
-| `[intersect/setdiff/union/]_ranges` | Set operations between two ranges, ignoring strand. | `intersect/setdiff/union/` with `ignore.strand = FALSE` |
-| `[intersect/setdiff/union/]_anchored_ranges` | As above taking into account strandedness. | 
+| `[intersect/setdiff/union/]_Ranges` | Set operations between two `Ranges`, ignoring strand. | `intersect/setdiff/union/` with `ignore.strand = FALSE` |
+| `[intersect/setdiff/union/]_anchored_Ranges` | As above taking into account strandedness. | 
 
 ## Set operations (element wise)
 
@@ -352,7 +371,7 @@ The `summarise` verb is most similar to the `aggregate` methods defined in `Geno
 The `reduce_ranges/disjoin_ranges` correspond to the `reduce/disjoin` methods. 
 However, the former methods allow additional summarisation. 
 
-The `set_coverage(x)` method corresponds to `[I/G]ranges(coverage(x))`. 
+The `set_coverage(x)` method corresponds to `[I/G]Ranges(coverage(x))`. 
 
 ## Overlaps
 
@@ -365,12 +384,12 @@ any strandedness, unless the suffix `directed` is added to the funciton call
 | `group_by_overlaps(x, y, maxgap, minoverlap)` | Returns a GroupedRanges object grouped by the query hits. |  Same as above with an additional column called `query` which contains the queryHits. |
 | `count_overlaps(x, y, maxgap, minoverlap)` | Returns an integer vector (used with `mutate`) | `countOverlaps(x, y, maxgap, minoverlap, type = "any")` |
 | `join_overlap_self(x, maxgap, minoverlap)` |  Returns a `Ranges` object with any range that overlaps itself. | `findOverlaps(x,x, maxgap, minoverlap, type = "any")`|
-| `join_overlap_inner(x, y, maxgap, minoverlap)` | Finds the intersecting ranges that overlap in `x` and `y`. Returns a `Ranges` object with the metadata from `x` and `y`.  |  `findOverlapsPairs(x,y, maxgap, minoverlap, type = "any")` + `pintersect`. |               | `join_overlap_left(x, y, maxgap, minoverlap)` | Identical to `find_overlaps`  | Identical to `find_overlaps`. |                   
+| `join_overlap_inner(x, y, maxgap, minoverlap)` | Finds the intersecting `Ranges` that overlap in `x` and `y`. Returns a `Ranges` object with the metadata from `x` and `y`.  |  `findOverlapsPairs(x,y, maxgap, minoverlap, type = "any")` + `pintersect`. |               | `join_overlap_left(x, y, maxgap, minoverlap)` | Identical to `find_overlaps`  | Identical to `find_overlaps`. |                   
 | `*_within` | Adding suffix `within` will find overlaps   | Makes `type = "within"` |
 | `*_includes` | inverse of within functions | - |
-| `join_nearest[_left/right/up/downstream](x,y)` | Finds nearest neighbour ranges between `x` and `y`. | `nearest` + reindexing to return a `Ranges` object. |
-|`join_precede[_left/right/up/downstream](x,y)`  | Finds ranges in `x` that preced `y` | `precedes` + reindexing to return a `Ranges` object. |
-|`join_follow[_left/right/up/downstream](x,y)`  | Finds ranges in `x` that follow `y`  | `precedes` + reindexing to return a `Ranges` object. |
+| `join_nearest[_left/right/up/downstream](x,y)` | Finds nearest neighbour `Ranges` between `x` and `y`. | `nearest` + reindexing to return a `Ranges` object. |
+|`join_precede[_left/right/up/downstream](x,y)`  | Finds `Ranges` in `x` that preced `y` | `precedes` + reindexing to return a `Ranges` object. |
+|`join_follow[_left/right/up/downstream](x,y)`  | Finds `Ranges` in `x` that follow `y`  | `precedes` + reindexing to return a `Ranges` object. |
 
 # Appendix
 
