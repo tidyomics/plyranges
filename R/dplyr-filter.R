@@ -1,12 +1,14 @@
 # filter.R
-filter_rng <- function(.data, expr) {
-  expr <- UQ(expr)
-  found_n <- is_n(expr)
-  expr <- check_n(expr)
+filter_rng <- function(.data, dots) {
+  dots <- UQS(dots)
+  found_n <- is_n(dots)
+  dots <- check_n(dots)
   overscope <- overscope_ranges(.data, bind_data = found_n)
 
-  r <- overscope_eval_next(overscope, expr)
+  r <- lapply(dots, overscope_eval_next, overscope = overscope)
   on.exit(overscope_clean(overscope))
+  r <- Reduce(`&`, r)
+
   if (!is.logical(r)) {
     if (!is(r, "Rle")) {
       stop("Argument to filter condition must evaluate to a logical vector or logical-Rle")
@@ -27,10 +29,10 @@ filter_rng <- function(.data, expr) {
 #' Subset a \code{Ranges} object
 #'
 #' @param .data A \code{Ranges} object
-#' @param expr a valid logical expression to act on .data
+#' @param ... a valid logical expression to act on .data, if multiple expression
+#' are added, this is equivalent to performing an AND operation.
 #
-#' @description Unlike \pkg{dplyr}'s filter, the filter for a \code{Ranges}
-#' is only valid for a single logical expression. For any Ranges objects
+#' @description  For any Ranges objects
 #' filter can act on all core components of the class including start, end,
 #' width (for IRanges) or seqnames and strand (for GRanges) in addition to
 #' metadata columns. If the Ranges object is grouped filter will act on each
@@ -57,36 +59,34 @@ filter_rng <- function(.data, expr) {
 #' rng %>% group_by(strand) %>% filter(gc > mean(gc))
 #'
 #' @export
-filter.GenomicRanges <- function(.data, expr) {
-  expr <- enquo(expr)
-  filter_rng(.data, expr)
+filter.GenomicRanges <- function(.data, ...) {
+  dots <- quos(...)
+  filter_rng(.data, dots)
 }
 
 #' @rdname filter-ranges
 #' @method filter Ranges
 #' @export
-filter.Ranges <- function(.data, expr) {
-
-  expr <- enquo(expr)
-  filter_rng(.data, expr)
-
+filter.Ranges <- function(.data, ...) {
+  dots <- quos(...)
+  filter_rng(.data, dots)
 }
 
 #' @rdname filter-ranges
 #' @method filter GRangesGrouped
 #' @export
-filter.GRangesGrouped <- function(.data, expr) {
-    expr <- enquo(expr)
+filter.GRangesGrouped <- function(.data, ...) {
+    dots <- quos(...)
     split_ranges <- split_groups(.data)
-    unlist(endoapply(split_ranges, filter_rng, expr), use.names = FALSE)
+    unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE)
 
 }
 
 #' @rdname filter-ranges
 #' @method filter IRangesGrouped
 #' @export
-filter.IRangesGrouped <- function(.data, expr) {
-  expr <- enquo(expr)
+filter.IRangesGrouped <- function(.data, ...) {
+  dots <- quos(...)
   split_ranges <- split_groups(.data)
-  unlist(endoapply(split_ranges, filter_rng, expr), use.names = FALSE)
+  unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE)
 }

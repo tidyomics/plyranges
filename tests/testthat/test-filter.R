@@ -12,6 +12,8 @@ test_that("simple filter checks", {
   expect_identical(gr0 %>% filter(score > 0), gr0[score(gr0) > 0])
   expect_identical(gr0 %>% filter(score > 0 & strand == "*"),
                    gr0[score(gr0) > 0 & strand(gr0) == "*"])
+  expect_identical(gr0 %>% filter(score > 0, strand == "*"),
+                   gr0[score(gr0) > 0 & strand(gr0) == "*"])
 })
 
 test_that("checking calls to n", {
