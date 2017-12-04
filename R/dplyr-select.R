@@ -25,7 +25,7 @@ select_rng <- function(.data, .drop_ranges, ...) {
   rng_list <- lapply(selected_vars, overscope_eval_next, overscope = rng_os)
 
   if (.drop_ranges) {
-    return(as_tibble(as.data.frame(rng_list)))
+    return(do.call("DataFrame", rng_list))
   } else {
     if (length(rng_list) > 0) {
       mcols(.data) <- do.call("DataFrame", rng_list)

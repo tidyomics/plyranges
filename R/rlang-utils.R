@@ -39,6 +39,3 @@ rlang::env_bind
 is_empty_quos <- function(quos) {
   length(quos) == 0L
 }
-
-#' @export
-tibble::as_tibble

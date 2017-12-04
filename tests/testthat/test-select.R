@@ -26,8 +26,13 @@ test_that("dropping core parts throws an error...", {
 })
 
 test_that("...unless allowing to drop ranges", {
-  expect_s3_class(select(ir0, start, .drop_ranges = TRUE), "tbl_df")
-  expect_s3_class(select(gr0, start, .drop_ranges = TRUE), "tbl_df")
+  expect_s4_class(select(ir0, start, .drop_ranges = TRUE), "DataFrame")
+  expect_s4_class(select(gr0, start, .drop_ranges = TRUE), "DataFrame")
+  expect_identical(select(ir1, score, gc, counts, .drop_ranges = TRUE),
+                   mcols(ir1))
+  expect_identical(select(gr1, score, gc, counts, .drop_ranges = TRUE),
+                   mcols(gr1))
+
 })
 
 test_that("reordering/dropping works as expected", {

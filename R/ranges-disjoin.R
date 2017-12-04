@@ -7,7 +7,6 @@
 #' @return a Ranges object with the
 #' @rdname ranges-disjoin
 #' @importFrom IRanges disjoin
-#' @importFrom S4Vectors rbind.DataFrame
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
 #' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))

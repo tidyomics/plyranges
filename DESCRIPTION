@@ -22,7 +22,6 @@ Imports:
   dplyr, 
   rlang, 
   magrittr,
-  tibble,
   tidyr,
   tidyselect,
   rtracklayer,

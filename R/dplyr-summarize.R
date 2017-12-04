@@ -12,8 +12,8 @@ summarize_rng <- function(.data, ...) {
 #' @param .data a Ranges object
 #' @param ... Name-value pairs of summary functions.
 #'
-#' @return a \link[tibble]{tibble}
-#' @importFrom tibble as_tibble
+#' @return a \link[S4Vectors]{DataFrame}
+#' @importFrom S4Vectors rbind cbind
 #' @importFrom dplyr summarise summarize
 #' @method summarise GenomicRanges
 #' @rdname ranges-summarise
@@ -27,7 +27,7 @@ summarize_rng <- function(.data, ...) {
 summarise.GenomicRanges <- function(.data, ...) {
 
   dots <- quos(...)
-  as_tibble(summarize_rng(.data, dots))
+  DataFrame(summarize_rng(.data, dots))
 
 }
 
@@ -37,7 +37,7 @@ summarise.GenomicRanges <- function(.data, ...) {
 summarise.Ranges <- function(.data, ...) {
 
   dots <- quos(...)
-  as_tibble(summarize_rng(.data, dots))
+  DataFrame(summarize_rng(.data, dots))
 
 }
 
@@ -51,10 +51,8 @@ summarise.GRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
   split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
   groups_summary <- lapply(split_ranges, summarize_rng, dots)
-  groups_summary <- lapply(groups_summary, as_tibble)
-  groups_df <- as_tibble(as.data.frame(mcols(split_ranges)))
-  groups_summary <- bind_rows(groups_summary)
-  bind_cols(groups_df, groups_summary)
+  groups_summary <- do.call(rbind, lapply(groups_summary, as, "DataFrame"))
+  cbind(mcols(split_ranges), groups_summary)
 
 }
 
@@ -65,8 +63,6 @@ summarise.IRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
   split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
   groups_summary <- lapply(split_ranges, summarize_rng, dots)
-  groups_summary <- lapply(groups_summary, as_tibble)
-  groups_df <- as_tibble(as.data.frame(mcols(split_ranges)))
-  groups_summary <- bind_rows(groups_summary)
-  bind_cols(groups_df, groups_summary)
+  groups_summary <- do.call(rbind, lapply(groups_summary, as, "DataFrame"))
+  cbind(mcols(split_ranges), groups_summary)
 }

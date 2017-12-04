@@ -10,15 +10,15 @@ gr1 <- GRanges(seqnames = "seq1",
                ranges = ir1)
 
 test_that("summarise evaluates correctly", {
-  df <- data.frame(mean = 4.8,  n = 10L)
+  df <- DataFrame(mean = 4.8,  n = 10L)
   expect_equal(summarise(ir1, mean = mean(score), n = n()), df)
   expect_equal(summarise(gr1, mean = mean(score), n = n()), df)
 
-  gdf <- data.frame(grp = c("A", "B"), score = c(3.6, 6),stringsAsFactors = FALSE)
+  gdf <- DataFrame(grp = c("A", "B"), score = c(3.6, 6))
   expect_equal(ir1 %>% group_by(grp) %>% summarise(score = mean(score)), gdf)
   expect_equal(gr1 %>% group_by(grp) %>% summarise(score = mean(score)), gdf)
 
-  gdf <- data.frame(grp = c("A", "B"), n = c(5L,5L), stringsAsFactors = FALSE)
+  gdf <- DataFrame(grp = c("A", "B"), n = c(5L,5L))
   expect_equal(ir1 %>% group_by(grp) %>% summarise(n = n()), gdf)
   expect_equal(gr1 %>% group_by(grp) %>% summarise(n = n()), gdf)
 })

@@ -179,15 +179,16 @@ using the `group_by` and `summarise` operations along with
 `left_join`. 
 
 First, we compute the 
-coverage over the exons and construct a `tibble` from the genome build 
+coverage over the exons and construct a `DataFrame` from the genome build 
 information using `select` with `.drop_ranges = FALSE`.
 
 ```{r cv-hist0}
 suppressPackageStartupMessages(library(dplyr))
 cvg <- exons %>% set_coverage()
-# convert the sequence annotation to a tibble
+# convert the sequence annotation to a data.frame 
 hg19 <- get_genome_info(cvg) %>%  
- select(seqnames, width, .drop_ranges = TRUE)
+ select(seqnames, width, .drop_ranges = TRUE) %>%
+  as.data.frame()
 ```
 
 Then to count the number of bases corresponding to a score we sum over
@@ -198,8 +199,9 @@ to the annotation `tibble` called `hg19`. Note that in the sums we have coerced 
 
 cvg_hist_by_seq <- cvg %>%
   group_by(seqnames, score) %>%
-  summarise(count = sum(as.numeric(width))) %>%  
-  left_join(., hg19, by = "seqnames") %>% 
+  summarise(count = sum(as.numeric(width))) %>% 
+  as.data.frame() %>%
+  left_join(., hg19) %>% 
   mutate(fraction = count / width)
 
 cvg_hist_by_seq
@@ -213,12 +215,14 @@ coverage histogram, we perform the same operation but do not group over
 ```{r cvhist2}
 cvg_hist_total <- cvg %>%
   group_by(score) %>% 
-  summarise(count = sum(as.numeric(width))) %>% 
+  summarise(count = sum(as.numeric(width))) %>%
+  as.data.frame() %>%
   mutate(seqnames = "genome") %>%
   left_join(.,
             hg19 %>% 
               summarise(width = sum(as.numeric(width))) %>% 
-              mutate(seqnames = "genome")) %>%
+              mutate(seqnames = "genome") %>%
+              as.data.frame()) %>%
   mutate(fraction = count / width)
 
 cvg_hist_total

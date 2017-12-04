@@ -1,5 +1,4 @@
 # ranges-reduce
-#' @importFrom S4Vectors rbind.DataFrame
 reduce_rng <- function(.data, reduced, ...) {
 
   dots <- UQS(...)
@@ -10,7 +9,7 @@ reduce_rng <- function(.data, reduced, ...) {
 
   reduced_summary <- as(lapply(ranges_list, summarize_rng, dots), "List")
 
-  mcols(reduced) <- Reduce(rbind.DataFrame, reduced_summary)
+  mcols(reduced) <- do.call(rbind, lapply(reduced_summary, as, "DataFrame"))
   return(reduced)
 }
 
@@ -22,7 +21,6 @@ reduce_rng <- function(.data, reduced, ...) {
 #' @return a Ranges object with the
 #' @rdname ranges-reduce
 #' @importFrom IRanges reduce
-#' @importFrom S4Vectors rbind.DataFrame
 #' @importFrom utils relist
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
@@ -87,5 +85,3 @@ reduce_ranges_directed.GenomicRanges <- function(.data, ...) {
   reduce_rng(.data, reduced, dots)
 
 }
-
-
