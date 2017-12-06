@@ -153,19 +153,19 @@ bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -f 0.5 -wo")
 
 Often we are interested in counting the number of features over
 an entire genome that overlap each other. In `plyranges` this is
-done with the `set_coverage` function in combination with other functions
+done with the `compute_coverage` function in combination with other functions
 to manipulate the results. This function will always return a new _Ranges_ 
 object with a column called score. Any other variables associated with the
 input _Ranges_ will be dropped.
 
 ## Coverage Vector
 
-By default, `set_coverage` is equivalent to `bedtools genomecov -bga` and
+By default, `compute_coverage` is equivalent to `bedtools genomecov -bga` and
 hence will return scores equal to zero. Filtering all scores above zero
 is equivalent to `bedtools genomecov -bg`:
 ```{r cv}
 cvg <- exons %>% 
-  set_coverage() %>% 
+  compute_coverage() %>% 
   filter(score > 0)
 cvg
 
@@ -184,7 +184,7 @@ information using `select` with `.drop_ranges = FALSE`.
 
 ```{r cv-hist0}
 suppressPackageStartupMessages(library(dplyr))
-cvg <- exons %>% set_coverage()
+cvg <- exons %>% compute_coverage()
 # convert the sequence annotation to a data.frame 
 hg19 <- get_genome_info(cvg) %>%  
  select(seqnames, width, .drop_ranges = TRUE) %>%
@@ -250,7 +250,7 @@ regions with zero coverage.
 
 ```{r}
 overlaps <- exons %>% 
-  set_coverage() %>% 
+  compute_coverage() %>% 
   filter(score == 0L) %>% 
   join_overlap_intersect(.,  cpg) 
 
@@ -262,7 +262,7 @@ and then plot results as an ecdf.
 
 ```{r}
 cvg_over_exons <- exons %>% 
-  set_coverage() %>%
+  compute_coverage() %>%
   join_overlap_inner(., cpg) %>%
   mutate(total = sum(as.numeric(width))) %>% 
   group_by(score) %>%

@@ -371,7 +371,7 @@ The `summarise` verb is most similar to the `aggregate` methods defined in `Geno
 The `reduce_ranges/disjoin_ranges` correspond to the `reduce/disjoin` methods. 
 However, the former methods allow additional summarisation. 
 
-The `set_coverage(x)` method corresponds to `[I/G]Ranges(coverage(x))`. 
+The `compute_coverage(x)` method corresponds to `[I/G]Ranges(coverage(x))`. 
 
 ## Overlaps
 
