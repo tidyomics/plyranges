@@ -50,7 +50,7 @@ test_that("group by matches HelloRanges", {
   result <- a %>%
     group_by(seqnames, start, end) %>%
     summarise(score.sum = sum(score)) %>%
-    Ranges() %>%
+    as_granges() %>%
     sort()
 
   expect_identical(exp, result)

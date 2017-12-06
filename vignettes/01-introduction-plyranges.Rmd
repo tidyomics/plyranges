@@ -63,7 +63,7 @@ df <- data.frame(start=c(2:-1, 13:15),
                  width=c(0:3, 2:0))
 
 # produces IRanges
-rng <- df %>% Ranges()
+rng <- df %>% as_iranges()
 rng
 
 # seqname is required for GRanges, metadata is automatically kept
@@ -71,7 +71,7 @@ grng <- df %>%
   transform(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
          strand = sample(c("+", "-"), 7, replace = TRUE),
          gc = runif(7)) %>% 
-  Ranges()
+  as_granges()
 
 grng
 ```
@@ -82,8 +82,8 @@ Sometimes you want to modify a genomic interval by altering the width of the
 interval while leaving the start, end or midpoint of the coordinates unaltered. 
 This is achieved with the `set_width` verb along with `anchor_*` adverbs.
 ```{r}
-rng <- Ranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8)))
-grng <- Ranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8), 
+rng <- as_iranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8)))
+grng <- as_granges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8), 
                           seqnames = "seq1",
                           strand = c("+", "*", "-")))
 set_width(rng, 10)
@@ -133,7 +133,7 @@ grng <- data.frame(seqnames = sample(c("chr1", "chr2"), 7, replace = TRUE),
          gc = runif(7),
          start = 1:7,
          width = 10) %>%
-  Ranges()
+  as_granges()
 
 grng_by_strand <- grng %>%
   group_by(strand)
@@ -157,9 +157,9 @@ We also provide the convience methods `filter_by_overlaps` and
 
 ```{r}
 ir0 <- data.frame(start = c(5,10, 15,20), width = 5) %>%
-  Ranges()
+  as_iranges()
 ir1 <- data.frame(start = 2:6, width = 3:7) %>%
-  Ranges()
+  as_iranges()
 ir0
 ir1
 ir0 %>% filter_by_overlaps(ir1)
@@ -238,7 +238,7 @@ First we create the two `Ranges` objects
 intensities <- data.frame(seqnames = "VI",
                           start = c(3320:3321,3330:3331,3341:3342),
                           width = 1)
-intensities <- Ranges(intensities)
+intensities <- as_granges(intensities)
 
 intensities 
 
@@ -248,7 +248,7 @@ genes <- data.frame(seqnames = "VI",
                     gene_id=c("YFL064C", "YFL065C"))
                     
                     
-genes <- Ranges(genes)
+genes <- as_granges(genes)
 genes
 
 ```

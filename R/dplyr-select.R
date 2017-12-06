@@ -57,7 +57,7 @@ select_rng <- function(.data, .drop_ranges, ...) {
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
 #' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10), counts = rpois(10, 2))
-#' rng <- Ranges(df)
+#' rng <- as_granges(df)
 #' select(rng, -gc)
 #' select(rng, gc)
 #' select(rng, counts, gc)

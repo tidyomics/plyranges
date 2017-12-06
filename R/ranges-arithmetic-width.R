@@ -10,12 +10,12 @@
 #' @seealso \code{\link[IRanges]{resize}}
 #' @export
 #' @examples
-#' rng <- Ranges(data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0)))
+#' rng <- as_iranges(data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0)))
 #' set_width(rng, width = 10)
 #' set_width(anchor_start(rng), 10)
 #' set_width(anchor_end(rng), 10)
 #' set_width(anchor_center(rng), 10)
-#' grng <- Ranges(data.frame(seqnames = "chr1",
+#' grng <- as_granges(data.frame(seqnames = "chr1",
 #'                          strand = c("+", "-", "-", "+", "+", "-", "+"),
 #'                          start=c(2:-1, 13:15),
 #'                          width=c(0:3, 2:0)))
