@@ -10,12 +10,12 @@ test_that("matches IRanges", {
   width(ir3) <- width(ir3) + 10
   expect_identical(stretch(anchor_start(ir1), 10), ir3)
   # will cause negative width
-  expect_error(stretch(anchor_end(ir1), 10))
+  expect_error(stretch(anchor_end(ir1), -10))
   # anchoring twice will produce same result as one stretch call
-  expect_identical(stretch(anchor_end(ir3), -10), ir2)
+  expect_identical(stretch(anchor_end(ir3), 10), ir2)
   # centering
   expect_identical(stretch(anchor_center(ir1), 10),
-                   IRanges(c(-8, -4, -8), c(13, 16,12)))
+                   IRanges(c(-8, -4, -8), c(12, 16,12)))
 })
 
 test_that("matches GenomicRanges", {
@@ -27,13 +27,17 @@ test_that("matches GenomicRanges", {
   gr2 <- stretch(gr1, 10)
   expect_equal(width(gr2), width(gr1) + 20)
 
+  # anchoring by 3p fixes start of - and end of +
   gr3 <- gr1
-  start(gr3[strand(gr3) == "+"]) <- start(gr3[strand(gr3) == "+"]) - 10
-  end(gr3[strand(gr3) == "+"]) <- end(gr3[strand(gr3) == "+"]) + 10
+  pos <- strand(gr3) == "+" | strand(gr3) == "*"
+  start(gr3[pos]) <- start(gr3[pos]) - 10
+  end(gr3[strand(gr3) == "-"]) <- end(gr3[strand(gr3) == "-"]) + 10
   expect_identical(stretch(anchor_3p(gr1), 10), gr3)
 
+  # anchoring by 3p fixes start of + and end of -
   gr4 <- gr1
+  pos <- strand(gr4) == "+" | strand(gr4) == "*"
   start(gr4[strand(gr4) == "-"]) <- start(gr4[strand(gr4) == "-"]) - 10
-  end(gr4[strand(gr4) == "-"]) <- end(gr4[strand(gr4) == "-"]) + 10
+  end(gr4[pos]) <- end(gr4[pos]) + 10
   expect_identical(stretch(anchor_5p(gr1), 10), gr4)
 })

@@ -7,14 +7,22 @@
 #'
 #' @details Shifting left or right will ignore any strand information
 #' in the Ranges object, while shifting upstream/downstream will shift coordinates
-#' on the positive strand left/right and the negative strand right/left. Shifting
-#' upstream/downstream supports the notion of anchoring by strand. For example,
-#' shifting upstream while anchoring the positive strand, will shift all negative
-#' strand ranges to the right.
+#' on the positive strand left/right and the negative strand right/left. By
+#' default, unstranded features are treated as positive.
 #'
 #' @seealso \code{\link[IRanges]{shift}}
 #' @importFrom IRanges shift
 #' @rdname shift-ranges
+#' @examples
+#' ir <- as_iranges(data.frame(start = 10:15, width = 5))
+#' shift_left(ir, 5L)
+#' shift_right(ir, 5L)
+#' gr <- as_granges(data.frame(start = 10:15,
+#'                             width = 5,
+#'                             seqnames = "seq1",
+#'                             strand = c("+", "+", "-", "-", "+", "*")))
+#' shift_upstream(gr, 5L)
+#' shift_downstream(gr, 5L)
 #' @export
 shift_left <- function(x, shift = 0L) {
   stopifnot(all(shift > 0) && is.numeric(shift))
@@ -32,37 +40,17 @@ shift_right <- function(x, shift = 0L) {
 #' @rdname shift-ranges
 #' @export
 shift_upstream <- function(x, shift = 0L) {
-  anchors <- anchors(x)
-  if (any(anchors == "3p")) {
-    x[strand(x) == "-"] <- shift_right(x[strand(x) == "-"], shift)
-    metadata(x)$anchor <- NULL
-    return(x)
-  } else if (any(anchors == "5p")) {
-    x[strand(x) == "+"] <- shift_left(x[strand(x) == "+"], shift)
-    metadata(x)$anchor <- NULL
-    return(x)
-  } else {
-    x[strand(x) == "-"] <- shift_right(x[strand(x) == "-"], shift)
-    x[strand(x) == "+"] <- shift_left(x[strand(x) == "+"], shift)
-    x
-  }
+  stopifnot(is(x, "GenomicRanges"))
+  x[strand(x) == "-"] <- shift_right(x[strand(x) == "-"], shift)
+  x[strand(x) == "+"] <- shift_left(x[strand(x) == "+"], shift)
+  x
 }
 
 #' @rdname shift-ranges
 #' @export
 shift_downstream <- function(x, shift = 0L) {
-  anchors <- anchors(x)
-  if (any(anchors == "3p")) {
-    x[strand(x) == "-"] <- shift_left(x[strand(x) == "-"], shift)
-    metadata(x)$anchor <- NULL
-    return(x)
-  } else if (any(anchors == "5p")) {
-    x[strand(x) == "+"] <- shift_right(x[strand(x) == "+"], shift)
-    metadata(x)$anchor <- NULL
-    return(x)
-  } else {
-    x[strand(x) == "-"] <- shift_left(x[strand(x) == "-"], shift)
-    x[strand(x) == "+"] <- shift_right(x[strand(x) == "+"], shift)
-    return(x)
-  }
+  stopifnot(is(x, "GenomicRanges"))
+  x[strand(x) == "-"] <- shift_left(x[strand(x) == "-"], shift)
+  x[strand(x) == "+"] <- shift_right(x[strand(x) == "+"], shift)
+  x
 }
