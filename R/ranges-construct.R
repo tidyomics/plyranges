@@ -16,10 +16,10 @@
 #'
 #' @importFrom rlang quos eval_tidy
 #' @importFrom S4Vectors mcols metadata mcols<- metadata<-
-#' @importFrom BiocGenerics start end width strand score start<- end<- width<- score<-
+#' @importFrom BiocGenerics start end width strand score start<- end<- width<- score<- strand<-
 #' @importFrom GenomeInfoDb seqnames seqnames<- seqinfo<-
 #' @importFrom IRanges IRanges
-#' @importFrom GenomicRanges GRanges
+#' @importFrom GenomicRanges GRanges granges
 #' @rdname ranges-construct
 #' @examples
 #' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0))

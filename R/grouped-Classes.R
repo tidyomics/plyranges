@@ -37,14 +37,10 @@ setValidity("GRangesGrouped", validGRangesGrouped)
 setMethod("show", "GRangesGrouped", function(object) {
   groups <- unlist(lapply(object@groups, as.character))
   groups <- paste(groups, collapse = ", ")
-  ranges_print <- c("", utils::capture.output(GenomicRanges:::show_GenomicRanges(object,
-                                                                          margin = "  ",
-                                                                          print.classinfo = TRUE,
-                                                                          print.seqinfo = TRUE)))
-  ranges_print[1] <- ranges_print[2]
-  ranges_print[2] <- paste("Groups:", groups)
-  cat(ranges_print, sep = "\n")
-
+  output <- c("", utils::capture.output(show(as(object, "GenomicRanges"))))
+  output[1] <- output[2]
+  output[2] <- paste("Groups:", groups)
+  cat(output, sep = "\n")
 })
 
 #' An S4 class to represent grouped IRanges
@@ -81,12 +77,9 @@ setValidity("IRangesGrouped", validIRangesGrouped)
 setMethod("show", "IRangesGrouped", function(object) {
   groups <- unlist(lapply(object@groups, as.character))
   groups <- paste(groups, collapse = ", ")
-  ranges_print <- c("", utils::capture.output(IRanges:::showRanges(object, margin = "  ",
-                                                            print.classinfo = TRUE
-  )))
-  ranges_print[1] <- ranges_print[2]
-  ranges_print[2] <- paste("Groups:", groups)
-  cat(ranges_print, sep = "\n")
-
+  output <- c("", utils::capture.output(show(as(object, "Ranges"))))
+  output[1] <- output[2]
+  output[2] <- paste("Groups:", groups)
+  cat(output, sep = "\n")
 })
 
