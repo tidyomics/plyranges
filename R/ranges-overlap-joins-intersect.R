@@ -6,11 +6,20 @@
 #' as an integer greater than zero, accounting for the maximum gap.
 #' @param suffix Character to vectors to append to common columns in x and y.
 #'
-#' @details Inner overlaps finds intersecting intervals between x and y
-#' while keeping information about the width from x and y.
-#' Left overlaps is equivalent to find_overlaps, it keeps all ranges in x
-#' that overlap ranges in y. Self overlaps find all overlaps within a ranges
-#' object x.
+#' @details The function \code{join_intersect_overlaps} finds
+#' the genomic intervals that are the overlapping ranges between x and y and
+#' returns a new ranges object with metadata columns from x and y.
+#'
+#' The function \code{join_inner_overlaps} is equivalent to \code{find_overlaps}
+#' , it returns all ranges in x that overlap ranges in y.
+#'
+#' The function \code{join_left_overlaps} performs a left outer join between x
+#' and y. It returns all ranges in x that overlap or do not overlap ranges in y
+#' plus metadata columns common to both. If there is no overlapping range
+#' the metadata column will contain a missing value.
+#'
+#' The function \code{join_self_overlaps} find all overlaps between a ranges
+#' object x and itself.
 #'
 #' @importFrom S4Vectors first second DataFrame
 #' @importFrom IRanges findOverlapPairs
@@ -45,6 +54,7 @@ join_overlap_intersect.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap 
                             maxgap = maxgap,
                             minoverlap = minoverlap,
                             ignore.strand = TRUE)
+
   inner_rng <- pintersect(pairs, ignore.strand = TRUE)
 
   left_rng <- first(pairs)

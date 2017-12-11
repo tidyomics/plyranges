@@ -14,35 +14,10 @@ mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
     names(mcols(right))[rname_inx] <- paste0(right_names[rname_inx], suffix[2])
   }
 
-  if (is(left, "GenomicRanges")) {
-    if (copy_left) {
-      additional_mcols <- DataFrame(granges.x = granges(left),
-                                    granges.y = granges(right))
-    } else {
-      additional_mcols <- DataFrame(granges.y = granges(right))
-
-    }
-
-  } else {
-    if (copy_left) {
-      additional_mcols <- DataFrame(ranges.x = ranges(left),
-                                    ranges.y = ranges(right))
-    } else {
-      additional_mcols <- DataFrame(ranges.y = ranges(right))
-    }
-  }
-
-  if (copy_left) {
-    names(additional_mcols) <- paste0(gsub("\\..*", "" , names(additional_mcols)),
-                                      suffix)
-  } else {
-    names(additional_mcols) <- paste0(gsub("\\..*", "" , names(additional_mcols)),
-                                      suffix[2])
-  }
-
+  additional_mcols <- NULL
 
   if (!is.null(mcols(left))) {
-    additional_mcols <- cbind(additional_mcols, mcols(left))
+    additional_mcols <- mcols(left)
   }
 
   if (!is.null(mcols(right))) {
@@ -64,15 +39,15 @@ mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
 #'
 #' @details \code{find_overlaps} will search for any overlaps between ranges
 #' x and y and return a ranges object of the same length as x but with additional
-#' metadata colums indicating the start, end, width of the overlap range in y
-#' and any additional metadata columns in y. \code{find_overlaps_within} is
+#' metadata colums corresponding to the metadata columns in y. \code{find_overlaps_within} is
 #' the same but will only search for overlaps within y. For GRanges strand is
 #' ignored, unless \code{find_overlaps_directed} is used.
 #'
 #' @return A Ranges object with rows corresponding to the
-#' ranges in x that overlap y. A metadata column containing  In the case of \code{group_by_overlaps}, returns
+#' ranges in x that overlap y.  In the case of \code{group_by_overlaps}, returns
 #' a GroupedRanges object, grouped by the number of overlaps
 #' of ranges in x that overlap y (stored in a column called query).
+#'
 #' @seealso \link[GenomicRanges]{setops-methods}, \link[IRanges]{findOverlaps-methods}
 #' @importFrom IRanges findOverlaps
 #' @importFrom S4Vectors queryHits subjectHits

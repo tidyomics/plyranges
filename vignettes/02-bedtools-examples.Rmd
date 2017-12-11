@@ -129,26 +129,6 @@ The equivalent bedtools operation is
 bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -v")
 ```
 
-## Excluding by fraction of overlap
-
-A common operation is to filter ranges by the fraction they overlap a
-given query or subject. We can achieve this with an intersect overlap join 
-and mutate. Since an overlap inner join will keep the the original query and
-subject ranges as metadata columns we can combine it with filter. 
-In this example we filter intersecting ranges where the proportion of overlap 
-on cpg islands is less than half.
-
-```{r}
-olap <- join_overlap_intersect(cpg, exons) %>%
-  filter(width / width(granges.x) >= 0.5)
-olap
-```
-
-The equivalent bedtools code is:
-```{r}
-bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -f 0.5 -wo")
-```
-
 # Computing Genomic Coverage
 
 Often we are interested in counting the number of features over
