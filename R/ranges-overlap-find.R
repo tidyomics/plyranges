@@ -14,14 +14,19 @@ mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
     names(mcols(right))[rname_inx] <- paste0(right_names[rname_inx], suffix[2])
   }
 
-  additional_mcols <- NULL
 
   if (!is.null(mcols(left))) {
     additional_mcols <- mcols(left)
+  } else {
+    additional_mcols <- NULL
   }
 
   if (!is.null(mcols(right))) {
-    additional_mcols <- cbind(additional_mcols, mcols(right))
+    if (is.null(additional_mcols)) {
+      additional_mcols <- mcols(right)
+    } else {
+      additional_mcols <- cbind(additional_mcols, mcols(right))
+    }
   }
   additional_mcols
 }
