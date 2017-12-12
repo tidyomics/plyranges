@@ -29,7 +29,7 @@ add_na_seqlevels <- function(x) {
 outer_left_join <- function(x, y, hits, suffix) {
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
 
   only_left <- rep(TRUE, queryLength(hits))
   only_left[queryHits(hits)] <- FALSE

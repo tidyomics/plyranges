@@ -1,5 +1,5 @@
 # workhorse funciton for copying metadata columns in y
-mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
+mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE) {
 
   left_names <- names(mcols(left))
   right_names <- names(mcols(right))
@@ -14,7 +14,6 @@ mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
     names(mcols(right))[rname_inx] <- paste0(right_names[rname_inx], suffix[2])
   }
 
-
   if (!is.null(mcols(left))) {
     additional_mcols <- mcols(left)
   } else {
@@ -28,6 +27,23 @@ mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
       additional_mcols <- cbind(additional_mcols, mcols(right))
     }
   }
+
+  if (return_data_frame) {
+    if (is(left, "GenomicRanges")) {
+      ranges_df <- DataFrame(granges.x = granges(left),
+                             granges.y = granges(right))
+    } else {
+      ranges_df <- DataFrame(ranges.x = ranges(left),
+                             ranges.y = ranges(right))
+    }
+    names(ranges_df) <- paste0(gsub("\\..*", "" , names(ranges_df)), suffix)
+    if (!is.null(additional_mcols)) {
+      additional_mcols <- cbind(ranges_df, additional_mcols)
+    } else {
+      return(ranges_df)
+    }
+  }
+
   additional_mcols
 }
 
@@ -67,7 +83,7 @@ find_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
   left
 }
 
@@ -78,7 +94,7 @@ find_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suf
                        type = "any", select = "all", ignore.strand = TRUE)
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
   left
 }
 
@@ -94,7 +110,7 @@ find_overlaps_within.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L, suff
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
   left
 }
 
@@ -105,7 +121,7 @@ find_overlaps_within.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0
                        type = "within", select = "all", ignore.strand = TRUE)
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
   left
 }
 
@@ -122,6 +138,6 @@ find_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap =
                        type = "any", select = "all", ignore.strand = FALSE)
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix, copy_left = FALSE)
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
   left
 }

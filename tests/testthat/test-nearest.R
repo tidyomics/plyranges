@@ -22,6 +22,7 @@ test_that("nearest/follows/precedes matches IRanges methods", {
   result <- join_nearest(query, subject)
   expect_identical(mcols(result)$subject,
                   mcols(subject)[nearest(query, subject, select = "arbitrary"),])
+
   # left/right joins select all nearest hits
   left <- join_nearest_left(query, subject)
   expect_identical(mcols(left)$subject,
@@ -29,19 +30,45 @@ test_that("nearest/follows/precedes matches IRanges methods", {
   right <- join_nearest_right(query, subject)
   expect_identical(mcols(right)$subject, mcols(subject)$subject[c(3,2,4,5)])
 
+  result_pairs <- pair_nearest(query, subject)
+  expect_s4_class(result_pairs, "DataFrame")
+  expect_identical(result_pairs$subject,
+                   mcols(subject)[nearest(query, subject, select = "arbitrary"),])
+
+  expect_identical(result_pairs$ranges.y,
+                   ranges(subject)[nearest(query, subject, select = "arbitrary"),])
+
+
   # follows --
   fol1 <- join_follow(query, subject)
-  expect_identical(mcols(fol1)$subject, mcols(subject)$subject[c(2,3,3,5)])
+  indx <- follow(query, subject)
+  indx <- indx[!is.na(indx)]
+  expect_identical(mcols(fol1)$subject, mcols(subject)$subject[indx])
   # all ranges that follow on the left
   fol2 <- join_follow_left(query, subject)
   expect_identical(mcols(fol2)$subject, mcols(subject)$subject[c(1,2,3,3,5)])
 
+  result_pairs <- pair_follow(query, subject)
+  expect_identical(result_pairs$subject, mcols(subject)$subject[indx])
+  expect_identical(result_pairs$ranges.y,
+                   ranges(subject)[indx])
   # precedes --
   pre1 <- join_precede(query, subject)
-  expect_identical(mcols(pre1)$query, mcols(query)$query[1:4])
+  indx <- precede(query, subject)
+  qindx <- !is.na(indx)
+  sindx <- indx[qindx]
+  expect_identical(mcols(pre1)$query, mcols(query)$query[qindx])
+  expect_identical(mcols(pre1)$subject, mcols(subject)$subject[sindx])
+
   pre2 <- join_precede_right(query, subject)
   expect_identical(mcols(pre2)$query, mcols(query)$query[c(1,2,2,3,4,4)])
 
+  result_pairs <- pair_precede(query, subject)
+  expect_identical(result_pairs$subject, mcols(subject)$subject[sindx])
+  expect_identical(result_pairs$ranges.y,
+                   ranges(subject)[sindx])
+  expect_identical(result_pairs$ranges.x,
+                   ranges(query)[qindx])
 })
 
 test_that("nearest/follows/precedes matches GenomicRanges", {

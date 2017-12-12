@@ -31,7 +31,8 @@ join_follow.Ranges <- function(x,y, suffix = c(".x", ".y")) {
   left <- x[no_hits_id, ]
   right <- y[hits[no_hits_id], ]
   mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  return(left)}
+  return(left)
+}
 
 #' @export
 join_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
@@ -42,8 +43,6 @@ join_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   mcols(left) <- mcols_overlaps_update(left, right, suffix)
   left
 }
-
-
 
 #' @rdname ranges-follow
 #' @importFrom IRanges follow
