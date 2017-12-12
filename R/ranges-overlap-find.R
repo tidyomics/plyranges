@@ -39,8 +39,8 @@ mcols_overlaps_update <- function(left, right, suffix, copy_left = TRUE) {
 #' @param maxgap,minoverlap The maximimum gap between intervals as an integer
 #' greater than or equal to negative one. The minimum amount of overlap between intervals
 #' as an integer greater than zero, accounting for the maximum gap.
-#' @param suffix A character vector length two used to identify metadata columns
-#' coming from x and y
+#' @param suffix A character vector of length two used to identify metadata columns
+#' coming from x and y.
 #'
 #' @details \code{find_overlaps} will search for any overlaps between ranges
 #' x and y and return a ranges object of the same length as x but with additional

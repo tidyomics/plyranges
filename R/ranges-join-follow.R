@@ -3,6 +3,8 @@
 #' Find following Ranges
 #'
 #' @param x,y Ranges objects, which ranges in x follow those in y.
+#' @param suffix A character vector of length two used to identify
+#' metadata columns coming from x and y.
 #'
 #' @details By default \code{join_follow} will find abritrary ranges
 #' in y that are followed by ranges in x and ignore any strand information.
@@ -13,24 +15,32 @@
 #' will result in ranges in y that are left of those in x and on the negative
 #' strand it will result in ranges in y that are right of those in x.
 #'
-#' @return A Ranges object with a metadata column called follows that
-#' contains the corresponding Ranges in y that are followed by the ranges in x.
+#' @return A Ranges object corresponding to the ranges in `x`` that are
+#' followed by the ranges in `y`, all metadata is copied over from the
+#' right-hand side ranges `y`.
 #'
 #' @rdname ranges-follow
 #' @importFrom IRanges follow
 #' @export
-join_follow <- function(x,y) { UseMethod("join_follow") }
+join_follow <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_follow") }
 
 #' @export
-join_follow.Ranges <- function(x,y) {
+join_follow.Ranges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y)
-  nearest_rng(x,y,hits, type = "follows")
-}
+  no_hits_id <- !is.na(hits)
+  left <- x[no_hits_id, ]
+  right <- y[hits[no_hits_id], ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
+  return(left)}
 
 #' @export
-join_follow.GenomicRanges <- function(x,y) {
+join_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, ignore.strand = TRUE)
-  nearest_rng(x,y, hits, type = "follows")
+  no_hits_id <- !is.na(hits)
+  left <- x[no_hits_id, ]
+  right <- y[hits[no_hits_id], ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
+  left
 }
 
 
@@ -38,27 +48,35 @@ join_follow.GenomicRanges <- function(x,y) {
 #' @rdname ranges-follow
 #' @importFrom IRanges follow
 #' @export
-join_follow_left <- function(x,y) { UseMethod("join_follow_left") }
+join_follow_left <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_follow_left") }
 
 #' @export
-join_follow_left.Ranges <- function(x,y) {
+join_follow_left.Ranges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all")
-  nearest_rng_all(x,y, hits, type = "follows")
-}
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
+  left}
 
 #' @export
-join_follow_left.GenomicRanges <- function(x,y) {
+join_follow_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all", ignore.strand = TRUE)
-  nearest_rng_all(x,y, hits, type = "follows")
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
+  left
 }
 
 #' @rdname ranges-follow
 #' @importFrom IRanges follow
 #' @export
-join_follow_upstream <- function(x,y) {UseMethod("join_follow_upstream")}
+join_follow_upstream <- function(x,y, suffix = c(".x", ".y")) {UseMethod("join_follow_upstream")}
 
 #' @export
-join_follow_upstream.GenomicRanges <- function(x,y) {
+join_follow_upstream.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all", ignore.strand = FALSE)
-  nearest_rng_all(x, y, hits, type = "follows")
+  left <- x[queryHits(hits), ]
+  right <- y[subjectHits(hits), ]
+  mcols(left) <- mcols_overlaps_update(left, right, suffix)
+  left
 }
