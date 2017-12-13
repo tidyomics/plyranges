@@ -94,19 +94,19 @@ valid_flag_filters <- function() {
 #' @param .data a DeferredGRanges object
 #' @param ... filter to apply to the input file
 #'
-#' @details The following are valid filters for a `BamFile`:
+#' @details The following are valid filters for a BamFile:
 #' \describe{
-#'  \item{is_paired}	Select either unpaired (FALSE) or paired (TRUE) reads.
-#'  \item{is_proper_pair} Select either improperly paired (FALSE) or properly paired (TRUE) reads. This is dependent on the alignment software used.
-#'  \item{is_unmapped_query}	Select unmapped (TRUE) or mapped (FALSE) reads.
-#'  \item{has_unmapped_mate} Select reads with mapped (FALSE) or unmapped (TRUE)  mates.
-#'  \item{is_minus_strand}	Select reads aligned to plus (FALSE) or minus (TRUE) strand.
-#'  \item{is_mate_minus_strand}	Select reads where mate is aligned to plus (FALSE) or minus (TRUE) strand.
-#'  \item{is_first_mate_read}	Select reads if they are the first mate (TRUE) or not (FALSE).
-#'  \item{is_second_mate_read}	Select reads if they are the second mate (TRUE) or not (FALSE).
-#'  \item{is_secondary_alignment Select reads if their alignment status is secondary (TRUE) or not (FALSE). This might be relevant if there are multimapping reads.
-#'  \item{is_not_passing_quality_controls} Select reads that either pass quality controls (FALSE) or that do not (TRUE).
-#'  \item{is_duplicate}	Select reads that are unduplicated (FALSE) or duplicated (TRUE). This may represent reads that are PCR or optical duplicates.
+#'  \item{`is_paired`}	Select either unpaired (FALSE) or paired (TRUE) reads.
+#'  \item{`is_proper_pair`} Select either improperly paired (FALSE) or properly paired (TRUE) reads. This is dependent on the alignment software used.
+#'  \item{`is_unmapped_query`}	Select unmapped (TRUE) or mapped (FALSE) reads.
+#'  \item{`has_unmapped_mate`} Select reads with mapped (FALSE) or unmapped (TRUE)  mates.
+#'  \item{`is_minus_strand`}	Select reads aligned to plus (FALSE) or minus (TRUE) strand.
+#'  \item{`is_mate_minus_strand`}	Select reads where mate is aligned to plus (FALSE) or minus (TRUE) strand.
+#'  \item{`is_first_mate_read`}	Select reads if they are the first mate (TRUE) or not (FALSE).
+#'  \item{`is_second_mate_read`}	Select reads if they are the second mate (TRUE) or not (FALSE).
+#'  \item{`is_secondary_alignment`} Select reads if their alignment status is secondary (TRUE) or not (FALSE). This might be relevant if there are multimapping reads.
+#'  \item{`is_not_passing_quality_controls`} Select reads that either pass quality controls (FALSE) or that do not (TRUE).
+#'  \item{`is_duplicate`}	Select reads that are unduplicated (FALSE) or duplicated (TRUE). This may represent reads that are PCR or optical duplicates.
 #' }
 #'
 #' @importFrom Rsamtools scanBamFlag bamFlag<-
