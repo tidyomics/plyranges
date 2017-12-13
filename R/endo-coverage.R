@@ -24,7 +24,7 @@ compute_coverage <- function(x, shift, width, weight, ...) {
   UseMethod("compute_coverage")
 }
 
-compute_coverage.default <- function(x, shift, width, weight, ...) {
+compute_coverage.default <- function(x, shift = 0L, width = NULL, weight = 1L, ...) {
   as_granges(coverage(x, shift, width, weight, ...))
 }
 
