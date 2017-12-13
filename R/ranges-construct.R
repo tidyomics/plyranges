@@ -178,3 +178,29 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
   return(ir)
 
 }
+
+
+# -- helper methods for other Bioconductor classes
+#' @export
+as_iranges.Rle <- function(x) {
+  rng <- ranges(x)
+  mcols(rng)[["score"]] <- runValue(x)
+  rng
+}
+
+#' @export
+as_iranges.RleList <- function(x) {
+  rng <- ranges(x)
+  mcols(rng)[["score"]] <- runValue(x)
+  rng
+}
+
+#' @export
+as_granges.RleList <- function(x) {
+  GRanges(x)
+}
+
+#' @export
+as_granges.Rle <- function(x) {
+  GRanges(x)
+}

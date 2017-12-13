@@ -6,6 +6,7 @@
 #' This must be either a  positive integer or NULL (default = NULL)
 #' @param weight weight how much weight should be assigned to each range? Either
 #' an integer or numeric vector or a column in x. (default = 1L)
+#' @param ... other optional parameters to pass to coverage
 #'
 #' @return An expanded Ranges object with a score column corresponding to
 #' the coverage value over that interval. Note that compute_coverage
@@ -19,25 +20,19 @@
 #' @importFrom IRanges coverage ranges
 #' @importFrom S4Vectors runValue
 #' @export
-compute_coverage <- function(x, shift, width, weight) {
+compute_coverage <- function(x, shift, width, weight, ...) {
   UseMethod("compute_coverage")
 }
 
-#' @export
-compute_coverage.GenomicRanges <- function(x, shift = 0L, width = NULL, weight = 1L) {
-  GRanges(coverage(x, shift, width, weight, method = "auto"))
+compute_coverage.default <- function(x, shift, width, weight, ...) {
+  as_granges(coverage(x, shift, width, weight, ...))
 }
 
 #' @export
-compute_coverage.Ranges <- function(x, shift = 0L, width = NULL, weight = 1L) {
-  cvg <- coverage(x, shift, width, weight, method = "auto")
-  rng <- ranges(cvg)
-  mcols(rng)[["score"]] <- runValue(cvg)
-  rng
+compute_coverage.GenomicRanges <- function(x, shift = 0L, width = NULL, weight = 1L, ...) {
+  as_granges(coverage(x, shift, width, weight, ...))
 }
 
-# compute_coverage.GRangesGrouped <- function(x, shift = 0L, width = NULL, weight = 1L) {
-#   gr_groups <- split_groups(x)
-#   GRanges(coverage(gr_groups, shift, width, weight, method = "auto"))
-# }
-
+compute_coverage.Ranges <- function(x, shift = 0L, width = NULL, weight = 1L, ...) {
+  as_iranges(coverage(x, shift, width, weight, ...))
+}
