@@ -31,3 +31,6 @@ dplyr::summarise
 #' @export
 dplyr::summarize
 
+#' @export
+dplyr::arrange
+
