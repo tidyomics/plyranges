@@ -179,28 +179,23 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 
 }
 
-
-# -- helper methods for other Bioconductor classes
+#' Coerce an Rle or RleList object to Ranges
+#' @param .data a \code{Rle} or \code{RleList} object
+#'
+#' @return a Ranges object for Rle or a GRanges object for RleList
 #' @export
-as_iranges.Rle <- function(x) {
-  rng <- ranges(x)
-  mcols(rng)[["score"]] <- runValue(x)
+as_ranges <- function(.data) UseMethod("as_ranges")
+
+#' @importFrom IRanges ranges
+#' @importFrom S4Vectors runValue
+#' @export
+as_ranges.Rle <- function(.data) {
+  rng <- ranges(.data)
+  mcols(rng)[["score"]] <- runValue(.data)
   rng
 }
 
+#' @importFrom GenomicRanges GRanges
 #' @export
-as_iranges.RleList <- function(x) {
-  rng <- ranges(x)
-  mcols(rng)[["score"]] <- runValue(x)
-  rng
-}
+as_ranges.RleList <- function(.data) GRanges(.data)
 
-#' @export
-as_granges.RleList <- function(x) {
-  GRanges(x)
-}
-
-#' @export
-as_granges.Rle <- function(x) {
-  GRanges(x)
-}
