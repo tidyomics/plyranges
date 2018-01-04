@@ -16,8 +16,8 @@ Depends:
   R (>= 3.4.0),
   methods,
   BiocGenerics,
-  GenomicRanges (>= 1.28.4),
-  IRanges
+  IRanges (>= 2.12.0),
+  GenomicRanges (>= 1.28.4)
 Imports:
   dplyr, 
   rlang, 

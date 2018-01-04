@@ -101,7 +101,7 @@ test_that("nearest/follows/precedes matches GenomicRanges", {
   expect_identical(mcols(down)$query, query_gr$query[c(1,3,5)])
   # keeps no strand calls, plus gives all follows
   follow_up <- join_follow_upstream(query_gr, subject_gr)
-  expect_identical(mcols(follow_up)$subject, subject_gr$subject[c(2,3,4,5,4,5,3)])
+  expect_identical(mcols(follow_up)$subject, subject_gr$subject[c(2,3,4,5,3)])
 
   precede_down <- join_precede_downstream(query_gr, subject_gr)
   expect_identical(mcols(precede_down)$subject, subject_gr$subject[c(3,1,5)])
