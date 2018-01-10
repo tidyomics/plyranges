@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -97,11 +97,11 @@
     <p>Find following Ranges</p>
     
 
-    <pre class="usage"><span class='fu'>join_follow</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+    <pre class="usage"><span class='fu'>join_follow</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='fu'>join_follow_left</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+<span class='fu'>join_follow_left</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='fu'>join_follow_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+<span class='fu'>join_follow_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -110,12 +110,18 @@
       <th>x, y</th>
       <td><p>Ranges objects, which ranges in x follow those in y.</p></td>
     </tr>
+    <tr>
+      <th>suffix</th>
+      <td><p>A character vector of length two used to identify
+metadata columns coming from x and y.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Ranges object with a metadata column called follows that
-contains the corresponding Ranges in y that are followed by the ranges in x.</p>
+    <p>A Ranges object corresponding to the ranges in `x`` that are
+followed by the ranges in `y`, all metadata is copied over from the
+right-hand side ranges `y`.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -114,21 +114,15 @@
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="anchor.html">anchors</a></code> <code><a href="anchor.html">anchor_start</a></code> <code><a href="anchor.html">anchor_end</a></code> <code><a href="anchor.html">anchor_center</a></code> <code><a href="anchor.html">anchor_3p</a></code> <code><a href="anchor.html">anchor_5p</a></code> </p>
+            <p><code><a href="as_ranges.html">as_ranges</a></code> </p>
           </td>
-          <td><p>Fixing a Range by coordinates or strand</p></td>
+          <td><p>Coerce an Rle or RleList object to Ranges</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="bam_flag_reads.html">bam_flag_reads</a></code> </p>
+            <p><code><a href="bam_file.html">bam_file</a></code> </p>
           </td>
-          <td><p>Flag reads for filtering prior to loading a BAM file.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bam_select.html">bam_select</a></code> </p>
-          </td>
-          <td><p>Select fields and tags to load from a BAM</p></td>
+          <td><p>Constructor for deferred reading of BAM files</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -168,6 +162,18 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="combine_ranges.html">combine_ranges</a></code> </p>
+          </td>
+          <td><p>Combine pairs of Ranges in order</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="compute_coverage.html">compute_coverage</a></code> </p>
+          </td>
+          <td><p>Compute coverage over a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="element-setops.html">%union%</a></code> <code><a href="element-setops.html">%intersect%</a></code> <code><a href="element-setops.html">%setdiff%</a></code> <code><a href="element-setops.html">between</a></code> <code><a href="element-setops.html">span</a></code> </p>
           </td>
           <td><p>Row-wise set operations on Ranges objects</p></td>
@@ -183,6 +189,12 @@
             <p><code><a href="filter-ranges.html">filter</a></code> </p>
           </td>
           <td><p>Subset a <code>Ranges</code> object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="filter.GRangesDeferred.html">filter</a></code> </p>
+          </td>
+          <td><p>Flag reads for filtering prior to loading a BAM file.</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -210,6 +222,24 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="GRangesAnchored-class.html">GRangesAnchored-class</a></code> </p>
+          </td>
+          <td><p>An S4 class to represent anchored GRanges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="GRangesDeferred-class.html">GRangesDeferred-class</a></code> </p>
+          </td>
+          <td><p>Deferred GRanges class</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="GRangesDeferred.html">GRangesDeferred</a></code> </p>
+          </td>
+          <td><p>Constructor for GRangesDeferred class</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
             <p><code><a href="GRangesGrouped-class.html">GRangesGrouped-class</a></code> </p>
           </td>
           <td><p>An S4 class to represent grouped GRanges</p></td>
@@ -225,6 +255,12 @@
             <p><code><a href="groups-ranges.html">groups</a></code> <code><a href="groups-ranges.html">group_vars</a></code> </p>
           </td>
           <td><p>Extract groupings from a RangesGrouped object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="IRangesAnchored-class.html">IRangesAnchored-class</a></code> </p>
+          </td>
+          <td><p>An S4 class to represent anchored IRanges</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -249,6 +285,24 @@
             <p><code><a href="precede-ranges.html">join_precede</a></code> <code><a href="precede-ranges.html">join_precede_right</a></code> <code><a href="precede-ranges.html">join_precede_downstream</a></code> </p>
           </td>
           <td><p>Find preceding Ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-anchor.html">anchor</a></code> <code><a href="ranges-anchor.html">anchor_start</a></code> <code><a href="ranges-anchor.html">anchor_end</a></code> <code><a href="ranges-anchor.html">anchor_center</a></code> <code><a href="ranges-anchor.html">anchor_centre</a></code> <code><a href="ranges-anchor.html">anchor_3p</a></code> <code><a href="ranges-anchor.html">anchor_5p</a></code> </p>
+          </td>
+          <td><p>Fixing a Range by coordinates or strand</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-arrange.html">arrange</a></code> </p>
+          </td>
+          <td><p>Sort a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-construct.html">as_iranges</a></code> <code><a href="ranges-construct.html">as_granges</a></code> </p>
+          </td>
+          <td><p>Construct a I/GRanges object from a tibble or data.frame</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -288,15 +342,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="ranges-nest.html">nest</a></code> </p>
-          </td>
-          <td><p>Nest a GenomicRanges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="ranges-overlaps.html">find_overlaps</a></code> <code><a href="ranges-overlaps.html">find_overlaps_within</a></code> <code><a href="ranges-overlaps.html">find_overlaps_directed</a></code> <code><a href="ranges-overlaps.html">group_by_overlaps</a></code> </p>
           </td>
           <td><p>Find overlap between two Ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-pairs.html">pair_overlaps</a></code> <code><a href="ranges-pairs.html">pair_nearest</a></code> <code><a href="ranges-pairs.html">pair_precede</a></code> <code><a href="ranges-pairs.html">pair_follow</a></code> </p>
+          </td>
+          <td><p>Pair together two ranges objects</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -330,27 +384,27 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="Ranges.html">Ranges</a></code> </p>
-          </td>
-          <td><p>Contstruct a I/GRanges object from a tibble or data.frame</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="read_bam.html">read_bam</a></code> </p>
           </td>
           <td><p>Read a BAM file</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="self-overlap-joins.html">join_overlap_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_within_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_self_inner</a></code> </p>
+            <p><code><a href="select_fields.html">select_fields</a></code> </p>
           </td>
-          <td><p>Find overlaps within a Ranges object</p></td>
+          <td><p>Select fields and tags to load from a BAM</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="set_coverage.html">set_coverage</a></code> </p>
+            <p><code><a href="select_tags.html">select_tags</a></code> </p>
           </td>
-          <td><p>Ranges friendly coverage method</p></td>
+          <td><p>Select tags in a BAM file</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="self-overlap-joins.html">join_overlap_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_within_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_self_inner</a></code> </p>
+          </td>
+          <td><p>Find overlaps within a Ranges object</p></td>
         </tr><tr>
           <!--  -->
           <td>

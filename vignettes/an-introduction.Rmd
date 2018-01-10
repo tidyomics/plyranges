@@ -1,37 +1,26 @@
 ---
-title: "Introduction to the plyranges package"
+title: "Getting started with the plyranges package"
 author: "Stuart Lee"
 package: plyranges
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document:
     toc_float: true
-  BiocStyle::md_document:
-    variant: markdown_github
 vignette: >
   %\VignetteIndexEntry{Introduction}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-# Introduction
-
-The `plyranges` package provides a 
-[fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for 
-performing common genomic data analysis tasks. One goal of this package is to 
-decrease the learning curve for Bioconductor and S4 classes 
-(especially for new users) by providing a consistent interface to 
-common classes, `IRanges` and `GRanges` classes. 
-
-This document provides an overview of some of the features of the `plyranges`
-grammar for analysing genomic data. I give a brief introduction
-to the `Ranges` and `GenomicRanges` classes and then detail each feature of
-the `plyranges` library: construction, arithmetic, restriction, summarisation,
-joins, and data import/output.
-
 # `Ranges` revisted
 
-`Ranges` objects can either represent intervals of integers as `IRanges`
+In Bioconductor there are two classes, `IRanges` and `GRanges`, 
+that are standard data structures for representing genomics data. 
+Throughout this document I refer to either of these classes as `Ranges` if an
+operation can be performed on either class, otherwise I explicilty mention if
+a function is approrpriate for an `IRanges` or `GRanges`.
+
+`Ranges` objects can either represent sets of integers as `IRanges`
 (which have start, end and width attributes)
 or represent genomic intervals (which have additional attributes, sequence name,
 and strand) as `GRanges`. In addition, both types of `Ranges` can store information
@@ -50,6 +39,7 @@ tasks.
 
 
 # Constructing `Ranges`
+
 To construct an `IRanges` we require there are at least two columns that represent at either a 
 starting coordinate, finishing coordinate or the width of the interval. To
 construct a `GRanges` we require a column that represents that sequence name (

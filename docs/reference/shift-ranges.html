@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -124,16 +124,57 @@ the same length as x.</p></td>
 
     <p>Shifting left or right will ignore any strand information
 in the Ranges object, while shifting upstream/downstream will shift coordinates
-on the positive strand left/right and the negative strand right/left. Shifting
-upstream/downstream supports the notion of anchoring by strand. For example,
-shifting upstream while anchoring the positive strand, will shift all negative
-strand ranges to the right.</p>
+on the positive strand left/right and the negative strand right/left. By
+default, unstranded features are treated as positive.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='http://www.rdocumentation.org/packages/IRanges/topics/intra-range-methods'>shift</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>ir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>15</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>))
+<span class='fu'>shift_left</span>(<span class='no'>ir</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 0 metadata columns:
+#&gt;           start       end     width
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]         5         9         5
+#&gt;   [2]         6        10         5
+#&gt;   [3]         7        11         5
+#&gt;   [4]         8        12         5
+#&gt;   [5]         9        13         5
+#&gt;   [6]        10        14         5</div><div class='input'><span class='fu'>shift_right</span>(<span class='no'>ir</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 0 metadata columns:
+#&gt;           start       end     width
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]        15        19         5
+#&gt;   [2]        16        20         5
+#&gt;   [3]        17        21         5
+#&gt;   [4]        18        22         5
+#&gt;   [5]        19        23         5
+#&gt;   [6]        20        24         5</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>15</span>,
+                            <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+                            <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,
+                            <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"*"</span>)))
+<span class='fu'>shift_upstream</span>(<span class='no'>gr</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     seq1  [ 5,  9]      +
+#&gt;   [2]     seq1  [ 6, 10]      +
+#&gt;   [3]     seq1  [17, 21]      -
+#&gt;   [4]     seq1  [18, 22]      -
+#&gt;   [5]     seq1  [ 9, 13]      +
+#&gt;   [6]     seq1  [15, 19]      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>shift_downstream</span>(<span class='no'>gr</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     seq1  [15, 19]      +
+#&gt;   [2]     seq1  [16, 20]      +
+#&gt;   [3]     seq1  [ 7, 11]      -
+#&gt;   [4]     seq1  [ 8, 12]      -
+#&gt;   [5]     seq1  [19, 23]      +
+#&gt;   [6]     seq1  [15, 19]      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -143,7 +184,9 @@ strand ranges to the right.</p>
       <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

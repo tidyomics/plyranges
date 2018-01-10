@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -122,7 +122,7 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,  <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,
 <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"*"</span>), <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>))
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Ranges.html'>Ranges</a></span>(<span class='no'>df</span>)
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>)
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>()</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -131,20 +131,20 @@
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 1 range and 1 metadata column:
 #&gt;       seqnames    ranges strand |                gc
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
-#&gt;   [1]     seq1   [1, 14]      * | 0.612297280225903
+#&gt;   [1]     seq1   [1, 14]      * | 0.559346940834075
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges_directed</span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 4 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |                 gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt;
-#&gt;   [1]     seq1  [ 9, 13]      + |  0.834027098724619
-#&gt;   [2]     seq1  [ 1, 12]      - |  0.609645262244157
-#&gt;   [3]     seq1  [ 3,  8]      * |  0.769781925715506
-#&gt;   [4]     seq1  [10, 14]      * | 0.0915102786384523
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1  [ 2,  6]      + | 0.599398155929521
+#&gt;   [2]     seq1  [10, 14]      + | 0.733466701582074
+#&gt;   [3]     seq1  [ 1, 10]      - | 0.498746844416019
+#&gt;   [4]     seq1  [ 4, 13]      * | 0.566404293291271
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>:<span class='fl'>13</span>, <span class='fl'>2</span>, <span class='fl'>7</span>:<span class='fl'>6</span>), <span class='kw'>width</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>id</span><span class='kw'>=</span><span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>6</span>],
 <span class='kw'>score</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>6</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Ranges.html'>Ranges</a></span>(<span class='no'>x</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='no'>x</span>)
 <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>()</div><div class='output co'>#&gt; IRanges object with 3 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;

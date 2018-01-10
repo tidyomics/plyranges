@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -147,15 +147,15 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
     </tr>
     <tr>
       <th>suffix</th>
-      <td><p>A character vector length two used to identify metadata columns
-coming from x and y</p></td>
+      <td><p>A character vector of length two used to identify metadata columns
+coming from x and y.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A Ranges object with rows corresponding to the
-ranges in x that overlap y. A metadata column containing  In the case of <code>group_by_overlaps</code>, returns
+ranges in x that overlap y.  In the case of <code>group_by_overlaps</code>, returns
 a GroupedRanges object, grouped by the number of overlaps
 of ranges in x that overlap y (stored in a column called query).</p>
     
@@ -163,8 +163,7 @@ of ranges in x that overlap y (stored in a column called query).</p>
 
     <p><code>find_overlaps</code> will search for any overlaps between ranges
 x and y and return a ranges object of the same length as x but with additional
-metadata colums indicating the start, end, width of the overlap range in y
-and any additional metadata columns in y. <code>find_overlaps_within</code> is
+metadata colums corresponding to the metadata columns in y. <code>find_overlaps_within</code> is
 the same but will only search for overlaps within y. For GRanges strand is
 ignored, unless <code>find_overlaps_directed</code> is used.</p>
     

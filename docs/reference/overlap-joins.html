@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -167,11 +167,17 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Inner overlaps finds intersecting intervals between x and y
-while keeping information about the width from x and y.
-Left overlaps is equivalent to find_overlaps, it keeps all ranges in x
-that overlap ranges in y. Self overlaps find all overlaps within a ranges
-object x.</p>
+    <p>The function <code>join_intersect_overlaps</code> finds
+the genomic intervals that are the overlapping ranges between x and y and
+returns a new ranges object with metadata columns from x and y.</p>
+<p>The function <code>join_inner_overlaps</code> is equivalent to <code>find_overlaps</code>
+, it returns all ranges in x that overlap ranges in y.</p>
+<p>The function <code>join_left_overlaps</code> performs a left outer join between x
+and y. It returns all ranges in x that overlap or do not overlap ranges in y
+plus metadata columns common to both. If there is no overlapping range
+the metadata column will contain a missing value.</p>
+<p>The function <code>join_self_overlaps</code> find all overlaps between a ranges
+object x and itself.</p>
     
 
   </div>

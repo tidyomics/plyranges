@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -97,49 +97,30 @@
     <p>Read a BAM file</p>
     
 
-    <pre class="usage"><span class='fu'>read_bam</span>(<span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='no'>file</span>, <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>flag_reads</span> <span class='kw'>=</span> <span class='fu'><a href='bam_flag_reads.html'>bam_flag_reads</a></span>(),
-  <span class='kw'>select_reads</span> <span class='kw'>=</span> <span class='fu'><a href='bam_select.html'>bam_select</a></span>(), <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>read_bam</span>(<span class='no'>bam</span>, <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>The path to a BAM file.</p></td>
-    </tr>
-    <tr>
-      <th>index</th>
-      <td><p>The path to the index file of the BAM. Must be given without
-the '.bai' extension.</p></td>
+      <th>bam</th>
+      <td><p>A GRangesDeferred object (constructed with <code>bam_file</code>.</p></td>
     </tr>
     <tr>
       <th>paired</th>
-      <td><p>Whether to treat the BAM file as paired end (TRUE) or single end (FALSE.</p></td>
-    </tr>
-    <tr>
-      <th>flag_reads</th>
-      <td><p>The reads that will be returned by selecting combinations in
-<code>bam_flag_reads</code>.</p></td>
-    </tr>
-    <tr>
-      <th>select_reads</th>
-      <td><p>The fields and tags in the BAM file that will be returned
-as metadata columns in the returned GRanges object. Determined by <code>bam_select</code>.</p></td>
-    </tr>
-    <tr>
-      <th>overlap_ranges</th>
-      <td><p>Only return records that overlap the given Ranges object. The
-returning GRanges object will be annotated with a column called which_label to
-identify the range in overlap_ranges that the read overalps.</p></td>
+      <td><p>Whether to treat the BAM file as paired end (TRUE)
+or single end (FALSE).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default for paired = TRUE, read_bam will select reads
+    <p>By default for paired = FALSE, read_bam will select reads
 that are mapped, paired and have mapped mates. For paired = FALSE,
 read_bam will select reads that are mapped. This function is wrapper to
-the <code>readGAlignment</code> functions in <span class="pkg">GenomicAlignemnts</span>.</p>
+the <code>readGAlignment</code> functions in <span class="pkg">GenomicAlignments</span>. To perform
+any filtering or selection prior to filtering use the <code>select_tags</code>,
+<code>select_fields</code> or <code>filter</code> methods provided.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

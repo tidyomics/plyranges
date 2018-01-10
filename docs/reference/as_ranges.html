@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select fields and tags to load from a BAM — bam_select • plyranges</title>
+<title>Coerce an Rle or RleList object to Ranges — as_ranges • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/01-introduction-plyranges.html">Introduction to the plyranges package</a>
+      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
     </li>
     <li>
-      <a href="../articles/02-bedtools-examples.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
     </li>
   </ul>
 </li>
@@ -90,36 +90,27 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select fields and tags to load from a BAM</h1>
+    <h1>Coerce an Rle or RleList object to Ranges</h1>
     </div>
 
     
-    <p>Select fields and tags to load from a BAM</p>
+    <p>Coerce an Rle or RleList object to Ranges</p>
     
 
-    <pre class="usage"><span class='fu'>bam_select</span>(<span class='kw'>fields</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tags</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>as_ranges</span>(<span class='no'>.data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>fields</th>
-      <td><p>a character vector indicating which fields from
-the BAM file to load. Valid entries are "qname" (QNAME), "flag" (FLAG),
-"rname" (RNAME), "strand", "pos" (POS), "qwidth" (width of query),
-"mapq" (MAPQ), "cigar" (CIGAR), "mrnm" (RNEXT), "mpos" (PNEXT), "isize"
-(TLEN), "seq" (SEQ), "qual" (QUAL).</p></td>
-    </tr>
-    <tr>
-      <th>tags</th>
-      <td><p>a character vector of tags (optional fields associated
-with each read), these are two letter codes.</p></td>
+      <th>.data</th>
+      <td><p>a <code>Rle</code> or <code>RleList</code> object</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/Rsamtools/topics/ScanBamParam-class'>ScanBamParam</a></code></p>
+    <p>a Ranges object for Rle or a GRanges object for RleList</p>
     
 
   </div>
@@ -128,7 +119,7 @@ with each read), these are two letter codes.</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#value">Value</a></li>
           </ul>
 
   </div>
