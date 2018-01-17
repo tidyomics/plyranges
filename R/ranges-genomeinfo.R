@@ -1,16 +1,7 @@
 # Representing seqinfo information as a Ranges
 
-#' Construct annotation information for Ranges
-#'
-#' @param genome A character vector of length one indicating the genome build.
-#' If this is the only argument supplied, the build information will be
-#' retrieved from UCSC database.
-#' @param seqnames A character vector containing the name of sequences.
-#' @param seqlengths An optional integer vector containg the lengths of sequences.
-#' @param is_circular An optional logical vector indicating whether a sequence is ciruclar.
-#'
-#' @return a GRanges object
-#' @importFrom GenomeInfoDb Seqinfo seqnames seqlengths isCircular genome seqinfo
+#' @name ranges-info
+#' @rdname ranges-info
 #' @export
 genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_circular = NULL) {
 
@@ -23,18 +14,50 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 
 }
 
-#' Add annotation information to a Ranges object
+#' Construct annotation information
 #'
-#' @param .data A Ranges object to annotate
+#' @param .data A Ranges object to annotate or retrieve an annotation for.
 #' @param genome A character vector of length one indicating the genome build.
+#' If this is the only argument supplied, the build information will be
+#' retrieved from UCSC database.
 #' @param seqnames A character vector containing the name of sequences.
 #' @param seqlengths An optional integer vector containg the lengths of sequences.
 #' @param is_circular An optional logical vector indicating whether a sequence is ciruclar.
 #'
-#' @return An annotated GRanges object. To see the annotations use
-#' \code{get_genome_info}.
-#' @export
-#' @rdname ranges-info-set
+#' @return a GRanges object containing annotations. To retrieve the annotations
+#' as a Ranges object use \code{get_genome_info}.
+#'
+#' @description To construct annotations by supplying annotation information
+#' use \code{genome_info}. This function allows you to get UCSC build information
+#' via \link[GenomeInfoDb]{\code{fetchExtendedChromInfoFromUCSC}}. To add
+#' annotations to an existing Ranges object use \code{set_genome_info}. To retrieve
+#' an annotation as a Ranges object use \code{get_genome_info}.
+#'
+#' @importFrom GenomeInfoDb Seqinfo seqnames seqlengths isCircular genome seqinfo
+#' @seealso \link[GenomeInfoDb]{Seqinfo-class} \link[GenomeInfoDb]{\code{fetchExtendedChromInfoFromUCSC}}
+#' @examples
+#' if (interactive()) {
+#'  # requires internet connection
+#'  genome_info(genome = "hg38")
+#' }
+#'
+#' x <- genome_info(genome = "toy",
+#'                  seqnames = letters[1:4],
+#'                  seqlengths = c(100, 300, 15, 600),
+#'                  is_circular = c(NA, FALSE, FALSE, TRUE))
+#'x
+#'
+#' rng <- as_granges(data.frame(seqnames = "a", start = 30:50, width = 10))
+#' rng
+#' rng <- set_genome_info(rng,
+#'                        genome = "toy",
+#'                        seqnames = letters[1:4],
+#'                        seqlengths = c(100, 300, 15, 600),
+#'                        is_circular = c(NA, FALSE, FALSE, TRUE))
+#' get_genome_info(rng)
+#'
+#'
+#' @rdname ranges-info
 set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
                             seqlengths = NULL, is_circular = NULL) {
 
@@ -43,23 +66,17 @@ set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
 }
 
 
-#' Extract annotation as a Ranges object
-#'
-#' @param .data a Seqinfo object or a GRanges with a seqinfo slot
-#'
-#' @return A GRanges object
+
 #' @export
-#' @rdname ranges-info-get
+#' @rdname ranges-info
 get_genome_info <- function(.data)  UseMethod("get_genome_info")
 
-#' @rdname ranges-info-get
 #' @export
 get_genome_info.GenomicRanges <- function(.data) {
   info <- seqinfo(.data)
   get_genome_info(info)
 }
 
-#' @rdname ranges-info-get
 #' @export
 get_genome_info.Seqinfo <- function(.data) {
 
