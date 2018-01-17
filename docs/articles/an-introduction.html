@@ -68,33 +68,29 @@
       <h1>Getting started with the plyranges package</h1>
                         <h4 class="author">Stuart Lee</h4>
             
-            <h4 class="date">2018-01-10</h4>
+            <h4 class="date">2018-01-17</h4>
           </div>
 
     
     
 <div class="contents">
-<div id="ranges-revisted" class="section level1">
-<h1 class="hasAnchor">
-<a href="#ranges-revisted" class="anchor"></a><code>Ranges</code> revisted</h1>
+<section id="ranges-revisted" class="level1"><h1>
+<code>Ranges</code> revisted</h1>
 <p>In Bioconductor there are two classes, <code>IRanges</code> and <code>GRanges</code>, that are standard data structures for representing genomics data. Throughout this document I refer to either of these classes as <code>Ranges</code> if an operation can be performed on either class, otherwise I explicilty mention if a function is approrpriate for an <code>IRanges</code> or <code>GRanges</code>.</p>
 <p><code>Ranges</code> objects can either represent sets of integers as <code>IRanges</code> (which have start, end and width attributes) or represent genomic intervals (which have additional attributes, sequence name, and strand) as <code>GRanges</code>. In addition, both types of <code>Ranges</code> can store information about their intervals as metadata columns (for example GC content over a genomic interval).</p>
 <p><code>Ranges</code> objects follow the tidy data principle: each row of a <code>Ranges</code> object corresponds to an interval, while each column will represent a variable about that interval, and generally each object will represent a single unit of observation (like gene annotations).</p>
 <p>Consequently, <code>Ranges</code> objects provide a powerful representation for reasoning about genomic data. In this vignette, you will learn more about <code>Ranges</code> objects and how via grouping, restriction and summarisation you can perform common data tasks.</p>
-</div>
-<div id="constructing-ranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#constructing-ranges" class="anchor"></a>Constructing <code>Ranges</code>
+</section><section id="constructing-ranges" class="level1"><h1>Constructing <code>Ranges</code>
 </h1>
 <p>To construct an <code>IRanges</code> we require there are at least two columns that represent at either a starting coordinate, finishing coordinate or the width of the interval. To construct a <code>GRanges</code> we require a column that represents that sequence name ( contig or chromosome id), and an optional column to represent the strandedness of an interval.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(plyranges))
-<span class="kw">set.seed</span>(<span class="dv">100</span>)
-df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">2</span><span class="op">:-</span><span class="dv">1</span>, <span class="dv">13</span><span class="op">:</span><span class="dv">15</span>), 
-                 <span class="dt">width=</span><span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">0</span>))
-
-<span class="co"># produces IRanges</span>
-rng &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>()
-rng</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(plyranges))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">set.seed</span>(<span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">2</span><span class="op">:-</span><span class="dv">1</span>, <span class="dv">13</span><span class="op">:</span><span class="dv">15</span>), </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">                 <span class="dt">width=</span><span class="kw">c</span>(<span class="dv">0</span><span class="op">:</span><span class="dv">3</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># produces IRanges</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">rng &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>()</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">rng</a></code></pre></div>
 <pre><code>## IRanges object with 7 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -105,14 +101,14 @@ rng</code></pre></div>
 ##   [5]        13        14         2
 ##   [6]        14        14         1
 ##   [7]        15        14         0</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># seqname is required for GRanges, metadata is automatically kept</span>
-grng &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">transform</span>(<span class="dt">seqnames =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-         <span class="dt">strand =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-         <span class="dt">gc =</span> <span class="kw">runif</span>(<span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()
-
-grng</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># seqname is required for GRanges, metadata is automatically kept</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">grng &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">transform</span>(<span class="dt">seqnames =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="dt">strand =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">         <span class="dt">gc =</span> <span class="kw">runif</span>(<span class="dv">7</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">grng</a></code></pre></div>
 <pre><code>## GRanges object with 7 ranges and 1 metadata column:
 ##       seqnames    ranges strand |                gc
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
@@ -125,23 +121,20 @@ grng</code></pre></div>
 ##   [7]     chr2  [15, 14]      + | 0.535811153938994
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-</div>
-<div id="arithmetic-on-ranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#arithmetic-on-ranges" class="anchor"></a>Arithmetic on Ranges</h1>
+</section><section id="arithmetic-on-ranges" class="level1"><h1>Arithmetic on Ranges</h1>
 <p>Sometimes you want to modify a genomic interval by altering the width of the interval while leaving the start, end or midpoint of the coordinates unaltered. This is achieved with the <code>set_width</code> verb along with <code>anchor_*</code> adverbs.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>(<span class="kw">data.frame</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">8</span>)))
-grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(<span class="kw">data.frame</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">8</span>), 
-                          <span class="dt">seqnames =</span> <span class="st">"seq1"</span>,
-                          <span class="dt">strand =</span> <span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"*"</span>, <span class="st">"-"</span>)))
-<span class="kw"><a href="../reference/set_width.html">set_width</a></span>(rng, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>(<span class="kw">data.frame</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">8</span>)))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(<span class="kw">data.frame</span>(<span class="dt">start=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">8</span>), </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">                          <span class="dt">seqnames =</span> <span class="st">"seq1"</span>,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">                          <span class="dt">strand =</span> <span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"*"</span>, <span class="st">"-"</span>)))</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(rng, <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]         1        10        10
 ##   [2]         2        11        10
 ##   [3]         3        12        10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_start</a></span>(rng), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_start</a></span>(rng), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: start
 ##           start       end     width
@@ -149,7 +142,7 @@ grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges
 ##   [1]         1        10        10
 ##   [2]         2        11        10
 ##   [3]         3        12        10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_end</a></span>(rng), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_end</a></span>(rng), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: end
 ##           start       end     width
@@ -157,7 +150,7 @@ grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges
 ##   [1]         1        10        10
 ##   [2]         2        11        10
 ##   [3]         3        12        10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_center</a></span>(rng), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_center</a></span>(rng), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: center
 ##           start       end     width
@@ -165,7 +158,7 @@ grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges
 ##   [1]         1        10        10
 ##   [2]         2        11        10
 ##   [3]         3        12        10</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_3p</a></span>(grng), <span class="dv">10</span>) <span class="co"># leave negative strand fixed</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_3p</a></span>(grng), <span class="dv">10</span>) <span class="co"># leave negative strand fixed</span></a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: 3p
 ##       seqnames    ranges strand
@@ -175,7 +168,7 @@ grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges
 ##   [3]     seq1   [3, 12]      -
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_5p</a></span>(grng), <span class="dv">10</span>) <span class="co"># leave positve strand fixed</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../reference/set_width.html">set_width</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_5p</a></span>(grng), <span class="dv">10</span>) <span class="co"># leave positve strand fixed</span></a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: 5p
 ##       seqnames    ranges strand
@@ -186,29 +179,29 @@ grng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Similarly, you can modify the width of an interval using the <code>stretch</code> verb. Without anchoring, this function will extend the interval in either direction by an integer amount. With anchoring, either the start, end or midpoint are preserved.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rng2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_center</a></span>(rng), <span class="dv">10</span>)
-rng2</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">rng2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_center</a></span>(rng), <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">rng2</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]        -7        13        21
 ##   [2]        -8        12        21
 ##   [3]        -5        15        21</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_end</a></span>(rng2), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_end</a></span>(rng2), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]       -17        13        31
 ##   [2]       -18        12        31
 ##   [3]       -15        15        31</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_start</a></span>(rng2), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_start</a></span>(rng2), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]        -7        23        31
 ##   [2]        -8        22        31
 ##   [3]        -5        25        31</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_3p</a></span>(grng), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_3p</a></span>(grng), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: 3p
 ##       seqnames    ranges strand
@@ -218,7 +211,7 @@ rng2</code></pre></div>
 ##   [3]     seq1  [-7, 18]      -
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_5p</a></span>(grng), <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../reference/stretch.html">stretch</a></span>(<span class="kw"><a href="../reference/ranges-anchor.html">anchor_5p</a></span>(grng), <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ## Anchored by: 5p
 ##       seqnames    ranges strand
@@ -229,21 +222,21 @@ rng2</code></pre></div>
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p><code>*Ranges</code> can be shifted left or right. If strand information is available we can also shift upstream or downstream.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shift-ranges.html">shift_left</a></span>(rng, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="../reference/shift-ranges.html">shift_left</a></span>(rng, <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]        -9        -5         5
 ##   [2]        -8        -8         1
 ##   [3]        -7        -2         6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shift-ranges.html">shift_right</a></span>(rng, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="../reference/shift-ranges.html">shift_right</a></span>(rng, <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## IRanges object with 3 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]        11        15         5
 ##   [2]        12        12         1
 ##   [3]        13        18         6</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shift-ranges.html">shift_upstream</a></span>(grng, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="../reference/shift-ranges.html">shift_upstream</a></span>(grng, <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -252,7 +245,7 @@ rng2</code></pre></div>
 ##   [3]     seq1  [13, 18]      -
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/shift-ranges.html">shift_downstream</a></span>(grng, <span class="dv">10</span>)</code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw"><a href="../reference/shift-ranges.html">shift_downstream</a></span>(grng, <span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -261,24 +254,21 @@ rng2</code></pre></div>
 ##   [3]     seq1  [-7, -2]      -
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-</div>
-<div id="grouping-ranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#grouping-ranges" class="anchor"></a>Grouping <code>Ranges</code>
+</section><section id="grouping-ranges" class="level1"><h1>Grouping <code>Ranges</code>
 </h1>
 <p><code>plyranges</code> introduces a new class of <code>Ranges</code> called <code>RangesGrouped</code>, this is a similiar idea to the grouped <code>data.frame\tibble</code> in <code>dplyr</code>. Note that grouping does not change the structure of a <code>Ranges</code> object only how certain functions act on it.</p>
 <p>Grouping can act on either the core components or the metadata columns.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grng &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-         <span class="dt">strand =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
-         <span class="dt">gc =</span> <span class="kw">runif</span>(<span class="dv">7</span>),
-         <span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,
-         <span class="dt">width =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()
-
-grng_by_strand &lt;-<span class="st"> </span>grng <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(strand)
-
-grng_by_strand</code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">grng &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">         <span class="dt">strand =</span> <span class="kw">sample</span>(<span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">         <span class="dt">gc =</span> <span class="kw">runif</span>(<span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">         <span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>,</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">         <span class="dt">width =</span> <span class="dv">10</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()</a>
+<a class="sourceLine" id="cb35-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb35-8" data-line-number="8">grng_by_strand &lt;-<span class="st"> </span>grng <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(strand)</a>
+<a class="sourceLine" id="cb35-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb35-11" data-line-number="11">grng_by_strand</a></code></pre></div>
 <pre><code>## GRanges object with 7 ranges and 1 metadata column:
 ## Groups: strand
 ##       seqnames    ranges strand |                gc
@@ -292,13 +282,10 @@ grng_by_strand</code></pre></div>
 ##   [7]     chr2   [7, 16]      - | 0.865120546659455
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-</div>
-<div id="restricting-ranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#restricting-ranges" class="anchor"></a>Restricting <code>Ranges</code>
+</section><section id="restricting-ranges" class="level1"><h1>Restricting <code>Ranges</code>
 </h1>
 <p>The verb <code>filter</code> can be used to restrict rows in the <code>Ranges</code>. Note that grouping will cause the <code>filter</code> to act within each group of the data.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grng <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gc <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.3</span>)</code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">grng <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gc <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.3</span>)</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |                gc
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
@@ -306,8 +293,8 @@ grng_by_strand</code></pre></div>
 ##   [2]     chr1   [5, 14]      + | 0.130288870073855
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># filtering by group </span>
-grng_by_strand <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gc <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(gc)) </code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co"># filtering by group </span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">grng_by_strand <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(gc <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(gc)) </a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
 ## Groups: 
 ##       seqnames    ranges strand |                gc
@@ -317,11 +304,11 @@ grng_by_strand <span class="op">%&gt;%</span><span class="st"> </span><span clas
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <p>We also provide the convience methods <code>filter_by_overlaps</code> and <code>filter_by_non_overlaps</code> for restricting by overlapping <code>Ranges</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir0 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">10</span>, <span class="dv">15</span>,<span class="dv">20</span>), <span class="dt">width =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>()
-ir1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">width =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">7</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>()
-ir0</code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">ir0 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">10</span>, <span class="dv">15</span>,<span class="dv">20</span>), <span class="dt">width =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>()</a>
+<a class="sourceLine" id="cb41-3" data-line-number="3">ir1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">2</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">width =</span> <span class="dv">3</span><span class="op">:</span><span class="dv">7</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_iranges</a></span>()</a>
+<a class="sourceLine" id="cb41-5" data-line-number="5">ir0</a></code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -329,7 +316,7 @@ ir0</code></pre></div>
 ##   [2]        10        14         5
 ##   [3]        15        19         5
 ##   [4]        20        24         5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir1</code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">ir1</a></code></pre></div>
 <pre><code>## IRanges object with 5 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -338,43 +325,37 @@ ir0</code></pre></div>
 ##   [3]         4         8         5
 ##   [4]         5        10         6
 ##   [5]         6        12         7</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_overlaps</a></span>(ir1)</code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_overlaps</a></span>(ir1)</a></code></pre></div>
 <pre><code>## IRanges object with 2 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]         5         9         5
 ##   [2]        10        14         5</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_non_overlaps</a></span>(ir1) </code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_non_overlaps</a></span>(ir1) </a></code></pre></div>
 <pre><code>## IRanges object with 2 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]        15        19         5
 ##   [2]        20        24         5</code></pre>
-</div>
-<div id="summarising-ranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#summarising-ranges" class="anchor"></a>Summarising <code>Ranges</code>
+</section><section id="summarising-ranges" class="level1"><h1>Summarising <code>Ranges</code>
 </h1>
 <p>The <code>summarise</code> function will return a tibble because the information required to return a <code>Ranges</code> object is lost. It is often most useful to use <code>summarise</code> in combination with the <code>group_by</code> family of functions.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir1 &lt;-<span class="st"> </span>ir1 <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gc =</span> <span class="kw">runif</span>(<span class="kw">length</span>(.)))
-
-ir0 <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">gc =</span> <span class="kw">mean</span>(gc))</code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">ir1 &lt;-<span class="st"> </span>ir1 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gc =</span> <span class="kw">runif</span>(<span class="kw">length</span>(.)))</a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4">ir0 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb49-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb49-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">gc =</span> <span class="kw">mean</span>(gc))</a></code></pre></div>
 <pre><code>## DataFrame with 2 rows and 2 columns
 ##       query        gc
 ##   &lt;integer&gt; &lt;numeric&gt;
 ## 1         1 0.6755545
 ## 2         2 0.6357952</code></pre>
-</div>
-<div id="joins-or-another-way-at-looking-at-overlaps-between-ranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges" class="anchor"></a>Joins, or another way at looking at overlaps between <code>Ranges</code>
+</section><section id="joins-or-another-way-at-looking-at-overlaps-between-ranges" class="level1"><h1>Joins, or another way at looking at overlaps between <code>Ranges</code>
 </h1>
 <p>We can think about finding overlaps as a type of join between two <code>Ranges</code> where we are using the intervals as keys. Of most use are the <code>join_overlap_intersect</code>, <code>join_overlap_inner</code> and <code>join_overlap_left</code> functions.</p>
 <p>The first function, <code>join_overlap_intersect</code> will return a <code>Ranges`` object  where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input</code>Ranges<code>.  These coordinates correspond to the intervals that are the intersecting</code>Ranges<code>.  By default, the input</code>Ranges` (and any other metadata) will be carried over as metadata columns. The names of the columsn</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(ir0, ir1, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">".left"</span>, <span class="st">".right"</span>))</code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(ir0, ir1, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">".left"</span>, <span class="st">".right"</span>))</a></code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -385,7 +366,7 @@ ir0 <span class="op">%&gt;%</span><span class="st"> </span>
 ##   [5]        10        10         1 | 0.491231821943074
 ##   [6]        10        12         3 | 0.780358511023223</code></pre>
 <p>The <code>join_overlap_inner</code> function will return the <code>Ranges</code> on the left that overlap any <code>Ranges</code> on the right. By default, it returns the <code>Ranges</code> on the right that overlap (and any other metadata columns belonging to the left or right) as a metadata column.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(ir0, ir1, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">".left"</span>, <span class="st">".right"</span>))</code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(ir0, ir1, <span class="dt">suffix =</span> <span class="kw">c</span>(<span class="st">".left"</span>, <span class="st">".right"</span>))</a></code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -397,7 +378,7 @@ ir0 <span class="op">%&gt;%</span><span class="st"> </span>
 ##   [6]        10        14         5 | 0.780358511023223</code></pre>
 <p>We also provide a convienence method called <code>find_overlaps</code> that computes the same result as <code>join_overlap_inner</code>.</p>
 <p>The <code>join_overlap_left</code> method will perform an outer left join. First any overlaps that are found will be returned similar to <code>join_overlap_inner</code>. Then any non-overlapping ranges will be returned, with missing values on the metadata columns. A ‘missing’ value for an <code>IRanges</code> column is interval with zero width, with <code>start=0</code> and <code>end=-1</code>. A ‘missing’ value for a <code>GRanges</code> column is the same as the <code>IRanges</code> but with <code>seqnames='.'</code> and <code>strand='*'</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(ir0, ir1)</code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(ir0, ir1)</a></code></pre></div>
 <pre><code>## IRanges object with 8 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -410,18 +391,16 @@ ir0 <span class="op">%&gt;%</span><span class="st"> </span>
 ##   [7]        15        19         5 |              &lt;NA&gt;
 ##   [8]        20        24         5 |              &lt;NA&gt;</code></pre>
 <p>Compared with <code>filter_by_overlaps</code> above, the overlap left join expands the <code>Ranges</code> to give information about each interval on the left hand side that overlap those on the right as well as the intervals on the left that do not overlap any range on the right.</p>
-<div id="example-dealing-with-multimapping" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-dealing-with-multimapping" class="anchor"></a>Example: dealing with multimapping</h2>
+<section id="example-dealing-with-multimapping" class="level2"><h2>Example: dealing with multimapping</h2>
 <p>This example is taken from the Bioconductor support <a href="https://support.bioconductor.org/p/100046/">site</a>.</p>
 <p>We have two <code>Ranges</code> objects. The first contains single nucleotide positions corresponding to an intensity measurement, while the other contains coordinates for two genes of interest. We want to identify which positions in the <code>intensties</code> <code>Ranges</code> overlap the genes, where each row corresponds to a position that overlaps a single gene.</p>
 <p>First we create the two <code>Ranges</code> objects</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">intensities &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>,
-                          <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3320</span><span class="op">:</span><span class="dv">3321</span>,<span class="dv">3330</span><span class="op">:</span><span class="dv">3331</span>,<span class="dv">3341</span><span class="op">:</span><span class="dv">3342</span>),
-                          <span class="dt">width =</span> <span class="dv">1</span>)
-intensities &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(intensities)
-
-intensities </code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">intensities &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>,</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2">                          <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3320</span><span class="op">:</span><span class="dv">3321</span>,<span class="dv">3330</span><span class="op">:</span><span class="dv">3331</span>,<span class="dv">3341</span><span class="op">:</span><span class="dv">3342</span>),</a>
+<a class="sourceLine" id="cb57-3" data-line-number="3">                          <span class="dt">width =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb57-4" data-line-number="4">intensities &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(intensities)</a>
+<a class="sourceLine" id="cb57-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb57-6" data-line-number="6">intensities </a></code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 0 metadata columns:
 ##       seqnames       ranges strand
 ##          &lt;Rle&gt;    &lt;IRanges&gt;  &lt;Rle&gt;
@@ -433,14 +412,14 @@ intensities </code></pre></div>
 ##   [6]       VI [3342, 3342]      *
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>, 
-                    <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3322</span>, <span class="dv">3030</span>),
-                    <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">3846</span>, <span class="dv">3338</span>),
-                    <span class="dt">gene_id=</span><span class="kw">c</span>(<span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span>))
-                    
-                    
-genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(genes)
-genes</code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>, </a>
+<a class="sourceLine" id="cb59-2" data-line-number="2">                    <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3322</span>, <span class="dv">3030</span>),</a>
+<a class="sourceLine" id="cb59-3" data-line-number="3">                    <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">3846</span>, <span class="dv">3338</span>),</a>
+<a class="sourceLine" id="cb59-4" data-line-number="4">                    <span class="dt">gene_id=</span><span class="kw">c</span>(<span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span>))</a>
+<a class="sourceLine" id="cb59-5" data-line-number="5">                    </a>
+<a class="sourceLine" id="cb59-6" data-line-number="6">                    </a>
+<a class="sourceLine" id="cb59-7" data-line-number="7">genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(genes)</a>
+<a class="sourceLine" id="cb59-8" data-line-number="8">genes</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames       ranges strand |  gene_id
 ##          &lt;Rle&gt;    &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
@@ -449,9 +428,9 @@ genes</code></pre></div>
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Now to find where the positions overlap each gene, we can perform an overlap join. This will automatically carry over the gene_id information as well as their coordinates (we can drop those by only selecting the gene_id).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(intensities, genes) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(gene_id)
-olap</code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(intensities, genes) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(gene_id)</a>
+<a class="sourceLine" id="cb61-3" data-line-number="3">olap</a></code></pre></div>
 <pre><code>## GRanges object with 8 ranges and 1 metadata column:
 ##       seqnames       ranges strand |  gene_id
 ##          &lt;Rle&gt;    &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
@@ -466,9 +445,9 @@ olap</code></pre></div>
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Several positions match to both genes. We can count them using <code>summarise</code> and grouping by the <code>start</code> position:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(start) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw">n</span>())</code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">olap <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(start) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 2 columns
 ##       start         n
 ##   &lt;integer&gt; &lt;integer&gt;
@@ -478,12 +457,9 @@ olap</code></pre></div>
 ## 4      3331         2
 ## 5      3341         1
 ## 6      3342         1</code></pre>
-</div>
-<div id="finding-your-neighbours" class="section level2">
-<h2 class="hasAnchor">
-<a href="#finding-your-neighbours" class="anchor"></a>Finding your neighbours</h2>
+</section><section id="finding-your-neighbours" class="level2"><h2>Finding your neighbours</h2>
 <p>We also provide methods for finding nearest, preceding or following <code>Ranges</code>. These methods nest a <code>Ranges</code> column upon returning (maybe better to return just coordinates?).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ranges-nearest.html">join_nearest</a></span>(ir0, ir1)</code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-nearest.html">join_nearest</a></span>(ir0, ir1)</a></code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -491,7 +467,7 @@ olap</code></pre></div>
 ##   [2]        10        14         5 | 0.780358511023223
 ##   [3]        15        19         5 | 0.780358511023223
 ##   [4]        20        24         5 | 0.780358511023223</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ranges-follow.html">join_follow</a></span>(ir0, ir1)</code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-follow.html">join_follow</a></span>(ir0, ir1)</a></code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -499,11 +475,11 @@ olap</code></pre></div>
 ##   [2]        10        14         5 | 0.603324356488883
 ##   [3]        15        19         5 | 0.780358511023223
 ##   [4]        20        24         5 | 0.780358511023223</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></a></code></pre></div>
 <pre><code>## IRanges object with 0 ranges and 1 metadata column:
 ##        start       end     width |        gc
 ##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir1, ir0)</code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir1, ir0)</a></code></pre></div>
 <pre><code>## IRanges object with 5 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -513,14 +489,11 @@ olap</code></pre></div>
 ##   [4]         5        10         6 | 0.491231821943074
 ##   [5]         6        12         7 | 0.780358511023223</code></pre>
 <p>For <code>GRanges</code> objects by default strand is not considered when performing overlap joins. To include strand when finding overlaps use append the prefix <code>directed</code>. To restrict overlapping <code>Ranges</code> to those within the query range use the prefix <code>within</code>.</p>
-</div>
-<div id="grouping-by-overlaps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#grouping-by-overlaps" class="anchor"></a>Grouping by overlaps</h2>
+</section><section id="grouping-by-overlaps" class="level2"><h2>Grouping by overlaps</h2>
 <p>It’s also possible to group by overlaps. Using this approach we can count the number of overlaps that are greater than 0.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grp_by_olap &lt;-<span class="st"> </span>ir0 <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1)
-grp_by_olap</code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">grp_by_olap &lt;-<span class="st"> </span>ir0 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1)</a>
+<a class="sourceLine" id="cb73-3" data-line-number="3">grp_by_olap</a></code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 2 metadata columns:
 ## Groups: query
 ##           start       end     width |                gc     query
@@ -531,8 +504,8 @@ grp_by_olap</code></pre></div>
 ##   [4]         5         9         5 | 0.780358511023223         1
 ##   [5]        10        14         5 | 0.491231821943074         2
 ##   [6]        10        14         5 | 0.780358511023223         2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">grp_by_olap <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw">n</span>())</code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">grp_by_olap <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw">n</span>())</a></code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 3 metadata columns:
 ## Groups: query
 ##           start       end     width |                gc     query
@@ -552,8 +525,8 @@ grp_by_olap</code></pre></div>
 ##   [5]          2
 ##   [6]          2</code></pre>
 <p>Of course we can also add overlap counts via the <code>count_overlaps</code> function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ir0 <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.Rd.html">count_overlaps</a></span>(., ir1))</code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">ir0 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.Rd.html">count_overlaps</a></span>(., ir1))</a></code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 1 metadata column:
 ##           start       end     width | n_overlaps
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;integer&gt;
@@ -561,11 +534,7 @@ grp_by_olap</code></pre></div>
 ##   [2]        10        14         5 |          2
 ##   [3]        15        19         5 |          0
 ##   [4]        20        24         5 |          0</code></pre>
-</div>
-</div>
-<div id="data-importoutput" class="section level1">
-<h1 class="hasAnchor">
-<a href="#data-importoutput" class="anchor"></a>Data Import/Output</h1>
+</section></section><section id="data-importoutput" class="level1"><h1>Data Import/Output</h1>
 <p>We provide convienence functions via <code>rtracklayer</code> for reading/writing the following data formats from/to <code>Ranges</code> objects.</p>
 <ul>
 <li>BED: <code>read/write_bed</code>
@@ -580,21 +549,15 @@ grp_by_olap</code></pre></div>
 </li>
 <li>narrowPeaks: <code>read/write_narrowpeaks</code>
 </li>
-</ul>
-</div>
-<div id="mapping-to-genomicrangesiranges" class="section level1">
-<h1 class="hasAnchor">
-<a href="#mapping-to-genomicrangesiranges" class="anchor"></a>Mapping to GenomicRanges/IRanges</h1>
+</ul></section><section id="mapping-to-genomicrangesiranges" class="level1"><h1>Mapping to GenomicRanges/IRanges</h1>
 <p>For users already familiar with the <code>IRanges</code> and <code>GenomicRanges</code> we provide mappings to <code>plyranges</code> functions.</p>
-<div id="operations-on-range-width" class="section level2">
-<h2 class="hasAnchor">
-<a href="#operations-on-range-width" class="anchor"></a>Operations on range width</h2>
+<section id="operations-on-range-width" class="level2"><h2>Operations on range width</h2>
 <p>For <code>G</code>Ranges`` objects all functions ignore any strandedness, unless the strand of the range is anchored.</p>
 <table class="table">
 <colgroup>
-<col width="33%">
-<col width="19%">
-<col width="47%">
+<col style="width: 33%">
+<col style="width: 18%">
+<col style="width: 47%">
 </colgroup>
 <thead><tr class="header">
 <th>
@@ -623,16 +586,12 @@ grp_by_olap</code></pre></div>
 </td>
 </tr>
 </tbody>
-</table>
-</div>
-<div id="operations-on-range-width-invariant" class="section level2">
-<h2 class="hasAnchor">
-<a href="#operations-on-range-width-invariant" class="anchor"></a>Operations on range width (invariant)</h2>
+</table></section><section id="operations-on-range-width-invariant" class="level2"><h2>Operations on range width (invariant)</h2>
 <table class="table">
 <colgroup>
-<col width="33%">
-<col width="19%">
-<col width="47%">
+<col style="width: 33%">
+<col style="width: 18%">
+<col style="width: 47%">
 </colgroup>
 <thead><tr class="header">
 <th>
@@ -657,17 +616,13 @@ grp_by_olap</code></pre></div>
 </td>
 </tr>
 </tbody>
-</table>
-</div>
-<div id="set-operations-vector-wise" class="section level2">
-<h2 class="hasAnchor">
-<a href="#set-operations-vector-wise" class="anchor"></a>Set operations (vector wise)</h2>
+</table></section><section id="set-operations-vector-wise" class="level2"><h2>Set operations (vector wise)</h2>
 <p>These are usual set-operations that act on the sets of the <code>Ranges</code> represented in x and y. By default these operations will ignore any strand information. The directed versions of these functions will take into account strand.</p>
 <table class="table">
 <colgroup>
-<col width="33%">
-<col width="19%">
-<col width="47%">
+<col style="width: 33%">
+<col style="width: 18%">
+<col style="width: 47%">
 </colgroup>
 <thead><tr class="header">
 <th>
@@ -690,34 +645,21 @@ grp_by_olap</code></pre></div>
 <td></td>
 </tr>
 </tbody>
-</table>
-</div>
-<div id="set-operations-element-wise" class="section level2">
-<h2 class="hasAnchor">
-<a href="#set-operations-element-wise" class="anchor"></a>Set operations (element wise)</h2>
+</table></section><section id="set-operations-element-wise" class="level2"><h2>Set operations (element wise)</h2>
 <p>We provide infix operators and the verbs between and span to the represent element wise range operations. These map to the <code>pintersect/punion/psetdiff/pgap/punion(fill.gap = FALSE)</code> functions.</p>
-</div>
-<div id="restrictions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#restrictions" class="anchor"></a>Restrictions</h2>
+</section><section id="restrictions" class="level2"><h2>Restrictions</h2>
 <p>The verb <code>filter</code> corresponds to <code>subset</code>, while <code>filter_by_[overlaps/non_overlaps]</code> corresponds to <code>subsetByOverlaps</code>.</p>
-</div>
-<div id="aggregation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#aggregation" class="anchor"></a>Aggregation</h2>
+</section><section id="aggregation" class="level2"><h2>Aggregation</h2>
 <p>The <code>summarise</code> verb is most similar to the <code>aggregate</code> methods defined in <code>GenomicRanges/IRanges</code>.</p>
 <p>The <code>reduce_ranges/disjoin_ranges</code> correspond to the <code>reduce/disjoin</code> methods. However, the former methods allow additional summarisation.</p>
 <p>The <code><a href="../reference/compute_coverage.html">compute_coverage(x)</a></code> method corresponds to <code>[I/G]Ranges(coverage(x))</code>.</p>
-</div>
-<div id="overlaps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overlaps" class="anchor"></a>Overlaps</h2>
+</section><section id="overlaps" class="level2"><h2>Overlaps</h2>
 <p>For <code>GRanges</code> objects all functions ignore any strandedness, unless the suffix <code>directed</code> is added to the funciton call</p>
-<table style="width:100%;" class="table">
+<table class="table">
 <colgroup>
-<col width="25%">
-<col width="54%">
-<col width="19%">
+<col style="width: 25%">
+<col style="width: 55%">
+<col style="width: 19%">
 </colgroup>
 <thead><tr class="header">
 <th>
@@ -786,13 +728,8 @@ grp_by_olap</code></pre></div>
 <code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
 </tr>
 </tbody>
-</table>
-</div>
-</div>
-<div id="appendix" class="section level1">
-<h1 class="hasAnchor">
-<a href="#appendix" class="anchor"></a>Appendix</h1>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sessionInfo</span>()</code></pre></div>
+</table></section></section><section id="appendix" class="level1"><h1>Appendix</h1>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 3.4.3 (2017-11-30)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS Sierra 10.12.6
@@ -836,7 +773,7 @@ grp_by_olap</code></pre></div>
 ## [41] GenomicAlignments_1.14.1   assertthat_0.2.0          
 ## [43] SummarizedExperiment_1.8.1 stringi_1.1.6             
 ## [45] RCurl_1.95-4.9</code></pre>
-</div>
+</section>
 </div>
   </div>
 

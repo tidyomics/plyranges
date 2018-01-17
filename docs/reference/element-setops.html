@@ -122,15 +122,109 @@
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Each of these functions acts on the rows of Ranges object. union
-will return the entire range between two ranges assuming there are no gaps,
-if there are gaps use <code>span</code> instead. intersect will update the Ranges object
+    <p>Each of these functions acts on the rows between pairs of
+Ranges object.
+The function <code>%union%</code>
+will return the entire range between two ranges objects assuming there
+are no gaps, if you would like to force gaps use <code>span</code> instead.
+The function <code>%intersect%</code> will create a new ranges object
 with a hit column indicating whether or not the two ranges intersect.
-setdiff will return the ranges for each row in x that are not in
-the corresponding row of y. <code>between</code> will return the gaps between
+The function<code>%setdiff%</code> will return the ranges for each
+row in x that are not in the corresponding row of y.
+The function <code>between</code> will return the gaps between
 two ranges.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <p><a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>punion</a> <a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>pintersect</a>
+<a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>pgap</a> <a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>psetdiff</a></p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>))
+<span class='co'># stretch x by 3 on the right</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='stretch.html'>stretch</a></span>(<span class='fu'><a href='ranges-anchor.html'>anchor_start</a></span>(<span class='no'>x</span>), <span class='fl'>3</span>)
+<span class='co'># take the rowwise union</span>
+<span class='no'>x</span> <span class='kw'>%union%</span> <span class='no'>y</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         1         8         8
+#&gt;    [2]         2         9         8
+#&gt;    [3]         3        10         8
+#&gt;    [4]         4        11         8
+#&gt;    [5]         5        12         8
+#&gt;    [6]         6        13         8
+#&gt;    [7]         7        14         8
+#&gt;    [8]         8        15         8
+#&gt;    [9]         9        16         8
+#&gt;   [10]        10        17         8</div><div class='input'><span class='co'># take the rowwise intersection</span>
+<span class='no'>x</span> <span class='kw'>%intersect%</span> <span class='no'>y</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         1         5         5
+#&gt;    [2]         2         6         5
+#&gt;    [3]         3         7         5
+#&gt;    [4]         4         8         5
+#&gt;    [5]         5         9         5
+#&gt;    [6]         6        10         5
+#&gt;    [7]         7        11         5
+#&gt;    [8]         8        12         5
+#&gt;    [9]         9        13         5
+#&gt;   [10]        10        14         5</div><div class='input'><span class='co'># asymetric difference</span>
+<span class='no'>y</span> <span class='kw'>%setdiff%</span> <span class='no'>x</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         6         8         3
+#&gt;    [2]         7         9         3
+#&gt;    [3]         8        10         3
+#&gt;    [4]         9        11         3
+#&gt;    [5]        10        12         3
+#&gt;    [6]        11        13         3
+#&gt;    [7]        12        14         3
+#&gt;    [8]        13        15         3
+#&gt;    [9]        14        16         3
+#&gt;   [10]        15        17         3</div><div class='input'><span class='no'>x</span> <span class='kw'>%setdiff%</span> <span class='no'>y</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         1         0         0
+#&gt;    [2]         2         1         0
+#&gt;    [3]         3         2         0
+#&gt;    [4]         4         3         0
+#&gt;    [5]         5         4         0
+#&gt;    [6]         6         5         0
+#&gt;    [7]         7         6         0
+#&gt;    [8]         8         7         0
+#&gt;    [9]         9         8         0
+#&gt;   [10]        10         9         0</div><div class='input'><span class='co'># if there are gaps between the rows of each range use span</span>
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>20</span>:<span class='fl'>15</span>, <span class='fl'>2</span>:<span class='fl'>5</span>),
+<span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>:<span class='fl'>15</span>,<span class='fl'>1</span>:<span class='fl'>4</span>)))
+<span class='co'># fill in the gaps and take the rowwise union</span>
+<span class='fu'>span</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         1        29        29
+#&gt;    [2]         2        29        28
+#&gt;    [3]         3        29        27
+#&gt;    [4]         4        29        26
+#&gt;    [5]         5        29        25
+#&gt;    [6]         6        29        24
+#&gt;    [7]         2        11        10
+#&gt;    [8]         3        12        10
+#&gt;    [9]         4        13        10
+#&gt;   [10]         5        14        10</div><div class='input'><span class='co'># find the gaps</span>
+<span class='fu'>between</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         6        19        14
+#&gt;    [2]         7        18        12
+#&gt;    [3]         8        17        10
+#&gt;    [4]         9        16         8
+#&gt;    [5]        10        15         6
+#&gt;    [6]        11        14         4
+#&gt;    [7]         3         6         4
+#&gt;    [8]         5         7         3
+#&gt;    [9]         7         8         2
+#&gt;   [10]         9         9         1</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -140,7 +234,11 @@ two ranges.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

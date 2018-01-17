@@ -160,8 +160,10 @@ all_ss
 
 Read the [introduction vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html) for an overview of `plyranges` features. 
 
-For mapping between `plyranges`, `bedtools`
-and `GenomicRanges` read the [API comparision vignette](http://stuartlee.org/plyranges/articles/comparision.html).
+
+
+For mapping between the `plyranges`, `bedtools`
+and `GenomicRanges` packages read the [API comparision vignette](https://sa-lee.github.io/plyranges/articles/comparision.html).
 
 
 # About the design of plyranges API

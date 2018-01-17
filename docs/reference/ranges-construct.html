@@ -109,12 +109,13 @@ metadata columns) slot of the returned object.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>.data</th>
-      <td><p>the object to construct a Ranges object from</p></td>
+      <td><p>a <code>data.frame</code> or <code>tibble</code> to
+construct a Ranges object from</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>optional named arguments specifying which the columns in .data
-containing the core components a Ranges object.</p></td>
+containin the core components a Ranges object.</p></td>
     </tr>
     <tr>
       <th>keep_mcols</th>
@@ -125,7 +126,7 @@ containing the core components a Ranges object.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <a href='http://www.rdocumentation.org/packages/IRanges/topics/Ranges-class'>Ranges</a> or a <a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a> object.</p>
+    <p>a <a href='http://www.rdocumentation.org/packages/IRanges/topics/IRanges-constructor'>IRanges</a> or a <a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>GRanges</a> object.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -159,6 +160,21 @@ containing the core components a Ranges object.</p></td>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>:-<span class='fl'>1</span>, <span class='fl'>13</span>:<span class='fl'>15</span>), <span class='kw'>width</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>3</span>, <span class='fl'>2</span>:<span class='fl'>0</span>),
 <span class='kw'>strand</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>)
 <span class='fu'>as_granges</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1  [ 2,  1]      +
+#&gt;   [2]     chr1  [ 1,  1]      +
+#&gt;   [3]     chr1  [ 0,  1]      +
+#&gt;   [4]     chr1  [-1,  1]      +
+#&gt;   [5]     chr1  [13, 14]      +
+#&gt;   [6]     chr1  [14, 14]      +
+#&gt;   [7]     chr1  [15, 14]      +
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='co'># as_g/iranges understand alternate name specification</span>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>:-<span class='fl'>1</span>, <span class='fl'>13</span>:<span class='fl'>15</span>), <span class='kw'>width</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>3</span>, <span class='fl'>2</span>:<span class='fl'>0</span>),
+<span class='kw'>strand</span> <span class='kw'>=</span> <span class='st'>"+"</span>, <span class='kw'>chr</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>)
+<span class='fu'>as_granges</span>(<span class='no'>df</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='no'>chr</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   [1]     chr1  [ 2,  1]      +
