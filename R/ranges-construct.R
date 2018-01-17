@@ -1,8 +1,9 @@
 #' Construct a I/GRanges object from a tibble or data.frame
 #'
-#' @param .data the object to construct a Ranges object from
+#' @param .data a \code{\link{data.frame}} or \code{\link{tibble}} to
+#' construct a Ranges object from
 #' @param ... optional named arguments specifying which the columns in .data
-#' containing the core components a Ranges object.
+#' containin the core components a Ranges object.
 #' @param keep_mcols place the remaining columns into the metadata columns slot
 #' (default=TRUE)
 #'
@@ -11,7 +12,7 @@
 #' object. By default other columns in .data are placed into the mcols (
 #' metadata columns) slot of the returned object.
 #'
-#' @return a \link[IRanges]{Ranges} or a \link[GenomicRanges]{GRanges} object.
+#' @return a \link[IRanges]{IRanges} or a \link[GenomicRanges]{GRanges} object.
 #' @seealso \link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
 #'
 #' @importFrom rlang quos eval_tidy
@@ -32,6 +33,11 @@
 #' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0),
 #' strand = "+", seqnames = "chr1")
 #' as_granges(df)
+#'
+#' # as_g/iranges understand alternate name specification
+#' df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0),
+#' strand = "+", chr = "chr1")
+#' as_granges(df, seqnames = chr)
 #'
 #' @export
 as_iranges <- function(.data, ..., keep_mcols = TRUE) UseMethod("as_iranges")
@@ -180,9 +186,24 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 }
 
 #' Coerce an Rle or RleList object to Ranges
-#' @param .data a \code{Rle} or \code{RleList} object
 #'
-#' @return a Ranges object for Rle or a GRanges object for RleList
+#' @param .data a \code{\link{Rle}} or an \code{\link{RleList}} object.
+#'
+#'
+#' @return an \code{\link{IRanges}} object if the input is an
+#' \code{\link{Rle}} object or a \code{\link{GRanges}} object for
+#' an \code{\link{RleList}} object.
+#'
+#' @details This function is behind \code{\link{compute_coverage}}.
+#'
+#' @seealso \link[S4Vectors]{Rle-class} \link[IRanges]{AtomicList}
+#' @examples
+#' x <- Rle(10:1, 1:10)
+#' as_ranges(x)
+#'
+#' y <- RleList(x)
+#' as_ranges(x)
+#'
 #' @export
 as_ranges <- function(.data) UseMethod("as_ranges")
 
