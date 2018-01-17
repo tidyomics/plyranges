@@ -1,10 +1,61 @@
 # ranges-anchors.R
 
-#' An S4 class to represent anchored GRanges
+#' Anchored Ranges objects
 #'
-#' @slot anchor a character(1) containing anchor. \code{anchor} must be one of
-#' \code{c("start", "end", "center", "3p", "5p")}.
+#' @description The \code{GRangesAnchored} class and the \code{IRangesAnchored}
+#' class allow components of a \code{GRanges} or \code{IRanges} (start, end, center)
+#' to be held fixed.
+#'
+#' @details Anchoring will fix a Ranges start, end, or center positions,
+#' so these positions will remain the same when performing arithimetic.
+#' For \code{GRanges} objects, the function
+#' (\code{anchor_3p}) will fix the start for the negative strand,
+#' while \code{anchor_5p} will fix the end for the
+#' positive strand. Anchoring modifies how arithmetic is performed, for example
+#' modifying the width of a range with \link{\code{set_width}} or stretching a
+#' range with \link{\code{stretch}}.
+#'
+#' @slot anchor a character vector containing an anchor.
+#'       For \code{anchor} to be valid it must be set to one of
+#'       \code{c("start", "end", "center")} for an \code{IRanges} object
+#'       or one of \code{c("start", "end", "center", "3p", "5p")} for a
+#'       \code{GRanges} object.
+#'
+#' @section Constructors:
+#' Depending on how you want to fix the components of a Ranges, there are
+#' five ways to construct a RangesAnchored class. Here \code{x} is either
+#' an \code{IRanges} or \code{GRanges} object.
+#' \itemize{
+#'    \item{\code{anchor_start(x)}}{Fix the start coordinates}
+#'    \item{\code{anchor_end(x)}}{Fix the end coordinates}
+#'    \item{\code{anchor_center(x)}}{Fix the center coordinates}
+#'    \item{\code{anchor_3p(x)}}{On the negative strand fix the start coordinates,
+#'    and for positive or unstranded ranges fix the end coordinates.}
+#'    \item{\code{anchor_5p(x)}}{On the positive or unstranded ranges fix the start coordinates,
+#'    coordinates and for negative stranded ranges fix the end coordinates.}
+#' }
+#'
+#' @section Accessors:
+#' To see what has been anchored use the function \code{anchor}.
+#'
+#' @seealso \link{\code{set_width}} \link{\code{stretch}}
+#'
+#' @examples
+#' df <- data.frame(start = 1:10, width = 5)
+#' rng <- as_iranges(df)
+#' rng_by_start <- anchor_start(rng)
+#' rng_by_start
+#' anchor(rng_by_start)
+#' set_width(rng_by_start, 3L)
+#' grng <- as_granges(df,
+#'                    seqnames = "chr1",
+#'                    strand = c(rep("-", 5), rep("+", 5)))
+#' rng_by_5p <- anchor_5p(grng)
+#' rng_by_5p
+#' set_width(rng_by_5p, 3L)
+#'
 #' @importFrom methods setClass setValidity setMethod show
+#' @rdname ranges-anchor
 #' @export
 setClass("GRangesAnchored",
          slot = c(anchor = "character"),
@@ -33,11 +84,8 @@ setMethod("show", "GRangesAnchored", function(object) {
   cat(output, sep = "\n")
 })
 
-#' An S4 class to represent anchored IRanges
-#'
-#' @slot anchor a character(1) containing anchor. \code{anchor} must be one of
-#' \code{c("start", "end", "center")}.
-#' @rdname IRangesAnchored-class
+
+#' @rdname ranges-anchor
 #' @importFrom methods setClass setValidity setMethod
 #' @export
 setClass("IRangesAnchored",
@@ -66,17 +114,7 @@ setMethod("show", "IRangesAnchored", function(object) {
   cat(output, sep = "\n")
 })
 
-#' Fixing a Range by coordinates or strand
-#' @param x a Ranges object
-#'
-#' @details Anchoring will fix a Ranges start, end, or center positions,
-#' so these positions will remain the same when performing arithimetic.
-#' Similiarly, (\code{anchor_3p}) will fix the start
-#' for the negative strand, while \code{anchor_5p} will fix the end for the
-#' positive strand. To see what has been anchored use
-#' \code{anchor}.
-#' @return A RangesAnchored object
-#' @importFrom methods is new
+
 #' @rdname ranges-anchor
 #' @export
 anchor <- function(x) {
