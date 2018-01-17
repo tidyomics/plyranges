@@ -144,69 +144,69 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, -<span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |    counts
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;    [1]     seq1  [ 1,  5]      * |         3
-#&gt;    [2]     seq1  [ 2,  6]      + |         3
-#&gt;    [3]     seq1  [ 3,  7]      - |         0
-#&gt;    [4]     seq1  [ 4,  8]      - |         1
-#&gt;    [5]     seq1  [ 5,  9]      * |         5
-#&gt;    [6]     seq1  [ 6, 10]      - |         0
-#&gt;    [7]     seq1  [ 7, 11]      - |         4
+#&gt;    [1]     seq1  [ 1,  5]      - |         1
+#&gt;    [2]     seq1  [ 2,  6]      - |         1
+#&gt;    [3]     seq1  [ 3,  7]      * |         0
+#&gt;    [4]     seq1  [ 4,  8]      * |         1
+#&gt;    [5]     seq1  [ 5,  9]      + |         2
+#&gt;    [6]     seq1  [ 6, 10]      - |         3
+#&gt;    [7]     seq1  [ 7, 11]      * |         5
 #&gt;    [8]     seq1  [ 8, 12]      + |         3
-#&gt;    [9]     seq1  [ 9, 13]      + |         1
-#&gt;   [10]     seq1  [10, 14]      * |         3
+#&gt;    [9]     seq1  [ 9, 13]      + |         0
+#&gt;   [10]     seq1  [10, 14]      * |         2
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 1,  5]      * |  0.327415082138032
-#&gt;    [2]     seq1  [ 2,  6]      + |  0.389478693250567
-#&gt;    [3]     seq1  [ 3,  7]      - | 0.0410527545027435
-#&gt;    [4]     seq1  [ 4,  8]      - |  0.361396634485573
-#&gt;    [5]     seq1  [ 5,  9]      * |  0.570978083880618
-#&gt;    [6]     seq1  [ 6, 10]      - |  0.684880241984501
-#&gt;    [7]     seq1  [ 7, 11]      - |  0.971116747008637
-#&gt;    [8]     seq1  [ 8, 12]      + |  0.701958807418123
-#&gt;    [9]     seq1  [ 9, 13]      + | 0.0115455046761781
-#&gt;   [10]     seq1  [10, 14]      * |  0.535532128764316
+#&gt;    [1]     seq1  [ 1,  5]      - |  0.906954375561327
+#&gt;    [2]     seq1  [ 2,  6]      - |  0.209816768066958
+#&gt;    [3]     seq1  [ 3,  7]      * |  0.358137989183888
+#&gt;    [4]     seq1  [ 4,  8]      * |  0.448299144394696
+#&gt;    [5]     seq1  [ 5,  9]      + |  0.906426433008164
+#&gt;    [6]     seq1  [ 6, 10]      - |  0.389439295744523
+#&gt;    [7]     seq1  [ 7, 11]      * |  0.517459749476984
+#&gt;    [8]     seq1  [ 8, 12]      + |  0.125239087734371
+#&gt;    [9]     seq1  [ 9, 13]      + | 0.0301457457244396
+#&gt;   [10]     seq1  [10, 14]      * |  0.771805494558066
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>counts</span>, <span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
 #&gt;        seqnames    ranges strand |    counts                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 1,  5]      * |         3  0.327415082138032
-#&gt;    [2]     seq1  [ 2,  6]      + |         3  0.389478693250567
-#&gt;    [3]     seq1  [ 3,  7]      - |         0 0.0410527545027435
-#&gt;    [4]     seq1  [ 4,  8]      - |         1  0.361396634485573
-#&gt;    [5]     seq1  [ 5,  9]      * |         5  0.570978083880618
-#&gt;    [6]     seq1  [ 6, 10]      - |         0  0.684880241984501
-#&gt;    [7]     seq1  [ 7, 11]      - |         4  0.971116747008637
-#&gt;    [8]     seq1  [ 8, 12]      + |         3  0.701958807418123
-#&gt;    [9]     seq1  [ 9, 13]      + |         1 0.0115455046761781
-#&gt;   [10]     seq1  [10, 14]      * |         3  0.535532128764316
+#&gt;    [1]     seq1  [ 1,  5]      - |         1  0.906954375561327
+#&gt;    [2]     seq1  [ 2,  6]      - |         1  0.209816768066958
+#&gt;    [3]     seq1  [ 3,  7]      * |         0  0.358137989183888
+#&gt;    [4]     seq1  [ 4,  8]      * |         1  0.448299144394696
+#&gt;    [5]     seq1  [ 5,  9]      + |         2  0.906426433008164
+#&gt;    [6]     seq1  [ 6, 10]      - |         3  0.389439295744523
+#&gt;    [7]     seq1  [ 7, 11]      * |         5  0.517459749476984
+#&gt;    [8]     seq1  [ 8, 12]      + |         3  0.125239087734371
+#&gt;    [9]     seq1  [ 9, 13]      + |         0 0.0301457457244396
+#&gt;   [10]     seq1  [10, 14]      * |         2  0.771805494558066
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='fl'>2</span>:<span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
 #&gt;        seqnames    ranges strand |    counts                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 1,  5]      * |         3  0.327415082138032
-#&gt;    [2]     seq1  [ 2,  6]      + |         3  0.389478693250567
-#&gt;    [3]     seq1  [ 3,  7]      - |         0 0.0410527545027435
-#&gt;    [4]     seq1  [ 4,  8]      - |         1  0.361396634485573
-#&gt;    [5]     seq1  [ 5,  9]      * |         5  0.570978083880618
-#&gt;    [6]     seq1  [ 6, 10]      - |         0  0.684880241984501
-#&gt;    [7]     seq1  [ 7, 11]      - |         4  0.971116747008637
-#&gt;    [8]     seq1  [ 8, 12]      + |         3  0.701958807418123
-#&gt;    [9]     seq1  [ 9, 13]      + |         1 0.0115455046761781
-#&gt;   [10]     seq1  [10, 14]      * |         3  0.535532128764316
+#&gt;    [1]     seq1  [ 1,  5]      - |         1  0.906954375561327
+#&gt;    [2]     seq1  [ 2,  6]      - |         1  0.209816768066958
+#&gt;    [3]     seq1  [ 3,  7]      * |         0  0.358137989183888
+#&gt;    [4]     seq1  [ 4,  8]      * |         1  0.448299144394696
+#&gt;    [5]     seq1  [ 5,  9]      + |         2  0.906426433008164
+#&gt;    [6]     seq1  [ 6, 10]      - |         3  0.389439295744523
+#&gt;    [7]     seq1  [ 7, 11]      * |         5  0.517459749476984
+#&gt;    [8]     seq1  [ 8, 12]      + |         3  0.125239087734371
+#&gt;    [9]     seq1  [ 9, 13]      + |         0 0.0301457457244396
+#&gt;   [10]     seq1  [10, 14]      * |         2  0.771805494558066
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>seqnames</span>, <span class='no'>strand</span>, <span class='kw'>.drop_ranges</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; DataFrame with 10 rows and 2 columns
 #&gt;    seqnames strand
 #&gt;       &lt;Rle&gt;  &lt;Rle&gt;
-#&gt; 1      seq1      *
-#&gt; 2      seq1      +
-#&gt; 3      seq1      -
-#&gt; 4      seq1      -
-#&gt; 5      seq1      *
+#&gt; 1      seq1      -
+#&gt; 2      seq1      -
+#&gt; 3      seq1      *
+#&gt; 4      seq1      *
+#&gt; 5      seq1      +
 #&gt; 6      seq1      -
-#&gt; 7      seq1      -
+#&gt; 7      seq1      *
 #&gt; 8      seq1      +
 #&gt; 9      seq1      +
 #&gt; 10     seq1      *</div></pre>

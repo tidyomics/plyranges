@@ -101,13 +101,13 @@ annotations to an existing Ranges object use <code>set_genome_info</code>. To re
 an annotation as a Ranges object use <code>get_genome_info</code>.</p>
     
 
-    <pre class="usage"><span class='fu'><a href='genome_info.html'>genome_info</a></span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'><a href='ranges-info-set.html'>set_genome_info</a></span>(<span class='no'>.data</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+<span class='fu'>set_genome_info</span>(<span class='no'>.data</span>, <span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'><a href='ranges-info-get.html'>get_genome_info</a></span>(<span class='no'>.data</span>)</pre>
+<span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -149,7 +149,7 @@ as a Ranges object use <code>get_genome_info</code>.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
  <span class='co'># requires internet connection</span>
- <span class='fu'><a href='genome_info.html'>genome_info</a></span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"hg38"</span>)
+ <span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"hg38"</span>)
 }</div><div class='output co'>#&gt; GRanges object with 455 ranges and 0 metadata columns:
 #&gt;                            seqnames         ranges strand
 #&gt;                               &lt;Rle&gt;      &lt;IRanges&gt;  &lt;Rle&gt;
@@ -166,7 +166,7 @@ as a Ranges object use <code>get_genome_info</code>.</p>
 #&gt;   chrUn_KI270757v1 chrUn_KI270757v1     [1, 71251]      *
 #&gt;   -------
 #&gt;   seqinfo: 455 sequences (1 circular) from hg38 genome</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='genome_info.html'>genome_info</a></span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"toy"</span>,
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"toy"</span>,
                  <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>],
                  <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>15</span>, <span class='fl'>600</span>),
                  <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>NA</span>, <span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>, <span class='fl'>TRUE</span>))
@@ -195,12 +195,12 @@ as a Ranges object use <code>get_genome_info</code>.</p>
 #&gt;   [20]        a  [49, 58]      *
 #&gt;   [21]        a  [50, 59]      *
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-info-set.html'>set_genome_info</a></span>(<span class='no'>rng</span>,
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>set_genome_info</span>(<span class='no'>rng</span>,
                        <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"toy"</span>,
                        <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>],
                        <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>15</span>, <span class='fl'>600</span>),
                        <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>NA</span>, <span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>, <span class='fl'>TRUE</span>))
-<span class='fu'><a href='ranges-info-get.html'>get_genome_info</a></span>(<span class='no'>rng</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 0 metadata columns:
+<span class='fu'>get_genome_info</span>(<span class='no'>rng</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 0 metadata columns:
 #&gt;     seqnames    ranges strand
 #&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   a        a  [1, 100]      *

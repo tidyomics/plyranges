@@ -36,8 +36,8 @@ of functions.
 * Import and write common genomic data formats with the `read_/write_` family
 of functions.
 
-For more details on the features of plryanges, read the
-[]().
+For more details on the features of plryanges, read the 
+[introduction vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
 
 # Installation
 

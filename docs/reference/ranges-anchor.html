@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fixing a Range by coordinates or strand — anchor • plyranges</title>
+<title>Anchored Ranges objects — GRangesAnchored-class • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,11 +90,13 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fixing a Range by coordinates or strand</h1>
+    <h1>Anchored Ranges objects</h1>
     </div>
 
     
-    <p>Fixing a Range by coordinates or strand</p>
+    <p>The <code>GRangesAnchored</code> class and the <code>IRangesAnchored</code>
+class allow components of a <code>GRanges</code> or <code>IRanges</code> (start, end, center)
+to be held fixed.</p>
     
 
     <pre class="usage"><span class='fu'>anchor</span>(<span class='no'>x</span>)
@@ -110,40 +112,135 @@
 <span class='fu'>anchor_3p</span>(<span class='no'>x</span>)
 
 <span class='fu'>anchor_5p</span>(<span class='no'>x</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>a Ranges object</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A RangesAnchored object</p>
-    
+        
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Anchoring will fix a Ranges start, end, or center positions,
 so these positions will remain the same when performing arithimetic.
-Similiarly, (<code>anchor_3p</code>) will fix the start
-for the negative strand, while <code>anchor_5p</code> will fix the end for the
-positive strand. To see what has been anchored use
-<code>anchor</code>.</p>
+For <code>GRanges</code> objects, the function
+(<code>anchor_3p</code>) will fix the start for the negative strand,
+while <code>anchor_5p</code> will fix the end for the
+positive strand. Anchoring modifies how arithmetic is performed, for example
+modifying the width of a range with <code>set_width</code> or stretching a
+range with <code>stretch</code>.</p>
+    
+    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
+
+    
+    <dl class='dl-horizontal'>
+<dt><code>anchor</code></dt><dd><p>a character vector containing an anchor.
+For <code>anchor</code> to be valid it must be set to one of
+<code>c("start", "end", "center")</code> for an <code>IRanges</code> object
+or one of <code>c("start", "end", "center", "3p", "5p")</code> for a
+<code>GRanges</code> object.</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="constructors"><a class="anchor" href="#constructors"></a>Constructors</h2>
+
+    
+    <p>Depending on how you want to fix the components of a Ranges, there are
+five ways to construct a RangesAnchored class. Here <code>x</code> is either
+an <code>IRanges</code> or <code>GRanges</code> object.</p><ul>
+<li><p><code>anchor_start(x)</code>Fix the start coordinates</p></li>
+<li><p><code>anchor_end(x)</code>Fix the end coordinates</p></li>
+<li><p><code>anchor_center(x)</code>Fix the center coordinates</p></li>
+<li><p><code>anchor_3p(x)</code>On the negative strand fix the start coordinates,
+   and for positive or unstranded ranges fix the end coordinates.</p></li>
+<li><p><code>anchor_5p(x)</code>On the positive or unstranded ranges fix the start coordinates,
+   coordinates and for negative stranded ranges fix the end coordinates.</p></li>
+</ul>
+    
+    <h2 class="hasAnchor" id="accessors"><a class="anchor" href="#accessors"></a>Accessors</h2>
+
+    
+    <p>To see what has been anchored use the function <code>anchor</code>.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code>set_width</code> <code>stretch</code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='no'>df</span>)
+<span class='no'>rng_by_start</span> <span class='kw'>&lt;-</span> <span class='fu'>anchor_start</span>(<span class='no'>rng</span>)
+<span class='no'>rng_by_start</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt; Anchored by: start
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         1         5         5
+#&gt;    [2]         2         6         5
+#&gt;    [3]         3         7         5
+#&gt;    [4]         4         8         5
+#&gt;    [5]         5         9         5
+#&gt;    [6]         6        10         5
+#&gt;    [7]         7        11         5
+#&gt;    [8]         8        12         5
+#&gt;    [9]         9        13         5
+#&gt;   [10]        10        14         5</div><div class='input'><span class='fu'>anchor</span>(<span class='no'>rng_by_start</span>)</div><div class='output co'>#&gt; [1] "start"</div><div class='input'><span class='fu'><a href='set_width.html'>set_width</a></span>(<span class='no'>rng_by_start</span>, <span class='fl'>3L</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;            start       end     width
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;    [1]         1         3         3
+#&gt;    [2]         2         4         3
+#&gt;    [3]         3         5         3
+#&gt;    [4]         4         6         3
+#&gt;    [5]         5         7         3
+#&gt;    [6]         6         8         3
+#&gt;    [7]         7         9         3
+#&gt;    [8]         8        10         3
+#&gt;    [9]         9        11         3
+#&gt;   [10]        10        12         3</div><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>,
+                   <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
+                   <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fu'>rep</span>(<span class='st'>"-"</span>, <span class='fl'>5</span>), <span class='fu'>rep</span>(<span class='st'>"+"</span>, <span class='fl'>5</span>)))
+<span class='no'>rng_by_5p</span> <span class='kw'>&lt;-</span> <span class='fu'>anchor_5p</span>(<span class='no'>grng</span>)
+<span class='no'>rng_by_5p</span></div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
+#&gt; Anchored by: 5p
+#&gt;        seqnames    ranges strand
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;    [1]     chr1  [ 1,  5]      -
+#&gt;    [2]     chr1  [ 2,  6]      -
+#&gt;    [3]     chr1  [ 3,  7]      -
+#&gt;    [4]     chr1  [ 4,  8]      -
+#&gt;    [5]     chr1  [ 5,  9]      -
+#&gt;    [6]     chr1  [ 6, 10]      +
+#&gt;    [7]     chr1  [ 7, 11]      +
+#&gt;    [8]     chr1  [ 8, 12]      +
+#&gt;    [9]     chr1  [ 9, 13]      +
+#&gt;   [10]     chr1  [10, 14]      +
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='set_width.html'>set_width</a></span>(<span class='no'>rng_by_5p</span>, <span class='fl'>3L</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
+#&gt;        seqnames    ranges strand
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;    [1]     chr1  [ 3,  5]      -
+#&gt;    [2]     chr1  [ 4,  6]      -
+#&gt;    [3]     chr1  [ 5,  7]      -
+#&gt;    [4]     chr1  [ 6,  8]      -
+#&gt;    [5]     chr1  [ 7,  9]      -
+#&gt;    [6]     chr1  [ 6,  8]      +
+#&gt;    [7]     chr1  [ 7,  9]      +
+#&gt;    [8]     chr1  [ 8, 10]      +
+#&gt;    [9]     chr1  [ 9, 11]      +
+#&gt;   [10]     chr1  [10, 12]      +
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-          </ul>
+
+      <li><a href="#slots">Slots</a></li>
+
+      <li><a href="#constructors">Constructors</a></li>
+
+      <li><a href="#accessors">Accessors</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

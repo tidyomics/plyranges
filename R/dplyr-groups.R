@@ -4,31 +4,59 @@
 #' @param ... Variable names to group by. These can be either metadata columns
 #' or the core variables of a Ranges.
 #'
-#' @description \code{group_by} takes a Ranges object and converts it
-#' to a RangesGrouped object. Operations are performed on these objects by
-#' their group. \code{ungroup} removes grouping.
+#' @description The function \code{group_by} takes a Ranges object and defines
+#' groups by one or more variables. Operations are then performed on the Ranges
+#' by their "group". \code{ungroup()} removes grouping.
+#'
+#' @details
+#' \code{group_by()} creates a new object of class \code{GRangesGrouped} if
+#' the input is a \code{GRanges} object or an object of class \code{IRangesGrouped}
+#' if the input is a \code{IRanges} object. Both of these classes contain a slot
+#' called \code{groups} corresponding to the names of grouping variables. They
+#' also inherit from their parent classes, \code{Ranges} and \code{GenomicRanges}
+#' respectively. \code{ungroup()} removes the grouping and will return
+#' either a \code{GRanges} or \code{IRanges} object.
+#'
+#' @section Accessors:
+#' To return grouping variables on a grouped Ranges use either
+#' \itemize{
+#'   \item{\code{groups(x)}}{Returns a list of symbols}
+#'   \item{\code{group_vars(x)}}{Returns a character vector}
+#' }
 #'
 #' @importFrom dplyr group_by
 #' @importFrom rlang quo_name quos syms
 #' @importFrom methods new
 #' @method group_by GRanges
-#' @return a \code{GroupedRanges} object
 #' @name group_by-ranges
 #' @rdname group_by-ranges
 #' @export
 #' @examples
-#' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
-#' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
-#' rng <- as_granges(df)
-#' rng
-#' # grouping does not change appearance or shape or Ranges
-#' rng_by_strand <- rng %>% group_by(strand)
-#' rng_by_strand
+#' set.seed(100)
+#' df <- data.frame(start = 1:10,
+#'                  width = 5,
+#'                  gc = runif(10),
+#'                  cat = sample(letters[1:2], 10, replace = TRUE))
+#' rng <- as_iranges(df)
+#' rng_by_cat <- rng %>% group_by(cat)
+#' # grouping does not change appearance or shape of Ranges
+#' rng_by_cat
+#' # a list of symbols
+#' groups(rng_by_cat)
+#' # ungroup removes any grouping
+#' ungroup(rng_by_cat)
+#' # group_by works best with other verbs
+#' grng <- as_granges(df,
+#'                    seqnames = "chr1",
+#'                    strand = sample(c("+", "-"), size = 10, replace = TRUE))
+#'
+#' grng_by_strand <- grng %>% group_by(strand)
+#' grng_by_strand
 #' # grouping with other verbs
-#' rng_by_strand %>% summarise(gc = mean(gc))
-#' rng_by_strand %>% filter(gc == min(gc))
-#' # remove grouping with ungroup
-#' rng_by_strand %>%
+#' grng_by_strand %>% summarise(gc = mean(gc))
+#' grng_by_strand %>% filter(gc == min(gc))
+
+#' grng_by_strand %>%
 #'   ungroup() %>%
 #'   summarise(gc = mean(gc))
 #'
@@ -42,8 +70,7 @@ group_by.GRanges <- function(.data, ...) {
 }
 
 
-#' @param x a Ranges object
-#'
+
 #' @importFrom dplyr ungroup
 #' @rdname group_by-ranges
 #' @method ungroup GRangesGrouped
@@ -91,28 +118,25 @@ ungroup.IRangesGrouped <- function(x, ...) {
   }
 }
 
-#' Extract groupings from a RangesGrouped object
-#' @param x a RangesGrouped object
+
 #' @importFrom dplyr groups
 #' @method groups GRangesGrouped
-#' @rdname groups-ranges
+#' @rdname group_by-ranges
 #' @export
 groups.GRangesGrouped <- function(x) { x@groups }
 
 #' @importFrom dplyr group_vars
 #' @method group_vars GRangesGrouped
-#' @rdname groups-ranges
+#' @rdname group_by-ranges
 #' @export
 group_vars.GRangesGrouped <- function(x) { as.character(unlist(x@groups)) }
 
-#' @method groups GRangesGrouped
-#' @rdname groups-ranges
+#' @method groups IRangesGrouped
+#' @rdname group_by-ranges
 #' @export
 groups.IRangesGrouped <- function(x) { x@groups }
 
-#' @importFrom dplyr group_vars
 #' @method group_vars IRangesGrouped
-#' @rdname groups-ranges
+#' @rdname group_by-ranges
 #' @export
 group_vars.IRangesGrouped <- function(x) { as.character(unlist(x@groups)) }
-

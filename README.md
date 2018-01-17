@@ -1,42 +1,27 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Build Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges) [![Coverage Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
 
-[![Build
-Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
+plyranges
+=========
 
-# plyranges
+`plryanges` provides a consistent interface for importing and wrangling genomics data from a variety of sources. The package defines a grammar of genomic data manipulation based on `dplyr` and the Bioconductor packages `IRanges`, `GenomicRanges`, and `rtracklayer`. It does this by providing a set of verbs for developing analysis pipelines based on *Ranges* objects that represent genomic regions:
 
-`plryanges` provides a consistent interface for importing and wrangling
-genomics data from a variety of sources. The package defines a grammar
-of genomic data manipulation based on `dplyr` and the Bioconductor
-packages `IRanges`, `GenomicRanges`, and `rtracklayer`. It does this by
-providing a set of verbs for developing analysis pipelines based on
-*Ranges* objects that represent genomic regions:
+-   Modify genomic regions with the `set_width()` and `stretch()` functions.
+-   Modify genomic regions while fixing the start/end/center coordinates with the `anchor_` family of functions.
+-   Sort genomic ranges with `arrange()`.
+-   Modify, subset, and aggregate genomic data with the `mutate()`, `filter()`, and `summarise()`functions.
+-   Any of the above operations can be performed on partitions of the data with `group_by()`.
+-   Find nearest neighbour genomic regions with the `join_nearest_` family of functions.
+-   Find overlaps between ranges with the `join_overlaps_` family of functions.
+-   Merge all overlapping and adjacent genomic regions with `reduce_ranges()`.
+-   Merge the end points of all genomic regions with `disjoin_ranges()`.
+-   Import and write common genomic data formats with the `read_/write_` family of functions.
 
-  - Modify genomic regions with the `set_width()` and `stretch()`
-    functions.
-  - Modify genomic regions while fixing the start/end/center coordinates
-    with the `anchor_` family of functions.
-  - Sort genomic ranges with `arrange()`.
-  - Modify, subset, and aggregate genomic data with the `mutate()`,
-    `filter()`, and `summarise()`functions.
-  - Any of the above operations can be performed on partitions of the
-    data with `group_by()`.
-  - Find nearest neighbour genomic regions with the `join_nearest_`
-    family of functions.
-  - Find overlaps between ranges with the `join_overlaps_` family of
-    functions.
-  - Merge all overlapping and adjacent genomic regions with
-    `reduce_ranges()`.
-  - Merge the end points of all genomic regions with `disjoin_ranges()`.
-  - Import and write common genomic data formats with the `read_/write_`
-    family of functions.
+For more details on the features of plryanges, read the [introduction vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
 
-For more details on the features of plryanges, read the []().
-
-# Installation
+Installation
+============
 
 Currently only the development version is available via Bioncoductor
 
@@ -45,24 +30,17 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("sa-lee/plyranges")
 ```
 
-# Quick overview
+Quick overview
+==============
 
-## About `Ranges`
+About `Ranges`
+--------------
 
-`Ranges` objects can either represent sets of integers as `IRanges`
-(which have start, end and width attributes) or represent genomic
-intervals (which have additional attributes, sequence name, and strand)
-as `GRanges`. In addition, both types of `Ranges` can store information
-about their intervals as metadata columns (for example GC content over a
-genomic interval).
+`Ranges` objects can either represent sets of integers as `IRanges` (which have start, end and width attributes) or represent genomic intervals (which have additional attributes, sequence name, and strand) as `GRanges`. In addition, both types of `Ranges` can store information about their intervals as metadata columns (for example GC content over a genomic interval).
 
-`Ranges` objects follow the tidy data principle: each row of a `Ranges`
-object corresponds to an interval, while each column will represent a
-variable about that interval, and generally each object will represent a
-single unit of observation (like gene annotations).
+`Ranges` objects follow the tidy data principle: each row of a `Ranges` object corresponds to an interval, while each column will represent a variable about that interval, and generally each object will represent a single unit of observation (like gene annotations).
 
-We can construct a `IRanges` object from a `data.frame` with a `start`
-or `width` using the `as_iranges()` method.
+We can construct a `IRanges` object from a `data.frame` with a `start` or `width` using the `as_iranges()` method.
 
 ``` r
 library(plyranges)
@@ -89,9 +67,7 @@ as_iranges(df)
 #>   [5]         5         9         5
 ```
 
-We can also construct a `GRanges` object in a similar manner. Note that
-a `GRanges` object requires at least a seqnames column to be present in
-the data.frame (but not necessarily a strand column).
+We can also construct a `GRanges` object in a similar manner. Note that a `GRanges` object requires at least a seqnames column to be present in the data.frame (but not necessarily a strand column).
 
 ``` r
 df <- data.frame(seqnames = c("chr1", "chr2", "chr2", "chr1", "chr2"),
@@ -123,19 +99,16 @@ as_granges(df)
 #>   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 ```
 
-# Example: finding GWAS hits that overlap known exons
+Example: finding GWAS hits that overlap known exons
+===================================================
 
-Let’s look at a more a realistic example (taken from HelloRanges
-vignette).
+Let's look at a more a realistic example (taken from HelloRanges vignette).
 
-Suppose we have two *GRanges* objects: one containing coordinates of
-known exons and another containing SNPs from a GWAS.
+Suppose we have two *GRanges* objects: one containing coordinates of known exons and another containing SNPs from a GWAS.
 
-The first and last 5 exons are printed below, there are two additional
-columns corresponding to the exon name, and a score.
+The first and last 5 exons are printed below, there are two additional columns corresponding to the exon name, and a score.
 
-We could check the number of exons per chromosome using `group_by` and
-`summarise`.
+We could check the number of exons per chromosome using `group_by` and `summarise`.
 
 ``` r
 exons 
@@ -194,9 +167,7 @@ exons <- exons %>%
   mutate(tx_id = sub("_exon.*", "", name))
 ```
 
-To find all GWAS SNPs that overlap exons, we use `join_overlap_inner`.
-This will create a new *GRanges* with the coordinates of SNPs that
-overlap exons, as well as metadata from both objects.
+To find all GWAS SNPs that overlap exons, we use `join_overlap_inner`. This will create a new *GRanges* with the coordinates of SNPs that overlap exons, as well as metadata from both objects.
 
 ``` r
 olap <- join_overlap_inner(gwas, exons)
@@ -254,10 +225,7 @@ olap %>%
 #> 1619  rs41281112   NR_104592         1
 ```
 
-We can also generate 2bp splice sites on either side of the exon using
-`flank_left` and `flank_right`. We add a column indicating the side of
-flanking for illustrative purposes. The `combine_ranges` function pairs
-the left and right pairs.
+We can also generate 2bp splice sites on either side of the exon using `flank_left` and `flank_right`. We add a column indicating the side of flanking for illustrative purposes. The `combine_ranges` function pairs the left and right pairs.
 
 ``` r
 left_ss <- flank_left(exons, 2L) %>%
@@ -310,26 +278,16 @@ all_ss
 #>   seqinfo: 93 sequences from an unspecified genome; no seqlengths
 ```
 
-# Learning more
+Learning more
+=============
 
-Read the [introduction
-vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html)
-for an overview of `plyranges` features.
+Read the [introduction vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html) for an overview of `plyranges` features.
 
-For mapping between the `plyranges`, `bedtools` and `GenomicRanges`
-packages read the [API comparision
-vignette](https://sa-lee.github.io/plyranges/articles/comparision.html).
+For mapping between the `plyranges`, `bedtools` and `GenomicRanges` packages read the [API comparision vignette](https://sa-lee.github.io/plyranges/articles/comparision.html).
 
-# About the design of plyranges API
+About the design of plyranges API
+=================================
 
-The `plyranges` package aims to provide a
-[fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for
-performing common genomic data analysis tasks. One goal of this package
-is to decrease the learning curve for Bioconductor and S4 classes
-(especially for new users) by providing a consistent interface to common
-classes *IRanges* and *GRanges* (future work will extend this to the
-*SummarizedExperiment* class)
+The `plyranges` package aims to provide a [fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for performing common genomic data analysis tasks. One goal of this package is to decrease the learning curve for Bioconductor and S4 classes (especially for new users) by providing a consistent interface to common classes *IRanges* and *GRanges* (future work will extend this to the *SummarizedExperiment* class)
 
-All of the methods defined in `plyranges` are type-consistent and
-chainable. As a consequence, users familiar with `dplyr` should be able
-to read and understand `plyranges` code without difficulty.
+All of the methods defined in `plyranges` are type-consistent and chainable. As a consequence, users familiar with `dplyr` should be able to read and understand `plyranges` code without difficulty.

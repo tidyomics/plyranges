@@ -1,15 +1,9 @@
-
-#' An S4 class to represent grouped GRanges
-#'
-#' @slot groups a list of names
-#' @seealso \code{\link{group_by}}
-#' @rdname GRangesGrouped-class
+#' @rdname group_by-ranges
 #' @importFrom methods setClass setValidity setMethod
 #' @export
 setClass("GRangesGrouped",
          slot = c(groups = "list"),
          contains = "GRanges")
-
 
 validGRangesGrouped <- function(object) {
   check_valid_names <- all(unlist(lapply(object@groups, is.name)))
@@ -43,11 +37,8 @@ setMethod("show", "GRangesGrouped", function(object) {
   cat(output, sep = "\n")
 })
 
-#' An S4 class to represent grouped IRanges
-#'
-#' @slot groups a list of names
-#' @seealso \code{\link{group_by}}
-#' @rdname IRangesGrouped-class
+
+#' @rdname group_by-ranges
 #' @export
 setClass("IRangesGrouped",
          slot = c(groups = "list"),
