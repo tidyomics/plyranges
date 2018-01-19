@@ -1,11 +1,10 @@
 summarize_rng <- function(.data, ...) {
   dots <- UQS(...)
-  found_n <- is_n(dots)
-  dots <- check_n(dots)
-  overscope <- overscope_ranges(.data, bind_data = found_n)
+  overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
   overscope_eval_update(overscope, dots)
 }
+
 
 #' Aggregate a Ranges object
 #'
@@ -27,6 +26,7 @@ summarize_rng <- function(.data, ...) {
 summarise.GenomicRanges <- function(.data, ...) {
 
   dots <- quos(...)
+
   DataFrame(summarize_rng(.data, dots))
 
 }
@@ -66,3 +66,4 @@ summarise.IRangesGrouped <- function(.data, ...) {
   groups_summary <- do.call(rbind, lapply(groups_summary, as, "DataFrame"))
   cbind(mcols(split_ranges), groups_summary)
 }
+

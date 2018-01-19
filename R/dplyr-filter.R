@@ -1,9 +1,7 @@
 # filter.R
 filter_rng <- function(.data, dots) {
   dots <- UQS(dots)
-  found_n <- is_n(dots)
-  dots <- check_n(dots)
-  overscope <- overscope_ranges(.data, bind_data = found_n)
+  overscope <- overscope_ranges(.data)
 
   r <- lapply(dots, overscope_eval_next, overscope = overscope)
   on.exit(overscope_clean(overscope))

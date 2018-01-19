@@ -1,11 +1,8 @@
 # ranges-eval-utils.R
 # some helpers for 'tidy' NSE on ranges
-overscope_ranges <- function(x, envir = parent.frame(), bind_data = FALSE) {
+overscope_ranges <- function(x, envir = parent.frame()) {
   x_env <- as.env(x, envir)
   os <- new_overscope(x_env, top = parent.env(x_env))
-  if (bind_data) {
-    rlang::env_bind(os, .data := x)
-  }
   return(os)
 }
 
@@ -36,35 +33,16 @@ ranges_vars <- function(x) {
   c(vars_rng, vars_mcols)
 }
 
-
-is_n <- function(dots) {
-  qnames <- unlist(lapply(dots, rlang::quo_name))
-  any(grepl("n\\(\\)", qnames))
-}
-
-#' @importFrom rlang quo_name get_env parse_quosure
-check_n <- function(dots) {
-  if (rlang::is_quosure(dots)) {
-    qnames <- rlang::quo_name(dots)
-    modify_n <- gsub("n\\(\\)", "length\\(.data\\)", qnames)
-    return(rlang::parse_quosure(modify_n, rlang::get_env(dots)))
-
-  } else {
-    qnames <- unlist(lapply(dots, rlang::quo_name))
-    which_n <- grep("n\\(\\)", qnames)
-    if (length(which_n) == 0L) {
-      return(dots)
-    } else {
-      modify_n <- gsub("n\\(\\)", "length\\(.data\\)", qnames)
-
-      for (i in seq_along(which_n)) {
-        update <- which_n[i]
-        dots[[update]] <- rlang::parse_quosure(modify_n[update],
-                                               env = rlang::get_env(dots[[update]]))
-      }
-      return(dots)
-    }
-  }
+# Port of dplyrs `n` function
+# It works by searching for a vector in the overscope environment
+# and calling length on it.
+#' @importFrom rlang env_get env_parent
+#' @export
+n <- function() {
+  up_env <- parent.frame()
+  parent_env <- rlang::env_parent(up_env)
+  .data <- rlang::env_get(parent_env, "start")
+  return(length(.data))
 }
 
 # dplyr's join syntax uses a function called tbl_vars to get
