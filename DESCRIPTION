@@ -33,12 +33,14 @@ biocViews: Infrastructure, Data Representation, WorkflowStep
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
-Suggests: knitr,
+Suggests: 
+    knitr,
     BiocStyle,
     rmarkdown,
     testthat,
     HelloRanges,
     HelloRangesData,
+    BSgenome.Hsapiens.UCSC.hg19,
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1

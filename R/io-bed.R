@@ -20,20 +20,25 @@
 #' @importFrom GenomeInfoDb seqinfo
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
-#' @rdname bed-files-read
+#' @rdname io-bed-read
 read_bed <- function(file, col_names = NULL, genome_info = NULL,
                      overlap_ranges = NULL) {
-  if (is.null(genome_info)) { genome_info <- NA }
-  if (is(genome_info, "GRanges")) {
+  # check genome_info input
+  if (is(genome_info, "GenomicRanges")) {
     seq_info <- seqinfo(genome_info)
     genome_info <- NA
+  } else if (is.character(genome_info)) {
+    seq_info <- NULL
   } else {
+    genome_info <- NA
     seq_info <- NULL
   }
+
   import.bed(file, colnames = col_names,
              genome = genome_info,
              seqinfo = seq_info,
-             which = overlap_ranges)
+             which = overlap_ranges,
+             trackLine = FALSE)
 }
 
 
@@ -41,6 +46,9 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #'
 #' @param x A GRanges object
 #' @param path Path or connection to write to
+#' @param index Compress and index the output file
+#'              with bgzf and tabix (default = FALSE). Note that tabix indexing will sort the
+#'              data by chromosome and start.
 #'
 #' @description This is a lightweight wrapper to the export family
 #' of functions defined in \pkg{rtracklayer}.
@@ -48,9 +56,9 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' @importFrom rtracklayer export.bed
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
-#' @rdname bed-files-write
-write_bed <- function(x, path) {
-  export.bed(x, path)
+#' @rdname io-bed-write
+write_bed <- function(x, path, index = FALSE) {
+  export.bed(x, path, index = index)
 }
 
 

@@ -21,6 +21,6 @@ read_bed_graph <- function(file, col_names = NULL, genome_info = NULL,
 #' @importFrom rtracklayer export.bedGraph
 #' @export
 #' @rdname bed-files-write
-write_bed <- function(x, path) {
+write_bed_graph <- function(x, path) {
   export.bed(x, path)
 }
