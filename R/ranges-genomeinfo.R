@@ -58,6 +58,7 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #'
 #'
 #' @rdname ranges-info
+#' @export
 set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
                             seqlengths = NULL, is_circular = NULL) {
 
