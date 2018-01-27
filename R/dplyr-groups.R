@@ -1,8 +1,9 @@
 #' Group a Ranges by one or more variables
 #'
-#' @param .data a Ranges object
+#' @param .data a Ranges object.
 #' @param ... Variable names to group by. These can be either metadata columns
 #' or the core variables of a Ranges.
+#' @param x a GroupedRanges object.
 #'
 #' @description The function \code{group_by} takes a Ranges object and defines
 #' groups by one or more variables. Operations are then performed on the Ranges

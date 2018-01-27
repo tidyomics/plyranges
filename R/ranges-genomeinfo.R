@@ -29,12 +29,12 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #'
 #' @description To construct annotations by supplying annotation information
 #' use \code{genome_info}. This function allows you to get UCSC build information
-#' via \link[GenomeInfoDb]{\code{fetchExtendedChromInfoFromUCSC}}. To add
+#' via \link[GenomeInfoDb]{fetchExtendedChromInfoFromUCSC}. To add
 #' annotations to an existing Ranges object use \code{set_genome_info}. To retrieve
 #' an annotation as a Ranges object use \code{get_genome_info}.
 #'
 #' @importFrom GenomeInfoDb Seqinfo seqnames seqlengths isCircular genome seqinfo
-#' @seealso \link[GenomeInfoDb]{Seqinfo-class} \link[GenomeInfoDb]{\code{fetchExtendedChromInfoFromUCSC}}
+#' @seealso \link[GenomeInfoDb]{Seqinfo-class} \link[GenomeInfoDb]{fetchExtendedChromInfoFromUCSC}
 #' @examples
 #' if (interactive()) {
 #'  # requires internet connection

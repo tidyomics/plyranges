@@ -12,14 +12,10 @@
 #' (\code{anchor_3p}) will fix the start for the negative strand,
 #' while \code{anchor_5p} will fix the end for the
 #' positive strand. Anchoring modifies how arithmetic is performed, for example
-#' modifying the width of a range with \link{\code{set_width}} or stretching a
-#' range with \link{\code{stretch}}.
+#' modifying the width of a range with \code{set_width} or stretching a
+#' range with \code{stretch}.
 #'
-#' @slot anchor a character vector containing an anchor.
-#'       For \code{anchor} to be valid it must be set to one of
-#'       \code{c("start", "end", "center")} for an \code{IRanges} object
-#'       or one of \code{c("start", "end", "center", "3p", "5p")} for a
-#'       \code{GRanges} object.
+#' @param x a Ranges object
 #'
 #' @section Constructors:
 #' Depending on how you want to fix the components of a Ranges, there are
@@ -37,8 +33,12 @@
 #'
 #' @section Accessors:
 #' To see what has been anchored use the function \code{anchor}.
+#' This will return a character vector containing a valid anchor.
+#' It will be set to one of \code{c("start", "end", "center")} for an
+#' \code{IRanges} object or one of
+#' \code{c("start", "end", "center", "3p", "5p")} for a \code{GRanges} object.
 #'
-#' @seealso \link{\code{set_width}} \link{\code{stretch}}
+#' @seealso \link{set_width}, \link{stretch}
 #'
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5)

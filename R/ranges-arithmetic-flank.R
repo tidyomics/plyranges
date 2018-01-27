@@ -26,7 +26,7 @@
 #'
 #' @return A Ranges object of same length as \code{x}.
 #'
-#' @seealso \code{\link[IRanges]{flank}} \link[GenomicRanges]{`intra-range-methods`}
+#' @seealso \link[IRanges]{flank} \link[GenomicRanges]{flank}
 #' @importFrom IRanges flank
 #' @examples
 #' gr <- as_granges(data.frame(start = 10:15,

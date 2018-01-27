@@ -49,10 +49,13 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 }
 
 
-#' Write a BED file
+#' Write a BED or BEDGraph file
 #'
 #' @param x A GRanges object
-#' @param path Path or connection to write to
+#' @param file File name, URL or connection specifying a file to write x to.
+#'             Compressed files with extensions such as '.gz' are handled
+#'             automatically. If you want to index the file with tabix use the
+#'             \code{index} argument.
 #' @param index Compress and index the output file
 #'              with bgzf and tabix (default = FALSE). Note that tabix indexing will sort the
 #'              data by chromosome and start.
@@ -61,11 +64,11 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' of functions defined in \pkg{rtracklayer}.
 #'
 #' @importFrom rtracklayer export.bed
-#' @seealso \code{\link[rtracklayer]{BEDFile}}
+#' @seealso \link[rtracklayer]{BEDFile} \link[rtracklayer]{BEDGraphFile}
 #' @export
 #' @rdname io-bed-write
-write_bed <- function(x, path, index = FALSE) {
-  export.bed(x, path, index = index)
+write_bed <- function(x, file, index = FALSE) {
+  export.bed(x, file, index = index)
 }
 
 #' @rdname io-bed-read
@@ -87,8 +90,8 @@ read_bed_graph <- function(file, col_names = NULL, genome_info = NULL,
 #' @importFrom rtracklayer export.bedGraph
 #' @export
 #' @rdname io-bed-write
-write_bed_graph <- function(x, path, index = FALSE) {
-  export.bedGraph(x, path, index = index)
+write_bed_graph <- function(x, file, index = FALSE) {
+  export.bedGraph(x, file, index = index)
 }
 
 
