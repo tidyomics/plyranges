@@ -33,6 +33,7 @@ set_width.Ranges <- function(x, width = 0L) {
   x
 }
 
+#' @export
 set_width.IRangesAnchored <- function(x, width = 0L) {
   anchor <- anchor(x)
 
@@ -51,6 +52,7 @@ set_width.GenomicRanges <- function(x, width = 0L) {
   x
 }
 
+#' @export
 set_width.GRangesAnchored <- function(x, width = 0L) {
   anchor <- anchor(x)
   x <- switch(anchor,

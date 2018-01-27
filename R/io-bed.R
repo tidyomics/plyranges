@@ -1,6 +1,20 @@
 # io-bed.R
+norm_args_reader <- function(genome_info) {
 
-#' Read a BED file
+  if (is(genome_info, "GenomicRanges")) {
+    seq_info <- seqinfo(genome_info)
+    genome_info <- NA
+  } else if (is.character(genome_info)) {
+    seq_info <- NULL
+  } else {
+    genome_info <- NA
+    seq_info <- NULL
+  }
+
+  return(list(genome_info = genome_info, seq_info = seq_info))
+}
+
+#' Read a BED or BEDGraph file
 #'
 #' @param file A path to a file or a connection.
 #' @param col_names An optional character vector for including additional
@@ -18,25 +32,18 @@
 #'
 #' @importFrom rtracklayer import.bed
 #' @importFrom GenomeInfoDb seqinfo
+#' @importFrom methods is
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
 #' @export
 #' @rdname io-bed-read
 read_bed <- function(file, col_names = NULL, genome_info = NULL,
                      overlap_ranges = NULL) {
   # check genome_info input
-  if (is(genome_info, "GenomicRanges")) {
-    seq_info <- seqinfo(genome_info)
-    genome_info <- NA
-  } else if (is.character(genome_info)) {
-    seq_info <- NULL
-  } else {
-    genome_info <- NA
-    seq_info <- NULL
-  }
+  args <- norm_args_reader(genome_info)
 
   import.bed(file, colnames = col_names,
-             genome = genome_info,
-             seqinfo = seq_info,
+             genome = args$genome_info,
+             seqinfo = args$seq_info,
              which = overlap_ranges,
              trackLine = FALSE)
 }
@@ -60,5 +67,29 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 write_bed <- function(x, path, index = FALSE) {
   export.bed(x, path, index = index)
 }
+
+#' @rdname io-bed-read
+#' @export
+#' @importFrom rtracklayer import.bedGraph
+read_bed_graph <- function(file, col_names = NULL, genome_info = NULL,
+                           overlap_ranges = NULL) {
+
+  args <- norm_args_reader(genome_info)
+
+  import.bedGraph(file, colnames = col_names,
+                  genome = args$genome_info,
+                  seqinfo = args$seq_info,
+                  which = overlap_ranges,
+                  trackLine = FALSE)
+}
+
+
+#' @importFrom rtracklayer export.bedGraph
+#' @export
+#' @rdname io-bed-write
+write_bed_graph <- function(x, path, index = FALSE) {
+  export.bedGraph(x, path, index = index)
+}
+
 
 
