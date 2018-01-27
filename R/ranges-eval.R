@@ -36,12 +36,34 @@ ranges_vars <- function(x) {
 # Port of dplyrs `n` function
 # It works by searching for a vector in the overscope environment
 # and calling length on it.
+
+#' Compute the number of ranges in each group.
+#'
+#' @description This function should only be used
+#' within \code{summarise()}, \code{mutate()} and \code{filter()}.
+#'
+#' @examples
+#' ir <- as_iranges(
+#'                  data.frame(start = 1:10,
+#'                             width = 5,
+#'                             name = c(rep("a", 5), rep("b", 3), rep("c", 2))
+#'                             )
+#'                 )
+#' by_names <- group_by(ir, name)
+#' summarise(by_names, n = n())
+#' mutate(by_names, n = n())
+#' filter(by_names, n() >= 3)
+#'
 #' @importFrom rlang env_get env_parent
 #' @export
 n <- function() {
   up_env <- parent.frame()
   parent_env <- rlang::env_parent(up_env)
-  .data <- rlang::env_get(parent_env, "start")
+  .data <- try(rlang::env_get(parent_env, "start"),
+               silent = TRUE)
+  if (is(.data, "try-error")) {
+    stop("This function should not be called directly.")
+  }
   return(length(.data))
 }
 
