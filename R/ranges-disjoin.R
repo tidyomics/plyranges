@@ -44,6 +44,30 @@ disjoin_ranges.GenomicRanges <- function(.data, ...) {
   reduce_rng(.data, disjoined, dots)
 }
 
+#' @method disjoin_ranges GRangesGrouped
+#' @export
+disjoin_ranges.GRangesGrouped <- function(.data, ...) {
+  dots <- quos(...)
+  split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
+
+  if (length(dots) == 0L) {
+    gr_d <- IRanges::stack(disjoin(split_ranges, ignore.strand = TRUE))
+    mcols(gr_d) <- mcols(gr_d)[, group_vars(.data), drop = FALSE]
+    return(gr_d)
+  }
+
+  disjoined <- disjoin(split_ranges, with.revmap = TRUE, ignore.strand = TRUE)
+
+  gr_d <- S4Vectors::List(Map(function(i)
+    reduce_rng(split_ranges[[i]], disjoined[[i]], dots),
+    seq_along(split_ranges)))
+  mcols(gr_d) <- mcols(split_ranges)
+  gr_d <- IRanges::stack(gr_d)
+  mcols(gr_d) <- mcols(gr_d)[, -1, drop = FALSE]
+  mcols(gr_d) <- mcols(gr_d)[, rev(seq_along(mcols(gr_d)))]
+  return(gr_d)
+}
+
 #' @rdname ranges-disjoin
 #' @export
 disjoin_ranges_directed <- function(.data, ...) {

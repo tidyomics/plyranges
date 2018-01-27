@@ -95,3 +95,30 @@ test_that("non-standard evaluation works as expected",{
                                       score.sum = sum(score)))
   setwd(oldwd)
 })
+
+test_that("grouping then reducing works as expected", {
+  oldwd <- getwd()
+  setwd(system.file("unitTests", "data", "multiinter", package="HelloRanges"))
+  bed_files <- list.files(pattern = ".bed$")
+  # GRangesList
+  gr_l <- S4Vectors::List(lapply(bed_files, function(x) {
+    mutate(read_bed(x), grp = sub(".bed$", "", basename(x)))
+  }))
+  names(gr_l) <- sub(".bed$", "", basename(bed_files))
+  gr_l_reduced <- reduce(gr_l)
+  correct_gr <- IRanges::stack(gr_l_reduced, "grp") %>%
+    mutate(grp = as.character(grp))
+
+  # GroupedGRanges
+  gr_by_group <- unlist(gr_l, use.names = FALSE) %>% group_by(grp)
+  test_gr <- reduce_ranges(gr_by_group)
+
+  expect_identical(correct_gr, test_gr)
+
+  # with an operation matches  revmap length
+  gr_l_reduced <- reduce(gr_l, with.revmap = TRUE)
+  correct_n <- lengths(IRanges::stack(gr_l_reduced)$revmap)
+  test_n <- reduce_ranges(gr_by_group, n = n())$n
+  expect_identical(correct_n, test_n)
+  setwd(oldwd)
+})

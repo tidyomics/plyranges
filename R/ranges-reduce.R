@@ -52,6 +52,30 @@ reduce_ranges.Ranges <- function(.data, ...) {
 
 }
 
+
+#' @method reduce_ranges GRangesGrouped
+#' @export
+reduce_ranges.GRangesGrouped <- function(.data, ...) {
+  dots <- quos(...)
+  split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
+  if (length(dots) == 0L) {
+    gr_r <- IRanges::stack(reduce(split_ranges, ignore.strand = TRUE))
+    mcols(gr_r) <- mcols(gr_r)[, group_vars(.data), drop = FALSE]
+    return(gr_r)
+  }
+
+  reduced <- reduce(split_ranges, with.revmap = TRUE, ignore.strand = TRUE)
+
+  gr_r <- S4Vectors::List(Map(function(i)
+    reduce_rng(split_ranges[[i]], reduced[[i]], dots),
+    seq_along(split_ranges)))
+  mcols(gr_r) <- mcols(split_ranges)
+  gr_r <- IRanges::stack(gr_r)
+  mcols(gr_r) <- mcols(gr_r)[, -1, drop = FALSE]
+  mcols(gr_r) <- mcols(gr_r)[, rev(seq_along(mcols(gr_r)))]
+  return(gr_r)
+}
+
 #' @method reduce_ranges GenomicRanges
 #' @export
 reduce_ranges.GenomicRanges <- function(.data, ...) {
