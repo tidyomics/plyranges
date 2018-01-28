@@ -13,24 +13,31 @@
 #' @return A GRanges object
 #'
 #' @importFrom rtracklayer import.wig
-#' @seealso \code{\link[rtracklayer]{BEDFile}}
+#' @seealso \code{\link[rtracklayer]{WIGFile}}
+#' @rdname io-wig-read
 #' @export
-#' @rdname wig-files-read
-#' @importFrom rtracklayer import.wig
-#' @importFrom GenomeInfoDb seqinfo
-read_wig <- function(file,  genome_info = NULL, overlap_ranges = NULL) {
+read_wig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 
-  if (is.null(genome_info)) { genome_info <- NA }
-  if (is(genome_info, "GRanges")) {
-    seq_info <- seqinfo(genome_info)
-    genome_info <- NA
-  } else {
-    seq_info <- NULL
-  }
+  args <- norm_args_reader(genome_info)
 
   import.wig(file,
             trackLine = FALSE,
-            genome = genome_info,
-            seqinfo = seq_info,
+            genome = args$genome_info,
+            seqinfo = args$seq_info,
             which = overlap_ranges)
+}
+
+
+#' Write a WIG file
+#'
+#' @param x A GRanges object
+#' @param file File name, URL or connection specifying a file to write x to.
+#'             Compressed files with extensions such as '.gz' are handled
+#'             automatically.
+#' @importFrom rtracklayer export.wig
+#' @seealso \link[rtracklayer]{WIGFile}
+#' @export
+#' @rdname io-wig-write
+write_wig <- function(x, file) {
+  export.wig(x, file)
 }
