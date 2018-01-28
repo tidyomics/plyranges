@@ -101,9 +101,9 @@ test_that("grouping then reducing works as expected", {
   setwd(system.file("unitTests", "data", "multiinter", package="HelloRanges"))
   bed_files <- list.files(pattern = ".bed$")
   # GRangesList
-  gr_l <- S4Vectors::List(lapply(bed_files, function(x) {
+  gr_l <- as(lapply(bed_files, function(x) {
     mutate(read_bed(x), grp = sub(".bed$", "", basename(x)))
-  }))
+  }), "GRangesList")
   names(gr_l) <- sub(".bed$", "", basename(bed_files))
   gr_l_reduced <- reduce(gr_l)
   correct_gr <- IRanges::stack(gr_l_reduced, "grp") %>%
