@@ -7,10 +7,11 @@ tidyr::unnest
 #' @param ... list-column names to unnest
 #' @param .drop Determines whether other list columns will be dropped.
 #' By default \code{unnest} will keep other list columns even if they are nested.
-#' @param .id If supplied will create a new column with name \code{.id},
-#' identifying the index of the list column.
+#' @param .id A character vector of length equal to number of list columns.
+#' If supplied will create new column(s) with name \code{.id}
+#' identifying the index of the list column (default = NULL).
 #' @param .sep Combine name of nested Ranges with name of list column seperated
-#' by \code{.sep}/
+#' by \code{.sep}, currently not implemented.
 #'
 #' @importFrom tidyr unnest
 #' @importFrom S4Vectors expand
@@ -38,6 +39,11 @@ unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NU
 
   dot_names <- unlist(Map(function(.) quo_name(.), dots))
 
+  if (any(!(dot_names %in% colnames(mcols(data))))) {
+    stop(paste("Input column(s):",
+               paste0(dot_names, collapse = ","), "not found."),
+         call. = FALSE)
+  }
 
   if (length(dot_names) == 0L) {
     which_unnest <- names(list_cols)
@@ -47,8 +53,10 @@ unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NU
   }
   if (length(which_unnest) == 0L) {
     stop(paste("Input column(s):",
-               paste0(dot_names, collapse = ","), "not found"), call. = FALSE)
+               paste0(dot_names, collapse = ","), "are not list columns."),
+         call. = FALSE)
   }
+
   if (.drop) {
     list_cols_to_drop <- setdiff(names(list_cols), which_unnest)
     if (length(list_cols_to_drop) > 0) {
@@ -56,16 +64,37 @@ unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NU
     }
   }
 
-  unnest_rng <- S4Vectors::expand(data, which_unnest)
   if (!is.null(.id)) {
-    if (length(which_unnest) == 1L) {
-      values <- names(mcols(data)[[which_unnest]])
-      if (is.null(values)) {
-        values <- seq_along(mcols(data)[[which_unnest]])
-      }
-      lengths <- lengths(mcols(data)[[which_unnest]])
-      mcols(unnest_rng)[[.id]] <- Rle(values, lengths)
+    if (length(.id) != length(which_unnest)) {
+      stop("`.id` does not have same length as number of list columns.",
+          call. = FALSE)
     }
+
+    values <- Map(function(col) {
+      current <- mcols(data)[[col]]
+      v <- names(current)
+      if (length(v) == 0) v <- seq_along(current)
+      l <- lengths(current)
+      inx <- IRanges::IntegerList(Map(function(i) rep(i, l[i]), seq_along(l)))
+      IRanges::extractList(v, inx)
+      }, which_unnest)
+
+
+    names(values) <- .id
+    values <- do.call("DataFrame", values)
+    # expand the ranges first then expand columns
+    expand_rng <- S4Vectors::expand(data, which_unnest)
+    expand_values <- S4Vectors::expand(values, .id)
+    # for some reason if values is single column DF, expand
+    # returns a List, with expanded values in last element
+    if (length(.id) == 1) {
+      expand_values <- expand_values[[.id]]
+      expand_values <- DataFrame(expand_values)
+      names(expand_values) <- .id
+    }
+    mcols(expand_rng) <- cbind(mcols(expand_rng), expand_values)
+    return(expand_rng)
   }
-  unnest_rng
+
+  return(S4Vectors::expand(data, which_unnest))
 }
