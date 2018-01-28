@@ -97,6 +97,7 @@ test_that("non-standard evaluation works as expected",{
 })
 
 test_that("grouping then reducing works as expected", {
+  skip_on_travis()
   oldwd <- getwd()
   setwd(system.file("unitTests", "data", "multiinter", package="HelloRanges"))
   bed_files <- list.files(pattern = ".bed$")
