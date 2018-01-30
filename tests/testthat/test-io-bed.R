@@ -118,3 +118,18 @@ test_that("write bed returns correct bed files", {
   expect_identical(correct_which, test_gr)
 
 })
+
+test_that("read_narrowpeaks returns correct GRanges", {
+  file <- system.file("extdata", "demo.narrowPeak.gz",  package="rtracklayer")
+  gr <- read_narrowpeaks(file, genome_info = "hg19")
+  expect_equal(length(gr), 6)
+  expect_equal(colnames(mcols(gr)),
+              c("name","score","signalValue","pValue","qValue","peak"))
+
+  # matches write output
+  test_np_out <- file.path(tempdir(), "test.narrowPeak.gz")
+  write_narrowpeaks(gr, test_np_out)
+  test_gr <- read_narrowpeaks(test_np_out, genome_info = "hg19")
+  expect_identical(gr, test_gr)
+
+})
