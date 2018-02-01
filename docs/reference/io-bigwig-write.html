@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select fields and tags to load from a BAM — select_fields • plyranges</title>
+<title>Write a BED file — write_bigwig • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,35 +90,34 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select fields and tags to load from a BAM</h1>
+    <h1>Write a BED file</h1>
     </div>
 
     
-    <p>Select fields and tags to load from a BAM</p>
+    <p>This is a lightweight wrapper to the export family
+of functions defined in <span class="pkg">rtracklayer</span>.</p>
     
 
-    <pre class="usage"><span class='fu'>select_fields</span>(<span class='no'>bam</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='bigwig-files-write.html'>write_bigwig</a></span>(<span class='no'>x</span>, <span class='no'>file</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bam</th>
-      <td><p>a BamFile</p></td>
+      <th>x</th>
+      <td><p>A GRanges object</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Values indicating which fields from
-the BAM file to load. Valid entries are qname (QNAME), flag (FLAG),
-rname (RNAME), strand, pos (POS), qwidth (width of query),
-mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
-(TLEN), seq (SEQ), qual (QUAL).</p></td>
+      <th>file</th>
+      <td><p>File name, URL or connection specifying a file to write x to.
+Compressed files with extensions such as '.gz' are handled
+automatically.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/Rsamtools/topics/ScanBamParam-class'>ScanBamParam</a></code></p>
+    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BigWigFile'>BigWigFile</a></code></p>
     
 
   </div>

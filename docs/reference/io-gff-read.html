@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select tags in a BAM file — select_tags • plyranges</title>
+<title>Read a GFF/GTF/GVT file — read_gff • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,27 +90,60 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Select tags in a BAM file</h1>
+    <h1>Read a GFF/GTF/GVT file</h1>
     </div>
 
     
-    <p>Select tags in a BAM file</p>
+    <p>This is a lightweight wrapper to the import family
+of functions defined in <span class="pkg">rtracklayer</span>.</p>
     
 
-    <pre class="usage"><span class='fu'>select_tags</span>(<span class='no'>bam</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='gff-files-read.html'>read_gff</a></span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'><a href='gff-files-read.html'>read_gff1</a></span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'><a href='gff-files-read.html'>read_gff2</a></span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'><a href='gff-files-read.html'>read_gff3</a></span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>bam</th>
-      <td><p>a A BamFile</p></td>
+      <th>file</th>
+      <td><p>A path to a file or a connection.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>two letter tags to select</p></td>
+      <th>col_names</th>
+      <td><p>An optional character vector for parsing specific
+columns in <code>file</code> that are part of the GFF specification. These should
+name either fixed fields, like source or type, or, for GFF2 and GFF3,
+any attribute.</p></td>
+    </tr>
+    <tr>
+      <th>genome_info</th>
+      <td><p>An optional character string or a Ranges object
+that contains information about the genome build. For example the UCSC identifier
+"hg19" will add build information to the returned GRanges.</p></td>
+    </tr>
+    <tr>
+      <th>overlap_ranges</th>
+      <td><p>An optional Ranges object. Only the intervals in the file
+that overlap the Ranges will be returned.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A GRanges object</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/GFFFile-class'>GFFFile</a></code></p>
     
 
   </div>
@@ -118,7 +151,11 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

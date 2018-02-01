@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a WIG file — read_wig • plyranges</title>
+<title>Read a BED or BEDGraph file — read_bed • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,15 +90,23 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a WIG file</h1>
+    <h1>Read a BED or BEDGraph file</h1>
     </div>
 
     
     <p>This is a lightweight wrapper to the import family
 of functions defined in <span class="pkg">rtracklayer</span>.</p>
+<p>Read common interval based formats as GRanges.</p>
     
 
-    <pre class="usage"><span class='fu'>read_wig</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>read_bed</span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>read_bed_graph</span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>read_narrowpeaks</span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -106,6 +114,11 @@ of functions defined in <span class="pkg">rtracklayer</span>.</p>
     <tr>
       <th>file</th>
       <td><p>A path to a file or a connection.</p></td>
+    </tr>
+    <tr>
+      <th>col_names</th>
+      <td><p>An optional character vector for including additional
+columns in <code>file</code> that are not part of the BED/narrowPeaks specification.</p></td>
     </tr>
     <tr>
       <th>genome_info</th>
@@ -124,6 +137,20 @@ that overlap the Ranges will be returned.</p></td>
 
     <p>A GRanges object</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This is a lightweight wrapper to the import family
+of functions defined in <span class="pkg">rtracklayer</span>.
+The <code>read_narrowpeaks</code> function parses the ENCODE narrowPeak BED format (see
+<a href='https://genome.ucsc.edu/FAQ/FAQformat.html#format12'>https://genome.ucsc.edu/FAQ/FAQformat.html#format12</a> for details.). As
+such the parser expects four additional columns called (corresponding to
+the narrowPeaks spec):</p><ul>
+<li><p>signalValue</p></li>
+<li><p>pValue</p></li>
+<li><p>qValue</p></li>
+<li><p>peak</p></li>
+</ul>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BEDFile-class'>BEDFile</a></code></p>
@@ -136,6 +163,8 @@ that overlap the Ranges will be returned.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
           </ul>

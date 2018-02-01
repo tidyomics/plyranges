@@ -112,7 +112,16 @@ to be held fixed.</p>
 <span class='fu'>anchor_3p</span>(<span class='no'>x</span>)
 
 <span class='fu'>anchor_5p</span>(<span class='no'>x</span>)</pre>
-        
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>a Ranges object</p></td>
+    </tr>
+    </table>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Anchoring will fix a Ranges start, end, or center positions,
@@ -123,17 +132,6 @@ while <code>anchor_5p</code> will fix the end for the
 positive strand. Anchoring modifies how arithmetic is performed, for example
 modifying the width of a range with <code>set_width</code> or stretching a
 range with <code>stretch</code>.</p>
-    
-    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
-
-    
-    <dl class='dl-horizontal'>
-<dt><code>anchor</code></dt><dd><p>a character vector containing an anchor.
-For <code>anchor</code> to be valid it must be set to one of
-<code>c("start", "end", "center")</code> for an <code>IRanges</code> object
-or one of <code>c("start", "end", "center", "3p", "5p")</code> for a
-<code>GRanges</code> object.</p></dd>
-</dl>
     
     <h2 class="hasAnchor" id="constructors"><a class="anchor" href="#constructors"></a>Constructors</h2>
 
@@ -153,11 +151,15 @@ an <code>IRanges</code> or <code>GRanges</code> object.</p><ul>
     <h2 class="hasAnchor" id="accessors"><a class="anchor" href="#accessors"></a>Accessors</h2>
 
     
-    <p>To see what has been anchored use the function <code>anchor</code>.</p>
+    <p>To see what has been anchored use the function <code>anchor</code>.
+This will return a character vector containing a valid anchor.
+It will be set to one of <code>c("start", "end", "center")</code> for an
+<code>IRanges</code> object or one of
+<code>c("start", "end", "center", "3p", "5p")</code> for a <code>GRanges</code> object.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>set_width</code> <code>stretch</code></p>
+    <p><a href='set_width.html'>set_width</a>, <a href='stretch.html'>stretch</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -228,10 +230,9 @@ an <code>IRanges</code> or <code>GRanges</code> object.</p><ul>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#slots">Slots</a></li>
 
       <li><a href="#constructors">Constructors</a></li>
 

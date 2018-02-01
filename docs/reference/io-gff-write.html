@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a BigWig file — read_bigwig • plyranges</title>
+<title>Write a GFF(123) file — write_gff • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,38 +90,43 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a BigWig file</h1>
+    <h1>Write a GFF(123) file</h1>
     </div>
 
     
-    <p>Read a BigWig file</p>
+    <p>This is a lightweight wrapper to the export family
+of functions defined in <span class="pkg">rtracklayer</span>.</p>
     
 
-    <pre class="usage"><span class='fu'>read_bigwig</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'><a href='gff-files-write.html'>write_gff</a></span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'><a href='gff-files-write.html'>write_gff1</a></span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>write_gff2</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>write_gff3</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>x</th>
+      <td><p>A GRanges object</p></td>
+    </tr>
+    <tr>
       <th>file</th>
-      <td><p>A path to a file or a connection.</p></td>
+      <td><p>Path or connection to write to</p></td>
     </tr>
     <tr>
-      <th>genome_info</th>
-      <td><p>An optional character string or a Ranges object
-that contains information about the genome build. For example the USSC identifier
-"hg19" will add build information to the returned GRanges.</p></td>
-    </tr>
-    <tr>
-      <th>overlap_ranges</th>
-      <td><p>An optional Ranges object. Only the intervals in the file
-that overlap the Ranges will be loaded.</p></td>
+      <th>index</th>
+      <td><p>If TRUE the output file will be compressed and indexed using bgzf and
+tabix.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BigWigFile'>BigWigFile</a></code></p>
+    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/GFFFile-class'>GFFFile</a></code></p>
     
 
   </div>

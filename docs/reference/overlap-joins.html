@@ -99,20 +99,11 @@
 
     <pre class="usage"><span class='fu'>join_overlap_intersect</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'>join_overlap_intersect</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
-
-<span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>join_overlap_intersect</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
-
 <span class='fu'>join_overlap_intersect_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>,
   <span class='st'>".y"</span>))
 
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'>join_overlap_intersect_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_overlap_intersect_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>,
+  <span class='st'>".y"</span>))
 
 <span class='fu'>join_overlap_left</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
@@ -161,7 +152,8 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
     </tr>
     <tr>
       <th>suffix</th>
-      <td><p>Character to vectors to append to common columns in x and y.</p></td>
+      <td><p>Character to vectors to append to common columns in x and y
+(default = <code>c(".x", ".y")</code>).</p></td>
     </tr>
     </table>
     
@@ -171,15 +163,38 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
 the genomic intervals that are the overlapping ranges between x and y and
 returns a new ranges object with metadata columns from x and y.</p>
 <p>The function <code>join_inner_overlaps</code> is equivalent to <code>find_overlaps</code>
-, it returns all ranges in x that overlap ranges in y.</p>
+it returns all ranges in x that overlap ranges in y.</p>
 <p>The function <code>join_left_overlaps</code> performs a left outer join between x
 and y. It returns all ranges in x that overlap or do not overlap ranges in y
 plus metadata columns common to both. If there is no overlapping range
 the metadata column will contain a missing value.</p>
 <p>The function <code>join_self_overlaps</code> find all overlaps between a ranges
 object x and itself.</p>
+<p>All of these functions have two suffixes that modify their behavior.
+The <code>within</code> suffix, returns only ranges in x that are completely
+contained in y. The <code>directed</code> suffix takes into account the strandedness
+of a GRanges object.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>, <span class='fl'>101</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>21</span>, <span class='fl'>201</span>)))
+<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>),
+                           <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>19</span>, <span class='fl'>21</span>, <span class='fl'>105</span>, <span class='fl'>202</span>)))
+
+<span class='co'># intersect takes common interval</span>
+<span class='fu'>join_overlap_intersect</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 4 ranges and 0 metadata columns:
+#&gt;           start       end     width
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]        11        19         9
+#&gt;   [2]        20        21         2
+#&gt;   [3]       101       105         5
+#&gt;   [4]       101       201       101</div><div class='input'>
+<span class='co'># within</span>
+<span class='fu'>join_overlap_intersect_within</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 0 metadata columns:
+#&gt;           start       end     width
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
+#&gt;   [1]       101       201       101</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -187,7 +202,9 @@ object x and itself.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
