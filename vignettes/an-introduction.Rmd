@@ -178,7 +178,7 @@ ir0 %>%
 
 # Joins, or another way at looking at overlaps between `Ranges`
 
-![Types of overlap](overlaps.png)
+<!--- ![Types of overlap](overlaps.png) --->
 
 We can think about finding overlaps as a type of join between two `Ranges`
 where we are using the intervals as keys. Of most use are the 
@@ -220,7 +220,7 @@ find_overlaps(ir0, ir1, suffix = c(".left", ".right"))
 
 The `join_overlap_left` method will perform an outer left join. 
 
-![left join](left_join.png)
+<!--- ![left join](left_join.png) --->
 
 First any overlaps that are found will be returned similar to `join_overlap_inner`. 
 Then any non-overlapping ranges will be returned, with missing values on the metadata columns. 
@@ -289,7 +289,7 @@ olap %>%
 ## Finding your neighbours
 We also provide methods for finding nearest, preceding or following `Ranges`.
 
-![Nearest neighbour joins](neighbours.png)
+<!--- ![Nearest neighbour joins](neighbours.png) --->
 
 These methods are similar to the overlap joins described above. 
 
