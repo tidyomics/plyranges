@@ -188,7 +188,7 @@ The first function, `join_overlap_intersect` will return a `Ranges`` object
 where the start, end, and width coordinates correspond to the amount of any overlap
 between the left and right input `Ranges`.
 
-![intersect join](intersects.png)
+<!--- ![intersect join](intersects.png) --->
 
 
 These coordinates correspond to the intervals that are the intersecting `Ranges`. 
@@ -204,7 +204,7 @@ overlap any `Ranges` on the right. By default, it returns the `Ranges` on the ri
 that overlap (and any other metadata columns belonging to the left or right)
 as a metadata column.
 
-![inner join](inner_join.png)
+<!--- ![inner join](inner_join.png) --->
 
 
 ```{r}
@@ -328,7 +328,7 @@ ir0 %>%
 # Data Import/Output
 
 We provide convienence functions via `rtracklayer` 
-for reading/writing the following data formats from/to `Ranges` objects.
+for reading/writing the following data formats to/from `Ranges` objects.
 
 * BED: `read/write_bed`
 * BEDGraph: `read/write_bedgraph`
