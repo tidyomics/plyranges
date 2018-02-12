@@ -62,20 +62,45 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
                             seqlengths = NULL, is_circular = NULL) {
 
-  info <- seqinfo(genome_info(genome, seqnames, seqlengths, is_circular))
-  seqinfo(.data) <- info
+
+
+  if (!is.null(genome)) {
+    GenomeInfoDb::genome(.data) <- genome
+  }
+
+  if (!is.null(seqlengths)) {
+    GenomeInfoDb::seqlengths(.data) <- genome
+  }
+
+  if (!is.null(seqnames)) {
+    if (any(!(seqnames %in% seqnames(.data)))) {
+      stop("Provide seqnames do not match seqnames(.data).", call. = FALSE)
+    }
+    GenomeInfoDb::seqnames(.data) <- seqnames
+  }
+
+  if (!is.null(is_circular)) {
+    GenomeInfoDb::isCircular(.data) <- is_circular
+  }
+
+  return(.data)
 }
 
 
 
 #' @export
+#' @importFrom methods hasMethod
 #' @rdname ranges-info
 get_genome_info <- function(.data)  UseMethod("get_genome_info")
 
 #' @export
-get_genome_info.GenomicRanges <- function(.data) {
-  info <- seqinfo(.data)
-  get_genome_info(info)
+get_genome_info.default <- function(.data) {
+  if (hasMethod("seqinfo", class(.data))) {
+    return(get_genome_info.Seqinfo(seqinfo(.data)))
+  } else {
+    stop(paste("Unable to retrieve genome annotation from object of class:",
+         class(.data)), call. = FALSE)
+  }
 }
 
 #' @export

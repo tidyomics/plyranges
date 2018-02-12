@@ -13,7 +13,7 @@
 #' @rdname io-bigwig-read
 read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 
-  stopifnot(is(overlap_ranges, "GRanges_OR_NULL"))
+  stopifnot(is(overlap_ranges, "GRanges") || is.null(overlap_ranges))
 
   if (!is.null(genome_info)) {
     if (is(genome_info, "GRanges")) {
@@ -24,7 +24,6 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
   } else {
     seq_info <- NULL
   }
-
 
   if (!is.null(overlap_ranges)) {
     selection <- BigWigSelection(overlap_ranges)
