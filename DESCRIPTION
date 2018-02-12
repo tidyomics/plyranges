@@ -32,7 +32,7 @@ Imports:
 biocViews: Infrastructure, Data Representation, WorkflowStep
 License: Artistic-2.0
 Encoding: UTF-8
-LazyData: true
+ByteCompile: true
 Suggests: 
     knitr,
     BiocStyle,
