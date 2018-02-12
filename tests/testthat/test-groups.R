@@ -44,7 +44,7 @@ test_that("group by matches HelloRanges", {
   setwd(system.file("unitTests", "data", "groupby", package="HelloRanges"))
 
   a <- read_bed("values3.header.bed")
-  exp <- aggregate(unstrand(a), score.sum = sum(score)) %>%
+  exp <- S4Vectors::aggregate(unstrand(a), score.sum = sum(score)) %>%
     select(-grouping)
 
   result <- a %>%
