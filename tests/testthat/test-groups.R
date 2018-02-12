@@ -40,6 +40,7 @@ test_that("ungrouping works as expected", {
 })
 
 test_that("group by matches HelloRanges", {
+  skip_on_travis()
   oldwd <- getwd()
   setwd(system.file("unitTests", "data", "groupby", package="HelloRanges"))
 
