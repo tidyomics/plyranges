@@ -193,6 +193,7 @@ test_that("inner join/find overlaps returns correct results", {
   target <- find_overlaps(a,b, suffix = c(".a", ".b"))
   expect_identical(target, exp)
 
+
   # directed
   exp <- GRanges(seqnames = "chr1",
                  strand = c("+", "-", "-", "+"),
@@ -204,5 +205,18 @@ test_that("inner join/find overlaps returns correct results", {
 
   target <- find_overlaps_directed(a,b, suffix = c(".a", ".b"))
   expect_identical(target, exp)
+
+  # left overlap join
+  a <- GRanges(seqnames = "chr1",
+               strand = c("+", "-"),
+               ranges = IRanges(c(1, 9), c(7, 10)),
+               key = letters[1:2])
+  b <- GRanges(seqnames = "chr1",
+               strand = c("-", "+"),
+               ranges = IRanges(c(2, 6), c(4, 8)),
+               key = LETTERS[1:2])
+  exp <- a
+  mcols(exp)$key.b <- c("B", NA)
+  target <- join_overlap_left(a,b, suffix = c(".a", ".b"))
 
 })

@@ -27,16 +27,29 @@ add_na_seqlevels <- function(x) {
 }
 
 outer_left_join <- function(x, y, hits, suffix) {
+  # overlaps found
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
   mcols(left) <- mcols_overlaps_update(left, right, suffix)
 
+
+  # overlaps not found
   only_left <- rep(TRUE, queryLength(hits))
   only_left[queryHits(hits)] <- FALSE
 
+  # ranges object
   rng_only_left <- x[only_left]
-  mcols(rng_only_left) <- rep(DataFrame(lapply(mcols(left), na_cols)),
+  mcols_outer <- rep(DataFrame(lapply(mcols(right), na_cols)),
                               sum(only_left))
+  if (!is.null(mcols(rng_only_left))) {
+    mcols(rng_only_left) <- cbind(mcols(rng_only_left), mcols_outer)
+
+  } else {
+    mcols(rng_only_left) <- mcols_outer
+  }
+
+  names(mcols(rng_only_left)) <- names(mcols(left))
+
 
   left_outer <-   c(left, rng_only_left)
   left_outer <- left_outer[order(c(queryHits(hits), which(only_left)))]
