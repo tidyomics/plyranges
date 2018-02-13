@@ -32,7 +32,6 @@ outer_left_join <- function(x, y, hits, suffix) {
   right <- y[subjectHits(hits), ]
   mcols(left) <- mcols_overlaps_update(left, right, suffix)
 
-
   # overlaps not found
   only_left <- rep(TRUE, queryLength(hits))
   only_left[queryHits(hits)] <- FALSE
@@ -75,7 +74,7 @@ join_overlap_left.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
   x <- add_na_seqlevels(x)
   y <- add_na_seqlevels(y)
   hits <- findOverlaps(x,y, maxgap, minoverlap,
-                       type = "any", select = "all", ignore.strand = FALSE)
+                       type = "any", select = "all", ignore.strand = TRUE)
 
   outer_left_join(x,y,hits, suffix)
 }
