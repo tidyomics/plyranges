@@ -14,7 +14,7 @@ select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
     if (length(dots) == 0) {
       return(cache)
     }
-    return(select_rng(cache, dots, .drop_ranges))
+    return(select(cache, UQS(dots), .drop_ranges))
   }
 
   # else, populate bam params
@@ -64,14 +64,14 @@ valid_flag_filters <- function() {
 filter.GRangesDeferred <- function(.data, ...) {
   dots <- quos(...)
 
-  # if cached select columns
+  # if cached normal filter
   if (has_cache_contents(.data)) {
     cache <- get_cache(.data)
     # no selection? - return .data
     if (length(dots) == 0) {
       return(cache)
     }
-    return(filter_rng(cache, dots))
+    return(filter(cache, UQS(dots)))
   }
 
 
@@ -115,23 +115,23 @@ filter_by_overlaps.GRangesDeferred <- function(x, y, maxgap = -1L, minoverlap = 
 #' @export
 summarise.GRangesDeferred <- function(.data, ...) {
   dots <- quos(...)
-  if (has_cache_contents(x)) {
-    cache <- get_cache(x)
+  if (has_cache_contents(.data)) {
+    cache <- get_cache(.data)
   } else {
     cache <- load_alignments(.data)
   }
-  return(summarize_rng(cache, dots))
+  return(summarize(cache, UQS(dots)))
 }
 
 #' @export
 mutate.GRangesDeferred <- function(.data, ...) {
   dots <- quos(...)
-  if (has_cache_contents(x)) {
-    cache <- get_cache(x)
+  if (has_cache_contents(.dat)) {
+    cache <- get_cache(.data)
   } else {
     cache <- load_alignments(.data)
   }
-  return(mutate_rng(cache, dots))
+  return(mutate(cache, UQS(dots)))
 }
 
 #' @export

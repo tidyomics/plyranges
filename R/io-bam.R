@@ -49,6 +49,9 @@
 #' @export
 #' @rdname io-bam-read
 read_bam <- function(file, index = file, paired = FALSE) {
+  if (is.null(index)) {
+    index <- character()
+  }
   env <- rlang::new_environment(
     list(input = Rsamtools::BamFile(file, index = index),
          param = Rsamtools::ScanBamParam(),
@@ -84,11 +87,12 @@ load_alignments <- function(.data) {
     mcols(r2_grng)[["read_pair_group"]] <- 2L
     grng <- c(r1_grng, r2_grng)
     grng <- grng[order(grng$read_pair_id)]
-    return(grng)
+    return(group_by(grng, "read_pair_id"))
   }
   alignments <-  GenomicAlignments::readGAlignments(file = .data@operation$input,
                       param = .data@operation$param,
                       with.which_label = with.which_label)
+
   galn_to_grng(alignments)
 }
 
@@ -98,6 +102,7 @@ galn_to_grng <- function(alignments) {
   mcols(grng)[["cigar"]] <- GenomicAlignments::cigar(alignments)
   mcols(grng)[["qwidth"]] <- GenomicAlignments::qwidth(alignments)
   mcols(grng)[["njunc"]] <- GenomicAlignments::njunc(alignments)
+  seqinfo(grng) <- seqinfo(alignments)
   grng
 }
 
