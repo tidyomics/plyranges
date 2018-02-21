@@ -1,5 +1,4 @@
-summarize_rng <- function(.data, ...) {
-  dots <- UQS(...)
+summarize_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
   overscope_eval_update(overscope, dots)
@@ -26,7 +25,6 @@ summarize_rng <- function(.data, ...) {
 summarise.GenomicRanges <- function(.data, ...) {
 
   dots <- quos(...)
-
   DataFrame(summarize_rng(.data, dots))
 
 }

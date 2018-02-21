@@ -1,8 +1,8 @@
-select_rng <- function(.data, .drop_ranges, ...) {
+select_rng <- function(.data, .drop_ranges, dots) {
 
   if (.drop_ranges) {
     var_names <- ranges_vars(.data)
-    selected_vars <- tidyselect::vars_select(var_names, UQS(...))
+    selected_vars <- tidyselect::vars_select(var_names, UQS(dots))
   } else {
     var_names <- names(mcols(.data))
     if (length(var_names) == 0L) {
@@ -15,7 +15,7 @@ select_rng <- function(.data, .drop_ranges, ...) {
       exclude <- c("start", "end", "width", "strand", "seqnames")
     }
 
-    selected_vars <- tidyselect::vars_select(var_names, UQS(...),
+    selected_vars <- tidyselect::vars_select(var_names, UQS(dots),
                                              .exclude = exclude)
   }
 

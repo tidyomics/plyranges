@@ -44,7 +44,7 @@ mutate_core <- function(.data, .mutated) {
 
 
 mutate_rng <- function(.data, dots) {
-  dots <- UQS(dots)
+  #dots <- UQS(dots)
   col_names <- names(dots)
   if (any(col_names %in% "")) {
     stop("mutate must have name-variable pairs as input", .call = FALSE)

@@ -1,7 +1,5 @@
 # ranges-reduce
-reduce_rng <- function(.data, reduced, ...) {
-
-  dots <- UQS(...)
+reduce_rng <- function(.data, reduced, dots) {
 
   revmap <- mcols(reduced)$revmap
 

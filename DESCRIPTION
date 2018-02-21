@@ -13,14 +13,14 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     and consistent way of manipulating these classes their accessiblity for new
     Bioconductor users is hopefully increased.
 Depends:
-  R (>= 3.4.0),
+  R (>= 3.4.2),
   methods,
   BiocGenerics,
   IRanges (>= 2.12.0),
   GenomicRanges (>= 1.28.4)
 Imports:
   dplyr, 
-  rlang, 
+  rlang (>= 0.2.0), 
   magrittr,
   tidyr,
   tidyselect,

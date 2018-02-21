@@ -1,6 +1,4 @@
 rng_arrange <- function(.data, dots) {
-
-  dots <- UQS(dots)
   rng_os <- overscope_ranges(.data)
   on.exit(overscope_clean(rng_os))
   rng_list <- lapply(dots, overscope_eval_next, overscope = rng_os)

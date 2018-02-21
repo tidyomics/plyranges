@@ -11,7 +11,7 @@
 #' TRUE, when alignments are load, the GRanges has two additional
 #' columns called read_pair_id and read_pair_group corresponding
 #' to paired reads (by default paired = TRUE will only select
-#' reads that are true pairs.
+#' reads that are proper pairs).
 #'
 #' For \code{select} valid columns are the either the fields of the
 #' BAM file. Valid entries are qname (QNAME), flag (FLAG),
@@ -21,30 +21,33 @@
 #' tags in the BAM file are also valid.
 #'
 #' For \code{filter} the following fields are valid
-#' \describe{
-#'  \item{is_paired}	Select either unpaired (FALSE) or paired (TRUE) reads.
-#'  \item{is_proper_pair} Select either improperly paired (FALSE) or properly paired (TRUE) reads. This is dependent on the alignment software used.
-#'  \item{is_unmapped_query}	Select unmapped (TRUE) or mapped (FALSE) reads.
-#'  \item{has_unmapped_mate} Select reads with mapped (FALSE) or unmapped (TRUE)  mates.
-#'  \item{is_minus_strand}	Select reads aligned to plus (FALSE) or minus (TRUE) strand.
-#'  \item{is_mate_minus_strand}	Select reads where mate is aligned to plus (FALSE) or minus (TRUE) strand.
-#'  \item{is_first_mate_read}	Select reads if they are the first mate (TRUE) or not (FALSE).
-#'  \item{is_second_mate_read}	Select reads if they are the second mate (TRUE) or not (FALSE).
-#'  \item{is_secondary_alignment} Select reads if their alignment status is secondary (TRUE) or not (FALSE). This might be relevant if there are multimapping reads.
-#'  \item{is_not_passing_quality_controls} Select reads that either pass quality controls (FALSE) or that do not (TRUE).
-#'  \item{is_duplicate}	Select reads that are unduplicated (FALSE) or duplicated (TRUE). This may represent reads that are PCR or optical duplicates.
-#' }
+#' is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
+#' is_proper_pair Select either improperly paired (FALSE) or properly
+#' paired (TRUE) reads. This is dependent on the alignment software used.
+#' is_unmapped_query	Select unmapped (TRUE) or mapped (FALSE) reads.
+#' has_unmapped_mate Select reads with mapped (FALSE) or unmapped (TRUE) mates.
+#' is_minus_strand 	Select reads aligned to plus (FALSE) or minus (TRUE) strand.
+#' is_mate_minus_strand	Select reads where mate is aligned to plus (FALSE) or
+#' minus (TRUE) strand.
+#' is_first_mate_read	Select reads if they are the first mate (TRUE) or
+#' not (FALSE).
+#' is_second_mate_read Select reads if they are the second mate (TRUE) or
+#' not (FALSE).
+#' is_secondary_alignment Select reads if their alignment status is
+#' secondary (TRUE) or not (FALSE). This might be relevant if there are
+#' multimapping reads.
+#' is_not_passing_quality_controls Select reads that either pass
+#' quality controls (FALSE) or that do not (TRUE).
+#' is_duplicate	Select reads that are unduplicated (FALSE) or
+#' duplicated (TRUE). This may represent reads that are PCR or
+#' optical duplicates.
 #'
-#' For \code{filter_by_overlaps}, the alignments that overlap another region
-#' are returned.
 #'
-#'
-#'
-#'@importFrom GenomicAlignments readGAlignments readGAlignmentPairs
-#'@importFrom Rsamtools BamFile ScanBamParam
-#'@importFrom rlang new_environment
-#'@export
-#'@rdname io-bam-read
+#' @importFrom GenomicAlignments readGAlignments readGAlignmentPairs
+#' @importFrom Rsamtools BamFile ScanBamParam
+#' @importFrom rlang new_environment
+#' @export
+#' @rdname io-bam-read
 read_bam <- function(file, index = file, paired = FALSE) {
   env <- rlang::new_environment(
     list(input = Rsamtools::BamFile(file, index = index),

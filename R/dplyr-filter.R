@@ -1,6 +1,5 @@
 # filter.R
 filter_rng <- function(.data, dots) {
-  dots <- UQS(dots)
   overscope <- overscope_ranges(.data)
 
   r <- lapply(dots, overscope_eval_next, overscope = overscope)
