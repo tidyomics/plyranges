@@ -64,25 +64,25 @@ set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
 
 
 
-  if (!is.null(genome)) {
-    GenomeInfoDb::genome(.data) <- genome
+  if (is.null(genome)) {
+     genome <- NA
   }
 
-  if (!is.null(seqlengths)) {
-    GenomeInfoDb::seqlengths(.data) <- genome
+  if (is.null(seqlengths)) {
+     seqlengths <- NA
   }
 
-  if (!is.null(seqnames)) {
-    if (any(!(seqnames %in% seqnames(.data)))) {
-      stop("Provide seqnames do not match seqnames(.data).", call. = FALSE)
-    }
-    GenomeInfoDb::seqnames(.data) <- seqnames
+  if (is.null(seqnames)) {
+    seqnames <- seqnames(.data)
   }
 
-  if (!is.null(is_circular)) {
-    GenomeInfoDb::isCircular(.data) <- is_circular
+  if (is.null(is_circular)) {
+    is_circular <- NA
   }
 
+  info <- Seqinfo(seqnames, seqlengths, is_circular, genome)
+
+  seqinfo(.data) <- info
   return(.data)
 }
 

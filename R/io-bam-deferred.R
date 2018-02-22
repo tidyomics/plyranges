@@ -126,7 +126,7 @@ summarise.GRangesDeferred <- function(.data, ...) {
 #' @export
 mutate.GRangesDeferred <- function(.data, ...) {
   dots <- quos(...)
-  if (has_cache_contents(.dat)) {
+  if (has_cache_contents(.data)) {
     cache <- get_cache(.data)
   } else {
     cache <- load_alignments(.data)
