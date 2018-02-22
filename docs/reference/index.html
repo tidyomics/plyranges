@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/united/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -52,33 +52,32 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+    Vignettes
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/an-introduction.html">Getting started with the plyranges package</a>
+      <a href="../articles/an-introduction.html">Introduction to plyranges</a>
     </li>
     <li>
-      <a href="../articles/comparision.html">Using plyranges to perform common genomic data wrangling tasks</a>
+      <a href="../article/comparison.html">Using plyranges like bedtools</a>
     </li>
   </ul>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/sa-lee/plyranges">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -107,40 +106,80 @@
       <tbody>
         <tr>
           <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+            <h2 id="section-ranges" class="hasAnchor"><a href="#section-ranges" class="anchor"></a>Ranges</h2>
             <p class="section-desc"></p>
           </th>
         </tr>
         <tr>
           <!--  -->
           <td>
-            <p><code><a href="as_ranges.html">as_ranges</a></code> </p>
+            <p><code><a href="ranges-construct.html">as_iranges</a></code> <code><a href="ranges-construct.html">as_granges</a></code> </p>
           </td>
-          <td><p>Coerce an Rle or RleList object to Ranges</p></td>
+          <td><p>Construct a I/GRanges object from a tibble or data.frame</p></td>
         </tr><tr>
           <!--  -->
           <td>
             <p><code><a href="combine_ranges.html">combine_ranges</a></code> </p>
           </td>
           <td><p>Combine pairs of Ranges in order</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-arithmetic" class="hasAnchor"><a href="#section-arithmetic" class="anchor"></a>Arithmetic</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-anchor.html">show</a></code> <code><a href="ranges-anchor.html">anchor</a></code> <code><a href="ranges-anchor.html">anchor_start</a></code> <code><a href="ranges-anchor.html">anchor_end</a></code> <code><a href="ranges-anchor.html">anchor_center</a></code> <code><a href="ranges-anchor.html">anchor_centre</a></code> <code><a href="ranges-anchor.html">anchor_3p</a></code> <code><a href="ranges-anchor.html">anchor_5p</a></code> </p>
+          </td>
+          <td><p>Anchored Ranges objects</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="compute_coverage.html">compute_coverage</a></code> </p>
+            <p><code><a href="set_width.html">set_width</a></code> </p>
           </td>
-          <td><p>Compute coverage over a Ranges object</p></td>
+          <td><p>Set the width of a genomic interval</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="element-setops.html">%union%</a></code> <code><a href="element-setops.html">%intersect%</a></code> <code><a href="element-setops.html">%setdiff%</a></code> <code><a href="element-setops.html">between</a></code> <code><a href="element-setops.html">span</a></code> </p>
+            <p><code><a href="stretch.html">stretch</a></code> </p>
           </td>
-          <td><p>Row-wise set operations on Ranges objects</p></td>
+          <td><p>Stretch a genomic interval</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="filter-overlaps.rd.html">filter_by_overlaps</a></code> <code><a href="filter-overlaps.rd.html">filter_by_non_overlaps</a></code> </p>
+            <p><code><a href="shift-ranges.html">shift_left</a></code> <code><a href="shift-ranges.html">shift_right</a></code> <code><a href="shift-ranges.html">shift_upstream</a></code> <code><a href="shift-ranges.html">shift_downstream</a></code> </p>
           </td>
-          <td><p>Filter by overlapping/non-overlapping ranges</p></td>
+          <td><p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="flank-ranges.html">flank_left</a></code> <code><a href="flank-ranges.html">flank_right</a></code> <code><a href="flank-ranges.html">flank_upstream</a></code> <code><a href="flank-ranges.html">flank_downstream</a></code> </p>
+          </td>
+          <td><p>Generate flanking regions</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-core-verbs" class="hasAnchor"><a href="#section-core-verbs" class="anchor"></a>Core verbs</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="mutate-ranges.html">mutate</a></code> </p>
+          </td>
+          <td><p>Modify a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-summarise.html">summarise</a></code> </p>
+          </td>
+          <td><p>Aggregate a Ranges object</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -150,9 +189,21 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="flank-ranges.html">flank_left</a></code> <code><a href="flank-ranges.html">flank_right</a></code> <code><a href="flank-ranges.html">flank_upstream</a></code> <code><a href="flank-ranges.html">flank_downstream</a></code> </p>
+            <p><code><a href="ranges-arrange.html">arrange</a></code> </p>
           </td>
-          <td><p>Generate flanking regions</p></td>
+          <td><p>Sort a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-select.html">select</a></code> </p>
+          </td>
+          <td><p>Select metadata columns of the Ranges object by name or position</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-unnest.html">unnest</a></code> </p>
+          </td>
+          <td><p>Expand list-columns in a Ranges object</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -162,9 +213,153 @@
         </tr><tr>
           <!--  -->
           <td>
+            <p><code><a href="ranges-reduce.html">reduce_ranges</a></code> <code><a href="ranges-reduce.html">reduce_ranges_directed</a></code> </p>
+          </td>
+          <td><p>Reduce then aggregate a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-disjoin.html">disjoin_ranges</a></code> <code><a href="ranges-disjoin.html">disjoin_ranges_directed</a></code> </p>
+          </td>
+          <td><p>Disjoin then aggregate a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="compute_coverage.html">compute_coverage</a></code> </p>
+          </td>
+          <td><p>Compute coverage over a Ranges object</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-overlaps" class="hasAnchor"><a href="#section-overlaps" class="anchor"></a>Overlaps</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="overlap-joins.html">join_overlap_intersect</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_within</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_directed</a></code> <code><a href="overlap-joins.html">join_overlap_left</a></code> <code><a href="overlap-joins.html">join_overlap_left_within</a></code> <code><a href="overlap-joins.html">join_overlap_left_directed</a></code> <code><a href="overlap-joins.html">join_overlap_inner</a></code> <code><a href="overlap-joins.html">join_overlap_inner_within</a></code> <code><a href="overlap-joins.html">join_overlap_inner_directed</a></code> </p>
+          </td>
+          <td><p>Join by overlapping Ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="self-overlap-joins.html">join_overlap_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_within_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_self_inner</a></code> </p>
+          </td>
+          <td><p>Find overlaps within a Ranges object</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="filter-overlaps.rd.html">filter_by_overlaps</a></code> <code><a href="filter-overlaps.rd.html">filter_by_non_overlaps</a></code> </p>
+          </td>
+          <td><p>Filter by overlapping/non-overlapping ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-overlaps.html">find_overlaps</a></code> <code><a href="ranges-overlaps.html">find_overlaps_within</a></code> <code><a href="ranges-overlaps.html">find_overlaps_directed</a></code> <code><a href="ranges-overlaps.html">group_by_overlaps</a></code> </p>
+          </td>
+          <td><p>Find overlap between two Ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-count-overlaps.Rd.html">count_overlaps</a></code> <code><a href="ranges-count-overlaps.Rd.html">count_overlaps_within</a></code> </p>
+          </td>
+          <td><p>Count the number of overlaps between two Ranges objects</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-nearest-neighbours" class="hasAnchor"><a href="#section-nearest-neighbours" class="anchor"></a>Nearest neighbours</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-follow.html">join_follow</a></code> <code><a href="ranges-follow.html">join_follow_left</a></code> <code><a href="ranges-follow.html">join_follow_upstream</a></code> </p>
+          </td>
+          <td><p>Find following Ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="precede-ranges.html">join_precede</a></code> <code><a href="precede-ranges.html">join_precede_right</a></code> <code><a href="precede-ranges.html">join_precede_downstream</a></code> </p>
+          </td>
+          <td><p>Find preceding Ranges</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-nearest.html">join_nearest</a></code> <code><a href="ranges-nearest.html">join_nearest_left</a></code> <code><a href="ranges-nearest.html">join_nearest_right</a></code> <code><a href="ranges-nearest.html">join_nearest_upstream</a></code> <code><a href="ranges-nearest.html">join_nearest_downstream</a></code> </p>
+          </td>
+          <td><p>Find nearest neighbours between two Ranges objects</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-pairing-up-ranges" class="hasAnchor"><a href="#section-pairing-up-ranges" class="anchor"></a>Pairing up Ranges</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-pairs.html">pair_overlaps</a></code> <code><a href="ranges-pairs.html">pair_nearest</a></code> <code><a href="ranges-pairs.html">pair_precede</a></code> <code><a href="ranges-pairs.html">pair_follow</a></code> </p>
+          </td>
+          <td><p>Pair together two ranges objects</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-set-operations" class="hasAnchor"><a href="#section-set-operations" class="anchor"></a>Set operations</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-setops.html">intersect_ranges</a></code> <code><a href="ranges-setops.html">intersect_ranges_directed</a></code> <code><a href="ranges-setops.html">union_ranges</a></code> <code><a href="ranges-setops.html">union_ranges_directed</a></code> <code><a href="ranges-setops.html">setdiff_ranges</a></code> <code><a href="ranges-setops.html">setdiff_ranges_directed</a></code> </p>
+          </td>
+          <td><p>Vector-wise Range set-opterations</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="element-setops.html">%union%</a></code> <code><a href="element-setops.html">%intersect%</a></code> <code><a href="element-setops.html">%setdiff%</a></code> <code><a href="element-setops.html">between</a></code> <code><a href="element-setops.html">span</a></code> </p>
+          </td>
+          <td><p>Row-wise set operations on Ranges objects</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-annotation" class="hasAnchor"><a href="#section-annotation" class="anchor"></a>Annotation</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-info.html">genome_info</a></code> <code><a href="ranges-info.html">set_genome_info</a></code> <code><a href="ranges-info.html">get_genome_info</a></code> </p>
+          </td>
+          <td><p>Construct annotation information</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-reading-and-writing-genomics-data" class="hasAnchor"><a href="#section-reading-and-writing-genomics-data" class="anchor"></a>Reading and Writing Genomics Data</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
             <p><code><a href="io-bam-read.html">read_bam</a></code> </p>
           </td>
           <td><p>Read a BAM file</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="ranges-deferred.html">GRangesDeferred</a></code> <code><a href="ranges-deferred.html">show</a></code> <code><a href="ranges-deferred.html">has_cache_contents</a></code> <code><a href="ranges-deferred.html">get_cache</a></code> <code><a href="ranges-deferred.html">get_operation</a></code> </p>
+          </td>
+          <td><p>GRangesDeferred Class</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -192,18 +387,6 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="io-gff-read.html">read_gff</a></code> <code><a href="io-gff-read.html">read_gff1</a></code> <code><a href="io-gff-read.html">read_gff2</a></code> <code><a href="io-gff-read.html">read_gff3</a></code> </p>
-          </td>
-          <td><p>Read a GFF/GTF/GVT file</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="io-gff-write.html">write_gff</a></code> <code><a href="io-gff-write.html">write_gff1</a></code> <code><a href="io-gff-write.html">write_gff2</a></code> <code><a href="io-gff-write.html">write_gff3</a></code> </p>
-          </td>
-          <td><p>Write a GFF(123) file</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
             <p><code><a href="io-wig-read.html">read_wig</a></code> </p>
           </td>
           <td><p>Read a WIG file</p></td>
@@ -216,9 +399,29 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="mutate-ranges.html">mutate</a></code> </p>
+            <p><code><a href="io-gff-read.html">read_gff</a></code> <code><a href="io-gff-read.html">read_gff1</a></code> <code><a href="io-gff-read.html">read_gff2</a></code> <code><a href="io-gff-read.html">read_gff3</a></code> </p>
           </td>
-          <td><p>Modify a Ranges object</p></td>
+          <td><p>Read a GFF/GTF/GVT file</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="io-gff-write.html">write_gff</a></code> <code><a href="io-gff-write.html">write_gff1</a></code> <code><a href="io-gff-write.html">write_gff2</a></code> <code><a href="io-gff-write.html">write_gff3</a></code> </p>
+          </td>
+          <td><p>Write a GFF(123) file</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
+            <h2 id="section-utilities" class="hasAnchor"><a href="#section-utilities" class="anchor"></a>Utilities</h2>
+            <p class="section-desc"></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="split_groups.html">split_groups</a></code> </p>
+          </td>
+          <td><p>Split a Grouped Ranges object into a RangesList</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -228,141 +431,15 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="overlap-joins.html">join_overlap_intersect</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_within</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_directed</a></code> <code><a href="overlap-joins.html">join_overlap_left</a></code> <code><a href="overlap-joins.html">join_overlap_left_within</a></code> <code><a href="overlap-joins.html">join_overlap_left_directed</a></code> <code><a href="overlap-joins.html">join_overlap_inner</a></code> <code><a href="overlap-joins.html">join_overlap_inner_within</a></code> <code><a href="overlap-joins.html">join_overlap_inner_directed</a></code> </p>
+            <p><code><a href="as_ranges.html">as_ranges</a></code> </p>
           </td>
-          <td><p>Join by overlapping Ranges</p></td>
+          <td><p>Coerce an Rle or RleList object to Ranges</p></td>
         </tr><tr>
           <!--  -->
           <td>
-            <p><code><a href="precede-ranges.html">join_precede</a></code> <code><a href="precede-ranges.html">join_precede_right</a></code> <code><a href="precede-ranges.html">join_precede_downstream</a></code> </p>
+            <p><code><a href="reexports.html">reexports</a></code> </p>
           </td>
-          <td><p>Find preceding Ranges</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-anchor.html">show</a></code> <code><a href="ranges-anchor.html">anchor</a></code> <code><a href="ranges-anchor.html">anchor_start</a></code> <code><a href="ranges-anchor.html">anchor_end</a></code> <code><a href="ranges-anchor.html">anchor_center</a></code> <code><a href="ranges-anchor.html">anchor_centre</a></code> <code><a href="ranges-anchor.html">anchor_3p</a></code> <code><a href="ranges-anchor.html">anchor_5p</a></code> </p>
-          </td>
-          <td><p>Anchored Ranges objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-arrange.html">arrange</a></code> </p>
-          </td>
-          <td><p>Sort a Ranges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-construct.html">as_iranges</a></code> <code><a href="ranges-construct.html">as_granges</a></code> </p>
-          </td>
-          <td><p>Construct a I/GRanges object from a tibble or data.frame</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-count-overlaps.Rd.html">count_overlaps</a></code> <code><a href="ranges-count-overlaps.Rd.html">count_overlaps_within</a></code> </p>
-          </td>
-          <td><p>Count the number of overlaps between two Ranges objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-deferred.html">GRangesDeferred</a></code> <code><a href="ranges-deferred.html">show</a></code> <code><a href="ranges-deferred.html">has_cache_contents</a></code> <code><a href="ranges-deferred.html">get_cache</a></code> <code><a href="ranges-deferred.html">get_operation</a></code> </p>
-          </td>
-          <td><p>GRangesDeferred Class</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-disjoin.html">disjoin_ranges</a></code> <code><a href="ranges-disjoin.html">disjoin_ranges_directed</a></code> </p>
-          </td>
-          <td><p>Disjoin then aggregate a Ranges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-follow.html">join_follow</a></code> <code><a href="ranges-follow.html">join_follow_left</a></code> <code><a href="ranges-follow.html">join_follow_upstream</a></code> </p>
-          </td>
-          <td><p>Find following Ranges</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-info.html">genome_info</a></code> <code><a href="ranges-info.html">set_genome_info</a></code> <code><a href="ranges-info.html">get_genome_info</a></code> </p>
-          </td>
-          <td><p>Construct annotation information</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-nearest.html">join_nearest</a></code> <code><a href="ranges-nearest.html">join_nearest_left</a></code> <code><a href="ranges-nearest.html">join_nearest_right</a></code> <code><a href="ranges-nearest.html">join_nearest_upstream</a></code> <code><a href="ranges-nearest.html">join_nearest_downstream</a></code> </p>
-          </td>
-          <td><p>Find nearest neighbours between two Ranges objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-overlaps.html">find_overlaps</a></code> <code><a href="ranges-overlaps.html">find_overlaps_within</a></code> <code><a href="ranges-overlaps.html">find_overlaps_directed</a></code> <code><a href="ranges-overlaps.html">group_by_overlaps</a></code> </p>
-          </td>
-          <td><p>Find overlap between two Ranges</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-pairs.html">pair_overlaps</a></code> <code><a href="ranges-pairs.html">pair_nearest</a></code> <code><a href="ranges-pairs.html">pair_precede</a></code> <code><a href="ranges-pairs.html">pair_follow</a></code> </p>
-          </td>
-          <td><p>Pair together two ranges objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-reduce.html">reduce_ranges</a></code> <code><a href="ranges-reduce.html">reduce_ranges_directed</a></code> </p>
-          </td>
-          <td><p>Reduce then aggregate a Ranges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-select.html">select</a></code> </p>
-          </td>
-          <td><p>Select metadata columns of the Ranges object by name or position</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-setops.html">intersect_ranges</a></code> <code><a href="ranges-setops.html">intersect_ranges_directed</a></code> <code><a href="ranges-setops.html">union_ranges</a></code> <code><a href="ranges-setops.html">union_ranges_directed</a></code> <code><a href="ranges-setops.html">setdiff_ranges</a></code> <code><a href="ranges-setops.html">setdiff_ranges_directed</a></code> </p>
-          </td>
-          <td><p>Vector-wise Range set-opterations</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-summarise.html">summarise</a></code> </p>
-          </td>
-          <td><p>Aggregate a Ranges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ranges-unnest.html">unnest</a></code> </p>
-          </td>
-          <td><p>Expand list-columns in a Ranges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="self-overlap-joins.html">join_overlap_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_within_self</a></code> <code><a href="self-overlap-joins.html">join_overlap_self_inner</a></code> </p>
-          </td>
-          <td><p>Find overlaps within a Ranges object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="set_width.html">set_width</a></code> </p>
-          </td>
-          <td><p>Set the width of a genomic interval</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="shift-ranges.html">shift_left</a></code> <code><a href="shift-ranges.html">shift_right</a></code> <code><a href="shift-ranges.html">shift_upstream</a></code> <code><a href="shift-ranges.html">shift_downstream</a></code> </p>
-          </td>
-          <td><p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="split_groups.html">split_groups</a></code> </p>
-          </td>
-          <td><p>Split a Grouped Ranges object into a RangesList</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="stretch.html">stretch</a></code> </p>
-          </td>
-          <td><p>Stretch a genomic interval</p></td>
+          <td><p>Objects exported from other packages</p></td>
         </tr>
       </tbody>
       </table>
@@ -372,14 +449,23 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-ranges">Ranges</a></li>
+      <li><a href="#section-arithmetic">Arithmetic</a></li>
+      <li><a href="#section-core-verbs">Core verbs</a></li>
+      <li><a href="#section-overlaps">Overlaps</a></li>
+      <li><a href="#section-nearest-neighbours">Nearest neighbours</a></li>
+      <li><a href="#section-pairing-up-ranges">Pairing up Ranges</a></li>
+      <li><a href="#section-set-operations">Set operations</a></li>
+      <li><a href="#section-annotation">Annotation</a></li>
+      <li><a href="#section-reading-and-writing-genomics-data">Reading and Writing Genomics Data</a></li>
+      <li><a href="#section-utilities">Utilities</a></li>
     </ul>
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Stuart Lee, Michael Lawrence, Dianne Cook.</p>
+  <p>Developed by <a href='http://stuartlee.org'>Stuart Lee</a>, <a href='https://github.com/lawremi'>Michael Lawrence</a>, Dianne Cook.</p>
 </div>
 
 <div class="pkgdown">

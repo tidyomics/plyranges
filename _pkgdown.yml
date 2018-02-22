@@ -1,0 +1,100 @@
+template:
+  params:
+    bootswatch: united
+
+authors:
+  Stuart Lee:
+    href: http://stuartlee.org
+  Di Cook:
+    href: http://dicook.org
+  Michael Lawrence:
+    href: https://github.com/lawremi
+
+reference:
+- title: Ranges
+  contents:
+    - as_granges
+    - as_iranges
+    - combine_ranges
+
+- title:  Arithmetic
+  contents:
+    - starts_with("anchor")
+    - set_width
+    - stretch
+    - shift_downstream
+    - flank_upstream
+
+- title: Core verbs
+  contents:
+    - mutate.GenomicRanges
+    - summarise.GenomicRanges
+    - filter.GenomicRanges
+    - arrange.GenomicRanges
+    - select.GenomicRanges
+    - unnest.GenomicRanges
+    - group_by.GRanges
+    - starts_with("reduce")
+    - starts_with("disjoin")
+    - compute_coverage
+
+
+- title: Overlaps
+  contents:
+    - starts_with("join_overlap")
+    - filter_by_overlaps
+    - filter_by_non_overlaps
+    - group_by_overlaps
+    - starts_with("count")
+
+- title: Nearest neighbours
+  contents:
+    - starts_with("join_follow")
+    - starts_with("join_precede")
+    - starts_with("join_nearest")
+
+- title: Pairing up Ranges
+  contents:
+    - starts_with("pair")
+
+- title: Set operations
+  contents:
+    - starts_with("union")
+    - starts_with("intersect")
+    - starts_with("setdiff")
+    - between
+    - span
+
+- title: Annotation
+  contents:
+    - ends_with("genome_info")
+
+- title: Reading and Writing Genomics Data
+  contents:
+    - ends_with("bam")
+    - GRangesDeferred
+    - ends_with("bed")
+    - ends_with("wig")
+    - ends_with("gff")
+
+- title: Utilities
+  contents:
+    - split_groups
+    - matches("^n$")
+    - as_ranges
+    - reexports
+
+navbar:
+  type: default
+  left:
+  - text: Reference
+    href: reference/index.html
+  - text: Vignettes
+    menu:
+    - text: Introduction to plyranges
+      href: articles/an-introduction.html
+    - text: Using plyranges like bedtools
+      href: article/comparison.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/sa-lee/plyranges

@@ -9,3 +9,4 @@ TODO.md
 ^codecov\.yml$
 Makefile
 ^docs$
+^_pkgdown\.yml$
