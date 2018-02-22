@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objects exported from other packages — reexports • plyranges</title>
+<title>Read a BAM file — read_bam • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,29 +90,79 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objects exported from other packages</h1>
+    <h1>Read a BAM file</h1>
     </div>
 
     
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p><dl class='dl-horizontal'>
-  <dt>dplyr</dt><dd><p><code><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/groups.html'>group_vars</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></code></p></dd>
-
-    <dt>magrittr</dt><dd><p><code>%&gt;%</code></p></dd>
-
-    <dt>rlang</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/rlang/topics/quotation'>enquo</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quotation'>quos</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quasiquotation'>UQS</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quasiquotation'>UQ</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/as_overscope'>overscope_clean</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/overscope_eval_next'>overscope_eval_next</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/as_overscope'>new_overscope</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/eval_bare'>eval_bare</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/eval_tidy'>eval_tidy</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/sym'>syms</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quasiquotation'>:=</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/env_bind'>env_bind</a></code></p></dd>
-
-    <dt>tidyr</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></code></p></dd>
-</dl>
+    <p>Read a BAM file</p>
     
 
-        
+    <pre class="usage"><span class='fu'>read_bam</span>(<span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='no'>file</span>, <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>A connection or path to a BAM file</p></td>
+    </tr>
+    <tr>
+      <th>index</th>
+      <td><p>The path to the BAM index file</p></td>
+    </tr>
+    <tr>
+      <th>paired</th>
+      <td><p>Whether to treat the BAM file as paired end (TRUE)
+or single end (FALSE).</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Reading a BAM file is deferred until an action
+such as selecting tags or filtering by overlapping ranges
+or filtering by tags is performed on it. If paired is set to
+TRUE, when alignments are load, the GRanges has two additional
+columns called read_pair_id and read_pair_group corresponding
+to paired reads (by default paired = TRUE will only select
+reads that are proper pairs).</p>
+<p>For <code>select</code> valid columns are the either the fields of the
+BAM file. Valid entries are qname (QNAME), flag (FLAG),
+rname (RNAME), strand, pos (POS), qwidth (width of query),
+mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
+(TLEN), seq (SEQ), and qual (QUAL). Any two character
+tags in the BAM file are also valid.</p>
+<p>For <code>filter</code> the following fields are valid
+is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
+is_proper_pair Select either improperly paired (FALSE) or properly
+paired (TRUE) reads. This is dependent on the alignment software used.
+is_unmapped_query	Select unmapped (TRUE) or mapped (FALSE) reads.
+has_unmapped_mate Select reads with mapped (FALSE) or unmapped (TRUE) mates.
+is_minus_strand 	Select reads aligned to plus (FALSE) or minus (TRUE) strand.
+is_mate_minus_strand	Select reads where mate is aligned to plus (FALSE) or
+minus (TRUE) strand.
+is_first_mate_read	Select reads if they are the first mate (TRUE) or
+not (FALSE).
+is_second_mate_read Select reads if they are the second mate (TRUE) or
+not (FALSE).
+is_secondary_alignment Select reads if their alignment status is
+secondary (TRUE) or not (FALSE). This might be relevant if there are
+multimapping reads.
+is_not_passing_quality_controls Select reads that either pass
+quality controls (FALSE) or that do not (TRUE).
+is_duplicate	Select reads that are unduplicated (FALSE) or
+duplicated (TRUE). This may represent reads that are PCR or
+optical duplicates.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

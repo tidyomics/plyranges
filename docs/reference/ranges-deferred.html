@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objects exported from other packages — reexports • plyranges</title>
+<title>GRangesDeferred Class — GRangesDeferred-class • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,29 +90,63 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objects exported from other packages</h1>
+    <h1>GRangesDeferred Class</h1>
     </div>
 
     
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p><dl class='dl-horizontal'>
-  <dt>dplyr</dt><dd><p><code><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/groups.html'>group_vars</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></code></p></dd>
-
-    <dt>magrittr</dt><dd><p><code>%&gt;%</code></p></dd>
-
-    <dt>rlang</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/rlang/topics/quotation'>enquo</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quotation'>quos</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quasiquotation'>UQS</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quasiquotation'>UQ</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/as_overscope'>overscope_clean</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/overscope_eval_next'>overscope_eval_next</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/as_overscope'>new_overscope</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/eval_bare'>eval_bare</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/eval_tidy'>eval_tidy</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/sym'>syms</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/quasiquotation'>:=</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/env_bind'>env_bind</a></code></p></dd>
-
-    <dt>tidyr</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></code></p></dd>
-</dl>
+    <p>Enables deferred reading of BAM files by caching
+after performing file operations.</p>
     
 
-        
+    <pre class="usage"><span class='fu'>GRangesDeferred</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fu'>GRanges</span>(), <span class='no'>operation</span>)
+
+<span class='co'># S4 method for GRangesDeferred</span>
+<span class='fu'>show</span>(<span class='no'>object</span>)
+
+<span class='fu'>has_cache_contents</span>(<span class='no'>.data</span>)
+
+<span class='fu'>get_cache</span>(<span class='no'>.data</span>)
+
+<span class='fu'>get_operation</span>(<span class='no'>.data</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>cache</th>
+      <td><p>a GRanges object</p></td>
+    </tr>
+    <tr>
+      <th>operation</th>
+      <td><p>an environment containing operations to perform
+to generate the cache.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>To see what is loaded in the cache use
+<code>get_cache</code> and to see the file operations being performed
+use <code>get_operation</code>. To check whether the cache is full
+use <code>has_cache_contents</code>.
+By default the <code>show</code> method for a GRangesDeferred object
+shows what's in the cache.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>read_bam</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
+          </ul>
 
   </div>
 </div>

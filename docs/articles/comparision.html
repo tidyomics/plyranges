@@ -68,7 +68,7 @@
       <h1>Using plyranges to perform common genomic data wrangling tasks</h1>
                         <h4 class="author">Stuart Lee</h4>
             
-            <h4 class="date">2018-02-01</h4>
+            <h4 class="date">2018-02-22</h4>
           </div>
 
     
@@ -78,23 +78,31 @@
     </div>
     
 <div class="contents">
-<section id="introduction" class="level1"><h1>Introduction</h1>
+<div id="introduction" class="section level1">
+<h1 class="hasAnchor">
+<a href="#introduction" class="anchor"></a>Introduction</h1>
 <p>Here we introduce the <code>plyranges</code> API for manipulating genomic data. The examples follow the <a href="http://bioconductor.org/packages/release/bioc/vignettes/HelloRanges/inst/doc/tutorial.pdf">HelloRanges tutorial</a>. The aim is to show how common analysis tasks that are usually undertaken using <code>bedtools</code> can be performed interactively using the <code>plyranges</code> API. Throughout this tutorial we will highlight how the <code>bedtools</code>, <code>HelloRanges</code> and <code>plyranges</code> API differ.</p>
 <p>The <code>plyranges</code> API attempts to be type-consistent, that is if you apply a <code>plyranges</code> function to a <em>Ranges</em> object it should return a <em>Ranges</em> object. This means that intermittant Bioconductor classes such as <code>Rle</code> objects are hidden away from the user, and the user can focus on the table-like structure of ordinary <em>Ranges</em> objects. A <em>Ranges</em> object, in particular a <em>GRanges</em> object resembles a BED file and has columns to represent the chromomsome, start, end, and strand information. It can also contain additional columns called metadata containing information about the rows (i.e an exon name or a measurement).</p>
-</section><section id="data" class="level1"><h1>Data</h1>
+</div>
+<div id="data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#data" class="anchor"></a>Data</h1>
 <p>The data we use for these examples are exported by the <code>HelloRangesData</code> package. For more details see that <a href="http://bioconductor.org/packages/release/data/experiment/vignettes/HelloRangesData/inst/doc/intro.pdf">package’s vignette</a>. For most examples in this tutorial we will use the RefSeq exons and CpG island annotations from the hg19 genome build.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">exons_bed &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"exons.bed"</span>, <span class="dt">package=</span><span class="st">"HelloRangesData"</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">cpg_bed &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"cpg.bed"</span>, <span class="dt">package =</span> <span class="st">"HelloRangesData"</span>)</a></code></pre></div>
-</section><section id="reading-bed-files" class="level1"><h1>Reading BED files</h1>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons_bed &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"exons.bed"</span>, <span class="dt">package=</span><span class="st">"HelloRangesData"</span>)
+cpg_bed &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"cpg.bed"</span>, <span class="dt">package =</span> <span class="st">"HelloRangesData"</span>)</code></pre></div>
+</div>
+<div id="reading-bed-files" class="section level1">
+<h1 class="hasAnchor">
+<a href="#reading-bed-files" class="anchor"></a>Reading BED files</h1>
 <p>To load the exons file as a <em>GRanges</em> object we use the <code>read_bed</code> function. We supply the genome build as an additional argument to this function, allowing us to obtain annotation information about each chromosome.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(plyranges))</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">cpg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(cpg_bed, <span class="dt">genome_info =</span> <span class="st">"hg19"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(plyranges))
+cpg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(cpg_bed, <span class="dt">genome_info =</span> <span class="st">"hg19"</span>)</code></pre></div>
 <pre><code>## 
 ## Attaching package: 'Biostrings'</code></pre>
 <pre><code>## The following object is masked from 'package:base':
 ## 
 ##     strsplit</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">cpg</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 1 metadata column:
 ##           seqnames               ranges strand |        name
 ##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -111,8 +119,8 @@
 ##   [28691]     chrY [59349267, 59349574]      * |     CpG:_29
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">exons &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(exons_bed, <span class="dt">genome_info =</span> <span class="kw"><a href="../reference/ranges-info.html">get_genome_info</a></span>(cpg))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">exons</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(exons_bed, <span class="dt">genome_info =</span> <span class="kw"><a href="../reference/ranges-info.html">get_genome_info</a></span>(cpg))
+exons</code></pre></div>
 <pre><code>## GRanges object with 459752 ranges and 2 metadata columns:
 ##            seqnames               ranges strand |
 ##               &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -142,11 +150,14 @@
 ##   [459752] NM_176786_exon_8_0_chrY_59342487_f         0
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
-</section><section id="intersections-and-overlaps" class="level1"><h1>Intersections and Overlaps</h1>
+</div>
+<div id="intersections-and-overlaps" class="section level1">
+<h1 class="hasAnchor">
+<a href="#intersections-and-overlaps" class="anchor"></a>Intersections and Overlaps</h1>
 <p>A useful operation on two <em>Ranges</em> is to identify where they intersect. By default <code>bedtools</code> will return the region of intersection between two genomic tracks. In <code>plyranges</code> the intersect operation is a type of overlap join, that is we are finding the common genomic intervals that overlap between the two tracks.</p>
 <p>In <code>plyranges</code> this is termed an intersect overlap join:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">intersect_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(cpg, exons)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">intersect_rng</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">intersect_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(cpg, exons)
+intersect_rng</code></pre></div>
 <pre><code>## GRanges object with 45500 ranges and 3 metadata columns:
 ##           seqnames               ranges strand |      name.x
 ##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -177,9 +188,9 @@
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>In the <code>HelloRanges</code> API (we also see the <code>bedtools</code> code here) the equivalent operation is:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(HelloRanges))</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">code &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19"</span>)</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">code</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(HelloRanges))
+code &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19"</span>)
+code</code></pre></div>
 <pre><code>## {
 ##     genome &lt;- Seqinfo(genome = "hg19")
 ##     gr_a &lt;- import("cpg.bed", genome = genome)
@@ -188,14 +199,19 @@
 ##     ans &lt;- pintersect(pairs, ignore.strand = TRUE)
 ##     ans
 ## }</code></pre>
-<section id="keeping-the-original-features" class="level2"><h2>Keeping the original features</h2>
+<div id="keeping-the-original-features" class="section level2">
+<h2 class="hasAnchor">
+<a href="#keeping-the-original-features" class="anchor"></a>Keeping the original features</h2>
 <p>By default an overlap join will keep the information in both the query and subject ranges.</p>
-</section><section id="computing-the-amount-of-overlap" class="level2"><h2>Computing the amount of overlap</h2>
+</div>
+<div id="computing-the-amount-of-overlap" class="section level2">
+<h2 class="hasAnchor">
+<a href="#computing-the-amount-of-overlap" class="anchor"></a>Computing the amount of overlap</h2>
 <p>To compute the amount of overlap we store the width of the intersecting ranges as an additional column using the <code>mutate</code> operator.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">intersect_rng &lt;-<span class="st"> </span>intersect_rng <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">overlap_width =</span> width)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">intersect_rng &lt;-<span class="st"> </span>intersect_rng <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">overlap_width =</span> width)</code></pre></div>
 <p>The equivalent bedtools/HelloRanges command is:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19 -wo"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19 -wo"</span>)</code></pre></div>
 <pre><code>## {
 ##     genome &lt;- Seqinfo(genome = "hg19")
 ##     gr_a &lt;- import("cpg.bed", genome = genome)
@@ -205,10 +221,13 @@
 ##     mcols(ans)$overlap_width &lt;- width(pintersect(ans, ignore.strand = TRUE))
 ##     ans
 ## }</code></pre>
-</section><section id="counting-the-number-of-overlaps" class="level2"><h2>Counting the number of overlaps</h2>
+</div>
+<div id="counting-the-number-of-overlaps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#counting-the-number-of-overlaps" class="anchor"></a>Counting the number of overlaps</h2>
 <p>To add the count of the number of times each cpg island overlaps an exon we can use <code>mutate</code> with the <code>count_overlaps</code> function.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">cpg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.Rd.html">count_overlaps</a></span>(., exons))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.Rd.html">count_overlaps</a></span>(., exons))</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 2 metadata columns:
 ##           seqnames               ranges strand |        name  overlaps
 ##              &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
@@ -226,7 +245,7 @@
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>The equivalent bedtools operation is</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19 -c"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19 -c"</span>)</code></pre></div>
 <pre><code>## {
 ##     genome &lt;- Seqinfo(genome = "hg19")
 ##     gr_a &lt;- import("cpg.bed", genome = genome)
@@ -235,10 +254,13 @@
 ##     mcols(ans)$overlap_count &lt;- countOverlaps(gr_a, gr_b, ignore.strand = TRUE)
 ##     ans
 ## }</code></pre>
-</section><section id="excluding-by-overlaps" class="level2"><h2>Excluding by overlaps</h2>
+</div>
+<div id="excluding-by-overlaps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#excluding-by-overlaps" class="anchor"></a>Excluding by overlaps</h2>
 <p>We can use <code>filter_by_non_overlaps</code> to include CpG islands that do not overlap any exons.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">cpg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_non_overlaps</a></span>(., exons)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_non_overlaps</a></span>(., exons)</code></pre></div>
 <pre><code>## GRanges object with 9846 ranges and 1 metadata column:
 ##          seqnames               ranges strand |        name
 ##             &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -256,21 +278,27 @@
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>The equivalent bedtools operation is</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19 -v"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_intersect">bedtools_intersect</a></span>(<span class="st">"-a cpg.bed -b exons.bed -g hg19 -v"</span>)</code></pre></div>
 <pre><code>## {
 ##     genome &lt;- Seqinfo(genome = "hg19")
 ##     gr_a &lt;- import("cpg.bed", genome = genome)
 ##     gr_b &lt;- import("exons.bed", genome = genome)
 ##     subsetByOverlaps(gr_a, gr_b, invert = TRUE, ignore.strand = TRUE)
 ## }</code></pre>
-</section></section><section id="computing-genomic-coverage" class="level1"><h1>Computing Genomic Coverage</h1>
+</div>
+</div>
+<div id="computing-genomic-coverage" class="section level1">
+<h1 class="hasAnchor">
+<a href="#computing-genomic-coverage" class="anchor"></a>Computing Genomic Coverage</h1>
 <p>Often we are interested in counting the number of features over an entire genome that overlap each other. In <code>plyranges</code> this is done with the <code>compute_coverage</code> function in combination with other functions to manipulate the results. This function will always return a new <em>Ranges</em> object with a column called score. Any other variables associated with the input <em>Ranges</em> will be dropped.</p>
-<section id="coverage-vector" class="level2"><h2>Coverage Vector</h2>
+<div id="coverage-vector" class="section level2">
+<h2 class="hasAnchor">
+<a href="#coverage-vector" class="anchor"></a>Coverage Vector</h2>
 <p>By default, <code>compute_coverage</code> is equivalent to <code>bedtools genomecov -bga</code> and hence will return scores equal to zero. Filtering all scores above zero is equivalent to <code>bedtools genomecov -bg</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb24-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(score <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">cvg</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(score <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
+cvg</code></pre></div>
 <pre><code>## GRanges object with 245860 ranges and 1 metadata column:
 ##                  seqnames           ranges strand |     score
 ##                     &lt;Rle&gt;        &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -287,7 +315,7 @@
 ##   [245860] chrUn_gl000228 [114478, 114676]      * |         1
 ##   -------
 ##   seqinfo: 93 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_genomecov">bedtools_genomecov</a></span>(<span class="st">"-i exons.bed -g hg19.genome -bg"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_genomecov">bedtools_genomecov</a></span>(<span class="st">"-i exons.bed -g hg19.genome -bg"</span>)</code></pre></div>
 <pre><code>## {
 ##     genome &lt;- import("hg19.genome")
 ##     gr_a &lt;- import("exons.bed", genome = genome)
@@ -296,24 +324,27 @@
 ##     ans &lt;- subset(ans, score &gt; 0)
 ##     ans
 ## }</code></pre>
-</section><section id="coverage-histogram" class="level2"><h2>Coverage histogram</h2>
+</div>
+<div id="coverage-histogram" class="section level2">
+<h2 class="hasAnchor">
+<a href="#coverage-histogram" class="anchor"></a>Coverage histogram</h2>
 <p>We can construct a histogram over all seqeunces in a genome using the <code>group_by</code> and <code>summarise</code> operations along with <code>left_join</code>.</p>
 <p>First, we compute the coverage over the exons and construct a <code>DataFrame</code> from the genome build information using <code>select</code> with <code>.drop_ranges = FALSE</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(dplyr))</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>()</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co"># convert the sequence annotation to a data.frame </span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4">hg19 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-info.html">get_genome_info</a></span>(cvg) <span class="op">%&gt;%</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(seqnames, width, <span class="dt">.drop_ranges =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="st">  </span><span class="kw">as.data.frame</span>()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(dplyr))
+cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>()
+<span class="co"># convert the sequence annotation to a data.frame </span>
+hg19 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-info.html">get_genome_info</a></span>(cvg) <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(seqnames, width, <span class="dt">.drop_ranges =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.data.frame</span>()</code></pre></div>
 <p>Then to count the number of bases corresponding to a score we sum over the width of each range in each chromosome. Then we join the resulting <code>tibble</code> to the annotation <code>tibble</code> called <code>hg19</code>. Note that in the sums we have coerced integer variables to doubles to avoid overflow.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">cvg_hist_by_seq &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(seqnames, score) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(., hg19) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">fraction =</span> count <span class="op">/</span><span class="st"> </span>width)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist_by_seq &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(seqnames, score) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(., hg19) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">fraction =</span> count <span class="op">/</span><span class="st"> </span>width)</code></pre></div>
 <pre><code>## Joining, by = "seqnames"</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">cvg_hist_by_seq</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist_by_seq</code></pre></div>
 <pre><code>##                  seqnames score     count     width     fraction
 ## 1                    chr1     0 241996316 249250621 9.708955e-01
 ## 2                    chr2     0 238060317 243199373 9.788690e-01
@@ -924,19 +955,19 @@
 ## 607                  chrY    76       705  59373566 1.187397e-05
 ## 608                  chrY    77      2103  59373566 3.541980e-05</code></pre>
 <p>Similarly for the genome-wide coverage histogram, we perform the same operation but do not group over <code>seqnames</code>. Finally we bind the resulting <code>tibbles</code> together.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">cvg_hist_total &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(score) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">seqnames =</span> <span class="st">"genome"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(.,</a>
-<a class="sourceLine" id="cb33-7" data-line-number="7">            hg19 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="st">              </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">width =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="st">              </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">seqnames =</span> <span class="st">"genome"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="st">              </span><span class="kw">as.data.frame</span>()) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">fraction =</span> count <span class="op">/</span><span class="st"> </span>width)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist_total &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(score) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.data.frame</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">seqnames =</span> <span class="st">"genome"</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/join.html">left_join</a></span>(.,
+            hg19 <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">              </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">width =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">              </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">seqnames =</span> <span class="st">"genome"</span>) <span class="op">%&gt;%</span>
+<span class="st">              </span><span class="kw">as.data.frame</span>()) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">fraction =</span> count <span class="op">/</span><span class="st"> </span>width)</code></pre></div>
 <pre><code>## Joining, by = "seqnames"</code></pre>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">cvg_hist_total</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist_total</code></pre></div>
 <pre><code>##    score      count seqnames      width     fraction
 ## 1      0 3062406951   genome 3137161264 9.761714e-01
 ## 2      1   44120515   genome 3137161264 1.406383e-02
@@ -983,8 +1014,8 @@
 ## 43    75       1921   genome 3137161264 6.123370e-07
 ## 44    76        705   genome 3137161264 2.247255e-07
 ## 45    77       2103   genome 3137161264 6.703513e-07</code></pre>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">cvg_hist &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(cvg_hist_by_seq, cvg_hist_total)</a>
-<a class="sourceLine" id="cb37-2" data-line-number="2">cvg_hist</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist &lt;-<span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(cvg_hist_by_seq, cvg_hist_total)
+cvg_hist</code></pre></div>
 <pre><code>##                  seqnames score      count      width     fraction
 ## 1                    chr1     0  241996316  249250621 9.708955e-01
 ## 2                    chr2     0  238060317  243199373 9.788690e-01
@@ -1640,7 +1671,7 @@
 ## 652                genome    76        705 3137161264 2.247255e-07
 ## 653                genome    77       2103 3137161264 6.703513e-07</code></pre>
 <p>Although this is slightly more verbose than the <code>bedtools</code> or <code>HelloRanges</code> approach the <code>plyranges</code> code makes the actions being performed on the input <code>Ranges</code> explicit:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_genomecov">bedtools_genomecov</a></span>(<span class="st">"-i exons.bed -g hg19.genome"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/HelloRanges/topics/bedtools_genomecov">bedtools_genomecov</a></span>(<span class="st">"-i exons.bed -g hg19.genome"</span>)</code></pre></div>
 <pre><code>## {
 ##     genome &lt;- import("hg19.genome")
 ##     gr_a &lt;- import("exons.bed", genome = genome)
@@ -1654,15 +1685,21 @@
 ##     ans &lt;- within(covhist, fraction &lt;- count/len)
 ##     ans
 ## }</code></pre>
-</section></section><section id="composing-pipelines" class="level1"><h1>Composing pipelines</h1>
-<section id="yet-another-overlaps-example" class="level2"><h2>Yet another overlaps example</h2>
+</div>
+</div>
+<div id="composing-pipelines" class="section level1">
+<h1 class="hasAnchor">
+<a href="#composing-pipelines" class="anchor"></a>Composing pipelines</h1>
+<div id="yet-another-overlaps-example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#yet-another-overlaps-example" class="anchor"></a>Yet another overlaps example</h2>
 <p>Here we perform another example where we find exons with no coverage that overlap cpg islands. To compose a chain first we compute the coverage then use a filter to restrict to zero coverage ranges. Then we perfrom an inner overlap join to find which cpg islands overlap the exonic regions with zero coverage.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">overlaps &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(score <span class="op">==</span><span class="st"> </span>0L) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(.,  cpg) </a>
-<a class="sourceLine" id="cb41-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb41-6" data-line-number="6">overlaps</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">overlaps &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(score <span class="op">==</span><span class="st"> </span>0L) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(.,  cpg) 
+
+overlaps</code></pre></div>
 <pre><code>## GRanges object with 40913 ranges and 2 metadata columns:
 ##                 seqnames           ranges strand |     score        name
 ##                    &lt;Rle&gt;        &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt;
@@ -1680,15 +1717,15 @@
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>We can also compute the coverage histogram of exons over cpg islands and then plot results as an ecdf.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">cvg_over_exons &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(., cpg) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">total =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(score) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb43-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width)),</a>
-<a class="sourceLine" id="cb43-7" data-line-number="7">            <span class="dt">fraction =</span> count <span class="op">/</span><span class="st"> </span><span class="kw">unique</span>(total)) </a>
-<a class="sourceLine" id="cb43-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb43-9" data-line-number="9">cvg_over_exons</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_over_exons &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(., cpg) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">total =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(score) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw">sum</span>(<span class="kw">as.numeric</span>(width)),
+            <span class="dt">fraction =</span> count <span class="op">/</span><span class="st"> </span><span class="kw">unique</span>(total)) 
+
+cvg_over_exons</code></pre></div>
 <pre><code>## DataFrame with 28 rows and 3 columns
 ##         score      count     fraction
 ##     &lt;integer&gt;  &lt;numeric&gt;    &lt;numeric&gt;
@@ -1703,13 +1740,221 @@
 ## 26         31        160 4.865236e-08
 ## 27         33        979 2.976916e-07
 ## 28         77       1157 3.518174e-07</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">plot</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">cumsum</span>(fraction) <span class="op">~</span><span class="st"> </span>score, <span class="dt">data =</span> cvg_over_exons, </a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">25</span>), </a>
-<a class="sourceLine" id="cb45-3" data-line-number="3">     <span class="dt">type=</span> <span class="st">"s"</span>, </a>
-<a class="sourceLine" id="cb45-4" data-line-number="4">     <span class="dt">xlab =</span> <span class="st">"coverage"</span>, </a>
-<a class="sourceLine" id="cb45-5" data-line-number="5">     <span class="dt">ylab =</span> <span class="st">"fraction of bp &gt; coverage"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">cumsum</span>(fraction) <span class="op">~</span><span class="st"> </span>score, <span class="dt">data =</span> cvg_over_exons, 
+     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">25</span>), 
+     <span class="dt">type=</span> <span class="st">"s"</span>, 
+     <span class="dt">xlab =</span> <span class="st">"coverage"</span>, 
+     <span class="dt">ylab =</span> <span class="st">"fraction of bp &gt; coverage"</span>)</code></pre></div>
 <p><img src="comparision_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
-</section></section>
+</div>
+</div>
+<div id="mapping-to-genomicrangesiranges" class="section level1">
+<h1 class="hasAnchor">
+<a href="#mapping-to-genomicrangesiranges" class="anchor"></a>Mapping to GenomicRanges/IRanges</h1>
+<p>For users already familiar with the <code>IRanges</code> and <code>GenomicRanges</code> we provide mappings to the <code>plyranges</code> API.</p>
+<div id="operations-on-range-width" class="section level2">
+<h2 class="hasAnchor">
+<a href="#operations-on-range-width" class="anchor"></a>Operations on range width</h2>
+<p>For <code>G</code>Ranges`` objects all functions ignore any strandedness, unless the strand of the range is anchored.</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="19%">
+<col width="47%">
+</colgroup>
+<thead><tr class="header">
+<th>
+<code>plyranges</code> functions</th>
+<th>Description</th>
+<th>
+<code>GenomicRanges/IRanges</code> command</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>anchor_(start/end/center/3p/5p)</code></td>
+<td>Fix the <code>start/end/center/</code> coordinates or positive/negative strand of range. Can be used in combination with any of the following</td>
+<td>Available in functions that have a <code>fix</code> argument.</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/set_width.html">set_width(x, width)</a></code></td>
+<td>Modify the width of a <code>Ranges</code>
+</td>
+<td><code>resize</code></td>
+</tr>
+<tr class="odd">
+<td><code><a href="../reference/stretch.html">stretch(x, extend)</a></code></td>
+<td>Extend the start and end coordinates in opposite directions by a fixed amount.</td>
+<td>
+<code>start(x)&lt;- start(x) + extend%/%2</code>, <code>end(x) &lt;- end(x) -extend%/%2</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="operations-on-range-width-invariant" class="section level2">
+<h2 class="hasAnchor">
+<a href="#operations-on-range-width-invariant" class="anchor"></a>Operations on range width (invariant)</h2>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="19%">
+<col width="47%">
+</colgroup>
+<thead><tr class="header">
+<th>
+<code>plyranges</code> functions</th>
+<th>Description</th>
+<th>
+<code>GenomicRanges/IRanges</code> command</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>shift_[left/right/downstream/upstream](x, shift)</code></td>
+<td>Shift the coordinates of the interval (left/right/downstream/upstream) by an integer amount.</td>
+<td>
+<code>shift_right</code> corresponds to <code>shift</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>flank_[left/right/downstream/upstream](x, width)</code></td>
+<td>Generates flanking regions of size width <code>left/right/downstream/upstream/</code>
+</td>
+<td>corresponds to <code>flank</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="set-operations-vector-wise" class="section level2">
+<h2 class="hasAnchor">
+<a href="#set-operations-vector-wise" class="anchor"></a>Set operations (vector wise)</h2>
+<p>These are usual set-operations that act on the sets of the <code>Ranges</code> represented in x and y. By default these operations will ignore any strand information. The directed versions of these functions will take into account strand.</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="19%">
+<col width="47%">
+</colgroup>
+<thead><tr class="header">
+<th>
+<code>plyranges</code> functions</th>
+<th>Description</th>
+<th>
+<code>GenomicRanges/IRanges</code> command</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>[intersect/setdiff/union/]_Ranges</code></td>
+<td>Set operations between two <code>Ranges</code>, ignoring strand.</td>
+<td>
+<code>intersect/setdiff/union/</code> with <code>ignore.strand = FALSE</code>
+</td>
+</tr>
+<tr class="even">
+<td><code>[intersect/setdiff/union/]_anchored_Ranges</code></td>
+<td>As above taking into account strandedness.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="set-operations-element-wise" class="section level2">
+<h2 class="hasAnchor">
+<a href="#set-operations-element-wise" class="anchor"></a>Set operations (element wise)</h2>
+<p>We provide infix operators and the verbs between and span to the represent element wise range operations. These map to the <code>pintersect/punion/psetdiff/pgap/punion(fill.gap = FALSE)</code> functions.</p>
+</div>
+<div id="restrictions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#restrictions" class="anchor"></a>Restrictions</h2>
+<p>The verb <code>filter</code> corresponds to <code>subset</code>, while <code>filter_by_[overlaps/non_overlaps]</code> corresponds to <code>subsetByOverlaps</code>.</p>
+</div>
+<div id="aggregation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#aggregation" class="anchor"></a>Aggregation</h2>
+<p>The <code>summarise</code> verb is most similar to the <code>aggregate</code> methods defined in <code>GenomicRanges/IRanges</code>.</p>
+<p>The <code>reduce_ranges/disjoin_ranges</code> correspond to the <code>reduce/disjoin</code> methods. However, the former methods allow additional summarisation.</p>
+<p>The <code><a href="../reference/compute_coverage.html">compute_coverage(x)</a></code> method corresponds to <code>[I/G]Ranges(coverage(x))</code>.</p>
+</div>
+<div id="overlaps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#overlaps" class="anchor"></a>Overlaps</h2>
+<p>For <code>GRanges</code> objects all functions ignore any strandedness, unless the suffix <code>directed</code> is added to the funciton call</p>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="25%">
+<col width="54%">
+<col width="19%">
+</colgroup>
+<thead><tr class="header">
+<th>
+<code>plyranges</code> function</th>
+<th>Description</th>
+<th>
+<code>GenomicRanges/IRanges</code> command</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code><a href="../reference/ranges-overlaps.html">find_overlaps(x, y, maxgap, minoverlap)</a></code></td>
+<td>Returns a <code>Ranges</code> object with any range in <code>y</code> that overlaps <code>x</code>. Appends the metadata in <code>y</code> and its genomic intervals to the returning <code>Ranges</code>.</td>
+<td>
+<code>findOverlaps(x,y, maxgap, minoverlap, type = "any")</code> with expanding <code>x</code> and <code>y</code> by their hits and appending the <code>mcols</code> in <code>y</code>.</td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/ranges-overlaps.html">group_by_overlaps(x, y, maxgap, minoverlap)</a></code></td>
+<td>Returns a GroupedRanges object grouped by the query hits.</td>
+<td>Same as above with an additional column called <code>query</code> which contains the queryHits.</td>
+</tr>
+<tr class="odd">
+<td><code><a href="../reference/ranges-count-overlaps.Rd.html">count_overlaps(x, y, maxgap, minoverlap)</a></code></td>
+<td>Returns an integer vector (used with <code>mutate</code>)</td>
+<td><code>countOverlaps(x, y, maxgap, minoverlap, type = "any")</code></td>
+</tr>
+<tr class="even">
+<td><code><a href="../reference/self-overlap-joins.html">join_overlap_self(x, maxgap, minoverlap)</a></code></td>
+<td>Returns a <code>Ranges</code> object with any range that overlaps itself.</td>
+<td><code>findOverlaps(x,x, maxgap, minoverlap, type = "any")</code></td>
+</tr>
+<tr class="odd">
+<td><code><a href="../reference/overlap-joins.html">join_overlap_inner(x, y, maxgap, minoverlap)</a></code></td>
+<td>Finds the intersecting <code>Ranges</code> that overlap in <code>x</code> and <code>y</code>. Returns a <code>Ranges</code> object with the metadata from <code>x</code> and <code>y</code>.</td>
+<td>
+<code>findOverlapsPairs(x,y, maxgap, minoverlap, type = "any")</code> + <code>pintersect</code>.</td>
+</tr>
+<tr class="even">
+<td><code>*_within</code></td>
+<td>Adding suffix <code>within</code> will find overlaps</td>
+<td>Makes <code>type = "within"</code>
+</td>
+</tr>
+<tr class="odd">
+<td><code>*_includes</code></td>
+<td>inverse of within functions</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td><code>join_nearest[_left/right/up/downstream](x,y)</code></td>
+<td>Finds nearest neighbour <code>Ranges</code> between <code>x</code> and <code>y</code>.</td>
+<td>
+<code>nearest</code> + reindexing to return a <code>Ranges</code> object.</td>
+</tr>
+<tr class="odd">
+<td><code>join_precede[_left/right/up/downstream](x,y)</code></td>
+<td>Finds <code>Ranges</code> in <code>x</code> that preced <code>y</code>
+</td>
+<td>
+<code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
+</tr>
+<tr class="even">
+<td><code>join_follow[_left/right/up/downstream](x,y)</code></td>
+<td>Finds <code>Ranges</code> in <code>x</code> that follow <code>y</code>
+</td>
+<td>
+<code>precedes</code> + reindexing to return a <code>Ranges</code> object.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
   </div>
 
@@ -1738,6 +1983,17 @@
       <li>
 <a href="#composing-pipelines">Composing pipelines</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#yet-another-overlaps-example">Yet another overlaps example</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#mapping-to-genomicrangesiranges">Mapping to GenomicRanges/IRanges</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#operations-on-range-width">Operations on range width</a></li>
+      <li><a href="#operations-on-range-width-invariant">Operations on range width (invariant)</a></li>
+      <li><a href="#set-operations-vector-wise">Set operations (vector wise)</a></li>
+      <li><a href="#set-operations-element-wise">Set operations (element wise)</a></li>
+      <li><a href="#restrictions">Restrictions</a></li>
+      <li><a href="#aggregation">Aggregation</a></li>
+      <li><a href="#overlaps">Overlaps</a></li>
       </ul>
 </li>
       </ul>
