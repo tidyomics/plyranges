@@ -19,7 +19,6 @@ r_packages:
   - rlang
   - dplyr
   - magrittr
-  - ggplot2
   - covr
 
 after_success:

@@ -93,8 +93,6 @@ navbar:
     menu:
     - text: Introduction to plyranges
       href: articles/an-introduction.html
-    - text: Using plyranges like bedtools
-      href: article/comparison.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/sa-lee/plyranges
