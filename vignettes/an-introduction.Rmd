@@ -327,15 +327,18 @@ ir0 %>%
 
 # Data Import/Output
 
-We provide convienence functions via `rtracklayer` 
+We provide convienence functions via `rtracklayer` and `GenomicAlignments` 
 for reading/writing the following data formats to/from `Ranges` objects.
 
-* BED: `read/write_bed`
-* BEDGraph: `read/write_bedgraph`
-* narrowPeaks: `read/write_narrowpeaks`
-* GFF(1-3): `read/write_gff(1-3)`
-* BigWig: `read/write_bw`
-* Wig: `read/write_wig`
+| `plyranges` functions | File Format |
+|-----------------------|-------------|
+|   `read_bam()`        | BAM         |
+| `read_bed()`/`write_bed()` | BED    |
+| `read_bedgraph()`/ `write_bedgraph()` | BEDGraph |
+| `read_narrowpeaks()`/ `write_narrowpeaks()` | narrowPeaks |
+| `read_gff()` / `write_gff()` | GFF(1-3) / GTF |
+| `read_bw()` / `write_bw()` |  BigWig |
+| `read_wig()` / `write_wig()` | Wig |
 
 
 # Mapping to GenomicRanges/IRanges
