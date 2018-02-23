@@ -317,10 +317,6 @@ Read the [introduction
 vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html)
 for an overview of `plyranges` features.
 
-For mapping between the `plyranges`, `bedtools` and `GenomicRanges`
-packages read the [API comparision
-vignette](https://sa-lee.github.io/plyranges/articles/comparision.html).
-
 # About the design of plyranges API
 
 The `plyranges` package aims to provide a

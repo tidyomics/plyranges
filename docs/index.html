@@ -306,7 +306,6 @@
 <a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
 </section><section id="learning-more" class="level1"><h1>Learning more</h1>
 <p>Read the <a href="https://sa-lee.github.io/plyranges/articles/an-introduction.html">introduction vignette</a> for an overview of <code>plyranges</code> features.</p>
-<p>For mapping between the <code>plyranges</code>, <code>bedtools</code> and <code>GenomicRanges</code> packages read the <a href="https://sa-lee.github.io/plyranges/articles/comparision.html">API comparision vignette</a>.</p>
 </section><section id="about-the-design-of-plyranges-api" class="level1"><h1>About the design of plyranges API</h1>
 <p>The <code>plyranges</code> package aims to provide a <a href="https://en.wikipedia.org/wiki/Fluent_interface">fluent</a> interface for performing common genomic data analysis tasks. One goal of this package is to decrease the learning curve for Bioconductor and S4 classes (especially for new users) by providing a consistent interface to common classes <em>IRanges</em> and <em>GRanges</em> (future work will extend this to the <em>SummarizedExperiment</em> class)</p>
 <p>All of the methods defined in <code>plyranges</code> are type-consistent and chainable. As a consequence, users familiar with <code>dplyr</code> should be able to read and understand <code>plyranges</code> code without difficulty.</p>
