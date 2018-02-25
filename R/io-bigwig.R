@@ -22,7 +22,7 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
       seq_info <- GenomeInfoDb::Seqinfo(genome = genome_info)
     }
   } else {
-    seq_info <- NULL
+      seq_info <- NULL
   }
 
   if (!is.null(overlap_ranges)) {

@@ -63,21 +63,22 @@ set_genome_info <- function(.data, genome = NULL, seqnames = NULL,
                             seqlengths = NULL, is_circular = NULL) {
 
 
+  info <- seqinfo(.data)
 
   if (is.null(genome)) {
-     genome <- NA
+     genome <- genome(info)
   }
 
   if (is.null(seqlengths)) {
-     seqlengths <- NA
+     seqlengths <- seqlengths(info)
   }
 
   if (is.null(seqnames)) {
-    seqnames <- seqnames(.data)
+    seqnames <- seqnames(info)
   }
 
   if (is.null(is_circular)) {
-    is_circular <- NA
+    is_circular <- isCircular(info)
   }
 
   info <- Seqinfo(seqnames, seqlengths, is_circular, genome)
