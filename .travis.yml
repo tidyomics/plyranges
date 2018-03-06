@@ -14,6 +14,7 @@ bioc_packages:
   - HelloRanges
   - HelloRangesData
   - BSgenome.Hsapiens.UCSC.hg19
+  - ggbio
 
 r_packages:
   - rlang

@@ -38,6 +38,7 @@ Suggests:
     BiocStyle,
     rmarkdown,
     testthat,
+    ggbio,
     HelloRanges,
     HelloRangesData,
     BSgenome.Hsapiens.UCSC.hg19,

@@ -74,7 +74,16 @@ grng
 
 Sometimes you want to modify a genomic interval by altering the width of the 
 interval while leaving the start, end or midpoint of the coordinates unaltered. 
-This is achieved with the `set_width` verb along with `anchor_*` adverbs.
+This is achieved with the `set_width` verb along with `anchor_*` adverbs. 
+
+The act of anchoring fixes either the start, end, center coordinates of the 
+`Range` object, as shown in the figure and code below and anchors are used in
+combination with either `set_width` or `stretch`.
+
+```{r, echo = FALSE, out.width="400px", fig.align="center"}
+knitr::include_graphics("anchors.png", dpi = 150)
+```
+
 ```{r}
 rng <- as_iranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8)))
 grng <- as_granges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8), 
@@ -102,7 +111,7 @@ stretch(anchor_3p(grng), 10)
 stretch(anchor_5p(grng), 10)
 ```
 
-`*Ranges` can be shifted left or right. If strand information is available 
+`Ranges` can be shifted left or right. If strand information is available 
 we can also shift upstream or downstream. 
 
 ```{r}
@@ -148,7 +157,7 @@ grng_by_strand %>% filter(gc == max(gc))
 ```
 
 We also provide the convience methods `filter_by_overlaps` and 
-`filter_by_non_overlaps` for restricting by overlapping `Ranges`.
+`filter_by_non_overlaps` for restricting by any overlapping `Ranges`.
 
 ```{r}
 ir0 <- data.frame(start = c(5,10, 15,20), width = 5) %>%
@@ -178,64 +187,88 @@ ir0 %>%
 
 # Joins, or another way at looking at overlaps between `Ranges`
 
-<!--- ![Types of overlap](overlaps.png) --->
-
 We can think about finding overlaps as a type of join between two `Ranges`
 where we are using the intervals as keys. Of most use are the 
 `join_overlap_intersect`, `join_overlap_inner` and `join_overlap_left` functions. 
 
-The first function, `join_overlap_intersect` will return a `Ranges`` object 
-where the start, end, and width coordinates correspond to the amount of any overlap
-between the left and right input `Ranges`.
-
-<!--- ![intersect join](intersects.png) --->
-
-
-These coordinates correspond to the intervals that are the intersecting `Ranges`. 
-By default, the input `Ranges` (and any other metadata) will be carried over as 
-metadata columns. The names of the columsn
+To begin we'll define a query and subject `GRanges` object.
 
 ```{r}
-join_overlap_intersect(ir0, ir1, suffix = c(".left", ".right"))
+query <- data.frame(seqnames = "chr1",
+               strand = c("+", "-"),
+               start = c(1, 9), 
+               end =  c(7, 10),
+               key.a = letters[1:2]) %>% 
+  as_granges()
+
+subject <- data.frame(seqnames = "chr1",
+               strand = c("-", "+"),
+               start = c(2, 6), 
+               end = c(4, 8),
+               key.b = LETTERS[1:2]) %>% 
+  as_granges()
 ```
 
-The `join_overlap_inner` function will return the `Ranges` on the left that
-overlap any `Ranges` on the right. By default, it returns the `Ranges` on the right
-that overlap (and any other metadata columns belonging to the left or right)
-as a metadata column.
+```{r, echo = FALSE, fig.cap = "Query and Subject Ranges", message = FALSE}
+ggbio::tracks(query = ggbio::autoplot(query),
+              subject = ggbio::autoplot(subject))
+```
 
-<!--- ![inner join](inner_join.png) --->
-
+The first function, `join_overlap_intersect` will return a `Ranges`` object 
+where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input `Ranges`. It also returns any metadata
+in the subject range if the subject overlaps the query. Note that by default
+the join functions ignore strandedness.
 
 ```{r}
-join_overlap_inner(ir0, ir1, suffix = c(".left", ".right"))
+intersect_rng <- join_overlap_intersect(query, subject)
+intersect_rng
+```
+
+
+
+
+The `join_overlap_inner` function will return the `Ranges` in the query that
+overlap any `Ranges` in the subject. Like the `join_overlap_intersect` function
+metadata of the subject `Range` is returned if it overlaps the query. 
+
+```{r}
+inner_rng <- join_overlap_inner(query, subject)
+inner_rng
+```
+
+
+```{r, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
+ggbio::tracks(query = ggbio::autoplot(query),
+              subject = ggbio::autoplot(subject),
+              `inner join` = ggbio::autoplot(inner_rng))
 ```
 
 We also provide a convienence method called `find_overlaps` that computes the 
 same result as `join_overlap_inner`.
 
 ```{r}
-find_overlaps(ir0, ir1, suffix = c(".left", ".right"))
+find_overlaps(query, subject)
 ```
 
 The `join_overlap_left` method will perform an outer left join. 
 
-<!--- ![left join](left_join.png) --->
 
-First any overlaps that are found will be returned similar to `join_overlap_inner`. 
-Then any non-overlapping ranges will be returned, with missing values on the metadata columns. 
-
-A 'missing' value for an `IRanges` column is interval with zero width,
-with `start=0` and `end=-1`. A 'missing' value for a `GRanges` column is the same
-as the `IRanges` but with `seqnames='.'` and `strand='*'`.
+First any overlaps that are found will be returned similar to `join_overlap_inner`. Then any non-overlapping ranges will be returned, with missing values on the metadata columns. 
 
 ```{r}
-join_overlap_left(ir0, ir1)
+left_rng <- join_overlap_left(query, subject)
+left_rng
+```
+
+```{r, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
+ggbio::tracks(query = ggbio::autoplot(query),
+              subject = ggbio::autoplot(subject),
+              `left outer join` = ggbio::autoplot(left_rng))
 ```
 
 Compared with `filter_by_overlaps` above, the overlap left join expands the
-`Ranges` to give information about each interval on the left hand side that 
-overlap those on the right as well as the intervals on the left that do not overlap any range on the right.
+`Ranges` to give information about each interval on the query `Ranges` that 
+overlap those on the subject `Ranges` as well as the intervals on the left that do not overlap any range on the right.
 
 ## Example: dealing with multimapping
 This example is taken from the Bioconductor support [site](https://support.bioconductor.org/p/100046/).
@@ -252,20 +285,18 @@ First we create the two `Ranges` objects
 ```{r ex1}
 intensities <- data.frame(seqnames = "VI",
                           start = c(3320:3321,3330:3331,3341:3342),
-                          width = 1)
-intensities <- as_granges(intensities)
+                          width = 1) %>% 
+  as_granges()
 
 intensities 
 
 genes <- data.frame(seqnames = "VI", 
                     start = c(3322, 3030),
                     end = c(3846, 3338),
-                    gene_id=c("YFL064C", "YFL065C"))
+                    gene_id=c("YFL064C", "YFL065C")) %>% 
+  as_granges()
                     
-                    
-genes <- as_granges(genes)
 genes
-
 ```
 
 Now to find where the positions overlap each gene, we can perform an overlap
