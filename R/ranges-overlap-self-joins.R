@@ -5,12 +5,34 @@
 #' greater than or equal to zero. The minimum amount of overlap between intervals
 #' as an integer greater than zero, accounting for the maximum gap.
 #'
-#' @details Self overlaps find any overlaps (or overlaps contained) within a
-#' ranges and append the overlapping details as metadata columns. A self inner
-#' overlap join will update the ranges object with all self intersecting ranges.
+#' @details Self overlaps find any overlaps (or overlaps within or overlaps
+#' directed) between a ranges object and itself.
 #'
-#' @rdname self-overlap-joins
-#' @export
+#' @examples
+#' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
+#'              as_iranges()
+#'
+#' join_overlap_self(query)
+
+#'
+#' # -- GRanges objects, strand is ignored by default
+#' query  <- data.frame(seqnames = "chr1",
+#'                start = c(11,101),
+#'                end = c(21, 200),
+#'                name = c("a1", "a2"),
+#'                strand = c("+", "-"),
+#'                score = c(1,2)) %>%
+#'            as_granges()
+#'
+#' # ignores strandedness
+#' join_overlap_self(query)
+#' join_overlap_within(query)
+#' # adding directed prefix includes strand
+#' join_overlap_self_directed(query)
+#'
+#'
+#' @rdname ranges-overlaps-self
+#' @seealso [find_overlaps()][join_overlap_inner()]
 join_overlap_self <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_self")
 }
@@ -23,31 +45,35 @@ join_overlap_self.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
-#' @rdname self-overlap-joins
+#' @rdname ranges-overlaps-self
 #' @export
-join_overlap_within_self <- function(x, maxgap, minoverlap) {
+join_overlap_self_within <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_within_self")
 }
 
-join_overlap_within_self.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
-  find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
-}
-
-join_overlap_within_self.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
-  find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
-}
-
-
-#' @rdname self-overlap-joins
 #' @export
-join_overlap_self_inner <- function(x, maxgap, minoverlap) {
+join_overlap_self_within.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
+  find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
+}
+
+#' @export
+join_overlap_self_within.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
+  find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
+}
+
+#' @rdname ranges-overlaps-self
+#' @export
+join_overlap_self_directed <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_within_self")
 }
 
-join_overlap_self_inner.Ranges <- function(x, maxgap = 0L, minoverlap = 1L) {
-  join_overlap_inner(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
+#' @export
+join_overlap_self_directed.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
+  find_overlaps_directed(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
-join_overlap_within_self.GenomicRanges <- function(x, maxgap = 0L, minoverlap = 1L) {
-  join_overlap_inner(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
+#' @export
+join_overlap_self_directed.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
+  find_overlaps_directed(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
+

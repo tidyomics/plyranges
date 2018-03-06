@@ -69,6 +69,39 @@ mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE
 #' a GroupedRanges object, grouped by the number of overlaps
 #' of ranges in x that overlap y (stored in a column called query).
 #'
+#' @examples
+#' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
+#'              as_iranges()
+#' subject <- data.frame(start = 2:6, width = 3:7, label = letters[1:5]) %>%
+#'              as_iranges()
+#'
+#' find_overlaps(query, subject)
+#' find_overlaps(query, subject, minoverlap = 5)
+#' find_overlaps_within(query, subject) # same result as minoverlap
+#' find_overlaps(query, subject, maxgap = 1)
+#'
+#' # -- GRanges objects, strand is ignored by default
+#' query  <- data.frame(seqnames = "chr1",
+#'                start = c(11,101),
+#'                end = c(21, 200),
+#'                name = c("a1", "a2"),
+#'                strand = c("+", "-"),
+#'                score = c(1,2)) %>%
+#'            as_granges()
+#' subject <- data.frame(seqnames = "chr1",
+#'                       strand = c("+", "-", "+", "-"),
+#'                       start = c(21,91,101,201),
+#'                       end = c(30,101,110,210),
+#'                       name = paste0("b", 1:4),
+#'                       score = 1:4) %>%
+#'                    as_granges()
+#'
+#' # ignores strandedness
+#' find_overlaps(query, subject, suffix = c(".query", ".subject"))
+#' find_overlaps(query, subject, suffix = c(".query", ".subject"), minoverlap = 2)
+#' # adding directed prefix includes strand
+#' find_overlaps_directed(query, subject, suffix = c(".query", ".subject"))
+#'
 #' @seealso \link[GenomicRanges]{setops-methods}, \link[IRanges]{findOverlaps-methods}
 #' @importFrom IRanges findOverlaps
 #' @importFrom S4Vectors queryHits subjectHits

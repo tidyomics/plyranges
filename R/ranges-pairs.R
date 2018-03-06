@@ -7,9 +7,44 @@
 #' @param suffix A character vector of length two used to identify metadata columns
 #' coming from x and y.
 #'
-#' @return a DataFrame with two ranges columns and their corresponding metadata
+#' @details These functions return a DataFrame object, and is one way of
+#' representing paired alignments with plyranges.
+#'
+#' @return a DataFrame with two ranges columns and the corresponding metadata
 #' columns.
 #'
+#' @seealso [join_nearest()][join_overlap_inner()][join_precede()][join_follow()]
+#' @examples
+#' #' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
+#'              as_iranges()
+#' subject <- data.frame(start = 2:6, width = 3:7, label = letters[1:5]) %>%
+#'              as_iranges()
+#'
+#' pair_overlaps(query, subject)
+#' pair_overlaps(query, subject, minoverlap = 5)
+#' pair_nearest(query, subject)
+#'
+#'
+#' query  <- data.frame(seqnames = "chr1",
+#'                start = c(11,101),
+#'                end = c(21, 200),
+#'                name = c("a1", "a2"),
+#'                strand = c("+", "-"),
+#'                score = c(1,2)) %>%
+#'            as_granges()
+#' subject <- data.frame(seqnames = "chr1",
+#'                       strand = c("+", "-", "+", "-"),
+#'                       start = c(21,91,101,201),
+#'                       end = c(30,101,110,210),
+#'                       name = paste0("b", 1:4),
+#'                       score = 1:4) %>%
+#'                    as_granges()
+#'
+#' # ignores strandedness
+#' pair_overlaps(query, subject, suffix = c(".query", ".subject"))
+#' pair_follow(query, subject, suffix = c(".query", ".subject"))
+#' pair_precede(query, subject, suffix = c(".query", ".subject"))
+#' pair_precede(query, subject, suffix = c(".query", ".subject"))
 #' @rdname ranges-pairs
 #' @export
 pair_overlaps <- function(x, y, maxgap, minoverlap, suffix) {
@@ -103,5 +138,3 @@ pair_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   right <- y[hits[no_hits_id], ]
   mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
 }
-
-
