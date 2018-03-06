@@ -210,8 +210,20 @@ subject <- data.frame(seqnames = "chr1",
 ```
 
 ```{r, echo = FALSE, fig.cap = "Query and Subject Ranges", message = FALSE}
-ggbio::tracks(query = ggbio::autoplot(query),
-              subject = ggbio::autoplot(subject))
+library(ggplot2)
+query_df <- as.data.frame(query)[, -6]
+query_df$key <- "Query"
+subject_df <- as.data.frame(subject)[, -6]
+subject_df$key <- "Subject"
+melted_ranges <- rbind(query_df, subject_df)
+ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = 1, ymax = 3)) +
+  geom_rect() + 
+  facet_grid(key ~ .) +
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  xlab("Position") +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank())
 ```
 
 The first function, `join_overlap_intersect` will return a `Ranges`` object 
@@ -224,7 +236,21 @@ intersect_rng <- join_overlap_intersect(query, subject)
 intersect_rng
 ```
 
-
+```{r}
+intersect_df <- as.data.frame(intersect_rng)[, -c(6,7)]
+intersect_df$key <- "Intersect Join"
+melted_ranges <- rbind(query_df, subject_df, intersect_df)
+melted_ranges$key <- factor(melted_ranges$key, 
+                              levels = c("Query", "Subject", "Intersect Join"))
+ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = 1, ymax = 3)) +
+  geom_rect() + 
+  facet_grid(key ~ .) +
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  xlab("Position") +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank())
+```
 
 
 The `join_overlap_inner` function will return the `Ranges` in the query that
@@ -238,9 +264,25 @@ inner_rng
 
 
 ```{r, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
-ggbio::tracks(query = ggbio::autoplot(query),
-              subject = ggbio::autoplot(subject),
-              `inner join` = ggbio::autoplot(inner_rng))
+inner_df <- as.data.frame(inner_rng)[, -c(6,7)]
+inner_df$ymin <- c(1,4)
+inner_df$ymax <- c(3,6)
+inner_df$key <- "Inner Join"
+melted_ranges <- rbind(query_df, subject_df)
+melted_ranges$ymin <- 1
+melted_ranges$ymax <- 3
+melted_ranges <- rbind(melted_ranges, inner_df)
+melted_ranges$key <- factor(melted_ranges$key, 
+                              levels = c("Query", "Subject", "Inner Join"))
+
+ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
+  geom_rect() + 
+  facet_grid(key ~ ., scales = "free_y") +
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  xlab("Position") +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank())
 ```
 
 We also provide a convienence method called `find_overlaps` that computes the 
@@ -261,9 +303,25 @@ left_rng
 ```
 
 ```{r, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
-ggbio::tracks(query = ggbio::autoplot(query),
-              subject = ggbio::autoplot(subject),
-              `left outer join` = ggbio::autoplot(left_rng))
+left_df <- as.data.frame(left_rng)[, -c(6,7)]
+left_df$ymin <- c(1,4, 1)
+left_df$ymax <- c(3,6, 3)
+left_df$key <- "Left Join"
+melted_ranges <- rbind(query_df, subject_df)
+melted_ranges$ymin <- 1
+melted_ranges$ymax <- 3
+melted_ranges <- rbind(melted_ranges, left_df)
+melted_ranges$key <- factor(melted_ranges$key, 
+                              levels = c("Query", "Subject", "Left Join"))
+
+ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
+  geom_rect() + 
+  facet_grid(key ~ ., scales = "free_y") +
+  scale_x_continuous(breaks = seq(1, 10, by = 1)) +
+  xlab("Position") +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank())
 ```
 
 Compared with `filter_by_overlaps` above, the overlap left join expands the

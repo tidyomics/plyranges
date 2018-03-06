@@ -14,14 +14,12 @@ bioc_packages:
   - HelloRanges
   - HelloRangesData
   - BSgenome.Hsapiens.UCSC.hg19
-  - ggbio
-  - biovizBase
 
 r_packages:
   - rlang
   - dplyr
-  - Hmisc
   - magrittr
+  - ggplot2
   - covr
 
 after_success:
