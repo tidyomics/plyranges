@@ -90,7 +90,10 @@ filter.Ranges <- function(.data, ...) {
 filter.GRangesGrouped <- function(.data, ...) {
     dots <- quos(...)
     split_ranges <- split_groups(.data)
-    unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE)
+    new("GRangesGrouped",
+        unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE),
+        groups = groups(.data)
+    )
 
 }
 
@@ -99,5 +102,8 @@ filter.GRangesGrouped <- function(.data, ...) {
 filter.IRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
   split_ranges <- split_groups(.data)
-  unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE)
+  new("IRangesGrouped",
+      unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE),
+      groups = groups(.data)
+  )
 }

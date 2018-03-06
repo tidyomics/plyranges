@@ -88,8 +88,10 @@ mutate.Ranges <- function(.data, ...) {
 #' @export
 mutate.GRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
+  groups <- groups(.data)
   split_ranges <- split_groups(.data, populate_mcols = FALSE, drop = TRUE)
-  unlist(endoapply(split_ranges, mutate_rng, dots), use.names = FALSE)
+  result <- unlist(endoapply(split_ranges, mutate_rng, dots), use.names = FALSE)
+  new("GRangesGrouped", result, groups = groups)
 }
 
 #' @rdname mutate-ranges
@@ -97,6 +99,8 @@ mutate.GRangesGrouped <- function(.data, ...) {
 #' @export
 mutate.IRangesGrouped <- function(.data, ...) {
   dots <- quos(...)
+  groups <- groups(.data)
   split_ranges <- split_groups(.data, populate_mcols = FALSE, drop = TRUE)
-  unlist(endoapply(split_ranges, mutate_rng, dots), use.names = FALSE)
+  result <- unlist(endoapply(split_ranges, mutate_rng, dots), use.names = FALSE)
+  new("IRangesGrouped", result, groups = groups)
 }

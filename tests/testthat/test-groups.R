@@ -39,6 +39,15 @@ test_that("ungrouping works as expected", {
   expect_equivalent(gr_by_strand_score %>% ungroup(strand), gr_by_score)
 })
 
+test_that("grouping after filter or mutate leaves groups in tact", {
+            by_strand <- gr1 %>% group_by(strand) %>% mutate(new_score = mean(score))
+            expect_s4_class(by_strand, "GRangesGrouped")
+            expect_equal("strand", group_vars(by_strand))
+            by_strand_filter <- gr1 %>% group_by(score) %>% filter(n() >= 2)
+            expect_s4_class(by_strand_filter, "GRangesGrouped")
+            expect_equal("score", group_vars(by_strand_filter))
+})
+
 test_that("group by matches HelloRanges", {
   skip_on_travis()
   oldwd <- getwd()
