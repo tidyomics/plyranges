@@ -67,7 +67,7 @@ test_that("non-standard evaluation works as expected",{
 
   mcols(a)$name <- paste0("a", 1:4)
   exp <- reduce(a, with.revmap=TRUE)
-  mcols(exp) <- aggregate(a, mcols(exp)$revmap,
+  mcols(exp) <- S4Vectors::aggregate(a, mcols(exp)$revmap,
                           name.collapse = unstrsplit(name, ","))
   exp <- exp %>% select(-grouping)
 
@@ -76,7 +76,7 @@ test_that("non-standard evaluation works as expected",{
                    )
   a <- read_bed("a.full.bed")
   exp <- reduce(a, with.revmap=TRUE, ignore.strand=TRUE)
-  mcols(exp) <- aggregate(a, mcols(exp)$revmap,
+  mcols(exp) <- S4Vectors::aggregate(a, mcols(exp)$revmap,
                           name.collapse = unstrsplit(name, ","),
                           score.sum = sum(score))
   exp <- exp %>% select(-grouping)
