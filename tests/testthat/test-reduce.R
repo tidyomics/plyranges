@@ -49,6 +49,7 @@ test_that("matches IRanges/GenomicRanges", {
 
 
 test_that("non-standard evaluation works as expected",{
+  skip_on_travis()
   oldwd <- getwd()
   setwd(system.file("unitTests", "data", "merge", package="HelloRanges"))
 
