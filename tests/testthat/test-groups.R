@@ -49,13 +49,15 @@ test_that("grouping after filter or mutate leaves groups in tact", {
 })
 
 test_that("group by matches HelloRanges", {
-  skip_on_travis()
   oldwd <- getwd()
   setwd(system.file("unitTests", "data", "groupby", package="HelloRanges"))
 
   a <- read_bed("values3.header.bed")
-  exp <- S4Vectors::aggregate(unstrand(a), score.sum = sum(score)) %>%
-    select(-grouping)
+  exp <- GRanges(seqnames = c(rep("chr1", 5), rep("chr3",4)),
+                 ranges = IRanges(start = c(1, 11, 12, 21, 121,1,11,21,121),
+                                  end = c(10, 20, 21, 30, 130, 10, 20, 30, 130)),
+                 strand = "*",
+                 score.sum = c(10,5,5,45,1,1,2,3,8))
 
   result <- a %>%
     group_by(seqnames, start, end) %>%
