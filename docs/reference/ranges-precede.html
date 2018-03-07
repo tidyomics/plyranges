@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find following Ranges — join_follow • plyranges</title>
+<title>Find preceding Ranges — join_precede • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,9 +27,9 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Find following Ranges — join_follow" />
+<meta property="og:title" content="Find preceding Ranges — join_precede" />
 
-<meta property="og:description" content="Find following Ranges" />
+<meta property="og:description" content="Find preceding Ranges" />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -92,25 +92,25 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find following Ranges</h1>
+    <h1>Find preceding Ranges</h1>
     </div>
 
     
-    <p>Find following Ranges</p>
+    <p>Find preceding Ranges</p>
     
 
-    <pre class="usage"><span class='fu'>join_follow</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+    <pre class="usage"><span class='fu'><a href='precede-ranges.html'>join_precede</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='fu'>join_follow_left</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'><a href='precede-ranges.html'>join_precede_right</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='fu'>join_follow_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))</pre>
+<span class='fu'><a href='precede-ranges.html'>join_precede_downstream</a></span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x, y</th>
-      <td><p>Ranges objects, which ranges in x follow those in y.</p></td>
+      <td><p>Ranges objects, which ranges in x precede those in y.</p></td>
     </tr>
     <tr>
       <th>suffix</th>
@@ -121,43 +121,44 @@ metadata columns coming from x and y.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A Ranges object corresponding to the ranges in `x`` that are
-followed by the ranges in `y`, all metadata is copied over from the
+    <p>A Ranges object corresponding to the ranges in `y` that are
+preceded by the ranges in `x`, all metadata is copied over from the
 right-hand side ranges `y`.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default <code>join_follow</code> will find abritrary ranges
-in y that are followed by ranges in x and ignore any strand information.
-On the other hand <code>join_follow_left</code> will find all ranges in y
-that are on the left-hand side of the ranges in x ignoring any strand
-information. Finally, <code>join_follow_upstream</code> will find all ranges in x
-that are that are upstream of the ranges in y. On the positive strand this
-will result in ranges in y that are left of those in x and on the negative
-strand it will result in ranges in y that are right of those in x.</p>
+    <p>By default <code>join_precede</code> will return the ranges
+in x that come before the ranges in y and ignore any strand information.
+The function <code>join_precede_right</code> will find all ranges in y
+that are on the right-hand side of the ranges in x ignoring any strand
+information. Finally, <code>join_precede_downstream</code> will find all ranges in y
+that are that are downstream of the ranges in x. On the positive strand this
+will result in ranges in y that are right of those in x and on the negative
+strand it will result in ranges in y that are left of those in x.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>,<span class='fl'>10</span>, <span class='fl'>15</span>,<span class='fl'>20</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>4</span>)) <span class='kw'>%&gt;%</span>
+    <pre class="examples"><div class='input'><span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>,<span class='fl'>10</span>, <span class='fl'>15</span>,<span class='fl'>20</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>4</span>)) <span class='kw'>%&gt;%</span>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
-<span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>6</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>7</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]) <span class='kw'>%&gt;%</span>
+<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>6</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>7</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]) <span class='kw'>%&gt;%</span>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
-<span class='fu'>join_follow</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; IRanges object with 4 ranges and 2 metadata columns:
-#&gt;           start       end     width |         gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.03780258        a
-#&gt;   [2]        10        14         5 | 0.57793740        c
-#&gt;   [3]        15        19         5 | 0.73331417        e
-#&gt;   [4]        20        24         5 | 0.24874240        e</div><div class='input'>
-<span class='no'>subject</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
+<span class='fu'><a href='precede-ranges.html'>join_precede</a></span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; IRanges object with 5 ranges and 2 metadata columns:
+#&gt;           start       end     width |    label        gc
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt; &lt;numeric&gt;
+#&gt;   [1]         2         4         3 |        a 0.5709781
+#&gt;   [2]         3         6         4 |        b 0.6848802
+#&gt;   [3]         4         8         5 |        c 0.6848802
+#&gt;   [4]         5        10         6 |        d 0.9711167
+#&gt;   [5]         6        12         7 |        e 0.9711167</div><div class='input'>
+<span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
                <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>21</span>, <span class='fl'>200</span>),
                <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"a1"</span>, <span class='st'>"a2"</span>),
                <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>),
                <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)) <span class='kw'>%&gt;%</span>
            <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
+<span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                       <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>),
                       <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>21</span>,<span class='fl'>91</span>,<span class='fl'>101</span>,<span class='fl'>201</span>),
                       <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>30</span>,<span class='fl'>101</span>,<span class='fl'>110</span>,<span class='fl'>210</span>),
@@ -165,27 +166,24 @@ strand it will result in ranges in y that are right of those in x.</p>
                       <span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
                    <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
 
-<span class='fu'>join_follow</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 3 ranges and 4 metadata columns:
+<span class='fu'><a href='precede-ranges.html'>join_precede</a></span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
 #&gt;       seqnames     ranges strand |   name.x   score.x   name.y   score.y
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;integer&gt; &lt;factor&gt; &lt;numeric&gt;
-#&gt;   [1]     chr1 [ 91, 101]      - |       b2         2       a1         1
-#&gt;   [2]     chr1 [101, 110]      + |       b3         3       a1         1
-#&gt;   [3]     chr1 [201, 210]      - |       b4         4       a2         2
+#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
+#&gt;   [1]     chr1 [ 11,  21]      + |       a1         1       b2         2
+#&gt;   [2]     chr1 [101, 200]      - |       a2         2       b4         4
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>join_follow_left</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 3 ranges and 4 metadata columns:
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='precede-ranges.html'>join_precede_right</a></span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
 #&gt;       seqnames     ranges strand |   name.x   score.x   name.y   score.y
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;integer&gt; &lt;factor&gt; &lt;numeric&gt;
-#&gt;   [1]     chr1 [ 91, 101]      - |       b2         2       a1         1
-#&gt;   [2]     chr1 [101, 110]      + |       b3         3       a1         1
-#&gt;   [3]     chr1 [201, 210]      - |       b4         4       a2         2
+#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
+#&gt;   [1]     chr1 [ 11,  21]      + |       a1         1       b2         2
+#&gt;   [2]     chr1 [101, 200]      - |       a2         2       b4         4
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>join_follow_upstream</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 4 metadata columns:
-#&gt;       seqnames     ranges strand |   name.x   score.x   name.y   score.y
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;integer&gt; &lt;factor&gt; &lt;numeric&gt;
-#&gt;   [1]     chr1 [101, 110]      + |       b3         3       a1         1
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='precede-ranges.html'>join_precede_downstream</a></span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 4 metadata columns:
+#&gt;       seqnames    ranges strand |   name.x   score.x   name.y   score.y
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
+#&gt;   [1]     chr1  [11, 21]      + |       a1         1       b3         3
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
-</div></pre>
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

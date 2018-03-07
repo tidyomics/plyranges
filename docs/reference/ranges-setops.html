@@ -120,22 +120,75 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A Ranges object</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These are usual set-operations that act on the sets of the
 ranges represented in x and y. By default these operations will ignore
-any strand information. The directedd versions of these functions will
+any strand information. The directed versions of these functions will
 take into account strand.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>gr1</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
+                  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>9</span>),
+                  <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>7</span>,<span class='fl'>9</span>),
+                  <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>)) <span class='kw'>%&gt;%</span>
+               <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
+<span class='no'>gr2</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>strand</span> <span class='kw'>=</span> <span class='st'>"-"</span>) <span class='kw'>%&gt;%</span>
+         <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
+
+<span class='fu'>union_ranges</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1    [2, 9]      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>union_ranges_directed</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1    [2, 7]      +
+#&gt;   [2]     chr1    [5, 9]      -
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='fu'>intersect_ranges</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1    [5, 7]      *
+#&gt;   [2]     chr1    [9, 9]      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>intersect_ranges_directed</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1    [9, 9]      -
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+<span class='fu'>setdiff_ranges</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1    [2, 4]      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>setdiff_ranges_directed</span>(<span class='no'>gr1</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     chr1    [2, 7]      +
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

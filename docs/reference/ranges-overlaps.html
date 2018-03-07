@@ -181,30 +181,30 @@ ignored, unless <code>find_overlaps_directed</code> is used.</p>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
 <span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 2 metadata columns:
-#&gt;           start       end     width |         gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.03780258        b
-#&gt;   [2]         5         9         5 | 0.03780258        c
-#&gt;   [3]         5         9         5 | 0.03780258        d
-#&gt;   [4]         5         9         5 | 0.03780258        e
-#&gt;   [5]        10        14         5 | 0.57793740        d
-#&gt;   [6]        10        14         5 | 0.57793740        e</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
-#&gt;           start       end     width |         gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.03780258        d</div><div class='input'><span class='fu'>find_overlaps_within</span>(<span class='no'>query</span>, <span class='no'>subject</span>) <span class='co'># same result as minoverlap</span></div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
-#&gt;           start       end     width |         gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.03780258        d</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 2 metadata columns:
-#&gt;           start       end     width |         gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.03780258        a
-#&gt;   [2]         5         9         5 | 0.03780258        b
-#&gt;   [3]         5         9         5 | 0.03780258        c
-#&gt;   [4]         5         9         5 | 0.03780258        d
-#&gt;   [5]         5         9         5 | 0.03780258        e
-#&gt;   [6]        10        14         5 | 0.57793740        c
-#&gt;   [7]        10        14         5 | 0.57793740        d
-#&gt;   [8]        10        14         5 | 0.57793740        e</div><div class='input'>
+#&gt;           start       end     width |        gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.5174597        b
+#&gt;   [2]         5         9         5 | 0.5174597        c
+#&gt;   [3]         5         9         5 | 0.5174597        d
+#&gt;   [4]         5         9         5 | 0.5174597        e
+#&gt;   [5]        10        14         5 | 0.1252391        d
+#&gt;   [6]        10        14         5 | 0.1252391        e</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
+#&gt;           start       end     width |        gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.5174597        d</div><div class='input'><span class='fu'>find_overlaps_within</span>(<span class='no'>query</span>, <span class='no'>subject</span>) <span class='co'># same result as minoverlap</span></div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
+#&gt;           start       end     width |        gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.5174597        d</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 2 metadata columns:
+#&gt;           start       end     width |        gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.5174597        a
+#&gt;   [2]         5         9         5 | 0.5174597        b
+#&gt;   [3]         5         9         5 | 0.5174597        c
+#&gt;   [4]         5         9         5 | 0.5174597        d
+#&gt;   [5]         5         9         5 | 0.5174597        e
+#&gt;   [6]        10        14         5 | 0.1252391        c
+#&gt;   [7]        10        14         5 | 0.1252391        d
+#&gt;   [8]        10        14         5 | 0.1252391        e</div><div class='input'>
 <span class='co'># -- GRanges objects, strand is ignored by default</span>
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),

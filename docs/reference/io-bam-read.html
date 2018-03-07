@@ -119,6 +119,10 @@ or single end (FALSE).</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A GRangesDeferred object</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Reading a BAM file is deferred until an action
@@ -172,7 +176,7 @@ optical duplicates.</p>
    <span class='co'># filter_by_ovleraps will only read alignments if they overlap roi</span>
    <span class='no'>by_olap</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='filter-overlaps.rd.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
    <span class='fu'>print</span>(<span class='no'>by_olap</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; GRanges object with 0 ranges and 0 metadata columns:
+}</div><div class='output co'>#&gt; GRanges object with 0 ranges and 0 metadata columns:
 #&gt;    seqnames    ranges strand
 #&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   -------
@@ -235,7 +239,6 @@ optical duplicates.</p>
 #&gt;   [28368]        75         0
 #&gt;   -------
 #&gt;   seqinfo: 8 sequences from an unspecified genome</div><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -243,6 +246,8 @@ optical duplicates.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>

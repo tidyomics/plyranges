@@ -136,6 +136,20 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
     <p>An integer vector of same length as x.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>,<span class='fl'>10</span>, <span class='fl'>15</span>,<span class='fl'>20</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>4</span>)) <span class='kw'>%&gt;%</span>
+             <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
+<span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>6</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>7</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]) <span class='kw'>%&gt;%</span>
+             <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
+<span class='no'>query</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>n_olap</span> <span class='kw'>=</span> <span class='fu'>count_overlaps</span>(<span class='no'>.</span>, <span class='no'>subject</span>),
+                 <span class='kw'>n_olap_within</span> <span class='kw'>=</span> <span class='fu'>count_overlaps_within</span>(<span class='no'>.</span>, <span class='no'>subject</span>))</div><div class='output co'>#&gt; IRanges object with 4 ranges and 3 metadata columns:
+#&gt;           start       end     width |                gc    n_olap n_olap_within
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;integer&gt;     &lt;integer&gt;
+#&gt;   [1]         5         9         5 | 0.463701178086922         4             1
+#&gt;   [2]        10        14         5 | 0.647101194132119         2             0
+#&gt;   [3]        15        19         5 | 0.960573092103004         0             0
+#&gt;   [4]        20        24         5 | 0.676398171577603         0             0</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -143,7 +157,9 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

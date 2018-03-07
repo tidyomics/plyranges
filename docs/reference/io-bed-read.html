@@ -140,6 +140,7 @@ that overlap the Ranges will be returned.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A GRanges object</p>
+<p>A GRanges object</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -181,10 +182,8 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [4]     #FF0000 [127474698, 127475864]                              [1, 1167]
 #&gt;   [5]     #0000FF [127475865, 127477031]                              [1, 1167]
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘Biostrings’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    strsplit</span></div><div class='input'><span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)
+<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
 #&gt;       seqnames                 ranges strand |        name     score
 #&gt;          &lt;Rle&gt;              &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
 #&gt;   [1]     chr7 [127471197, 127472363]      + |        Pos1         0
@@ -240,8 +239,7 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [5]       8.161    60.506 2.605382e-57       341
 #&gt;   [6]       9.332    54.023 7.130400e-51       349
 #&gt;   -------
-#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</div><div class='input'>
-</div></pre>
+#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

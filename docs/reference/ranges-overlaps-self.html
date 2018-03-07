@@ -120,6 +120,10 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a Ranges object</p>
+    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Self overlaps find any overlaps (or overlaps within or overlaps
@@ -137,10 +141,10 @@ directed) between a ranges object and itself.</p>
 <span class='fu'>join_overlap_self</span>(<span class='no'>query</span>)</div><div class='output co'>#&gt; IRanges object with 4 ranges and 2 metadata columns:
 #&gt;           start       end     width |                gc        gc.overlap
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;         &lt;numeric&gt;
-#&gt;   [1]         5         9         5 | 0.459525486687198 0.459525486687198
-#&gt;   [2]        10        14         5 | 0.599398155929521 0.599398155929521
-#&gt;   [3]        15        19         5 | 0.919721910730004 0.919721910730004
-#&gt;   [4]        20        24         5 | 0.982824077364057 0.982824077364057</div><div class='input'>
+#&gt;   [1]         5         9         5 | 0.358137989183888 0.358137989183888
+#&gt;   [2]        10        14         5 | 0.448299144394696 0.448299144394696
+#&gt;   [3]        15        19         5 | 0.906426433008164 0.906426433008164
+#&gt;   [4]        20        24         5 | 0.389439295744523 0.389439295744523</div><div class='input'>
 <span class='co'># -- GRanges objects, strand is ignored by default</span>
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
@@ -191,6 +195,8 @@ directed) between a ranges object and itself.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
       <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>

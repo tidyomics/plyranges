@@ -151,21 +151,21 @@ representing paired alignments with plyranges.</p>
 <span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 6 rows and 4 columns
 #&gt;    ranges.x  ranges.y        gc    label
 #&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;factor&gt;
-#&gt; 1  [ 5,  9]   [3,  6] 0.3007365        b
-#&gt; 2  [ 5,  9]   [4,  8] 0.3007365        c
-#&gt; 3  [ 5,  9]   [5, 10] 0.3007365        d
-#&gt; 4  [ 5,  9]   [6, 12] 0.3007365        e
-#&gt; 5  [10, 14]   [5, 10] 0.7334667        d
-#&gt; 6  [10, 14]   [6, 12] 0.7334667        e</div><div class='input'><span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; DataFrame with 1 row and 4 columns
+#&gt; 1  [ 5,  9]   [3,  6] 0.3274151        b
+#&gt; 2  [ 5,  9]   [4,  8] 0.3274151        c
+#&gt; 3  [ 5,  9]   [5, 10] 0.3274151        d
+#&gt; 4  [ 5,  9]   [6, 12] 0.3274151        e
+#&gt; 5  [10, 14]   [5, 10] 0.3894787        d
+#&gt; 6  [10, 14]   [6, 12] 0.3894787        e</div><div class='input'><span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; DataFrame with 1 row and 4 columns
 #&gt;    ranges.x  ranges.y        gc    label
 #&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;factor&gt;
-#&gt; 1    [5, 9]   [5, 10] 0.3007365        d</div><div class='input'><span class='fu'>pair_nearest</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 4 rows and 4 columns
-#&gt;    ranges.x  ranges.y        gc    label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;factor&gt;
-#&gt; 1  [ 5,  9]   [6, 12] 0.3007365        e
-#&gt; 2  [10, 14]   [6, 12] 0.7334667        e
-#&gt; 3  [15, 19]   [6, 12] 0.9069544        e
-#&gt; 4  [20, 24]   [6, 12] 0.2098168        e</div><div class='input'>
+#&gt; 1    [5, 9]   [5, 10] 0.3274151        d</div><div class='input'><span class='fu'>pair_nearest</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 4 rows and 4 columns
+#&gt;    ranges.x  ranges.y         gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;  &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1  [ 5,  9]   [6, 12] 0.32741508        e
+#&gt; 2  [10, 14]   [6, 12] 0.38947869        e
+#&gt; 3  [15, 19]   [6, 12] 0.04105275        e
+#&gt; 4  [20, 24]   [6, 12] 0.36139663        e</div><div class='input'>
 
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
