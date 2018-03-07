@@ -32,6 +32,16 @@ norm_args_reader_gff <- function(genome_info) {
 #' @seealso \code{\link[rtracklayer]{GFFFile}}
 #' @export
 #' @rdname io-gff-read
+#' @examples
+#' test_path <- system.file("tests", package = "rtracklayer")
+#' # gff3
+#' test_gff3 <- file.path(test_path, "genes.gff3")
+#' gr <- read_gff3(test_gff3)
+#' gr
+#' # alternatively with read_gff
+#' gr <- read_gff(test_gff3, genome_info = "hg19")
+#' gr
+#'
 #' @importFrom rtracklayer import.gff
 read_gff <- function(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL) {
   import.gff(file,

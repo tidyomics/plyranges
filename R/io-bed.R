@@ -53,7 +53,7 @@ norm_args_reader <- function(genome_info) {
 #' @examples
 #'
 #' test_path <- system.file("tests", package = "rtracklayer")
-#  bed_file <- file.path(test_path, "test.bed")
+#'  bed_file <- file.path(test_path, "test.bed")
 #' gr <- read_bed(bed_file)
 #' gr
 #' gr <- read_bed(bed_file, genome_info = "hg19")
@@ -63,7 +63,7 @@ norm_args_reader <- function(genome_info) {
 #'               overlap_ranges = olap)
 #' # bedGraph
 #' bg_file <- file.path(test_path, "test.bedGraph")
-#' gr <- read_bedgraph(bg_file)
+#' gr <- read_bed_graph(bg_file)
 #' gr
 #' # narrowpeaks
 #' np_file <- system.file("extdata", "demo.narrowPeak.gz",  package="rtracklayer")

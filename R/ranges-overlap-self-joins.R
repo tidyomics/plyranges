@@ -26,21 +26,24 @@
 #'
 #' # ignores strandedness
 #' join_overlap_self(query)
-#' join_overlap_within(query)
+#' join_overlap_self_within(query)
 #' # adding directed prefix includes strand
 #' join_overlap_self_directed(query)
 #'
 #'
 #' @rdname ranges-overlaps-self
 #' @seealso [find_overlaps()][join_overlap_inner()]
+#' @export
 join_overlap_self <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_self")
 }
 
+#' @export
 join_overlap_self.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
+#' @export
 join_overlap_self.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
@@ -48,7 +51,7 @@ join_overlap_self.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
 #' @rdname ranges-overlaps-self
 #' @export
 join_overlap_self_within <- function(x, maxgap, minoverlap) {
-  UseMethod("join_overlap_within_self")
+  UseMethod("join_overlap_self_within")
 }
 
 #' @export
@@ -64,7 +67,7 @@ join_overlap_self_within.GenomicRanges <- function(x, maxgap = -1L, minoverlap =
 #' @rdname ranges-overlaps-self
 #' @export
 join_overlap_self_directed <- function(x, maxgap, minoverlap) {
-  UseMethod("join_overlap_within_self")
+  UseMethod("join_overlap_self_directed")
 }
 
 #' @export

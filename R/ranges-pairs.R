@@ -15,7 +15,7 @@
 #'
 #' @seealso [join_nearest()][join_overlap_inner()][join_precede()][join_follow()]
 #' @examples
-#' #' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
+#' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
 #'              as_iranges()
 #' subject <- data.frame(start = 2:6, width = 3:7, label = letters[1:5]) %>%
 #'              as_iranges()

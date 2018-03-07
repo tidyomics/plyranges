@@ -15,6 +15,12 @@
 #' @importFrom rtracklayer import.wig
 #' @seealso \code{\link[rtracklayer]{WIGFile}}
 #' @rdname io-wig-read
+#' @examples
+#' test_path <- system.file("tests", package = "rtracklayer")
+#' test_wig <- file.path(test_path, "step.wig")
+#' gr <- read_wig(test_wig)
+#' gr
+#' gr <- read_wig(test_wig, genome_info = "hg19")
 #' @export
 read_wig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 
