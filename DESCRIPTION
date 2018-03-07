@@ -7,7 +7,7 @@ Authors@R: c(
       person("Michael", "Lawrence", role = c("aut", "ctb")),
       person("Dianne", "Cook", role = c("aut", "ctb"))
     )
-Maintainer: Stuart Lee <stuart.lee1@monash.edu>
+Maintainer: Stuart Lee <lee.s@wehi.edu.au>
 Description: A dplyr-like interface for interacting with the common Bioconductor 
     classes Ranges and GenomicRanges. By providing a grammatical
     and consistent way of manipulating these classes their accessiblity for new
