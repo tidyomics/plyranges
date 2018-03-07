@@ -8,6 +8,7 @@
 #' @param cache a GRanges object
 #' @param operation an environment containing operations to perform
 #' to generate the cache.
+#' @param .data a GRangesDeferred object
 #'
 #' @details
 #' To see what is loaded in the cache use
@@ -31,7 +32,6 @@ GRangesDeferred <- function(cache = GRanges(), operation) {
   new("GRangesDeferred", cache = cache, operation = operation)
 }
 
-#' @rdname ranges-deferred
 setMethod("show", "GRangesDeferred",
           function(object) {
             show(get_cache(object))

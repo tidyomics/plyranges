@@ -76,7 +76,6 @@ validGRangesAnchored <- function(object) {
 
 setValidity("GRangesAnchored", validGRangesAnchored)
 
-#' @rdname ranges-anchor
 setMethod("show", "GRangesAnchored", function(object) {
   output <- c("", utils::capture.output(show(as(object, "GenomicRanges"))))
   output[1] <- output[2]
@@ -107,7 +106,6 @@ validIRangesAnchored <- function(object) {
 
 setValidity("IRangesAnchored", validIRangesAnchored)
 
-#' @rdname ranges-anchor
 setMethod("show", "IRangesAnchored", function(object) {
   output <- c("", utils::capture.output(show(as(object, "Ranges"))))
   output[1] <- output[2]

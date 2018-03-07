@@ -47,6 +47,24 @@
 #' @importFrom Rsamtools BamFile ScanBamParam
 #' @importFrom rlang new_environment
 #' @export
+#' @examples
+#'
+#' if (require(pasillaBamSubset)) {
+#'    bamfile <- untreated1_chr4()
+#'    # nothing is read until an action has been performed
+#'    print(read_bam(bamfile))
+#'    # define a region of interest
+#'    roi <- data.frame(seqnames = "chr4", start = 5e5, end = 7e5) %>%
+#'             as_granges()
+#'    # add map quality scores
+#'    rng_mapq <- read_bam(bamfile) %>% select(mapq)
+#'    print(rng_mapq)
+#'    # filter_by_ovleraps will only read alignments if they overlap roi
+#'    by_olap <- read_bam(bamfile) %>% filter_by_overlaps(roi)
+#'    print(by_olap)
+#' }
+#'
+#'
 #' @rdname io-bam-read
 read_bam <- function(file, index = file, paired = FALSE) {
   if (is.null(index)) {

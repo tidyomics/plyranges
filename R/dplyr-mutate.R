@@ -61,13 +61,33 @@ mutate_rng <- function(.data, dots) {
 #' Modify a Ranges object
 #'
 #' @param .data a \code{Ranges} object
-#' @param ... Pairs of name-value expressions, either creating new columns
-#' or modifying existing ones.
+#' @param ... Pairs of name-value expressions. The name-value pairs can either
+#' create new metadata columns or modify existing ones.
 #'
 #' @importFrom dplyr mutate
 #' @rdname mutate-ranges
 #' @return a Ranges object
 #' @method mutate GenomicRanges
+#'
+#' @examples
+#' df <- data.frame(start = 1:10,
+#'                  width = 5,
+#'                  seqnames = "seq1",
+#'                  strand = sample(c("+", "-", "*"), 10, replace = TRUE),
+#'                  gc = runif(10))
+#' rng <- as_granges(df)
+#'
+#' # mutate adds new columns
+#' rng %>%
+#'     mutate(avg_gc = mean(gc), row_id = 1:n())
+#' # can also compute on newly created columns
+#' rng %>%
+#'     mutate(score = gc * width, score2 = score + 1)
+#' # group by partitions the data and computes within each group
+#' rng %>%
+#'     group_by(strand) %>%
+#'     mutate(avg_gc = mean(gc), row_id = 1:n())
+#'
 #' @export
 mutate.GenomicRanges <- function(.data, ...) {
   dots <- quos(...)

@@ -28,7 +28,6 @@ validGRangesGrouped <- function(object) {
 
 setValidity("GRangesGrouped", validGRangesGrouped)
 
-#' @rdname group_by-ranges
 setMethod("show", "GRangesGrouped", function(object) {
   groups <- unlist(lapply(object@groups, as.character))
   groups <- paste(groups, collapse = ", ")
@@ -66,7 +65,6 @@ validIRangesGrouped <- function(object) {
 
 setValidity("IRangesGrouped", validIRangesGrouped)
 
-#' @rdname group_by-ranges
 setMethod("show", "IRangesGrouped", function(object) {
   groups <- unlist(lapply(object@groups, as.character))
   groups <- paste(groups, collapse = ", ")

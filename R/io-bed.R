@@ -49,6 +49,27 @@ norm_args_reader <- function(genome_info) {
 #' @importFrom GenomeInfoDb seqinfo
 #' @importFrom methods is
 #' @seealso \code{\link[rtracklayer]{BEDFile}}
+#'
+#' @examples
+#'
+#' test_path <- system.file("tests", package = "rtracklayer")
+#  bed_file <- file.path(test_path, "test.bed")
+#' gr <- read_bed(bed_file)
+#' gr
+#' gr <- read_bed(bed_file, genome_info = "hg19")
+#' gr
+#' olap <-  as_granges(data.frame(seqnames = "chr7", start = 1, end = 127473000))
+#' gr <- read_bed(bed_file,
+#'               overlap_ranges = olap)
+#' # bedGraph
+#' bg_file <- file.path(test_path, "test.bedGraph")
+#' gr <- read_bedgraph(bg_file)
+#' gr
+#' # narrowpeaks
+#' np_file <- system.file("extdata", "demo.narrowPeak.gz",  package="rtracklayer")
+#' gr <- read_narrowpeaks(np_file, genome_info = "hg19")
+#' gr
+#'
 #' @export
 #' @rdname io-bed-read
 read_bed <- function(file, col_names = NULL, genome_info = NULL,

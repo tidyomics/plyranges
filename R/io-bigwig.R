@@ -6,6 +6,13 @@
 #' @param overlap_ranges An optional Ranges object. Only the intervals in the file
 #' that overlap the Ranges will be loaded.
 #'
+#' @examples
+#' if (.Platform$OS.type != "windows") {
+#'   test_path <- system.file("tests", package = "rtracklayer")
+#'   bw_file <- file.path(test_path, "test.bw")
+#'   gr <- read_bigwig(bw_file)
+#'   gr
+#' }
 #'
 #' @importFrom rtracklayer import.bw BigWigSelection BigWigFile
 #' @seealso \link[rtracklayer]{BigWigFile}
