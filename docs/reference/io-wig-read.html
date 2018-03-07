@@ -132,6 +132,26 @@ that overlap the Ranges will be returned.</p></td>
     <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/WIGFile-class'>WIGFile</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>test_path</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"tests"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtracklayer"</span>)
+<span class='no'>test_wig</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>test_path</span>, <span class='st'>"step.wig"</span>)
+<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_wig</span>(<span class='no'>test_wig</span>)
+<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 19 ranges and 1 metadata column:
+#&gt;        seqnames               ranges strand |     score
+#&gt;           &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;    [1]    chr19 [59104701, 59104701]      * |        10
+#&gt;    [2]    chr19 [59104901, 59104901]      * |      12.5
+#&gt;    [3]    chr19 [59105401, 59105401]      * |        15
+#&gt;    [4]    chr19 [59105601, 59105601]      * |      17.5
+#&gt;    [5]    chr19 [59105901, 59105901]      * |        20
+#&gt;    ...      ...                  ...    ... .       ...
+#&gt;   [15]    chr18 [59109521, 59109720]      * |       500
+#&gt;   [16]    chr18 [59109821, 59110020]      * |       400
+#&gt;   [17]    chr18 [59110121, 59110320]      * |       300
+#&gt;   [18]    chr18 [59110421, 59110620]      * |       200
+#&gt;   [19]    chr18 [59110721, 59110920]      * |       100
+#&gt;   -------
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_wig</span>(<span class='no'>test_wig</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -141,7 +161,9 @@ that overlap the Ranges will be returned.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

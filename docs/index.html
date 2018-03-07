@@ -255,55 +255,53 @@
 <a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; 1617   rs2224391   NR_104417         1</span></a>
 <a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt; 1618   rs2224391   NR_104418         1</span></a>
 <a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; 1619  rs41281112   NR_104592         1</span></a></code></pre></div>
-<p>We can also generate 2bp splice sites on either side of the exon using <code>flank_left</code> and <code>flank_right</code>. We add a column indicating the side of flanking for illustrative purposes. The <code>combine_ranges</code> function pairs the left and right pairs.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">left_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_left</a></span>(exons, 2L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">side =</span> <span class="st">"left"</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">right_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_right</a></span>(exons, 2L) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">side =</span> <span class="st">"right"</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">all_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/combine_ranges.html">combine_ranges</a></span>(left_ss, right_ss)</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">all_ss</a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;            seqnames               ranges strand |</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;               &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; |</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;        [1]     chr1       [11872, 11873]      + |</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;        [2]     chr1       [12228, 12229]      + |</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;        [3]     chr1       [12611, 12612]      + |</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;        [4]     chr1       [12722, 12723]      + |</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;        [5]     chr1       [13219, 13220]      + |</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;        ...      ...                  ...    ... .</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;   [919500]     chrY [59340279, 59340280]      + |</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;   [919501]     chrY [59342485, 59342486]      + |</span></a>
-<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt;   [919502]     chrY [59343489, 59343490]      + |</span></a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt;   [919503]     chrY [59342485, 59342486]      + |</span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;   [919504]     chrY [59343489, 59343490]      + |</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;                                          name     score       tx_id</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt; &lt;character&gt;</span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt;        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt;        ...                                ...       ...         ...</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt;   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186</span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt;   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt;   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt;   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span></a>
-<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt;                   side</span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt;            &lt;character&gt;</span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt;        [1]        left</span></a>
-<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt;        [2]       right</span></a>
-<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt;        [3]        left</span></a>
-<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt;        [4]       right</span></a>
-<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt;        [5]        left</span></a>
-<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt;        ...         ...</span></a>
-<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt;   [919500]       right</span></a>
-<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt;   [919501]        left</span></a>
-<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt;   [919502]       right</span></a>
-<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt;   [919503]        left</span></a>
-<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt;   [919504]       right</span></a>
-<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt;   -------</span></a>
-<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
+<p>We can also generate 2bp splice sites on either side of the exon using <code>flank_left</code> and <code>flank_right</code>. We add a column indicating the side of flanking for illustrative purposes. The <code>interweave</code> function pairs the left and right ranges objects.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">left_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_left</a></span>(exons, 2L) </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">right_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_right</a></span>(exons, 2L)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">all_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/ranges-interweave.html">interweave</a></span>(left_ss, right_ss, <span class="dt">.id =</span> <span class="st">"side"</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">all_ss</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;            seqnames               ranges strand |</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt;               &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; |</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt;        [1]     chr1       [11872, 11873]      + |</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt;        [2]     chr1       [12228, 12229]      + |</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt;        [3]     chr1       [12611, 12612]      + |</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt;        [4]     chr1       [12722, 12723]      + |</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt;        [5]     chr1       [13219, 13220]      + |</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt;        ...      ...                  ...    ... .</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt;   [919500]     chrY [59340279, 59340280]      + |</span></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt;   [919501]     chrY [59342485, 59342486]      + |</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt;   [919502]     chrY [59343489, 59343490]      + |</span></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt;   [919503]     chrY [59342485, 59342486]      + |</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"><span class="co">#&gt;   [919504]     chrY [59343489, 59343490]      + |</span></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt;                                          name     score       tx_id</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt; &lt;character&gt;</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt;        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;        ...                                ...       ...         ...</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt;   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt;   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt;   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt;                   side</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt;            &lt;character&gt;</span></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt;        [1]        left</span></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt;        [2]       right</span></a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt;        [3]        left</span></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt;        [4]       right</span></a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt;        [5]        left</span></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt;        ...         ...</span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt;   [919500]       right</span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt;   [919501]        left</span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt;   [919502]       right</span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt;   [919503]        left</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt;   [919504]       right</span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt;   -------</span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
 </section><section id="learning-more" class="level1"><h1>Learning more</h1>
 <p>Read the <a href="https://sa-lee.github.io/plyranges/articles/an-introduction.html">introduction vignette</a> for an overview of <code>plyranges</code> features.</p>
 </section><section id="about-the-design-of-plyranges-api" class="level1"><h1>About the design of plyranges API</h1>

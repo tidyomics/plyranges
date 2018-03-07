@@ -257,15 +257,13 @@ olap %>%
 
 We can also generate 2bp splice sites on either side of the exon using
 `flank_left` and `flank_right`. We add a column indicating the side of
-flanking for illustrative purposes. The `combine_ranges` function pairs
-the left and right pairs.
+flanking for illustrative purposes. The `interweave` function pairs the
+left and right ranges objects.
 
 ``` r
-left_ss <- flank_left(exons, 2L) %>%
-  mutate(side = "left")
-right_ss <- flank_right(exons, 2L) %>%
-  mutate(side = "right")
-all_ss <- combine_ranges(left_ss, right_ss)
+left_ss <- flank_left(exons, 2L) 
+right_ss <- flank_right(exons, 2L)
+all_ss <- interweave(left_ss, right_ss, .id = "side")
 all_ss
 #> GRanges object with 919504 ranges and 4 metadata columns:
 #>            seqnames               ranges strand |

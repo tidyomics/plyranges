@@ -120,8 +120,8 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Pairs of name-value expressions, either creating new columns
-or modifying existing ones.</p></td>
+      <td><p>Pairs of name-value expressions. The name-value pairs can either
+create new metadata columns or modify existing ones.</p></td>
     </tr>
     </table>
     
@@ -130,6 +130,102 @@ or modifying existing ones.</p></td>
     <p>a Ranges object</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>,
+                 <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+                 <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,
+                 <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"*"</span>), <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+                 <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>))
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>)
+
+<span class='co'># mutate adds new columns</span>
+<span class='no'>rng</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>avg_gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>), <span class='kw'>row_id</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 10 ranges and 3 metadata columns:
+#&gt;        seqnames    ranges strand |                gc            avg_gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;         &lt;numeric&gt;
+#&gt;    [1]     seq1  [ 1,  5]      - | 0.330660525709391 0.607461047288962
+#&gt;    [2]     seq1  [ 2,  6]      * | 0.865120546659455 0.607461047288962
+#&gt;    [3]     seq1  [ 3,  7]      - | 0.777584439376369 0.607461047288962
+#&gt;    [4]     seq1  [ 4,  8]      * | 0.827303449623287 0.607461047288962
+#&gt;    [5]     seq1  [ 5,  9]      * | 0.603324356488883 0.607461047288962
+#&gt;    [6]     seq1  [ 6, 10]      * | 0.491231821943074 0.607461047288962
+#&gt;    [7]     seq1  [ 7, 11]      + | 0.780358511023223 0.607461047288962
+#&gt;    [8]     seq1  [ 8, 12]      - | 0.884227027418092 0.607461047288962
+#&gt;    [9]     seq1  [ 9, 13]      * | 0.207713897805661 0.607461047288962
+#&gt;   [10]     seq1  [10, 14]      + | 0.307085896842182 0.607461047288962
+#&gt;           row_id
+#&gt;        &lt;integer&gt;
+#&gt;    [1]         1
+#&gt;    [2]         2
+#&gt;    [3]         3
+#&gt;    [4]         4
+#&gt;    [5]         5
+#&gt;    [6]         6
+#&gt;    [7]         7
+#&gt;    [8]         8
+#&gt;    [9]         9
+#&gt;   [10]        10
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># can also compute on newly created columns</span>
+<span class='no'>rng</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>gc</span> * <span class='no'>width</span>, <span class='kw'>score2</span> <span class='kw'>=</span> <span class='no'>score</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 3 metadata columns:
+#&gt;        seqnames    ranges strand |                gc            score
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;        &lt;numeric&gt;
+#&gt;    [1]     seq1  [ 1,  5]      - | 0.330660525709391 1.65330262854695
+#&gt;    [2]     seq1  [ 2,  6]      * | 0.865120546659455 4.32560273329727
+#&gt;    [3]     seq1  [ 3,  7]      - | 0.777584439376369 3.88792219688185
+#&gt;    [4]     seq1  [ 4,  8]      * | 0.827303449623287 4.13651724811643
+#&gt;    [5]     seq1  [ 5,  9]      * | 0.603324356488883 3.01662178244442
+#&gt;    [6]     seq1  [ 6, 10]      * | 0.491231821943074 2.45615910971537
+#&gt;    [7]     seq1  [ 7, 11]      + | 0.780358511023223 3.90179255511612
+#&gt;    [8]     seq1  [ 8, 12]      - | 0.884227027418092 4.42113513709046
+#&gt;    [9]     seq1  [ 9, 13]      * | 0.207713897805661  1.0385694890283
+#&gt;   [10]     seq1  [10, 14]      + | 0.307085896842182 1.53542948421091
+#&gt;                  score2
+#&gt;               &lt;numeric&gt;
+#&gt;    [1] 2.65330262854695
+#&gt;    [2] 5.32560273329727
+#&gt;    [3] 4.88792219688185
+#&gt;    [4] 5.13651724811643
+#&gt;    [5] 4.01662178244442
+#&gt;    [6] 3.45615910971537
+#&gt;    [7] 4.90179255511612
+#&gt;    [8] 5.42113513709046
+#&gt;    [9]  2.0385694890283
+#&gt;   [10] 2.53542948421091
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># group by partitions the data and computes within each group</span>
+<span class='no'>rng</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>strand</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>avg_gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>), <span class='kw'>row_id</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 10 ranges and 3 metadata columns:
+#&gt; Groups: strand
+#&gt;        seqnames    ranges strand |                gc            avg_gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;         &lt;numeric&gt;
+#&gt;    [1]     seq1  [ 7, 11]      + | 0.780358511023223 0.543722203932703
+#&gt;    [2]     seq1  [10, 14]      + | 0.307085896842182 0.543722203932703
+#&gt;    [3]     seq1  [ 1,  5]      - | 0.330660525709391 0.664157330834617
+#&gt;    [4]     seq1  [ 3,  7]      - | 0.777584439376369 0.664157330834617
+#&gt;    [5]     seq1  [ 8, 12]      - | 0.884227027418092 0.664157330834617
+#&gt;    [6]     seq1  [ 2,  6]      * | 0.865120546659455 0.598938814504072
+#&gt;    [7]     seq1  [ 4,  8]      * | 0.827303449623287 0.598938814504072
+#&gt;    [8]     seq1  [ 5,  9]      * | 0.603324356488883 0.598938814504072
+#&gt;    [9]     seq1  [ 6, 10]      * | 0.491231821943074 0.598938814504072
+#&gt;   [10]     seq1  [ 9, 13]      * | 0.207713897805661 0.598938814504072
+#&gt;           row_id
+#&gt;        &lt;integer&gt;
+#&gt;    [1]         1
+#&gt;    [2]         2
+#&gt;    [3]         1
+#&gt;    [4]         2
+#&gt;    [5]         3
+#&gt;    [6]         1
+#&gt;    [7]         2
+#&gt;    [8]         3
+#&gt;    [9]         4
+#&gt;   [10]         5
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -137,7 +233,9 @@ or modifying existing ones.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

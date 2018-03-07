@@ -103,9 +103,6 @@ after performing file operations.</p>
 
     <pre class="usage"><span class='fu'>GRangesDeferred</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fu'>GRanges</span>(), <span class='no'>operation</span>)
 
-<span class='co'># S4 method for GRangesDeferred</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
 <span class='fu'>has_cache_contents</span>(<span class='no'>.data</span>)
 
 <span class='fu'>get_cache</span>(<span class='no'>.data</span>)
@@ -123,6 +120,10 @@ after performing file operations.</p>
       <th>operation</th>
       <td><p>an environment containing operations to perform
 to generate the cache.</p></td>
+    </tr>
+    <tr>
+      <th>.data</th>
+      <td><p>a GRangesDeferred object</p></td>
     </tr>
     </table>
     

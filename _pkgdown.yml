@@ -15,7 +15,8 @@ reference:
   contents:
     - as_granges
     - as_iranges
-    - combine_ranges
+    - interweave
+    - bind_ranges
 
 - title:  Arithmetic
   contents:

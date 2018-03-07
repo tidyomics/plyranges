@@ -219,13 +219,3 @@ as_ranges.Rle <- function(.data) {
 #' @importFrom GenomicRanges GRanges
 #' @export
 as_ranges.RleList <- function(.data) GRanges(.data)
-
-
-#' Combine pairs of Ranges in order
-#' @param x,y Ranges objects.
-#' @importFrom S4Vectors zipup Pairs
-#' @export
-combine_ranges <- function(x, y) {
-  unlist(zipup(Pairs(x, y)))
-}
-

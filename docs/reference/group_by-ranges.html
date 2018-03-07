@@ -125,13 +125,7 @@ by their "group". <code><a href='http://dplyr.tidyverse.org/reference/group_by.h
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>x</span>)
 
 <span class='co'># S3 method for IRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>group_vars</a></span>(<span class='no'>x</span>)
-
-<span class='co'># S4 method for GRangesGrouped</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)
-
-<span class='co'># S4 method for IRangesGrouped</span>
-<span class='fu'>show</span>(<span class='no'>object</span>)</pre>
+<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>group_vars</a></span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -235,7 +229,7 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 #&gt;   &lt;factor&gt; &lt;numeric&gt;
 #&gt; 1        + 0.3741940
 #&gt; 2        - 0.4147751</div><div class='input'><span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>gc</span> <span class='kw'>==</span> <span class='fu'>min</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 2 ranges and 2 metadata columns:
-#&gt; Groups: 
+#&gt; Groups: strand
 #&gt;       seqnames    ranges strand |         gc      cat
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;numeric&gt; &lt;factor&gt;
 #&gt;   [1]     chr1  [10, 14]      + | 0.17026205        b

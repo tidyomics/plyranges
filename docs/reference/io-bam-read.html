@@ -157,6 +157,86 @@ duplicated (TRUE). This may represent reads that are PCR or
 optical duplicates.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>pasillaBamSubset</span>)) {
+   <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/pasillaBamSubset/topics/pasillaBamSubset-package'>untreated1_chr4</a></span>()
+   <span class='co'># nothing is read until an action has been performed</span>
+   <span class='fu'>print</span>(<span class='fu'>read_bam</span>(<span class='no'>bamfile</span>))
+   <span class='co'># define a region of interest</span>
+   <span class='no'>roi</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr4"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>5e5</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>7e5</span>) <span class='kw'>%&gt;%</span>
+            <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
+   <span class='co'># add map quality scores</span>
+   <span class='no'>rng_mapq</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mapq</span>)
+   <span class='fu'>print</span>(<span class='no'>rng_mapq</span>)
+   <span class='co'># filter_by_ovleraps will only read alignments if they overlap roi</span>
+   <span class='no'>by_olap</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='filter-overlaps.rd.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
+   <span class='fu'>print</span>(<span class='no'>by_olap</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; GRanges object with 0 ranges and 0 metadata columns:
+#&gt;    seqnames    ranges strand
+#&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   -------
+#&gt;   seqinfo: no sequences
+#&gt; GRanges object with 204355 ranges and 4 metadata columns:
+#&gt;            seqnames             ranges strand |      mapq       cigar    qwidth
+#&gt;               &lt;Rle&gt;          &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt; &lt;integer&gt;
+#&gt;        [1]     chr4        [892,  966]      - |       255         75M        75
+#&gt;        [2]     chr4        [919,  993]      - |       255         75M        75
+#&gt;        [3]     chr4        [924,  998]      + |         3         75M        75
+#&gt;        [4]     chr4        [936, 1010]      + |         3         75M        75
+#&gt;        [5]     chr4        [949, 1023]      + |         1         75M        75
+#&gt;        ...      ...                ...    ... .       ...         ...       ...
+#&gt;   [204351]     chr4 [1348268, 1348342]      + |         3         75M        75
+#&gt;   [204352]     chr4 [1348268, 1348342]      + |         3         75M        75
+#&gt;   [204353]     chr4 [1348268, 1348342]      + |         3         75M        75
+#&gt;   [204354]     chr4 [1348449, 1348523]      - |         0         75M        75
+#&gt;   [204355]     chr4 [1350124, 1350198]      - |         0         75M        75
+#&gt;                njunc
+#&gt;            &lt;integer&gt;
+#&gt;        [1]         0
+#&gt;        [2]         0
+#&gt;        [3]         0
+#&gt;        [4]         0
+#&gt;        [5]         0
+#&gt;        ...       ...
+#&gt;   [204351]         0
+#&gt;   [204352]         0
+#&gt;   [204353]         0
+#&gt;   [204354]         0
+#&gt;   [204355]         0
+#&gt;   -------
+#&gt;   seqinfo: 8 sequences from an unspecified genome
+#&gt; GRanges object with 28368 ranges and 4 metadata columns:
+#&gt;           seqnames           ranges strand |        which_label       cigar
+#&gt;              &lt;Rle&gt;        &lt;IRanges&gt;  &lt;Rle&gt; |              &lt;Rle&gt; &lt;character&gt;
+#&gt;       [1]     chr4 [499946, 500020]      + | chr4:500000-700000         75M
+#&gt;       [2]     chr4 [500023, 500097]      + | chr4:500000-700000         75M
+#&gt;       [3]     chr4 [500421, 500495]      - | chr4:500000-700000         75M
+#&gt;       [4]     chr4 [500684, 500758]      - | chr4:500000-700000         75M
+#&gt;       [5]     chr4 [500753, 500827]      - | chr4:500000-700000         75M
+#&gt;       ...      ...              ...    ... .                ...         ...
+#&gt;   [28364]     chr4 [699956, 700030]      + | chr4:500000-700000         75M
+#&gt;   [28365]     chr4 [699957, 700031]      + | chr4:500000-700000         75M
+#&gt;   [28366]     chr4 [699960, 700034]      - | chr4:500000-700000         75M
+#&gt;   [28367]     chr4 [699962, 700036]      + | chr4:500000-700000         75M
+#&gt;   [28368]     chr4 [699963, 700037]      + | chr4:500000-700000         75M
+#&gt;              qwidth     njunc
+#&gt;           &lt;integer&gt; &lt;integer&gt;
+#&gt;       [1]        75         0
+#&gt;       [2]        75         0
+#&gt;       [3]        75         0
+#&gt;       [4]        75         0
+#&gt;       [5]        75         0
+#&gt;       ...       ...       ...
+#&gt;   [28364]        75         0
+#&gt;   [28365]        75         0
+#&gt;   [28366]        75         0
+#&gt;   [28367]        75         0
+#&gt;   [28368]        75         0
+#&gt;   -------
+#&gt;   seqinfo: 8 sequences from an unspecified genome</div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -164,7 +244,9 @@ optical duplicates.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
