@@ -3,7 +3,7 @@ Type: Package
 Title: A fluent interface for manipulating GenomicRanges
 Version: 0.1.0
 Authors@R: c(
-      person("Stuart", "Lee", email = "stuart.lee1@monash.edu", role = c("aut", "cre")),
+      person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
       person("Dianne", "Cook", role = c("aut", "ctb"))
     )
@@ -28,8 +28,9 @@ Imports:
   GenomicAlignments,
   GenomeInfoDb,
   Rsamtools,
-  S4Vectors
-biocViews: Infrastructure, Data Representation, WorkflowStep
+  S4Vectors, 
+  utils
+biocViews: Infrastructure, DataRepresentation, WorkflowStep, Coverage
 License: Artistic-2.0
 Encoding: UTF-8
 ByteCompile: true

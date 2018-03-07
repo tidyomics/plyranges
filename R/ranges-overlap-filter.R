@@ -18,6 +18,7 @@
 #' \code{minoverlap} refers to the minimum number of positions
 #' overlapping between ranges, to consider there to be overlap.
 #'
+#' @return  a Ranges object
 #' @importFrom IRanges subsetByOverlaps
 #' @seealso \link[IRanges]{subsetByOverlaps}
 #' @export
@@ -40,7 +41,7 @@
 #'
 #' filter_by_non_overlaps(query, subject)
 #'
-#' @rdname filter-overlaps.rd
+#' @rdname ranges-filter-overlaps
 filter_by_overlaps <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   UseMethod("filter_by_overlaps")
 }
@@ -56,7 +57,7 @@ filter_by_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap =0L)
 }
 
 #' @export
-#' @rdname filter-overlaps.rd
+#' @rdname ranges-filter-overlaps
 filter_by_non_overlaps <- function(x,y, maxgap, minoverlap) {
   UseMethod("filter_by_non_overlaps")
 }

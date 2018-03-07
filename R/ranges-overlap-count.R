@@ -6,6 +6,15 @@
 #' as an integer greater than zero, accounting for the maximum gap.
 #'
 #' @return An integer vector of same length as x.
+#'
+#' @examples
+#' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
+#'              as_iranges()
+#' subject <- data.frame(start = 2:6, width = 3:7, label = letters[1:5]) %>%
+#'              as_iranges()
+#' query %>% mutate(n_olap = count_overlaps(., subject),
+#'                  n_olap_within = count_overlaps_within(., subject))
+#'
 #' @importFrom IRanges countOverlaps
 #' @rdname ranges-count-overlaps.Rd
 #' @export

@@ -6,8 +6,27 @@
 #'
 #' @details These are usual set-operations that act on the sets of the
 #' ranges represented in x and y. By default these operations will ignore
-#' any strand information. The directedd versions of these functions will
+#' any strand information. The directed versions of these functions will
 #' take into account strand.
+#' @return A Ranges object
+#'
+#' @examples
+#' gr1 <- data.frame(seqnames = "chr1",
+#'                   start = c(2,9),
+#'                   end = c(7,9),
+#'                   strand = c("+", "-")) %>%
+#'                as_granges()
+#' gr2 <- data.frame(seqnames = "chr1", start = 5, width = 5, strand = "-") %>%
+#'          as_granges()
+#'
+#' union_ranges(gr1, gr2)
+#' union_ranges_directed(gr1, gr2)
+#'
+#' intersect_ranges(gr1, gr2)
+#' intersect_ranges_directed(gr1, gr2)
+#'
+#' setdiff_ranges(gr1, gr2)
+#' setdiff_ranges_directed(gr1, gr2)
 #'
 #' @export
 #' @rdname ranges-setops
@@ -65,8 +84,8 @@ setdiff_ranges.Ranges <- function(x,y) {
 }
 
 #' @importFrom GenomicRanges setdiff
-setdiff_ranges.Ranges <- function(x,y) {
-  setdiff(x,y, ignore.strand = FALSE)
+setdiff_ranges.GenomicRanges <- function(x,y) {
+  setdiff(x,y, ignore.strand = TRUE)
 }
 
 #' @export

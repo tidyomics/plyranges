@@ -19,7 +19,33 @@
 #' preceded by the ranges in `x`, all metadata is copied over from the
 #' right-hand side ranges `y`.
 #'
-#' @rdname precede-ranges
+#' @examples
+#' subject <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
+#'              as_iranges()
+#' query <- data.frame(start = 2:6, width = 3:7, label = letters[1:5]) %>%
+#'              as_iranges()
+#'
+#' join_precede(query, subject)
+#'
+#' query  <- data.frame(seqnames = "chr1",
+#'                start = c(11,101),
+#'                end = c(21, 200),
+#'                name = c("a1", "a2"),
+#'                strand = c("+", "-"),
+#'                score = c(1,2)) %>%
+#'            as_granges()
+#' subject <- data.frame(seqnames = "chr1",
+#'                       strand = c("+", "-", "+", "-"),
+#'                       start = c(21,91,101,201),
+#'                       end = c(30,101,110,210),
+#'                       name = paste0("b", 1:4),
+#'                       score = 1:4) %>%
+#'                    as_granges()
+#'
+#' join_precede(query, subject)
+#' join_precede_right(query, subject)
+#' join_precede_downstream(query, subject)
+#' @rdname ranges-precede
 #' @importFrom IRanges precede
 #' @export
 join_precede <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_precede") }
@@ -45,7 +71,7 @@ join_precede.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
 }
 
 
-#' @rdname precede-ranges
+#' @rdname ranges-precede
 #' @importFrom IRanges precede
 #' @export
 join_precede_right <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_precede_right") }
@@ -69,7 +95,7 @@ join_precede_right.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
 }
 
 
-#' @rdname precede-ranges
+#' @rdname ranges-precede
 #' @importFrom IRanges precede
 #' @export
 join_precede_downstream <- function(x,y, suffix = c(".x", ".y")) {UseMethod("join_precede_downstream")}

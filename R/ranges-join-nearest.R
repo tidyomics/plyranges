@@ -25,6 +25,37 @@
 #'
 #' @return A Ranges object corresponding to the nearest ranges, all metadata
 #' is copied over from the right-hand side ranges `y`.
+#'
+#' @examples
+#' query <- data.frame(start = c(5,10, 15,20),
+#'                    width = 5,
+#'                    gc = runif(4)) %>%
+#'              as_iranges()
+#' subject <- data.frame(start = c(2:6, 24),
+#'                       width = 3:8,
+#'                       label = letters[1:6]) %>%
+#'              as_iranges()
+#'
+#' join_nearest(query, subject)
+#' join_nearest_left(query, subject)
+#' join_nearest_right(query, subject)
+#'
+#' subject  <- data.frame(seqnames = "chr1",
+#'                start = c(11,101),
+#'                end = c(21, 200),
+#'                name = c("a1", "a2"),
+#'                strand = c("+", "-"),
+#'                score = c(1,2)) %>%
+#'            as_granges()
+#' query <- data.frame(seqnames = "chr1",
+#'                       strand = c("+", "-", "+", "-"),
+#'                       start = c(21,91,101,201),
+#'                       end = c(30,101,110,210),
+#'                       name = paste0("b", 1:4),
+#'                       score = 1:4) %>%
+#'                    as_granges()
+#' join_nearest_upstream(query, subject)
+#' join_nearest_downstream(query, subject)
 #' @rdname ranges-nearest
 #' @importFrom IRanges nearest
 #' @export

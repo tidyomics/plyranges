@@ -6,7 +6,7 @@ overscope_ranges <- function(x, envir = parent.frame()) {
   return(os)
 }
 
-#' @importFrom rlang env_bind :=
+#' @importFrom rlang env_bind := new_overscope overscope_eval_next
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
 
