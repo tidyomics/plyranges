@@ -69,7 +69,7 @@ norm_args_reader <- function(genome_info) {
 #' np_file <- system.file("extdata", "demo.narrowPeak.gz",  package="rtracklayer")
 #' gr <- read_narrowpeaks(np_file, genome_info = "hg19")
 #' gr
-#'
+#' @return A GRanges object
 #' @export
 #' @rdname io-bed-read
 read_bed <- function(file, col_names = NULL, genome_info = NULL,
@@ -102,6 +102,7 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' @importFrom rtracklayer export.bed
 #' @seealso \link[rtracklayer]{BEDFile} \link[rtracklayer]{BEDGraphFile}
 #' @export
+#' @return The write functions return a BED(Graph)File invisibly
 #' @rdname io-bed-write
 write_bed <- function(x, file, index = FALSE) {
   export.bed(x, file, index = index)

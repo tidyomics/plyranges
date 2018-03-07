@@ -23,6 +23,7 @@ rng_arrange <- function(.data, dots) {
 #' arrange(rng, score)
 #' # you can also use dplyr::desc to arrange by descending order
 #' @rdname ranges-arrange
+#' @return A sorted Ranges object
 #' @method arrange GenomicRanges
 #' @export
 arrange.GenomicRanges <- function(.data, ...) {

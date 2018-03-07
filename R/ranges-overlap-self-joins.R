@@ -8,6 +8,8 @@
 #' @details Self overlaps find any overlaps (or overlaps within or overlaps
 #' directed) between a ranges object and itself.
 #'
+#' @return a Ranges object
+#'
 #' @examples
 #' query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) %>%
 #'              as_iranges()

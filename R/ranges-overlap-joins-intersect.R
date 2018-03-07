@@ -27,6 +27,8 @@
 #' contained in y. The \code{directed} suffix takes into account the strandedness
 #' of a GRanges object.
 #'
+#' @return a GRanges object
+#'
 #' @importFrom S4Vectors first second DataFrame
 #' @importFrom IRanges findOverlapPairs
 #' @examples

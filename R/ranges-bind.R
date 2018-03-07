@@ -17,6 +17,7 @@
 #' interweave(flank_left(gr, width = 5L), flank_right(gr, width = 5L))
 #' interweave(flank_left(gr, width = 5L), flank_right(gr, width = 5L), .id = "origin")
 #' @importFrom S4Vectors zipup Pairs
+#' @return a Ranges object
 #' @export
 #' @rdname ranges-interweave
 interweave <- function(left, right, .id = NULL) {
@@ -38,6 +39,7 @@ interweave <- function(left, right, .id = NULL) {
 #' of the column correspond to the named arguments or the names of the list
 #' supplied.
 #'
+#' @return a concatenated Ranges object
 #' @importFrom rlang dots_values have_name
 #' @rdname ranges-bind
 #' @examples

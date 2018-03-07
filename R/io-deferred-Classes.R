@@ -18,6 +18,7 @@
 #' By default the \code{show} method for a GRangesDeferred object
 #' shows what's in the cache.
 #'
+#' @return a GRangesDeferred object.
 #' @seealso read_bam
 #' @export
 #' @rdname ranges-deferred

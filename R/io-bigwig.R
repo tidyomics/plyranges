@@ -13,7 +13,7 @@
 #'   gr <- read_bigwig(bw_file)
 #'   gr
 #' }
-#'
+#' @return a GRanges object
 #' @importFrom rtracklayer import.bw BigWigSelection BigWigFile
 #' @seealso \link[rtracklayer]{BigWigFile}
 #' @export
@@ -58,6 +58,7 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 #' @importFrom rtracklayer export.bw
 #' @seealso \code{\link[rtracklayer]{BigWigFile}}
 #' @export
+#' @return The write functions return a BigWigFile invisibly
 #' @rdname io-bigwig-write
 write_bigwig <- function(x, file) {
   export.bw(x, file)

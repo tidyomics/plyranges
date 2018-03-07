@@ -41,7 +41,7 @@ norm_args_reader_gff <- function(genome_info) {
 #' # alternatively with read_gff
 #' gr <- read_gff(test_gff3, genome_info = "hg19")
 #' gr
-#'
+#' @return a GRanges object
 #' @importFrom rtracklayer import.gff
 read_gff <- function(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL) {
   import.gff(file,
@@ -94,6 +94,7 @@ read_gff3 <- function(file, col_names = NULL, genome_info = NULL, overlap_ranges
 #'
 #' @importFrom rtracklayer export.gff export.gff1 export.gff2 export.gff3
 #' @seealso \code{\link[rtracklayer]{GFFFile}}
+#' @return The write function returns a GFFFile object invisibly
 #' @export
 #' @rdname io-gff-write
 write_gff <- function(x, file, index = FALSE) {

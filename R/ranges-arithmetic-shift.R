@@ -10,6 +10,8 @@
 #' on the positive strand left/right and the negative strand right/left. By
 #' default, unstranded features are treated as positive.
 #'
+#' @return a Ranges object with start and end coordinates shifted.
+#'
 #' @seealso \code{\link[IRanges]{shift}}
 #' @importFrom IRanges shift
 #' @rdname shift-ranges

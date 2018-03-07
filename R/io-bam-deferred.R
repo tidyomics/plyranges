@@ -1,3 +1,4 @@
+#' @method select GRangesDeferred
 #' @importFrom Rsamtools bamWhat<- bamTag<-
 #' @export
 select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
@@ -59,6 +60,7 @@ valid_flag_filters <- function() {
 
 }
 
+#' @method filter GRangesDeferred
 #' @importFrom Rsamtools scanBamFlag bamFlag<-
 #' @export
 filter.GRangesDeferred <- function(.data, ...) {
@@ -112,6 +114,7 @@ filter_by_overlaps.GRangesDeferred <- function(x, y, maxgap = -1L, minoverlap = 
                   operation = get_operation(x))
 }
 
+#' @method summarise GRangesDeferred
 #' @export
 summarise.GRangesDeferred <- function(.data, ...) {
   dots <- quos(...)
@@ -123,6 +126,7 @@ summarise.GRangesDeferred <- function(.data, ...) {
   return(summarize(cache, UQS(dots)))
 }
 
+#' @method mutate GRangesDeferred
 #' @export
 mutate.GRangesDeferred <- function(.data, ...) {
   dots <- quos(...)
@@ -134,6 +138,7 @@ mutate.GRangesDeferred <- function(.data, ...) {
   return(mutate(cache, UQS(dots)))
 }
 
+#' @method group_by GRangesDeferred
 #' @export
 group_by.GRangesDeferred <- function(.data, ...) {
   capture_groups <- quos(...)

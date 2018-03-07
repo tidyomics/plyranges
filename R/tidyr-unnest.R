@@ -17,6 +17,7 @@ tidyr::unnest
 #' @importFrom S4Vectors expand
 #' @method unnest GenomicRanges
 #'
+#' @return a GRanges object with expanded list columns
 #' @examples
 #' grng <- as_granges(data.frame(seqnames = "chr1", start = 20:23, width = 1000))
 #' grng <- mutate(grng, exon_id = IntegerList(a = 1, b = c(4,5), c = 3, d = c(2,5)))

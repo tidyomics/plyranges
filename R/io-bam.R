@@ -64,7 +64,7 @@
 #'    print(by_olap)
 #' }
 #'
-#'
+#' @return A GRangesDeferred object
 #' @rdname io-bam-read
 read_bam <- function(file, index = file, paired = FALSE) {
   if (is.null(index)) {

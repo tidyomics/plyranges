@@ -9,6 +9,7 @@
 #' @description Without anchoring, this function will extend the interval
 #' in either direction by the integer vector in extend.
 #' @export
+#' @return a Ranges object with modified start or end (or both) coordinates
 #' @examples
 #' rng <- as_iranges(data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0)))
 #' rng2 <- stretch(anchor_center(rng), 10)

@@ -25,6 +25,11 @@
 #'   \item{\code{group_vars(x)}}{Returns a character vector}
 #' }
 #'
+#' @return The \code{group_by()} function will return a GroupedRanges object.
+#' These have the same appearance as a regular Ranges object but with an
+#' additional groups slot.
+#'
+#'
 #' @importFrom dplyr group_by
 #' @importFrom rlang quo_name quos syms
 #' @importFrom methods new

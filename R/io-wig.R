@@ -21,6 +21,7 @@
 #' gr <- read_wig(test_wig)
 #' gr
 #' gr <- read_wig(test_wig, genome_info = "hg19")
+#' @return A GRanges object
 #' @export
 read_wig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 
@@ -43,6 +44,7 @@ read_wig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 #' @importFrom rtracklayer export.wig
 #' @seealso \link[rtracklayer]{WIGFile}
 #' @export
+#' @return The write function returns a WIGFile invisibly.
 #' @rdname io-wig-write
 write_wig <- function(x, file) {
   export.wig(x, file)

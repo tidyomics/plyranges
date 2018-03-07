@@ -10,6 +10,8 @@
 #'
 #' @details By default unstranded features are treated as
 #' positive strand features.
+#'
+#' @return a Ranges object with modified width
 #' @importFrom IRanges resize
 #' @seealso \code{\link[IRanges]{resize}}
 #' @export

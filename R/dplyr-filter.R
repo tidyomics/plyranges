@@ -79,13 +79,14 @@ filter.GenomicRanges <- function(.data, ...) {
   filter_rng(.data, dots)
 }
 
-
+#' @method filter Ranges
 #' @export
 filter.Ranges <- function(.data, ...) {
   dots <- quos(...)
   filter_rng(.data, dots)
 }
 
+#' @method filter GRangesGrouped
 #' @export
 filter.GRangesGrouped <- function(.data, ...) {
     dots <- quos(...)
@@ -97,7 +98,7 @@ filter.GRangesGrouped <- function(.data, ...) {
 
 }
 
-
+#' @method filter IRangesGrouped
 #' @export
 filter.IRangesGrouped <- function(.data, ...) {
   dots <- quos(...)

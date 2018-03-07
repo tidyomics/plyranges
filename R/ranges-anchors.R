@@ -40,6 +40,8 @@
 #'
 #' @seealso \link{set_width}, \link{stretch}
 #'
+#' @return a RangesAnchored object which has the same appearance as a regular
+#' Ranges object but with an additional slot displaying an anchor.
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5)
 #' rng <- as_iranges(df)
