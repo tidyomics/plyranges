@@ -49,7 +49,6 @@ test_that("matches IRanges/GenomicRanges", {
 
 
 test_that("non-standard evaluation works as expected",{
-  skip_on_travis()
   oldwd <- getwd()
   setwd(system.file("unitTests", "data", "merge", package="HelloRanges"))
 
@@ -60,37 +59,34 @@ test_that("non-standard evaluation works as expected",{
   expect_identical(exp, reduce_ranges(a))
 
   exp <- reduce(a, with.revmap=TRUE, ignore.strand = TRUE)
-  mcols(exp) <- aggregate(a, mcols(exp)$revmap,
-                          seqnames.count = lengths(seqnames))
-  exp <- exp %>% select(-grouping)
+  mcols(exp)[["seqnames.count"]] <- lengths(exp$revmap)
+  exp <- exp %>% select(-revmap)
 
   expect_identical(exp, a %>% reduce_ranges(seqnames.count = length(seqnames)))
 
   mcols(a)$name <- paste0("a", 1:4)
   exp <- reduce(a, with.revmap=TRUE)
-  mcols(exp) <- S4Vectors::aggregate(a, mcols(exp)$revmap,
-                          name.collapse = unstrsplit(name, ","))
-  exp <- exp %>% select(-grouping)
+  mcols(exp)[["name.collapse"]] <- c("a1", "a2,a3,a4")
+  exp <- exp %>% select(-revmap)
 
   expect_identical(exp, a %>%
                      reduce_ranges(name.collapse = paste0(name, collapse = ","))
                    )
   a <- read_bed("a.full.bed")
   exp <- reduce(a, with.revmap=TRUE, ignore.strand=TRUE)
-  mcols(exp) <- S4Vectors::aggregate(a, mcols(exp)$revmap,
-                          name.collapse = unstrsplit(name, ","),
-                          score.sum = sum(score))
-  exp <- exp %>% select(-grouping)
+  mcols(exp)[["name.collapse"]] <- c("a1", "a2,a3,a4", "a1", "a2", "a3,a4")
+  mcols(exp)[["score.sum"]] <- c(1,9,5,6,15)
+
+  exp <- exp %>% select(-revmap)
 
   expect_identical(exp, reduce_ranges(a,
                                       name.collapse = paste0(name, collapse = ","),
                                       score.sum = sum(score)))
 
   exp <- reduce(a, with.revmap=TRUE, ignore.strand=TRUE)
-  mcols(exp) <- aggregate(a, mcols(exp)$revmap,
-                          score.count = lengths(score),
-                          score.sum = sum(score))
-  exp <- exp %>% select(-grouping)
+  mcols(exp)[["score.count"]] <- c(1L,3L,1L,1L,2L)
+  mcols(exp)[["score.sum"]] <- c(1,9,5,6,15)
+  exp <- exp %>% select(-revmap)
 
   expect_identical(exp, reduce_ranges(a, score.count = length(score),
                                       score.sum = sum(score)))
