@@ -55,5 +55,5 @@ rng \%>\%
 
 }
 \seealso{
-\code{\link[dplyr]{filter}}
+\code{\link[dplyr:filter]{dplyr::filter()}}
 }

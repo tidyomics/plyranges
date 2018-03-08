@@ -21,5 +21,5 @@ This is a lightweight wrapper to the export family
 of functions defined in \pkg{rtracklayer}.
 }
 \seealso{
-\code{\link[rtracklayer]{BigWigFile}}
+\code{\link[rtracklayer:BigWigFile]{rtracklayer::BigWigFile()}}
 }

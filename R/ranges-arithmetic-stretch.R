@@ -1,9 +1,9 @@
 #' Stretch a genomic interval
 #'
 #' @param x a Ranges object, to fix by either the start, end or center
-#' of an interval use \code{anchor_start(x)}, \code{anchor_end(x)},
-#' \code{anchor_center(x)}. To fix by strand use \code{anchor_3p(x)} or
-#' \code{anchor_5p(x)}.
+#' of an interval use `anchor_start(x)`, `anchor_end(x)`,
+#' `anchor_center(x)`. To fix by strand use `anchor_3p(x)` or
+#' `anchor_5p(x)`.
 #' @param extend the amount to alter the width of a Ranges object by. Either an
 #' integer vector of length 1 or an integer vector the same length as x.
 #' @description Without anchoring, this function will extend the interval

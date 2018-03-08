@@ -27,7 +27,7 @@ coming from x and y.}
 }
 \value{
 A Ranges object corresponding to the nearest ranges, all metadata
-is copied over from the right-hand side ranges `y`.
+is copied over from the right-hand side ranges \code{y}.
 }
 \description{
 Find nearest neighbours between two Ranges objects

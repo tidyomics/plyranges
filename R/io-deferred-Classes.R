@@ -12,10 +12,10 @@
 #'
 #' @details
 #' To see what is loaded in the cache use
-#' \code{get_cache} and to see the file operations being performed
-#' use \code{get_operation}. To check whether the cache is full
-#' use \code{has_cache_contents}.
-#' By default the \code{show} method for a GRangesDeferred object
+#' `get_cache` and to see the file operations being performed
+#' use `get_operation`. To check whether the cache is full
+#' use `has_cache_contents`.
+#' By default the `show` method for a GRangesDeferred object
 #' shows what's in the cache.
 #'
 #' @return a GRangesDeferred object.

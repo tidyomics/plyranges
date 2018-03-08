@@ -32,5 +32,5 @@ This is a lightweight wrapper to the export family
 of functions defined in \pkg{rtracklayer}.
 }
 \seealso{
-\link[rtracklayer]{BEDFile} \link[rtracklayer]{BEDGraphFile}
+\code{\link[rtracklayer:BEDFile]{rtracklayer::BEDFile()}}
 }

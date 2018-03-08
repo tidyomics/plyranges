@@ -34,5 +34,5 @@ compute_coverage(rng, shift = 14L)
 compute_coverage(rng, width = 10L)
 }
 \seealso{
-\link[IRanges]{coverage}
+\code{\link[IRanges:coverage]{IRanges::coverage()}}, \code{\link[GenomicRanges:coverage]{GenomicRanges::coverage()}}
 }

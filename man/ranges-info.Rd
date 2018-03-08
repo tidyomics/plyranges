@@ -35,16 +35,11 @@ as a Ranges object use \code{get_genome_info}.
 \description{
 To construct annotations by supplying annotation information
 use \code{genome_info}. This function allows you to get UCSC build information
-via \link[GenomeInfoDb]{fetchExtendedChromInfoFromUCSC}. To add
+via \code{\link[GenomeInfoDb:fetchExtendedChromInfoFromUCSC]{GenomeInfoDb::fetchExtendedChromInfoFromUCSC()}}. To add
 annotations to an existing Ranges object use \code{set_genome_info}. To retrieve
 an annotation as a Ranges object use \code{get_genome_info}.
 }
 \examples{
-if (interactive()) {
- # requires internet connection
- genome_info(genome = "hg38")
-}
-
 x <- genome_info(genome = "toy",
                  seqnames = letters[1:4],
                  seqlengths = c(100, 300, 15, 600),
@@ -60,8 +55,14 @@ rng <- set_genome_info(rng,
                        is_circular = c(NA, FALSE, FALSE, TRUE))
 get_genome_info(rng)
 
+\dontrun{
+if (interactive()) {
+ # requires internet connection
+ genome_info(genome = "hg38")
+}
+}
 
 }
 \seealso{
-\link[GenomeInfoDb]{Seqinfo-class} \link[GenomeInfoDb]{fetchExtendedChromInfoFromUCSC}
+\code{\link[GenomeInfoDb:Seqinfo]{GenomeInfoDb::Seqinfo()}}, \code{\link[GenomeInfoDb:fetchExtendedChromInfoFromUCSC]{GenomeInfoDb::fetchExtendedChromInfoFromUCSC()}}
 }

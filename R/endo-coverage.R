@@ -1,6 +1,6 @@
 #' Compute coverage over a Ranges object
 #'
-#' @param x a \code{Ranges} object
+#' @param x a `Ranges` object
 #' @param shift shift how much should each range in x be shifted by? (default = 0L)
 #' @param width width how long should the returned coverage score be?
 #' This must be either a  positive integer or NULL (default = NULL)
@@ -11,7 +11,7 @@
 #' @return An expanded Ranges object with a score column corresponding to
 #' the coverage value over that interval. Note that compute_coverage
 #' drops metadata associated with the orginal ranges.
-#' @seealso \link[IRanges]{coverage}
+#' @seealso [IRanges::coverage()], [GenomicRanges::coverage()]
 #' @examples
 #' rng <- as_iranges(data.frame(start = 1:10, width = 5))
 #' compute_coverage(rng)

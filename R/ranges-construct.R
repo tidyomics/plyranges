@@ -1,6 +1,6 @@
 #' Construct a I/GRanges object from a tibble or data.frame
 #'
-#' @param .data a \code{\link{data.frame}} or \code{\link{tibble}} to
+#' @param .data a [data.frame()] or [tibble()] to
 #' construct a Ranges object from
 #' @param ... optional named arguments specifying which the columns in .data
 #' containin the core components a Ranges object.
@@ -12,8 +12,8 @@
 #' object. By default other columns in .data are placed into the mcols (
 #' metadata columns) slot of the returned object.
 #'
-#' @return a \link[IRanges]{IRanges} or a \link[GenomicRanges]{GRanges} object.
-#' @seealso \link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
+#' @return a Ranges object.
+#' @seealso [IRanges::IRanges()][GenomicRanges::GRanges()]
 #'
 #' @importFrom rlang quos eval_tidy
 #' @importFrom S4Vectors mcols metadata mcols<- metadata<-
@@ -187,16 +187,16 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 
 #' Coerce an Rle or RleList object to Ranges
 #'
-#' @param .data a \code{\link{Rle}} or an \code{\link{RleList}} object.
+#' @param .data a [Rle()] or an [RleList()] object.
 #'
 #'
-#' @return an \code{\link{IRanges}} object if the input is an
-#' \code{\link{Rle}} object or a \code{\link{GRanges}} object for
-#' an \code{\link{RleList}} object.
+#' @return an [IRanges()] object if the input is an
+#' [Rle()] object or a [GRanges()] object for
+#' an [RleList()] object.
 #'
-#' @details This function is behind \code{\link{compute_coverage}}.
+#' @details This function is behind [compute_coverage()].
 #'
-#' @seealso \link[S4Vectors]{Rle-class} \link[IRanges]{AtomicList}
+#' @seealso [S4Vectors::Rle()],[IRanges::RleList()]
 #' @examples
 #' x <- Rle(10:1, 1:10)
 #' as_ranges(x)

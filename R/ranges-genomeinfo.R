@@ -25,22 +25,17 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #' @param is_circular An optional logical vector indicating whether a sequence is ciruclar.
 #'
 #' @return a GRanges object containing annotations. To retrieve the annotations
-#' as a Ranges object use \code{get_genome_info}.
+#' as a Ranges object use `get_genome_info`.
 #'
 #' @description To construct annotations by supplying annotation information
-#' use \code{genome_info}. This function allows you to get UCSC build information
-#' via \link[GenomeInfoDb]{fetchExtendedChromInfoFromUCSC}. To add
-#' annotations to an existing Ranges object use \code{set_genome_info}. To retrieve
-#' an annotation as a Ranges object use \code{get_genome_info}.
+#' use `genome_info`. This function allows you to get UCSC build information
+#' via [GenomeInfoDb::fetchExtendedChromInfoFromUCSC()]. To add
+#' annotations to an existing Ranges object use `set_genome_info`. To retrieve
+#' an annotation as a Ranges object use `get_genome_info`.
 #'
 #' @importFrom GenomeInfoDb Seqinfo seqnames seqlengths isCircular genome seqinfo
-#' @seealso \link[GenomeInfoDb]{Seqinfo-class} \link[GenomeInfoDb]{fetchExtendedChromInfoFromUCSC}
+#' @seealso [GenomeInfoDb::Seqinfo()], [GenomeInfoDb::fetchExtendedChromInfoFromUCSC()]
 #' @examples
-#' if (interactive()) {
-#'  # requires internet connection
-#'  genome_info(genome = "hg38")
-#' }
-#'
 #' x <- genome_info(genome = "toy",
 #'                  seqnames = letters[1:4],
 #'                  seqlengths = c(100, 300, 15, 600),
@@ -56,6 +51,12 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #'                        is_circular = c(NA, FALSE, FALSE, TRUE))
 #' get_genome_info(rng)
 #'
+#'\dontrun{
+#' if (interactive()) {
+#'  # requires internet connection
+#'  genome_info(genome = "hg38")
+#' }
+#' }
 #'
 #' @rdname ranges-info
 #' @export

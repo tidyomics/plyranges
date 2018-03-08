@@ -18,7 +18,7 @@ norm_args_reader <- function(genome_info) {
 #'
 #' @param file A path to a file or a connection.
 #' @param col_names An optional character vector for including additional
-#' columns in \code{file} that are not part of the BED/narrowPeaks specification.
+#' columns in `file` that are not part of the BED/narrowPeaks specification.
 #' @param genome_info An optional character string or a Ranges object
 #' that contains information about the genome build. For example the USSC identifier
 #'"hg19" will add build information to the returned GRanges.
@@ -32,8 +32,8 @@ norm_args_reader <- function(genome_info) {
 #'
 #' @details This is a lightweight wrapper to the import family
 #' of functions defined in \pkg{rtracklayer}.
-#' The \code{read_narrowpeaks} function parses the ENCODE narrowPeak BED format (see
-#' \url{https://genome.ucsc.edu/FAQ/FAQformat.html#format12} for details.). As
+#' The `read_narrowpeaks` function parses the ENCODE narrowPeak BED format (see
+#' <https://genome.ucsc.edu/FAQ/FAQformat.html#format12> for details.). As
 #' such the parser expects four additional columns called (corresponding to
 #' the narrowPeaks spec):
 #' \itemize{
@@ -48,7 +48,7 @@ norm_args_reader <- function(genome_info) {
 #' @importFrom rtracklayer import.bed
 #' @importFrom GenomeInfoDb seqinfo
 #' @importFrom methods is
-#' @seealso \code{\link[rtracklayer]{BEDFile}}
+#' @seealso [rtracklayer::BEDFile()]
 #'
 #' @examples
 #'
@@ -69,7 +69,6 @@ norm_args_reader <- function(genome_info) {
 #' np_file <- system.file("extdata", "demo.narrowPeak.gz",  package="rtracklayer")
 #' gr <- read_narrowpeaks(np_file, genome_info = "hg19")
 #' gr
-#' @return A GRanges object
 #' @export
 #' @rdname io-bed-read
 read_bed <- function(file, col_names = NULL, genome_info = NULL,
@@ -91,7 +90,7 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' @param file File name, URL or connection specifying a file to write x to.
 #'             Compressed files with extensions such as '.gz' are handled
 #'             automatically. If you want to index the file with tabix use the
-#'             \code{index} argument.
+#'             `index` argument.
 #' @param index Compress and index the output file
 #'              with bgzf and tabix (default = FALSE). Note that tabix indexing will sort the
 #'              data by chromosome and start.
@@ -100,7 +99,7 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' of functions defined in \pkg{rtracklayer}.
 #'
 #' @importFrom rtracklayer export.bed
-#' @seealso \link[rtracklayer]{BEDFile} \link[rtracklayer]{BEDGraphFile}
+#' @seealso [rtracklayer::BEDFile()]
 #' @export
 #' @return The write functions return a BED(Graph)File invisibly
 #' @rdname io-bed-write

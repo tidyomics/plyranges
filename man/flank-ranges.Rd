@@ -56,5 +56,5 @@ flank_upstream(gr, width = 5L)
 flank_downstream(gr, width = 5L)
 }
 \seealso{
-\link[IRanges]{flank} \link[GenomicRanges]{flank}
+\link[GenomicRanges:flank]{IRanges::flank()}
 }

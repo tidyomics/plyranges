@@ -5,27 +5,27 @@
 #' or the core variables of a Ranges.
 #' @param x a GroupedRanges object.
 #'
-#' @description The function \code{group_by} takes a Ranges object and defines
+#' @description The function `group_by` takes a Ranges object and defines
 #' groups by one or more variables. Operations are then performed on the Ranges
-#' by their "group". \code{ungroup()} removes grouping.
+#' by their "group". `ungroup()` removes grouping.
 #'
 #' @details
-#' \code{group_by()} creates a new object of class \code{GRangesGrouped} if
-#' the input is a \code{GRanges} object or an object of class \code{IRangesGrouped}
-#' if the input is a \code{IRanges} object. Both of these classes contain a slot
-#' called \code{groups} corresponding to the names of grouping variables. They
-#' also inherit from their parent classes, \code{Ranges} and \code{GenomicRanges}
-#' respectively. \code{ungroup()} removes the grouping and will return
-#' either a \code{GRanges} or \code{IRanges} object.
+#' `group_by()` creates a new object of class `GRangesGrouped` if
+#' the input is a `GRanges` object or an object of class `IRangesGrouped`
+#' if the input is a `IRanges` object. Both of these classes contain a slot
+#' called `groups` corresponding to the names of grouping variables. They
+#' also inherit from their parent classes, `Ranges` and `GenomicRanges`
+#' respectively. `ungroup()` removes the grouping and will return
+#' either a `GRanges` or `IRanges` object.
 #'
 #' @section Accessors:
 #' To return grouping variables on a grouped Ranges use either
 #' \itemize{
-#'   \item{\code{groups(x)}}{Returns a list of symbols}
-#'   \item{\code{group_vars(x)}}{Returns a character vector}
+#'   \item{`groups(x)`}{Returns a list of symbols}
+#'   \item{`group_vars(x)`}{Returns a character vector}
 #' }
 #'
-#' @return The \code{group_by()} function will return a GroupedRanges object.
+#' @return The `group_by()` function will return a GroupedRanges object.
 #' These have the same appearance as a regular Ranges object but with an
 #' additional groups slot.
 #'

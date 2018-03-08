@@ -28,7 +28,7 @@ Filter by overlapping/non-overlapping ranges
 }
 \details{
 By default, \code{filter_by_overlaps} and
-\code{filter_by_non_overlaps} ignore strandedness for \code{\link{GRanges}}
+\code{filter_by_non_overlaps} ignore strandedness for \code{\link[=GRanges]{GRanges()}}
 objects. The argument \code{maxgap} is the maximum number of positions
 between two ranges for them to be considered overlapping. Here the default
 is set to be -1 as that is the the gap between two ranges that
@@ -57,5 +57,5 @@ filter_by_non_overlaps(query, subject)
 
 }
 \seealso{
-\link[IRanges]{subsetByOverlaps}
+\code{\link[IRanges:subsetByOverlaps]{IRanges::subsetByOverlaps()}}
 }

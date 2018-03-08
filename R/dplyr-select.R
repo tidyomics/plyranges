@@ -40,7 +40,7 @@ select_rng <- function(.data, .drop_ranges, dots) {
 
 #' Select metadata columns of the Ranges object by name or position
 #'
-#' @param .data a \code{Ranges} object
+#' @param .data a `Ranges` object
 #' @param ... One or more metadata column names.
 #' @param .drop_ranges If TRUE select will always return a tibble. In this
 #' case, you may select columns that form the core part of the Ranges object.
@@ -49,7 +49,7 @@ select_rng <- function(.data, .drop_ranges, dots) {
 #' without the other required components (this includes the seqnames, strand, start, end,
 #' width names), then select will throw an error unless .drop_ranges is set to TRUE.
 #' @return a Ranges object or a tibble
-#' @seealso \link[dplyr]{select}
+#' @seealso [dplyr::select()]
 #' @importFrom dplyr select
 #' @importFrom tidyselect vars_select
 #' @rdname ranges-select

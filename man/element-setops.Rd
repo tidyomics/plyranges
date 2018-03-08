@@ -30,14 +30,14 @@ Row-wise set operations on Ranges objects
 \details{
 Each of these functions acts on the rows between pairs of
 Ranges object.
-The function \code{\link{\%union\%}}
+The function \code{\%union\%()}.
 will return the entire range between two ranges objects assuming there
-are no gaps, if you would like to force gaps use \code{\link{span}} instead.
-The function \code{\link{\%intersect\%}} will create a new ranges object
+are no gaps, if you would like to force gaps use \code{\link[=span]{span()}} instead.
+The function \code{\%intersect\%()} will create a new ranges object
 with a hit column indicating whether or not the two ranges intersect.
-The function\code{\link{\%setdiff\%}} will return the ranges for each
+The function \code{\%setdiff\%()}will return the ranges for each
 row in x that are not in the corresponding row of y.
-The function \code{\link{between}} will return the gaps between
+The function \code{\link[=between]{between()}} will return the gaps between
 two ranges.
 }
 \examples{
@@ -60,6 +60,5 @@ span(x,y)
 between(x,y)
 }
 \seealso{
-\link[IRanges]{punion} \link[IRanges]{pintersect}
-\link[IRanges]{pgap} \link[IRanges]{psetdiff}
+[IRanges::punion()][IRanges::pintersect()][IRanges::pgap()][IRanges::psetdiff()]
 }

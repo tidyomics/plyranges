@@ -6,12 +6,12 @@ tidyr::unnest
 #' @param data A Ranges object
 #' @param ... list-column names to unnest
 #' @param .drop Determines whether other list columns will be dropped.
-#' By default \code{unnest} will keep other list columns even if they are nested.
+#' By default `unnest` will keep other list columns even if they are nested.
 #' @param .id A character vector of length equal to number of list columns.
-#' If supplied will create new column(s) with name \code{.id}
+#' If supplied will create new column(s) with name `.id`
 #' identifying the index of the list column (default = NULL).
 #' @param .sep Combine name of nested Ranges with name of list column seperated
-#' by \code{.sep}, currently not implemented.
+#' by `.sep`, currently not implemented.
 #'
 #' @importFrom tidyr unnest
 #' @importFrom S4Vectors expand

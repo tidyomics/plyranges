@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 0.99.2
+Version: 0.99.3
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
@@ -13,7 +13,7 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     and consistent way of manipulating these classes their accessiblity for new
     Bioconductor users is hopefully increased.
 Depends:
-  R (>= 3.4.2),
+  R (>= 3.5),
   methods,
   BiocGenerics,
   IRanges (>= 2.12.0),
@@ -46,4 +46,5 @@ Suggests:
     pasillaBamSubset,
     covr
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1

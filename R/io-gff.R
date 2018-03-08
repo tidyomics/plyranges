@@ -13,7 +13,7 @@ norm_args_reader_gff <- function(genome_info) {
 #'
 #' @param file A path to a file or a connection.
 #' @param col_names An optional character vector for parsing specific
-#' columns in \code{file} that are part of the GFF specification. These should
+#' columns in `file` that are part of the GFF specification. These should
 #' name either fixed fields, like source or type, or, for GFF2 and GFF3,
 #' any attribute.
 #' @param genome_info An optional character string or a Ranges object
@@ -29,7 +29,7 @@ norm_args_reader_gff <- function(genome_info) {
 #'
 #' @importFrom rtracklayer import.gff
 #' @importFrom GenomeInfoDb seqinfo
-#' @seealso \code{\link[rtracklayer]{GFFFile}}
+#' @seealso [rtracklayer::GFFFile()]
 #' @export
 #' @rdname io-gff-read
 #' @examples
@@ -93,7 +93,7 @@ read_gff3 <- function(file, col_names = NULL, genome_info = NULL, overlap_ranges
 #' of functions defined in \pkg{rtracklayer}.
 #'
 #' @importFrom rtracklayer export.gff export.gff1 export.gff2 export.gff3
-#' @seealso \code{\link[rtracklayer]{GFFFile}}
+#' @seealso [rtracklayer::GFFFile()]
 #' @return The write function returns a GFFFile object invisibly
 #' @export
 #' @rdname io-gff-write

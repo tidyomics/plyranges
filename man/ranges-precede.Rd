@@ -19,9 +19,9 @@ join_precede_downstream(x, y, suffix = c(".x", ".y"))
 metadata columns coming from x and y.}
 }
 \value{
-A Ranges object corresponding to the ranges in `y` that are
-preceded by the ranges in `x`, all metadata is copied over from the
-right-hand side ranges `y`.
+A Ranges object corresponding to the ranges in \code{y} that are
+preceded by the ranges in \code{x}, all metadata is copied over from the
+right-hand side ranges \code{y}.
 }
 \description{
 Find preceding Ranges

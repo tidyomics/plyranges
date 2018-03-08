@@ -6,27 +6,27 @@
 
 #' @param x a Ranges object.
 #' @param width the width of the flanking region relative to the ranges in
-#' \code{x}. Either an integer vector of length 1 or an integer vector
+#' `x`. Either an integer vector of length 1 or an integer vector
 #' the same length as x. The width can be negative in which case the
 #' flanking region is reversed.
 #'
 #' @details The function
-#' \code{flank_left} will create the flanking region to the left of starting
-#' coordinates in \code{x}, while \code{flank_right} will create the flanking
-#' region to the right of the starting coordinates in \code{x}. The function
-#' \code{flank_upstream} will \code{flank_left} if the strand of rows in \code{x} is
-#' not negative and will \code{flank_right} if the strand of rows in \code{x} is
-#' negative. The function \code{flank_downstream} will \code{flank_right} if the strand of rows in \code{x} is
-#' not negative and will \code{flank_leftt} if the strand of rows in \code{x} is
+#' `flank_left` will create the flanking region to the left of starting
+#' coordinates in `x`, while `flank_right` will create the flanking
+#' region to the right of the starting coordinates in `x`. The function
+#' `flank_upstream` will `flank_left` if the strand of rows in `x` is
+#' not negative and will `flank_right` if the strand of rows in `x` is
+#' negative. The function `flank_downstream` will `flank_right` if the strand of rows in `x` is
+#' not negative and will `flank_leftt` if the strand of rows in `x` is
 #' negative.
 #'
-#' By default \code{flank_left} and \code{flank_right} will
-#' ignore strandedness of any ranges, while \code{flank_upstream} and
-#' \code{flank_downstream} will take into account the strand of \code{x}.
+#' By default `flank_left` and `flank_right` will
+#' ignore strandedness of any ranges, while `flank_upstream` and
+#' `flank_downstream` will take into account the strand of `x`.
 #'
-#' @return A Ranges object of same length as \code{x}.
+#' @return A Ranges object of same length as `x`.
 #'
-#' @seealso \link[IRanges]{flank} \link[GenomicRanges]{flank}
+#' @seealso [IRanges::flank()][GenomicRanges::flank()]
 #' @importFrom IRanges flank
 #' @examples
 #' gr <- as_granges(data.frame(start = 10:15,

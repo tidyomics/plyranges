@@ -58,14 +58,14 @@ mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE
 #' @param suffix A character vector of length two used to identify metadata columns
 #' coming from x and y.
 #'
-#' @details \code{find_overlaps} will search for any overlaps between ranges
+#' @details `find_overlaps` will search for any overlaps between ranges
 #' x and y and return a ranges object of the same length as x but with additional
-#' metadata colums corresponding to the metadata columns in y. \code{find_overlaps_within} is
+#' metadata colums corresponding to the metadata columns in y. `find_overlaps_within` is
 #' the same but will only search for overlaps within y. For GRanges strand is
-#' ignored, unless \code{find_overlaps_directed} is used.
+#' ignored, unless `find_overlaps_directed` is used.
 #'
 #' @return A Ranges object with rows corresponding to the
-#' ranges in x that overlap y.  In the case of \code{group_by_overlaps}, returns
+#' ranges in x that overlap y.  In the case of `group_by_overlaps`, returns
 #' a GroupedRanges object, grouped by the number of overlaps
 #' of ranges in x that overlap y (stored in a column called query).
 #'
@@ -102,7 +102,7 @@ mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE
 #' # adding directed prefix includes strand
 #' find_overlaps_directed(query, subject, suffix = c(".query", ".subject"))
 #'
-#' @seealso \link[GenomicRanges]{setops-methods}, \link[IRanges]{findOverlaps-methods}
+#' @seealso [GenomicRanges::findOverlaps()], [IRanges::findOverlaps()]
 #' @importFrom IRanges findOverlaps
 #' @importFrom S4Vectors queryHits subjectHits
 #' @export

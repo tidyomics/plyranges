@@ -31,5 +31,5 @@ This is a lightweight wrapper to the export family
 of functions defined in \pkg{rtracklayer}.
 }
 \seealso{
-\code{\link[rtracklayer]{GFFFile}}
+\code{\link[rtracklayer:GFFFile]{rtracklayer::GFFFile()}}
 }

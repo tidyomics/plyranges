@@ -23,18 +23,18 @@ filter_rng <- function(.data, dots) {
 }
 
 
-#' Subset a \code{Ranges} object
+#' Subset a `Ranges` object
 #'
-#' @param .data A \code{Ranges} object
+#' @param .data A `Ranges` object
 #' @param ...  valid logical predictates to subset .data by. These
-#' are determined by variables in \code{.data}. If more than
-#' one condition is supplied, the conditions are combined with \code{&}. Only
-#' rows where the condition evaluates to \code{TRUE} are kept.
+#' are determined by variables in `.data`. If more than
+#' one condition is supplied, the conditions are combined with `&`. Only
+#' rows where the condition evaluates to `TRUE` are kept.
 #
 #' @details  For any Ranges objects
-#' \code{filter} can act on all core components of the class including start, end,
+#' `filter` can act on all core components of the class including start, end,
 #' width (for IRanges) or seqnames and strand (for GRanges) in addition to
-#' metadata columns. If the Ranges object is grouped, \code{filter} will act
+#' metadata columns. If the Ranges object is grouped, `filter` will act
 #' seperately on each  parition of the data.
 #'
 #' @return a Ranges object
@@ -43,7 +43,7 @@ filter_rng <- function(.data, dots) {
 #' @importFrom IRanges as.env
 #' @importFrom S4Vectors runValue endoapply
 #' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
-#' @seealso \code{\link[dplyr]{filter}}
+#' @seealso [dplyr::filter()]
 #' @method filter GenomicRanges
 #' @name filter-ranges
 #' @rdname filter-ranges

@@ -10,7 +10,7 @@ as_iranges(.data, ..., keep_mcols = TRUE)
 as_granges(.data, ..., keep_mcols = TRUE)
 }
 \arguments{
-\item{.data}{a \code{\link{data.frame}} or \code{\link{tibble}} to
+\item{.data}{a \code{\link[=data.frame]{data.frame()}} or \code{\link[=tibble]{tibble()}} to
 construct a Ranges object from}
 
 \item{...}{optional named arguments specifying which the columns in .data
@@ -20,7 +20,7 @@ containin the core components a Ranges object.}
 (default=TRUE)}
 }
 \value{
-a \link[IRanges]{IRanges} or a \link[GenomicRanges]{GRanges} object.
+a Ranges object.
 }
 \description{
 The as_i(g)ranges function looks for column names in .data called start,
@@ -47,5 +47,5 @@ as_granges(df, seqnames = chr)
 
 }
 \seealso{
-\link[IRanges]{IRanges-class} \link[GenomicRanges]{GRanges-class}
+\link[GenomicRanges:GRanges]{IRanges::IRanges()}
 }

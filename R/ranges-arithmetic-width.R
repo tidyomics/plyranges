@@ -1,10 +1,10 @@
 #' Set the width of a genomic interval
 #'
 #' @param x a Ranges object, to fix by either the start, end or center
-#' of an interval use \code{anchor_start(x)}, \code{anchor_end(x)},
-#' \code{anchor_center(x)}. To fix by start for negative strand and
-#' end by positive strand use \code{anchor_3p(x)}. To fix by start for positive
-#' strand and end by negative strand use \code{anchor_end(x)}.
+#' of an interval use `anchor_start(x)`, `anchor_end(x)`,
+#' `anchor_center(x)`. To fix by start for negative strand and
+#' end by positive strand use `anchor_3p(x)`. To fix by start for positive
+#' strand and end by negative strand use `anchor_end(x)`.
 #' @param width the amount to alter the width of a Ranges object by. Either an
 #' integer vector of length 1 or an integer vector the same length as x.
 #'
@@ -13,7 +13,7 @@
 #'
 #' @return a Ranges object with modified width
 #' @importFrom IRanges resize
-#' @seealso \code{\link[IRanges]{resize}}
+#' @seealso [IRanges::resize()]
 #' @export
 #' @examples
 #' rng <- as_iranges(data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0)))

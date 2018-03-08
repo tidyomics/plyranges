@@ -31,5 +31,5 @@ if (.Platform$OS.type != "windows") {
 }
 }
 \seealso{
-\link[rtracklayer]{BigWigFile}
+\code{\link[rtracklayer:BigWigFile]{rtracklayer::BigWigFile()}}
 }

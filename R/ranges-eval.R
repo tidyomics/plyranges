@@ -40,7 +40,7 @@ ranges_vars <- function(x) {
 #' Compute the number of ranges in each group.
 #'
 #' @description This function should only be used
-#' within \code{summarise()}, \code{mutate()} and \code{filter()}.
+#' within `summarise()`, `mutate()` and `filter()`.
 #'
 #' @examples
 #' ir <- as_iranges(
@@ -53,7 +53,7 @@ ranges_vars <- function(x) {
 #' summarise(by_names, n = n())
 #' mutate(by_names, n = n())
 #' filter(by_names, n() >= 3)
-#' @return \code{n()} will only be evaluated inside a function call, where it
+#' @return `n()` will only be evaluated inside a function call, where it
 #' returns an integer.
 #'
 #' @importFrom rlang env_get env_parent

@@ -54,5 +54,5 @@ gr <- read_gff(test_gff3, genome_info = "hg19")
 gr
 }
 \seealso{
-\code{\link[rtracklayer]{GFFFile}}
+\code{\link[rtracklayer:GFFFile]{rtracklayer::GFFFile()}}
 }

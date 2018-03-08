@@ -13,14 +13,14 @@
 #' to paired reads (by default paired = TRUE will only select
 #' reads that are proper pairs).
 #'
-#' For \code{select} valid columns are the either the fields of the
+#' For `select` valid columns are the either the fields of the
 #' BAM file. Valid entries are qname (QNAME), flag (FLAG),
 #' rname (RNAME), strand, pos (POS), qwidth (width of query),
 #' mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
 #' (TLEN), seq (SEQ), and qual (QUAL). Any two character
 #' tags in the BAM file are also valid.
 #'
-#' For \code{filter} the following fields are valid
+#' For `filter` the following fields are valid
 #' is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
 #' is_proper_pair Select either improperly paired (FALSE) or properly
 #' paired (TRUE) reads. This is dependent on the alignment software used.

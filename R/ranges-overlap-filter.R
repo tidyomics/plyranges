@@ -4,23 +4,23 @@
 #' @param x,y Objects representing ranges
 #' @param maxgap The maximimum gap between intervals as a single
 #' integer greater than or equal to -1. If you modify this argument,
-#' \code{minoverlap} must be held fixed.
+#' `minoverlap` must be held fixed.
 #' @param minoverlap  The minimum amount of overlap between intervals
 #' as a single integer greater than 0. If you modify this argument,
-#' \code{maxgap} must be held fixed.
+#' `maxgap` must be held fixed.
 #'
-#' @details By default, \code{filter_by_overlaps} and
-#' \code{filter_by_non_overlaps} ignore strandedness for \code{\link{GRanges}}
-#' objects. The argument \code{maxgap} is the maximum number of positions
+#' @details By default, `filter_by_overlaps` and
+#' `filter_by_non_overlaps` ignore strandedness for [GRanges()]
+#' objects. The argument `maxgap` is the maximum number of positions
 #' between two ranges for them to be considered overlapping. Here the default
 #' is set to be -1 as that is the the gap between two ranges that
 #' has its start or end strictly inside the other. The argugment
-#' \code{minoverlap} refers to the minimum number of positions
+#' `minoverlap` refers to the minimum number of positions
 #' overlapping between ranges, to consider there to be overlap.
 #'
 #' @return  a Ranges object
 #' @importFrom IRanges subsetByOverlaps
-#' @seealso \link[IRanges]{subsetByOverlaps}
+#' @seealso [IRanges::subsetByOverlaps()]
 #' @export
 #' @examples
 #' df <- data.frame(seqnames = c("chr1", rep("chr2", 2),

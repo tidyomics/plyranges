@@ -40,5 +40,5 @@ select(rng, 2:1)
 select(rng, seqnames, strand, .drop_ranges = TRUE)
 }
 \seealso{
-\link[dplyr]{select}
+\code{\link[dplyr:select]{dplyr::select()}}
 }

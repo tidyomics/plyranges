@@ -60,7 +60,7 @@ mutate_rng <- function(.data, dots) {
 }
 #' Modify a Ranges object
 #'
-#' @param .data a \code{Ranges} object
+#' @param .data a `Ranges` object
 #' @param ... Pairs of name-value expressions. The name-value pairs can either
 #' create new metadata columns or modify existing ones.
 #'

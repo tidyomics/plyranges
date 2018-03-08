@@ -33,5 +33,5 @@ gr
 gr <- read_wig(test_wig, genome_info = "hg19")
 }
 \seealso{
-\code{\link[rtracklayer]{WIGFile}}
+\code{\link[rtracklayer:WIGFile]{rtracklayer::WIGFile()}}
 }

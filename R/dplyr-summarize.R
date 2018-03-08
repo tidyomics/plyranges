@@ -10,7 +10,8 @@ summarize_rng <- function(.data, dots) {
 #' @param .data a Ranges object
 #' @param ... Name-value pairs of summary functions.
 #'
-#' @return a \link[S4Vectors]{DataFrame}
+#' @return a [S4Vectors::DataFrame()]
+#' @seealso [dplyr::summarise()]
 #' @importFrom S4Vectors rbind cbind
 #' @importFrom dplyr summarise summarize
 #' @method summarise GenomicRanges

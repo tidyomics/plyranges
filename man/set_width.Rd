@@ -40,5 +40,5 @@ set_width(anchor_3p(grng), 10)
 set_width(anchor_5p(grng), 10)
 }
 \seealso{
-\code{\link[IRanges]{resize}}
+\code{\link[IRanges:resize]{IRanges::resize()}}
 }

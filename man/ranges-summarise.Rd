@@ -21,7 +21,7 @@
 \item{...}{Name-value pairs of summary functions.}
 }
 \value{
-a \link[S4Vectors]{DataFrame}
+a \code{\link[S4Vectors:DataFrame]{S4Vectors::DataFrame()}}
 }
 \description{
 Aggregate a Ranges object
@@ -32,4 +32,7 @@ strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
 rng <- as_granges(df)
 rng \%>\% summarise(gc = mean(gc))
 rng \%>\% group_by(strand) \%>\% summarise(gc = mean(gc))
+}
+\seealso{
+\code{\link[dplyr:summarise]{dplyr::summarise()}}
 }

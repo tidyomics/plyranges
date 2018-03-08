@@ -7,18 +7,18 @@
 as_ranges(.data)
 }
 \arguments{
-\item{.data}{a \code{\link{Rle}} or an \code{\link{RleList}} object.}
+\item{.data}{a \code{\link[=Rle]{Rle()}} or an \code{\link[=RleList]{RleList()}} object.}
 }
 \value{
-an \code{\link{IRanges}} object if the input is an
-\code{\link{Rle}} object or a \code{\link{GRanges}} object for
-an \code{\link{RleList}} object.
+an \code{\link[=IRanges]{IRanges()}} object if the input is an
+\code{\link[=Rle]{Rle()}} object or a \code{\link[=GRanges]{GRanges()}} object for
+an \code{\link[=RleList]{RleList()}} object.
 }
 \description{
 Coerce an Rle or RleList object to Ranges
 }
 \details{
-This function is behind \code{\link{compute_coverage}}.
+This function is behind \code{\link[=compute_coverage]{compute_coverage()}}.
 }
 \examples{
 x <- Rle(10:1, 1:10)
@@ -29,5 +29,5 @@ as_ranges(x)
 
 }
 \seealso{
-\link[S4Vectors]{Rle-class} \link[IRanges]{AtomicList}
+\code{\link[S4Vectors:Rle]{S4Vectors::Rle()}},\code{\link[IRanges:RleList]{IRanges::RleList()}}
 }

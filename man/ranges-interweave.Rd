@@ -19,7 +19,7 @@ a Ranges object
 Interweave a pair of Ranges objects together
 }
 \details{
-The output of `interweave()` takes pairs of Ranges
+The output of \code{interweave()} takes pairs of Ranges
 objects and combines them into a single  Ranges object. If an .id
 argument is supplied, an origin column with name .id is created indicated which side
 the resulting Range comes from (eit)

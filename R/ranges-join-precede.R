@@ -6,11 +6,11 @@
 #' @param suffix A character vector of length two used to identify
 #' metadata columns coming from x and y.
 #'
-#' @details By default \code{join_precede} will return the ranges
+#' @details By default `join_precede` will return the ranges
 #' in x that come before the ranges in y and ignore any strand information.
-#' The function \code{join_precede_right} will find all ranges in y
+#' The function `join_precede_right` will find all ranges in y
 #' that are on the right-hand side of the ranges in x ignoring any strand
-#' information. Finally, \code{join_precede_downstream} will find all ranges in y
+#' information. Finally, `join_precede_downstream` will find all ranges in y
 #' that are that are downstream of the ranges in x. On the positive strand this
 #' will result in ranges in y that are right of those in x and on the negative
 #' strand it will result in ranges in y that are left of those in x.

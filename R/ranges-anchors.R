@@ -2,41 +2,41 @@
 
 #' Anchored Ranges objects
 #'
-#' @description The \code{GRangesAnchored} class and the \code{IRangesAnchored}
-#' class allow components of a \code{GRanges} or \code{IRanges} (start, end, center)
+#' @description The `GRangesAnchored` class and the `IRangesAnchored`
+#' class allow components of a `GRanges` or `IRanges` (start, end, center)
 #' to be held fixed.
 #'
 #' @details Anchoring will fix a Ranges start, end, or center positions,
 #' so these positions will remain the same when performing arithimetic.
-#' For \code{GRanges} objects, the function
-#' (\code{anchor_3p}) will fix the start for the negative strand,
-#' while \code{anchor_5p} will fix the end for the
+#' For `GRanges` objects, the function
+#' (`anchor_3p`) will fix the start for the negative strand,
+#' while `anchor_5p` will fix the end for the
 #' positive strand. Anchoring modifies how arithmetic is performed, for example
-#' modifying the width of a range with \code{set_width} or stretching a
-#' range with \code{stretch}.
+#' modifying the width of a range with `set_width` or stretching a
+#' range with `stretch`.
 #'
 #' @param x a Ranges object
 #'
 #' @section Constructors:
 #' Depending on how you want to fix the components of a Ranges, there are
-#' five ways to construct a RangesAnchored class. Here \code{x} is either
-#' an \code{IRanges} or \code{GRanges} object.
+#' five ways to construct a RangesAnchored class. Here `x` is either
+#' an `IRanges` or `GRanges` object.
 #' \itemize{
-#'    \item{\code{anchor_start(x)}}{Fix the start coordinates}
-#'    \item{\code{anchor_end(x)}}{Fix the end coordinates}
-#'    \item{\code{anchor_center(x)}}{Fix the center coordinates}
-#'    \item{\code{anchor_3p(x)}}{On the negative strand fix the start coordinates,
+#'    \item{`anchor_start(x)`}{Fix the start coordinates}
+#'    \item{`anchor_end(x)`}{Fix the end coordinates}
+#'    \item{`anchor_center(x)`}{Fix the center coordinates}
+#'    \item{`anchor_3p(x)`}{On the negative strand fix the start coordinates,
 #'    and for positive or unstranded ranges fix the end coordinates.}
-#'    \item{\code{anchor_5p(x)}}{On the positive or unstranded ranges fix the start coordinates,
+#'    \item{`anchor_5p(x)`}{On the positive or unstranded ranges fix the start coordinates,
 #'    coordinates and for negative stranded ranges fix the end coordinates.}
 #' }
 #'
 #' @section Accessors:
-#' To see what has been anchored use the function \code{anchor}.
+#' To see what has been anchored use the function `anchor`.
 #' This will return a character vector containing a valid anchor.
-#' It will be set to one of \code{c("start", "end", "center")} for an
-#' \code{IRanges} object or one of
-#' \code{c("start", "end", "center", "3p", "5p")} for a \code{GRanges} object.
+#' It will be set to one of `c("start", "end", "center")` for an
+#' `IRanges` object or one of
+#' `c("start", "end", "center", "3p", "5p")` for a `GRanges` object.
 #'
 #' @seealso \link{set_width}, \link{stretch}
 #'

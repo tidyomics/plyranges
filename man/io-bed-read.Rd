@@ -30,8 +30,6 @@ that overlap the Ranges will be returned.}
 }
 \value{
 A GRanges object
-
-A GRanges object
 }
 \description{
 This is a lightweight wrapper to the import family
@@ -47,10 +45,10 @@ The \code{read_narrowpeaks} function parses the ENCODE narrowPeak BED format (se
 such the parser expects four additional columns called (corresponding to
 the narrowPeaks spec):
 \itemize{
-  \item signalValue
-  \item pValue
-  \item qValue
-  \item peak
+\item signalValue
+\item pValue
+\item qValue
+\item peak
 }
 }
 \examples{
@@ -74,5 +72,5 @@ gr <- read_narrowpeaks(np_file, genome_info = "hg19")
 gr
 }
 \seealso{
-\code{\link[rtracklayer]{BEDFile}}
+\code{\link[rtracklayer:BEDFile]{rtracklayer::BEDFile()}}
 }

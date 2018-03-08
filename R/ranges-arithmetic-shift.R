@@ -12,7 +12,7 @@
 #'
 #' @return a Ranges object with start and end coordinates shifted.
 #'
-#' @seealso \code{\link[IRanges]{shift}}
+#' @seealso [IRanges::shift()]
 #' @importFrom IRanges shift
 #' @rdname shift-ranges
 #' @examples

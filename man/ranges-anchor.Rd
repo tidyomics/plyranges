@@ -55,13 +55,13 @@ Depending on how you want to fix the components of a Ranges, there are
 five ways to construct a RangesAnchored class. Here \code{x} is either
 an \code{IRanges} or \code{GRanges} object.
 \itemize{
-   \item{\code{anchor_start(x)}}{Fix the start coordinates}
-   \item{\code{anchor_end(x)}}{Fix the end coordinates}
-   \item{\code{anchor_center(x)}}{Fix the center coordinates}
-   \item{\code{anchor_3p(x)}}{On the negative strand fix the start coordinates,
-   and for positive or unstranded ranges fix the end coordinates.}
-   \item{\code{anchor_5p(x)}}{On the positive or unstranded ranges fix the start coordinates,
-   coordinates and for negative stranded ranges fix the end coordinates.}
+\item{\code{anchor_start(x)}}{Fix the start coordinates}
+\item{\code{anchor_end(x)}}{Fix the end coordinates}
+\item{\code{anchor_center(x)}}{Fix the center coordinates}
+\item{\code{anchor_3p(x)}}{On the negative strand fix the start coordinates,
+and for positive or unstranded ranges fix the end coordinates.}
+\item{\code{anchor_5p(x)}}{On the positive or unstranded ranges fix the start coordinates,
+coordinates and for negative stranded ranges fix the end coordinates.}
 }
 }
 
