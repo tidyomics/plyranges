@@ -174,9 +174,9 @@ optical duplicates.</p>
    <span class='no'>rng_mapq</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mapq</span>)
    <span class='fu'>print</span>(<span class='no'>rng_mapq</span>)
    <span class='co'># filter_by_ovleraps will only read alignments if they overlap roi</span>
-   <span class='no'>by_olap</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='filter-overlaps.rd.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
+   <span class='no'>by_olap</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='ranges-filter-overlaps.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
    <span class='fu'>print</span>(<span class='no'>by_olap</span>)
-}</div><div class='output co'>#&gt; GRanges object with 0 ranges and 0 metadata columns:
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; GRanges object with 0 ranges and 0 metadata columns:
 #&gt;    seqnames    ranges strand
 #&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   -------

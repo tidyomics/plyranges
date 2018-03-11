@@ -31,7 +31,7 @@
 
 <meta property="og:description" content="To construct annotations by supplying annotation information
 use genome_info. This function allows you to get UCSC build information
-via fetchExtendedChromInfoFromUCSC. To add
+via GenomeInfoDb::fetchExtendedChromInfoFromUCSC(). To add
 annotations to an existing Ranges object use set_genome_info. To retrieve
 an annotation as a Ranges object use get_genome_info." />
 <meta name="twitter:card" content="summary" />
@@ -102,7 +102,7 @@ an annotation as a Ranges object use get_genome_info." />
     
     <p>To construct annotations by supplying annotation information
 use <code>genome_info</code>. This function allows you to get UCSC build information
-via <a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fetchExtendedChromInfoFromUCSC'>fetchExtendedChromInfoFromUCSC</a>. To add
+via <code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fetchExtendedChromInfoFromUCSC'>GenomeInfoDb::fetchExtendedChromInfoFromUCSC()</a></code>. To add
 annotations to an existing Ranges object use <code>set_genome_info</code>. To retrieve
 an annotation as a Ranges object use <code>get_genome_info</code>.</p>
     
@@ -149,30 +149,11 @@ as a Ranges object use <code>get_genome_info</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/Seqinfo-class'>Seqinfo-class</a> <a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fetchExtendedChromInfoFromUCSC'>fetchExtendedChromInfoFromUCSC</a></p>
+    <p><code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/Seqinfo-class'>GenomeInfoDb::Seqinfo()</a></code>, <code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fetchExtendedChromInfoFromUCSC'>GenomeInfoDb::fetchExtendedChromInfoFromUCSC()</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
- <span class='co'># requires internet connection</span>
- <span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"hg38"</span>)
-}</div><div class='output co'>#&gt; GRanges object with 455 ranges and 0 metadata columns:
-#&gt;                            seqnames         ranges strand
-#&gt;                               &lt;Rle&gt;      &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;               chr1             chr1 [1, 248956422]      *
-#&gt;               chr2             chr2 [1, 242193529]      *
-#&gt;               chr3             chr3 [1, 198295559]      *
-#&gt;               chr4             chr4 [1, 190214555]      *
-#&gt;               chr5             chr5 [1, 181538259]      *
-#&gt;                ...              ...            ...    ...
-#&gt;   chrUn_KI270753v1 chrUn_KI270753v1     [1, 62944]      *
-#&gt;   chrUn_KI270754v1 chrUn_KI270754v1     [1, 40191]      *
-#&gt;   chrUn_KI270755v1 chrUn_KI270755v1     [1, 36723]      *
-#&gt;   chrUn_KI270756v1 chrUn_KI270756v1     [1, 79590]      *
-#&gt;   chrUn_KI270757v1 chrUn_KI270757v1     [1, 71251]      *
-#&gt;   -------
-#&gt;   seqinfo: 455 sequences (1 circular) from hg38 genome</div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"toy"</span>,
+    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"toy"</span>,
                  <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>4</span>],
                  <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>300</span>, <span class='fl'>15</span>, <span class='fl'>600</span>),
                  <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>NA</span>, <span class='fl'>FALSE</span>, <span class='fl'>FALSE</span>, <span class='fl'>TRUE</span>))
@@ -215,7 +196,12 @@ as a Ranges object use <code>get_genome_info</code>.</p>
 #&gt;   d        d  [1, 600]      *
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences (1 circular) from toy genome</div><div class='input'>
-
+</div><span class='co'># NOT RUN {</span>
+<span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
+ <span class='co'># requires internet connection</span>
+ <span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"hg38"</span>)
+}
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

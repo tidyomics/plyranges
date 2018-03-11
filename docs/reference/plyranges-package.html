@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Write a GFF(123) file — write_gff • plyranges</title>
+<title>plyranges: a grammar of genomic data manipulation — plyranges-package • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,10 +27,10 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Write a GFF(123) file — write_gff" />
+<meta property="og:title" content="plyranges: a grammar of genomic data manipulation — plyranges-package" />
 
-<meta property="og:description" content="This is a lightweight wrapper to the export family
-of functions defined in rtracklayer." />
+<meta property="og:description" content="plyranges is a dplyr like API to the Ranges/GenomicRanges infrastructure
+in Bioconductor." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -93,59 +93,61 @@ of functions defined in rtracklayer." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Write a GFF(123) file</h1>
+    <h1>plyranges: a grammar of genomic data manipulation</h1>
     </div>
 
     
-    <p>This is a lightweight wrapper to the export family
-of functions defined in <span class="pkg">rtracklayer</span>.</p>
+    <p>plyranges is a dplyr like API to the Ranges/GenomicRanges infrastructure
+in Bioconductor.</p>
     
 
-    <pre class="usage"><span class='fu'>write_gff</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-<span class='fu'>write_gff1</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>write_gff2</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>write_gff3</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A GRanges object</p></td>
-    </tr>
-    <tr>
-      <th>file</th>
-      <td><p>Path or connection to write to</p></td>
-    </tr>
-    <tr>
-      <th>index</th>
-      <td><p>If TRUE the output file will be compressed and indexed using bgzf and
-tabix.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>The write function returns a GFFFile object invisibly</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/GFFFile-class'>rtracklayer::GFFFile()</a></code></p>
+    <p>plryanges provides a consistent interface for importing and
+wrangling genomics data from a variety of sources. The package defines a
+grammar of genomic data manipulation through a set of verbs. These verbs
+can be used to construct human readable analysis pipelines based on Ranges
+objects.</p><ul>
+<li><p>Modify genomic regions with the <code><a href='set_width.html'>set_width()</a></code> and <code><a href='stretch.html'>stretch()</a></code> functions.</p><ul>
+<li><p>Modify genomic regions while fixing the start/end/center coordinates
+with the <code>anchors()</code> family of functions.</p></li>
+<li><p>Sort genomic ranges with <code><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange()</a></code>.</p></li>
+<li><p>Modify, subset, and aggregate genomic data with the <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>,
+<code><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, and <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>functions.</p></li>
+<li><p>Any of the above operations can be performed on partitions of the
+data with <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code>.</p></li>
+<li><p>Find nearest neighbour genomic regions with the <code><a href='ranges-nearest.html'>join_nearest()</a></code> family
+of functions.</p></li>
+<li><p>Find overlaps between ranges with the <code><a href='overlap-joins.html'>join_overlap_inner()</a></code> family of functions.</p></li>
+<li><p>Merge all overlapping and adjacent genomic regions with <code><a href='ranges-reduce.html'>reduce_ranges()</a></code>.</p></li>
+<li><p>Merge the end points of all genomic regions with <code><a href='ranges-disjoin.html'>disjoin_ranges()</a></code>.</p></li>
+<li><p>Import and write common genomic data formats with the <code>read_/write_</code> family
+of functions.</p></li>
+</ul></li>
+</ul>
+    <p>For more details on the features of plryanges, read the vignette:
+<code>browseVignettes(package = "plyranges")</code></p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
+
+    <h2>Author</h2>
+    
+<strong>Maintainer</strong>: Stuart Lee <a href='mailto:lee.s@wehi.edu.au'>lee.s@wehi.edu.au</a>
+
+Authors:
+<ul>
+<li><p>Michael Lawrence [contributor]</p></li>
+<li><p>Dianne Cook [contributor]</p></li>
+</ul>
+
 
   </div>
 </div>

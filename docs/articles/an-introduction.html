@@ -69,7 +69,7 @@
       <h1>Getting started with the plyranges package</h1>
                         <h4 class="author">Stuart Lee</h4>
             
-            <h4 class="date">2018-03-07</h4>
+            <h4 class="date">2018-03-11</h4>
           </div>
 
     
@@ -325,13 +325,13 @@
 ##   [3]         4         8         5
 ##   [4]         5        10         6
 ##   [5]         6        12         7</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_overlaps</a></span>(ir1)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps</a></span>(ir1)</a></code></pre></div>
 <pre><code>## IRanges object with 2 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 ##   [1]         5         9         5
 ##   [2]        10        14         5</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/filter-overlaps.rd.html">filter_by_non_overlaps</a></span>(ir1) </a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">ir0 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/ranges-filter-overlaps.html">filter_by_non_overlaps</a></span>(ir1) </a></code></pre></div>
 <pre><code>## IRanges object with 2 ranges and 0 metadata columns:
 ##           start       end     width
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -525,11 +525,11 @@ Inner Join
 ##   [2]        10        14         5 | 0.603324356488883
 ##   [3]        15        19         5 | 0.780358511023223
 ##   [4]        20        24         5 | 0.780358511023223</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-precede.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></a></code></pre></div>
 <pre><code>## IRanges object with 0 ranges and 1 metadata column:
 ##        start       end     width |        gc
 ##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw"><a href="../reference/precede-ranges.html">join_precede</a></span>(ir1, ir0)</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-precede.html">join_precede</a></span>(ir1, ir0)</a></code></pre></div>
 <pre><code>## IRanges object with 5 ranges and 1 metadata column:
 ##           start       end     width |                gc
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
@@ -831,7 +831,7 @@ Inner Join
 ## [8] methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_2.2.1        plyranges_0.1.0      GenomicRanges_1.30.3
+## [1] ggplot2_2.2.1        plyranges_0.99.4     GenomicRanges_1.30.3
 ## [4] GenomeInfoDb_1.14.0  IRanges_2.12.0       S4Vectors_0.16.0    
 ## [7] BiocGenerics_0.24.0 
 ## 

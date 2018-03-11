@@ -126,20 +126,19 @@
 
     <p>Each of these functions acts on the rows between pairs of
 Ranges object.
-The function <code>%union%</code>
+The function <code>%union%()</code>.
 will return the entire range between two ranges objects assuming there
-are no gaps, if you would like to force gaps use <code>span</code> instead.
-The function <code>%intersect%</code> will create a new ranges object
+are no gaps, if you would like to force gaps use <code>span()</code> instead.
+The function <code>%intersect%()</code> will create a new ranges object
 with a hit column indicating whether or not the two ranges intersect.
-The function<code>%setdiff%</code> will return the ranges for each
+The function <code>%setdiff%()</code>will return the ranges for each
 row in x that are not in the corresponding row of y.
-The function <code>between</code> will return the gaps between
+The function <code>between()</code> will return the gaps between
 two ranges.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>punion</a> <a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>pintersect</a>
-<a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>pgap</a> <a href='http://www.rdocumentation.org/packages/IRanges/topics/setops-methods'>psetdiff</a></p>
+    <p>[IRanges::punion()][IRanges::pintersect()][IRanges::pgap()][IRanges::psetdiff()]</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

@@ -39,11 +39,13 @@ vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
 
 # Installation
 
-Currently only the development version is available via Bioncoductor
+The package is currently under review for submission in the next release
+of Bioconductor. A development version for R (\>= 3.4.2) is available to
+install via github with the following code
 
 ``` r
 source("https://bioconductor.org/biocLite.R")
-biocLite("sa-lee/plyranges")
+biocLite("sa-lee/plyranges@current-r-release")
 ```
 
 # Quick overview
