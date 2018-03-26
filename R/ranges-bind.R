@@ -63,7 +63,7 @@ bind_ranges <- function(..., .id = NULL) {
 
   if (all(vapply(x, function(x) is(x, "GenomicRanges"), logical(1)))) {
     to_class <- "GRangesList"
-  } else if (all(vapply(x, function(x) is(x, "Ranges"), logical(1)))) {
+  } else if (all(vapply(x, function(x) is(x, "IntegerRanges"), logical(1)))) {
     to_class <- "IRangesList"
   } else {
     stop("Cannot bind objects of different classes together, ... must be

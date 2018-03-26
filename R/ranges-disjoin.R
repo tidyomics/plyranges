@@ -19,7 +19,7 @@ disjoin_ranges <- function(.data, ...) { UseMethod("disjoin_ranges") }
 
 #' @method disjoin_ranges Ranges
 #' @export
-disjoin_ranges.Ranges <- function(.data, ...) {
+disjoin_ranges.IntegerRanges <- function(.data, ...) {
   dots <- quos(...)
   if (length(dots) == 0L) {
     return(disjoin(.data))

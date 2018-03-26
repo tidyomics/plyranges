@@ -51,7 +51,7 @@ join_overlap_intersect <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".
 }
 
 #' @export
-join_overlap_intersect.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L,
+join_overlap_intersect.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                           suffix = c(".x", ".y")) {
   pairs <- findOverlapPairs(x, y,
                             type = "any",
@@ -90,7 +90,7 @@ join_overlap_intersect_within <- function(x, y, maxgap, minoverlap,
 }
 
 #' @export
-join_overlap_intersect_within.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L,
+join_overlap_intersect_within.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                              suffix = c(".x", ".y")) {
   pairs <- findOverlapPairs(x, y,
                             type = "within",

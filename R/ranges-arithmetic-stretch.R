@@ -25,39 +25,36 @@ stretch <- function(x, extend) { UseMethod("stretch") }
 
 #' @export
 stretch.Ranges <- function(x, extend = 0L) {
-
     start(x) <- start(x) - extend
     end(x) <- end(x) + extend
     return(x)
 }
 
 #' @export
-stretch.IRangesAnchored <- function(x, extend = 0L) {
+stretch.AnchoredIntegerRanges <- function(x, extend = 0L) {
   anchor <- anchor(x)
-  x <- switch(anchor,
-              start = mutate(x, end = end + extend),
-              end = mutate(x, start = start - extend),
-              center = stretch_center(x, extend))
-  as(x, "Ranges")
+  rng <- x@delegate
+  switch(
+    anchor,
+    start = mutate(rng, end = end + extend),
+    end = mutate(rng, start = start - extend),
+    center = stretch_center(rng, extend)
+  )
 }
 
 
 #' @export
-stretch.GenomicRanges <- function(x, extend = 0L) {
-  start(x) <- start(x) - extend
-  end(x) <- end(x) + extend
-  return(x)
-}
-
-stretch.GRangesAnchored <- function(x, extend = 0L) {
+stretch.AnchoredGenomicRanges <- function(x, extend = 0L) {
   anchor <- anchor(x)
-  x <- switch(anchor,
-                start = mutate(x, end = end + extend),
-                end = mutate(x, start = start + extend),
-                center = stretch_center(x, extend),
-                "3p" = stretch_by_strand(x, extend, "3p"),
-                "5p" = stretch_by_strand(x, extend, "5p"))
-  as(x, "GRanges")
+  rng <- x@delegate
+  switch(
+    anchor,
+    start = mutate(rng, end = end + extend),
+    end = mutate(rng, start = start + extend),
+    center = stretch_center(rng, extend),
+    "3p" = stretch_by_strand(rng, extend, "3p"),
+    "5p" = stretch_by_strand(rng, extend, "5p")
+  )
 }
 
 

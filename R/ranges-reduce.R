@@ -38,7 +38,7 @@ reduce_ranges <- function(.data, ...) { UseMethod("reduce_ranges") }
 
 #' @method reduce_ranges Ranges
 #' @export
-reduce_ranges.Ranges <- function(.data, ...) {
+reduce_ranges.IntegerRanges <- function(.data, ...) {
   dots <- quos(...)
   if (length(dots) == 0L) {
     return(reduce(.data))

@@ -64,7 +64,7 @@ join_nearest <- function(x, y, suffix = c(".x", ".y")) {
 }
 
 #' @export
-join_nearest.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+join_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- nearest(x,y, select = "arbitrary")
   no_hits_id <- !is.na(hits)
   left <- x[no_hits_id, ]
@@ -90,7 +90,7 @@ join_nearest_left <- function(x, y, suffix = c(".x", ".y")) {
 }
 
 #' @export
-join_nearest_left.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+join_nearest_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- nearest(x,y, select = "all")
   mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
     end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
@@ -119,7 +119,7 @@ join_nearest_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
 join_nearest_right <- function(x, y,  suffix = c(".x", ".y")) { UseMethod("join_nearest_right")}
 
 #' @export
-join_nearest_right.Ranges <- function(x, y, suffix = c(".x", ".y")) {
+join_nearest_right.IntegerRanges <- function(x, y, suffix = c(".x", ".y")) {
   hits <- nearest(x,y, select = "all")
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]

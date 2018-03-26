@@ -112,7 +112,7 @@ find_overlaps <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
 
 #' @rdname ranges-overlaps
 #' @export
-find_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+find_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
@@ -139,7 +139,7 @@ find_overlaps_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"
 
 #' @rdname ranges-overlaps
 #' @export
-find_overlaps_within.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+find_overlaps_within.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]

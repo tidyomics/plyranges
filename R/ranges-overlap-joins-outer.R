@@ -64,7 +64,7 @@ join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) 
 }
 
 #' @export
-join_overlap_left.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+join_overlap_left.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
   outer_left_join(x,y,hits, suffix)
 }
@@ -86,7 +86,7 @@ join_overlap_left_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", 
 }
 
 #' @export
-join_overlap_left_within.Ranges <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+join_overlap_left_within.IntegerRanges <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
   outer_left_join(x, y, hits, suffix)
 }

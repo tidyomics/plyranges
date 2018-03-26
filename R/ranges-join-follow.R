@@ -52,7 +52,7 @@
 join_follow <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_follow") }
 
 #' @export
-join_follow.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+join_follow.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y)
   no_hits_id <- !is.na(hits)
   left <- x[no_hits_id, ]
@@ -77,7 +77,7 @@ join_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
 join_follow_left <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_follow_left") }
 
 #' @export
-join_follow_left.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+join_follow_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]

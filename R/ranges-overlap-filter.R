@@ -47,7 +47,7 @@ filter_by_overlaps <- function(x,y, maxgap = -1L, minoverlap = 0L) {
 }
 
 #' @export
-filter_by_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
+filter_by_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
   subsetByOverlaps(x,y, maxgap, minoverlap)
 }
 
@@ -63,7 +63,7 @@ filter_by_non_overlaps <- function(x,y, maxgap, minoverlap) {
 }
 
 #' @export
-filter_by_non_overlaps.Ranges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
+filter_by_non_overlaps.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   subsetByOverlaps(x,y, maxgap, minoverlap, invert = TRUE)
 }
 

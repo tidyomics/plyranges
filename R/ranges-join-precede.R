@@ -51,7 +51,7 @@
 join_precede <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_precede") }
 
 #' @export
-join_precede.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+join_precede.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y)
   no_hits_id <- !is.na(hits)
   left <- x[no_hits_id, ]
@@ -77,7 +77,7 @@ join_precede.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
 join_precede_right <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_precede_right") }
 
 #' @export
-join_precede_right.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+join_precede_right.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y, select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]

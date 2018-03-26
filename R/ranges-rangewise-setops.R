@@ -60,7 +60,7 @@ union_ranges <- function(x,y) { UseMethod("union_ranges") }
 
 #' @export
 #' @importFrom IRanges union
-union_ranges.Ranges <- function(x,y) {
+union_ranges.IntegerRanges <- function(x,y) {
   union(x,y)
 }
 
@@ -86,7 +86,7 @@ setdiff_ranges <- function(x,y) { UseMethod("setdiff_ranges") }
 
 #' @export
 #' @importFrom IRanges setdiff
-setdiff_ranges.Ranges <- function(x,y) {
+setdiff_ranges.IntegerRanges <- function(x,y) {
   setdiff(x,y)
 }
 

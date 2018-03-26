@@ -52,7 +52,7 @@ pair_overlaps <- function(x, y, maxgap, minoverlap, suffix) {
 }
 
 #' @export
-pair_overlaps.Ranges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+pair_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
   left <- x[queryHits(hits), ]
   right <- y[subjectHits(hits), ]
@@ -75,7 +75,7 @@ pair_nearest <- function(x, y, suffix) {
 }
 
 #' @export
-pair_nearest.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+pair_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- nearest(x,y, select = "arbitrary")
   no_hits_id <- !is.na(hits)
   left <- x[no_hits_id, ]
@@ -99,7 +99,7 @@ pair_precede <- function(x, y, suffix) {
 }
 
 #' @export
-pair_precede.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+pair_precede.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y)
   no_hits_id <- !is.na(hits)
   left <- x[no_hits_id, ]
@@ -122,7 +122,7 @@ pair_follow <- function(x, y, suffix) {
   UseMethod("pair_follow")
 }
 #' @export
-pair_follow.Ranges <- function(x,y, suffix = c(".x", ".y")) {
+pair_follow.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y)
   no_hits_id <- !is.na(hits)
   left <- x[no_hits_id, ]

@@ -41,7 +41,7 @@ join_overlap_self <- function(x, maxgap, minoverlap) {
 }
 
 #' @export
-join_overlap_self.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
+join_overlap_self.IntegerRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
@@ -57,7 +57,7 @@ join_overlap_self_within <- function(x, maxgap, minoverlap) {
 }
 
 #' @export
-join_overlap_self_within.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
+join_overlap_self_within.IntegerRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps_within(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 
@@ -73,7 +73,7 @@ join_overlap_self_directed <- function(x, maxgap, minoverlap) {
 }
 
 #' @export
-join_overlap_self_directed.Ranges <- function(x, maxgap = -1L, minoverlap = 0L) {
+join_overlap_self_directed.IntegerRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps_directed(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
 

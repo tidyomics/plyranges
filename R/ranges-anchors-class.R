@@ -51,29 +51,29 @@ new_anchored_gr <- function(rng, anchor) {
   new(new_cls, delegate = rng, anchor = anchor)
 }
 
-# equivalent of DelegatingGenomicRanges for IRanges objects
-setClass("DelegatingIntegerRanges",
-         representation = representation(delegate = "IntegerRanges"),
-         contains = c("VIRTUAL", "IntegerRanges"))
-
-validAnchoredIntegerRanges <- function(object) {
-  valid_anchors <- c("start", "end", "center", "centre")
-  
-  if (length(object@anchor) > 1L) {
-    paste("anchor must be character vector of length 1.")
-  }
-  
-  if (!(object@anchor %in% valid_anchors)) {
-    paste(object@anchor, "is not a valid anchor.")
-  }
-}
-
-setClass("AnchoredIntegerRanges",
-         slot = c(anchor = "character"),
-         contains = c("VIRTUAL", "IntegerRanges"),
-         validity = validAnchoredIntegerRanges)
-
-setMethod("start", "AnchoredIntegerRanges", function(x, ...) start(x@delegate))
-setMethod("end", "AnchoredIntegerRanges", function(x, ...) end(x@delegate))
-setMethod("width", "AnchoredIntegerRange", function(x) width(x@delegate))
+# # equivalent of DelegatingGenomicRanges for IRanges objects
+# setClass("DelegatingIntegerRanges",
+#          representation = representation(delegate = "IntegerRanges"),
+#          contains = c("VIRTUAL", "IntegerRanges"))
+# 
+# validAnchoredIntegerRanges <- function(object) {
+#   valid_anchors <- c("start", "end", "center", "centre")
+# 
+#   if (length(object@anchor) > 1L) {
+#     paste("anchor must be character vector of length 1.")
+#   }
+# 
+#   if (!(object@anchor %in% valid_anchors)) {
+#     paste(object@anchor, "is not a valid anchor.")
+#   }
+# }
+# 
+# setClass("AnchoredIntegerRanges",
+#          slot = c(anchor = "character"),
+#          contains = c("VIRTUAL", "IntegerRanges"),
+#          validity = validAnchoredIntegerRanges)
+# 
+# setMethod("start", "AnchoredIntegerRanges", function(x, ...) start(x@delegate))
+# setMethod("end", "AnchoredIntegerRanges", function(x, ...) end(x@delegate))
+# setMethod("width", "AnchoredIntegerRanges", function(x) width(x@delegate))
 
