@@ -1,5 +1,4 @@
-# ranges-anchors.R
-
+# # ranges-anchors.R
 #' Anchored Ranges objects
 #'
 #' @description The `GRangesAnchored` class and the `IRangesAnchored`
@@ -59,73 +58,17 @@
 #' @importFrom methods setClass setValidity setMethod show
 #' @rdname ranges-anchor
 #' @export
-setClass("GRangesAnchored",
-         slot = c(anchor = "character"),
-         contains = "GRanges")
-
-validGRangesAnchored <- function(object) {
-  valid_anchors <- c("start", "end", "center", "centre", "5p", "3p")
-
-  if (length(object@anchor) > 1L) {
-    paste("anchor must be character vector of length 1.")
-  }
-
-  if (!(object@anchor %in% valid_anchors)) {
-    paste(object@anchor, "is not a valid anchor.")
-  }
-}
-
-
-setValidity("GRangesAnchored", validGRangesAnchored)
-
-setMethod("show", "GRangesAnchored", function(object) {
-  output <- c("", utils::capture.output(show(as(object, "GenomicRanges"))))
-  output[1] <- output[2]
-  anchor <- object@anchor
-  output[2] <- paste("Anchored by:", anchor)
-  cat(output, sep = "\n")
-})
-
-
-#' @rdname ranges-anchor
-#' @importFrom methods setClass setValidity setMethod
-#' @export
-setClass("IRangesAnchored",
-         slot = c(anchor = "character"),
-         contains = "IRanges")
-
-validIRangesAnchored <- function(object) {
-  valid_anchors <- c("start", "end", "center", "centre")
-
-  if (length(object@anchor) > 1L) {
-    paste("anchor must be character vector of length 1.")
-  }
-
-  if (!(object@anchor %in% valid_anchors)) {
-    paste(object@anchor, "is not a valid anchor.")
-  }
-}
-
-setValidity("IRangesAnchored", validIRangesAnchored)
-
-setMethod("show", "IRangesAnchored", function(object) {
-  output <- c("", utils::capture.output(show(as(object, "Ranges"))))
-  output[1] <- output[2]
-  anchor <- object@anchor
-  output[2] <- paste("Anchored by:", anchor)
-  cat(output, sep = "\n")
-})
 
 
 #' @rdname ranges-anchor
 #' @export
-anchor <- function(x) {
-  if (!(is(x, "GRangesAnchored") | is(x, "IRangesAnchored"))) {
-    return(NULL)
-  } else {
-    x@anchor
-  }
+anchor <- function(x) { UseMethod("anchor") }
+
+#' @export
+anchor.AnchoredGenomicRanges <- function(x) {
+  x@anchor
 }
+
 
 #' @rdname ranges-anchor
 #' @export
@@ -138,7 +81,7 @@ anchor_start.Ranges <- function(x) {
 
 #' @export
 anchor_start.GenomicRanges <- function(x) {
-  new("GRangesAnchored", anchor = "start", x)
+  new_anchored(x, anchor = "start")
 }
 
 
@@ -153,7 +96,7 @@ anchor_end.Ranges <- function(x) {
 
 #' @export
 anchor_end.GenomicRanges <- function(x) {
-  new("GRangesAnchored", anchor = "end", x)
+  new_anchored(x, anchor = "end")
 }
 
 #' @rdname ranges-anchor
@@ -167,7 +110,7 @@ anchor_center.Ranges <- function(x) {
 
 #' @export
 anchor_center.GenomicRanges <- function(x) {
-  new("GRangesAnchored", anchor = "center", x)
+  new_anchored(x, anchor = "center")
 }
 
 #' @rdname ranges-anchor
@@ -180,7 +123,7 @@ anchor_3p <- function(x) { UseMethod("anchor_3p") }
 
 #' @export
 anchor_3p.GenomicRanges <- function(x) {
-  new("GRangesAnchored", anchor = "3p", x)
+  new_anchored(x, anchor = "3p")
 }
 
 #' @rdname ranges-anchor
@@ -189,5 +132,5 @@ anchor_5p <- function(x) { UseMethod("anchor_5p") }
 
 #' @export
 anchor_5p.GenomicRanges <- function(x) {
-  new("GRangesAnchored", anchor = "5p", x)
+  new_anchored(x, anchor = "5p")
 }

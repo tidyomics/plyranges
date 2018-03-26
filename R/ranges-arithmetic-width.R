@@ -38,33 +38,26 @@ set_width.Ranges <- function(x, width = 0L) {
 #' @export
 set_width.IRangesAnchored <- function(x, width = 0L) {
   anchor <- anchor(x)
-
-  x <- switch(anchor,
-                start = resize(x, width, fix = "start"),
-                end = resize(x, width, fix = "end"),
-                center = resize(x, width, fix = "center")
-              )
-
-  as(x, "Ranges")
+  rng <- x@delegate
+  switch(anchor,
+         start = resize(rng, width, fix = "start"),
+         end = resize(rng, width, fix = "end"),
+         center = resize(rng, width, fix = "center")
+         )
 }
 
-#' @export
-set_width.GenomicRanges <- function(x, width = 0L) {
-  width(x) <- width
-  x
-}
 
 #' @export
-set_width.GRangesAnchored <- function(x, width = 0L) {
+set_width.AnchoredGenomicRanges <- function(x, width = 0L) {
   anchor <- anchor(x)
-  x <- switch(anchor,
-              start = resize(x, width, fix = "start", ignore.strand = TRUE),
-              end = resize(x, width, fix = "end", ignore.strand = TRUE),
-              center = resize(x, width, fix = "center", ignore.strand = TRUE),
-              "3p" = resize_by_strand(x, width, "3p"),
-              "5p" = resize_by_strand(x, width, "5p")
+  rng <- x@delegate
+  switch(anchor,
+              start = resize(rng, width, fix = "start", ignore.strand = TRUE),
+              end = resize(rng, width, fix = "end", ignore.strand = TRUE),
+              center = resize(rng, width, fix = "center", ignore.strand = TRUE),
+              "3p" = resize_by_strand(rng, width, "3p"),
+              "5p" = resize_by_strand(rng, width, "5p")
   )
-  as(x, "GenomicRanges")
 }
 
 # anchor by strand version of resize
