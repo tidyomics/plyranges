@@ -2,25 +2,33 @@
 % Please edit documentation in R/ranges-overlap-count.R
 \name{count_overlaps}
 \alias{count_overlaps}
-\alias{count_overlaps.Ranges}
+\alias{count_overlaps.IntegerRanges}
 \alias{count_overlaps.GenomicRanges}
 \alias{count_overlaps_within}
-\alias{count_overlaps_within.Ranges}
+\alias{count_overlaps_within.IntegerRanges}
 \alias{count_overlaps_within.GenomicRanges}
+\alias{count_overlaps_directed}
+\alias{count_overlaps_directed.GenomicRanges}
 \title{Count the number of overlaps between two Ranges objects}
 \usage{
 count_overlaps(x, y, maxgap, minoverlap)
 
-\method{count_overlaps}{Ranges}(x, y, maxgap = -1L, minoverlap = 0L)
+\method{count_overlaps}{IntegerRanges}(x, y, maxgap = -1L, minoverlap = 0L)
 
 \method{count_overlaps}{GenomicRanges}(x, y, maxgap = -1L, minoverlap = 0L)
 
 count_overlaps_within(x, y, maxgap, minoverlap)
 
-\method{count_overlaps_within}{Ranges}(x, y, maxgap = 0L, minoverlap = 1L)
+\method{count_overlaps_within}{IntegerRanges}(x, y, maxgap = 0L,
+  minoverlap = 1L)
 
 \method{count_overlaps_within}{GenomicRanges}(x, y, maxgap = 0L,
   minoverlap = 1L)
+
+count_overlaps_directed(x, y, maxgap, minoverlap)
+
+\method{count_overlaps_directed}{GenomicRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L)
 }
 \arguments{
 \item{x, y}{Objects representing ranges}

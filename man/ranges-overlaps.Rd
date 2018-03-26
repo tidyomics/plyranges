@@ -3,21 +3,21 @@
 %   R/ranges-overlap-groups.R
 \name{find_overlaps}
 \alias{find_overlaps}
-\alias{find_overlaps.Ranges}
+\alias{find_overlaps.IntegerRanges}
 \alias{find_overlaps.GenomicRanges}
 \alias{find_overlaps_within}
-\alias{find_overlaps_within.Ranges}
+\alias{find_overlaps_within.IntegerRanges}
 \alias{find_overlaps_within.GenomicRanges}
 \alias{find_overlaps_directed}
 \alias{find_overlaps_directed.GenomicRanges}
 \alias{group_by_overlaps}
-\alias{group_by_overlaps.Ranges}
+\alias{group_by_overlaps.IntgerRanges}
 \alias{group_by_overlaps.GenomicRanges}
 \title{Find overlap between two Ranges}
 \usage{
 find_overlaps(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-\method{find_overlaps}{Ranges}(x, y, maxgap = -1L, minoverlap = 0L,
+\method{find_overlaps}{IntegerRanges}(x, y, maxgap = -1L, minoverlap = 0L,
   suffix = c(".x", ".y"))
 
 \method{find_overlaps}{GenomicRanges}(x, y, maxgap = -1L, minoverlap = 0L,
@@ -25,8 +25,8 @@ find_overlaps(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 find_overlaps_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-\method{find_overlaps_within}{Ranges}(x, y, maxgap = -1L, minoverlap = 0L,
-  suffix = c(".x", ".y"))
+\method{find_overlaps_within}{IntegerRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L, suffix = c(".x", ".y"))
 
 \method{find_overlaps_within}{GenomicRanges}(x, y, maxgap = -1L,
   minoverlap = 0L, suffix = c(".x", ".y"))
@@ -38,7 +38,8 @@ find_overlaps_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 group_by_overlaps(x, y, maxgap, minoverlap)
 
-\method{group_by_overlaps}{Ranges}(x, y, maxgap = -1L, minoverlap = 0L)
+\method{group_by_overlaps}{IntgerRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L)
 
 \method{group_by_overlaps}{GenomicRanges}(x, y, maxgap = -1L,
   minoverlap = 0L)
@@ -55,7 +56,7 @@ coming from x and y.}
 }
 \value{
 A Ranges object with rows corresponding to the
-ranges in x that overlap y.  In the case of \code{group_by_overlaps}, returns
+ranges in x that overlap y.  In the case of \code{group_by_overlaps()}, returns
 a GroupedRanges object, grouped by the number of overlaps
 of ranges in x that overlap y (stored in a column called query).
 }
@@ -63,11 +64,17 @@ of ranges in x that overlap y (stored in a column called query).
 Find overlap between two Ranges
 }
 \details{
-\code{find_overlaps} will search for any overlaps between ranges
-x and y and return a ranges object of the same length as x but with additional
-metadata colums corresponding to the metadata columns in y. \code{find_overlaps_within} is
-the same but will only search for overlaps within y. For GRanges strand is
-ignored, unless \code{find_overlaps_directed} is used.
+\code{find_overlaps()} will search for any overlaps between ranges
+x and y and return a Ranges object of length equal to the number of times x
+overlaps y. This  Ranges object will have additional metadata columns
+corresponding to the metadata columns in y. \code{find_overlaps_within()} is
+the same but will only search for overlaps within y. For GRanges objects strand is
+ignored, unless \code{find_overlaps_directed()} is used. If the Ranges objects have no
+metadata, one could use \code{group_by_overlaps()} to be able to
+identify the index of the input Range x that overlaps a Range in y.
+Alternatively,
+\code{pair_overlaps()} could be used to place the x ranges next to the range
+in y they overlap.
 }
 \examples{
 query <- data.frame(start = c(5,10, 15,20), width = 5, gc = runif(4)) \%>\%

@@ -15,7 +15,7 @@ group_by_overlaps.IntgerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L) 
   mcols(left) <- mcols_overlaps_update(left, right,
                                        suffix = c(".query", ".subject"))
   mcols(left)$query <- queryHits(hits)
-  new("IRangesGrouped", left, groups = syms("query"))
+  new("IRangesGrouped", left, groups = rlang::syms("query"))
 }
 
 #' @rdname ranges-overlaps
@@ -29,7 +29,7 @@ group_by_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L)
   mcols(left) <- mcols_overlaps_update(left, right,
                                        suffix = c(".query", ".subject"))
   mcols(left)$query <- queryHits(hits)
-  new("GRangesGrouped", left,  groups = syms("query"))
+  new("GRangesGrouped", left,  groups = rlang::syms("query"))
 }
 
 

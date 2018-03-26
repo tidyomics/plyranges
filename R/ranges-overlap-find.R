@@ -58,14 +58,20 @@ mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE
 #' @param suffix A character vector of length two used to identify metadata columns
 #' coming from x and y.
 #'
-#' @details `find_overlaps` will search for any overlaps between ranges
-#' x and y and return a ranges object of the same length as x but with additional
-#' metadata colums corresponding to the metadata columns in y. `find_overlaps_within` is
-#' the same but will only search for overlaps within y. For GRanges strand is
-#' ignored, unless `find_overlaps_directed` is used.
+#' @details `find_overlaps()` will search for any overlaps between ranges
+#' x and y and return a Ranges object of length equal to the number of times x
+#' overlaps y. This  Ranges object will have additional metadata columns 
+#' corresponding to the metadata columns in y. `find_overlaps_within()` is
+#' the same but will only search for overlaps within y. For GRanges objects strand is
+#' ignored, unless `find_overlaps_directed()` is used. If the Ranges objects have no
+#' metadata, one could use `group_by_overlaps()` to be able to
+#' identify the index of the input Range x that overlaps a Range in y. 
+#' Alternatively,
+#' `pair_overlaps()` could be used to place the x ranges next to the range
+#' in y they overlap.
 #'
 #' @return A Ranges object with rows corresponding to the
-#' ranges in x that overlap y.  In the case of `group_by_overlaps`, returns
+#' ranges in x that overlap y.  In the case of `group_by_overlaps()`, returns
 #' a GroupedRanges object, grouped by the number of overlaps
 #' of ranges in x that overlap y (stored in a column called query).
 #'

@@ -9,10 +9,10 @@
 \alias{join_overlap_left_within}
 \alias{join_overlap_left_directed}
 \alias{join_overlap_inner}
-\alias{join_overlap_inner.Ranges}
+\alias{join_overlap_inner.IntegerRanges}
 \alias{join_overlap_inner.GenomicRanges}
 \alias{join_overlap_inner_within}
-\alias{join_overlap_inner_within.Ranges}
+\alias{join_overlap_inner_within.IntegerRanges}
 \alias{join_overlap_inner_within.GenomicRanges}
 \alias{join_overlap_inner_directed}
 \alias{join_overlap_inner_directed.GenomicRanges}
@@ -34,15 +34,15 @@ join_overlap_left_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 join_overlap_inner(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-\method{join_overlap_inner}{Ranges}(x, y, maxgap = -1L, minoverlap = 0L,
-  suffix = c(".x", ".y"))
+\method{join_overlap_inner}{IntegerRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L, suffix = c(".x", ".y"))
 
 \method{join_overlap_inner}{GenomicRanges}(x, y, maxgap = -1L,
   minoverlap = 0L, suffix = c(".x", ".y"))
 
 join_overlap_inner_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-\method{join_overlap_inner_within}{Ranges}(x, y, maxgap = -1L,
+\method{join_overlap_inner_within}{IntegerRanges}(x, y, maxgap = -1L,
   minoverlap = 0L, suffix = c(".x", ".y"))
 
 \method{join_overlap_inner_within}{GenomicRanges}(x, y, maxgap = -1L,

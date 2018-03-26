@@ -17,7 +17,7 @@
 #' @export
 disjoin_ranges <- function(.data, ...) { UseMethod("disjoin_ranges") }
 
-#' @method disjoin_ranges Ranges
+#' @method disjoin_ranges IntegerRanges
 #' @export
 disjoin_ranges.IntegerRanges <- function(.data, ...) {
   dots <- quos(...)
