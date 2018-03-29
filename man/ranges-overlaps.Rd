@@ -11,7 +11,7 @@
 \alias{find_overlaps_directed}
 \alias{find_overlaps_directed.GenomicRanges}
 \alias{group_by_overlaps}
-\alias{group_by_overlaps.IntgerRanges}
+\alias{group_by_overlaps.IntegerRanges}
 \alias{group_by_overlaps.GenomicRanges}
 \title{Find overlap between two Ranges}
 \usage{
@@ -38,7 +38,7 @@ find_overlaps_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 group_by_overlaps(x, y, maxgap, minoverlap)
 
-\method{group_by_overlaps}{IntgerRanges}(x, y, maxgap = -1L,
+\method{group_by_overlaps}{IntegerRanges}(x, y, maxgap = -1L,
   minoverlap = 0L)
 
 \method{group_by_overlaps}{GenomicRanges}(x, y, maxgap = -1L,

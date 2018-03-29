@@ -26,8 +26,7 @@ select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
                      FUN.VALUE = logical(1))
 
   tags <- all_fields_tags[tags_inx]
-
-  bamTag(.data@operation$param) <- tags
+  if (length(tags) > 0 ) bamTag(.data@operation$param) <- tags
 
   fields <- all_fields_tags[!tags_inx]
 
@@ -35,9 +34,9 @@ select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
     if (any(!(fields %in% Rsamtools::scanBamWhat()))) {
       stop("Invalid field identifier.", call. = FALSE)
     }
+    bamWhat(.data@operation$param) <- fields
   }
-
-  bamWhat(.data@operation$param) <- fields
+  
   GRangesDeferred(load_alignments(.data),
                   operation = get_operation(.data))
 }

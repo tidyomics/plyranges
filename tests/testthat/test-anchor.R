@@ -4,13 +4,14 @@ test_that("IRangesAnchored", {
   ir <- IRanges()
   astart <- anchor_start(ir)
   # check class and accessors
+  expect_true(is(astart, "AnchoredIntegerRanges"))
   expect_s4_class(astart, "IRangesAnchored")
   expect_equal(anchor(astart), "start")
   # adding a new anchored overrides existing one
   expect_equal(anchor(anchor_center(astart)), "center")
   # can't anchor by strand for IRanges
-  expect_error(anchor_5p(astart))
-  expect_error(new("IRangesAnchored", ir, anchor = "3p"))
+  expect_error(anchor_5p(ir))
+  expect_error(anchor_3p(ir))
   # stretching empty ranges returns identical range if anchored
   expect_identical(ir, stretch(astart, 5L))
 
@@ -28,15 +29,16 @@ test_that("IRangesAnchored", {
   expect_identical(correct_center, test_center)
 })
 
-test_that("GRangesAnchored", {
+test_that("AnchoredGenomicRanges constructor works", {
 
   gr <- GRanges()
   # check class and acessors
-  expect_s4_class(anchor_5p(gr), "GRangesAnchored")
+  expect_true(is(anchor_5p(gr), "AnchoredGenomicRanges"))
+  expect_s4_class(anchor_start(gr), "GRangesAnchored")
   by_3p <- anchor_3p(gr)
   expect_equal(anchor(by_3p), "3p")
-  # unanchored returns null
-  expect_null(anchor(gr))
+  # unanchored returns error
+  expect_error(anchor(gr))
 
   # anchoring coordinates works as expected
   gr <- GRanges(
@@ -47,6 +49,10 @@ test_that("GRangesAnchored", {
     GC=seq(1, 0, length=10)
   )
 
+  # check anchoring does not remove any Range info
+  by_end <- anchor_end(gr)
+
+  expect_equal(names(by_end), names(gr))
   # modifying width anchors by start
   correct_gr <- gr
   width(correct_gr) <- 5L
@@ -58,4 +64,6 @@ test_that("GRangesAnchored", {
   # anchoring by 3p fixes end for neg strand
   expect_identical(set_width(anchor_3p(gr), 5L),
                    resize(gr, fix = "end", width = 5L))
+  # TODO ranges derivatives work as expected
+
 })
