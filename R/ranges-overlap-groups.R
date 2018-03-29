@@ -5,7 +5,7 @@ group_by_overlaps <- function(x, y, maxgap, minoverlap) { UseMethod("group_by_ov
 
 #' @rdname ranges-overlaps
 #' @export
-group_by_overlaps.IntgerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
+group_by_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
 
   hits <- findOverlaps(x, y, maxgap, minoverlap,
                        type = "any", select = "all")
