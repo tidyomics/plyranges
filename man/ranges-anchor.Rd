@@ -2,6 +2,7 @@
 % Please edit documentation in R/ranges-anchors.R
 \name{anchor}
 \alias{anchor}
+\alias{unanchor}
 \alias{anchor_start}
 \alias{anchor_end}
 \alias{anchor_center}
@@ -11,6 +12,8 @@
 \title{Anchored Ranges objects}
 \usage{
 anchor(x)
+
+unanchor(x)
 
 anchor_start(x)
 
@@ -40,11 +43,11 @@ to be held fixed.
 Anchoring will fix a Ranges start, end, or center positions,
 so these positions will remain the same when performing arithimetic.
 For \code{GRanges} objects, the function
-(\code{anchor_3p}) will fix the start for the negative strand,
-while \code{anchor_5p} will fix the end for the
+(\code{anchor_3p()}) will fix the start for the negative strand,
+while \code{anchor_5p()} will fix the end for the
 positive strand. Anchoring modifies how arithmetic is performed, for example
-modifying the width of a range with \code{set_width} or stretching a
-range with \code{stretch}.
+modifying the width of a range with \code{set_width()} or stretching a
+range with \code{stretch()}. To remove anchoring use \code{unanchor()}.
 }
 \section{Constructors}{
 

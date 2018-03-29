@@ -8,11 +8,11 @@
 #' @details Anchoring will fix a Ranges start, end, or center positions,
 #' so these positions will remain the same when performing arithimetic.
 #' For `GRanges` objects, the function
-#' (`anchor_3p`) will fix the start for the negative strand,
-#' while `anchor_5p` will fix the end for the
+#' (`anchor_3p()`) will fix the start for the negative strand,
+#' while `anchor_5p()` will fix the end for the
 #' positive strand. Anchoring modifies how arithmetic is performed, for example
-#' modifying the width of a range with `set_width` or stretching a
-#' range with `stretch`.
+#' modifying the width of a range with `set_width()` or stretching a
+#' range with `stretch()`. To remove anchoring use `unanchor()`.
 #'
 #' @param x a Ranges object
 #'
@@ -74,14 +74,28 @@ anchor.AnchoredIntegerRanges <- function(x) {
   x@anchor
 }
 
+#' @rdname ranges-anchor
+#' @export
+unanchor <- function(x) { UseMethod("unanchor") }
+
+#' @export
+unanchor.AnchoredGenomicRanges <- function(x) {
+  x@delegate
+}
+
+#' @export
+unanchor.AnchoredIntegerRanges <- function(x) {
+  x@delegate
+}
+
 
 #' @rdname ranges-anchor
 #' @export
 anchor_start <- function(x) { UseMethod("anchor_start") }
 
 #' @export
-anchor_start.Ranges <- function(x) {
-  new("IRangesAnchored", anchor = "start", x)
+anchor_start.IntegerRanges <- function(x) {
+  new_anchored_ir(x, "start")
 }
 
 #' @export
@@ -95,8 +109,8 @@ anchor_start.GenomicRanges <- function(x) {
 anchor_end <- function(x) { UseMethod("anchor_end") }
 
 #' @export
-anchor_end.Ranges <- function(x) {
-  new("IRangesAnchored", anchor = "end", x)
+anchor_end.IntegerRanges <- function(x) {
+  new_anchored_ir(x, "end")
 }
 
 #' @export
@@ -109,8 +123,8 @@ anchor_end.GenomicRanges <- function(x) {
 anchor_center <- function(x) { UseMethod("anchor_center") }
 
 #' @export
-anchor_center.Ranges <- function(x) {
-  new("IRangesAnchored", anchor = "center", x)
+anchor_center.IntegerRanges <- function(x) {
+  new_anchored_ir(x, "center")
 }
 
 #' @export

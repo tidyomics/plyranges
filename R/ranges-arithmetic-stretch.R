@@ -85,5 +85,3 @@ stretch_by_strand <- function(x, extend, anchor) {
   x[strand(x) == "-"] <- x_neg
   return(x)
 }
-
-

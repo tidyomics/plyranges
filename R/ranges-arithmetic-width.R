@@ -36,7 +36,7 @@ set_width.Ranges <- function(x, width = 0L) {
 }
 
 #' @export
-set_width.IRangesAnchored <- function(x, width = 0L) {
+set_width.AnchoredIntegerRanges <- function(x, width = 0L) {
   anchor <- anchor(x)
   rng <- x@delegate
   switch(anchor,
