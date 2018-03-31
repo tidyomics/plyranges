@@ -107,9 +107,11 @@ load_alignments <- function(.data) {
     grng <- grng[order(grng$read_pair_id)]
     return(group_by(grng, "read_pair_id"))
   }
-  alignments <-  GenomicAlignments::readGAlignments(file = .data@operation$input,
+  alignments <-  suppressWarnings(
+    GenomicAlignments::readGAlignments(file = .data@operation$input,
                       param = .data@operation$param,
                       with.which_label = with.which_label)
+    )
 
   galn_to_grng(alignments)
 }

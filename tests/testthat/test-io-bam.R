@@ -25,9 +25,14 @@ test_that("no index", {
 test_that("selection works with pipes", {
   fl <- system.file("extdata", "ex1.bam", package="Rsamtools")
   exp <- DataFrame(nm_sum = 924L)
-  result <- read_bam(fl) %>% select(NM) %>% summarise(nm_sum = sum(NM))
+  result <- read_bam(fl) %>% 
+    select(NM) %>% 
+    summarise(nm_sum = sum(NM))
+  
   expect_identical(result, exp)
-  result <- read_bam(fl) %>% select(FO) %>% summarise(fo_na = all(is.na(FO)))
+  result <- read_bam(fl) %>% 
+    select(FO) %>% 
+    summarise(fo_na = all(is.na(FO)))
   expect_true(result$fo_na)
 })
 
