@@ -30,11 +30,6 @@ setMethod("strand", "AnchoredGenomicRanges", function(x) strand(x@delegate))
 
 setMethod("seqinfo", "AnchoredGenomicRanges", function(x) seqinfo(x@delegate))
 
-setMethod("update", "AnchoredGenomicRanges", function (object, ...) {
-  object@delegate <- update(object@delegate, ...)
-  object
-})
-
 setMethod("mcols", "DelegatingGenomicRanges", function(x, ...) {
   mcols(x@delegate, ...)
 })
@@ -50,7 +45,7 @@ setMethod("show", "AnchoredGenomicRanges", function(object) {
 new_anchored_gr <- function(rng, anchor) {
   cls <- class(rng)
   new_cls <- paste0(cls, "Anchored")
-  setClass(new_cls, contains = c("AnchoredGenomicRanges"))
+  setClass(new_cls, contains = c("AnchoredGenomicRanges"), where = parent.frame())
   new(new_cls, 
       elementMetadata =  S4Vectors:::make_zero_col_DataFrame(length(rng)), 
       delegate = rng, 
@@ -95,6 +90,6 @@ setMethod("show", "AnchoredIntegerRanges", function(object) {
 new_anchored_ir <- function(rng, anchor) {
   cls <- class(rng)
   new_cls <- paste0(cls, "Anchored")
-  setClass(new_cls, contains =  "AnchoredIntegerRanges")
+  setClass(new_cls, contains =  "AnchoredIntegerRanges", where = parent.frame())
   new(new_cls, delegate = rng, anchor = anchor)
 }
