@@ -11,7 +11,7 @@
 #'
 #' @details
 #' `group_by()` creates a new object of class `GRangesGrouped` if
-#' the input is a `GRanges` object or an object of class `IRangesGrouped`
+#' the input is a `GRanges` object or an object of class `GroupedIntegerRanges`
 #' if the input is a `IRanges` object. Both of these classes contain a slot
 #' called `groups` corresponding to the names of grouping variables. They
 #' also inherit from their parent classes, `Ranges` and `GenomicRanges`
@@ -33,7 +33,7 @@
 #' @importFrom dplyr group_by
 #' @importFrom rlang quo_name quos syms
 #' @importFrom methods new
-#' @method group_by GRanges
+#' @method group_by GenomicRanges
 #' @name group_by-ranges
 #' @rdname group_by-ranges
 #' @export
@@ -67,82 +67,69 @@
 #'   summarise(gc = mean(gc))
 #'
 #'
-group_by.GRanges <- function(.data, ...) {
-  capture_groups <- quos(...)
-  groups <- lapply(capture_groups, function(x) quo_name(x))
-  groups <- syms(groups)
-  new("GRangesGrouped", .data, groups = groups)
-
+group_by.GenomicRanges <- function(.data, ...) {
+  new_grouped_gr(.data, ...)
 }
-
-
 
 #' @importFrom dplyr ungroup
 #' @rdname group_by-ranges
-#' @method ungroup GRangesGrouped
+#' @method ungroup GroupedGenomicRanges
 #' @export
-ungroup.GRangesGrouped <- function(x, ...) {
+ungroup.GroupedGenomicRanges <- function(x, ...) {
   groups <- as.character(unlist(groups(x)))
   capture_groups <- quos(...)
   ungroups <- lapply(capture_groups, function(x) quo_name(x))
   if (length(ungroups) == 0L) {
-    GRanges(x)
+    return(x@delegate)
   } else {
     groups_update <- setdiff(groups, ungroups)
     groups_update <- syms(groups_update)
-    new("GRangesGrouped", x, groups = groups_update)
+    new_grouped_gr(x@delegate, UQS(groups_update))
   }
 }
 
 #' @rdname group_by-ranges
-#' @method group_by IRanges
+#' @method group_by IntegerRanges
 #' @export
-group_by.IRanges <- function(.data, ...) {
-  capture_groups <- quos(...)
-  groups <- lapply(capture_groups, function(x) quo_name(x))
-  groups <- syms(groups)
-  new("IRangesGrouped", .data, groups = groups)
+group_by.IntegerRanges <- function(.data, ...) {
+  new_grouped_ir(.data, ...)
 }
 
 #' @rdname group_by-ranges
-#' @method ungroup IRangesGrouped
+#' @method ungroup GroupedIntegerRanges
 #' @export
-ungroup.IRangesGrouped <- function(x, ...) {
+ungroup.GroupedIntegerRanges <- function(x, ...) {
   groups <- as.character(unlist(groups(x)))
   capture_groups <- quos(...)
   ungroups <- lapply(capture_groups, function(x) quo_name(x))
   if (length(ungroups) == 0L) {
-    rng <- IRanges(x)
-    if (!is.null(mcols(x))) {
-      mcols(rng) <- mcols(x)
-    }
-    return(rng)
+    return(x@delegate)
   } else {
     groups_update <- setdiff(groups, ungroups)
     groups_update <- syms(groups_update)
-    new("IRangesGrouped", x, groups = groups_update)
+    new_grouped_ir(x@delegate, UQS(groups_update))
   }
 }
 
 
 #' @importFrom dplyr groups
-#' @method groups GRangesGrouped
+#' @method groups GroupedGenomicRanges
 #' @rdname group_by-ranges
 #' @export
-groups.GRangesGrouped <- function(x) { x@groups }
+groups.GroupedGenomicRanges <- function(x) { x@groups }
 
 #' @importFrom dplyr group_vars
-#' @method group_vars GRangesGrouped
+#' @method group_vars GroupedGenomicRanges
 #' @rdname group_by-ranges
 #' @export
-group_vars.GRangesGrouped <- function(x) { as.character(unlist(x@groups)) }
+group_vars.GroupedGenomicRanges <- function(x) { as.character(unlist(x@groups)) }
 
-#' @method groups IRangesGrouped
+#' @method groups GroupedIntegerRanges
 #' @rdname group_by-ranges
 #' @export
-groups.IRangesGrouped <- function(x) { x@groups }
+groups.GroupedIntegerRanges <- function(x) { x@groups }
 
-#' @method group_vars IRangesGrouped
+#' @method group_vars GroupedIntegerRanges
 #' @rdname group_by-ranges
 #' @export
-group_vars.IRangesGrouped <- function(x) { as.character(unlist(x@groups)) }
+group_vars.GroupedIntegerRanges <- function(x) { as.character(unlist(x@groups)) }
