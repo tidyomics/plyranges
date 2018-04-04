@@ -90,7 +90,6 @@ filter.DelegatingIntegerRanges <- function(.data, ...) {
   return(.data)
 }
 
-
 #' @method filter GroupedGenomicRanges
 #' @export
 filter.GroupedGenomicRanges <- function(.data, ...) {

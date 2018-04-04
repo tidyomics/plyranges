@@ -24,17 +24,28 @@ rng_arrange <- function(.data, dots) {
 #' # you can also use dplyr::desc to arrange by descending order
 #' @rdname ranges-arrange
 #' @return A sorted Ranges object
-#' @method arrange GenomicRanges
-#' @export
-arrange.GenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  rng_arrange(.data, dots)
-}
-
-#' @rdname ranges-arrange
 #' @method arrange Ranges
 #' @export
 arrange.Ranges <- function(.data, ...) {
   dots <- quos(...)
   rng_arrange(.data, dots)
 }
+
+#' @method arrange DelegatingGenomicRanges
+#' @export
+arrange.DelegatingGenomicRanges <- function(.data, ...) {
+  dots <- quos(...)
+  delegate <- .data@delegate
+  .data@delegate <- rng_arrange(delegate, dots)
+  .data
+}
+
+#' @method arrange DelegatingGenomicRanges
+#' @export
+arrange.DelegatingIntegerRanges <- function(.data, ...) {
+  dots <- quos(...)
+  delegate <- .data@delegate
+  .data@delegate <- rng_arrange(delegate, dots)
+  .data
+}
+# -- TODO: allow sorting by group?

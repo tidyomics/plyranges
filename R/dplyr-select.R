@@ -53,7 +53,6 @@ select_rng <- function(.data, .drop_ranges, dots) {
 #' @importFrom dplyr select
 #' @importFrom tidyselect vars_select
 #' @rdname ranges-select
-#' @method select GenomicRanges
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
 #' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10), counts = rpois(10, 2))
@@ -63,23 +62,6 @@ select_rng <- function(.data, .drop_ranges, dots) {
 #' select(rng, counts, gc)
 #' select(rng, 2:1)
 #' select(rng, seqnames, strand, .drop_ranges = TRUE)
-#' @export
-select.GenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
-
-  dots <- quos(...)
-  # no selection? - return .data
-  if (length(dots) == 0) {
-    return(.data)
-  }
-
-  # if the quo is named return an error
-  if (length(names(dots)) == 0) {
-    stop("select does not support renaming variables", call. = FALSE)
-  }
-
-  select_rng(.data, .drop_ranges, dots)
-}
-
 #' @rdname ranges-select
 #' @method select Ranges
 #' @export
@@ -95,6 +77,50 @@ select.Ranges <- function(.data, ..., .drop_ranges = FALSE) {
   if (length(names(dots)) == 0) {
     stop("select does not support renaming variables", call. = FALSE)
   }
-
   select_rng(.data, .drop_ranges,  dots)
+}
+
+#' @method select DelegatingGenomicRanges
+#' @export
+select.DelegatingGenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
+  dots <- quos(...)
+  # no selection? - return .data
+  if (length(dots) == 0) {
+    return(.data)
+  }
+
+  # if the quo is named return an error
+  if (length(names(dots)) == 0) {
+    stop("select does not support renaming variables", call. = FALSE)
+  }
+  delegate <- .data@delegate
+  delegate <- select_rng(delegate, .drop_ranges,  dots)
+  if (.drop_ranges) {
+    return(delegate)
+  } else {
+    .data@delegate <- delegate
+  }
+  .data
+}
+
+#' @method select DelegatingIntegerRanges
+#' @export
+select.DelegatingIntegerRanges <- function(.data, ..., .drop_ranges = FALSE) {
+  dots <- quos(...)
+  # no selection? - return .data
+  if (length(dots) == 0) {
+    return(.data)
+  }
+  # if the quo is named return an error
+  if (length(names(dots)) == 0) {
+    stop("select does not support renaming variables", call. = FALSE)
+  }
+  delegate <- .data@delegate
+  delegate <- select_rng(delegate, .drop_ranges,  dots)
+  if (.drop_ranges) {
+    return(delegate)
+  } else {
+    .data@delegate <- delegate
+  }
+  .data
 }
