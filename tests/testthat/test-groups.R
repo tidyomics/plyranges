@@ -9,8 +9,8 @@ gr1 <- GRanges(seqnames = "seq1",
                score = as.integer(c(0,3,4,5,10,14,0, 0, 4,8)))
 
 test_that("grouping works on empty ranges", {
-  expect_s4_class(gr0 %>% group_by(seqnames), "GRangesGrouped")
-  expect_s4_class(ir0 %>% group_by(start), "IRangesGrouped")
+  expect_s4_class(gr0 %>% group_by(seqnames), "GroupedGenomicRanges")
+  expect_s4_class(ir0 %>% group_by(start), "GroupedIntegerRanges")
 })
 
 test_that("throws invalid object if group not found", {
@@ -19,8 +19,9 @@ test_that("throws invalid object if group not found", {
 })
 
 test_that("grouping allows character names", {
-  expect_s4_class(gr0 %>% group_by("seqnames"), "GRangesGrouped")
-  expect_s4_class(gr1 %>% group_by("score"), "GRangesGrouped")
+  expect_s4_class(gr0 %>% group_by("seqnames"), "GroupedGenomicRanges")
+  expect_s4_class(ir0 %>% group_by("start"), "GroupedIntegerRanges")
+  expect_s4_class(gr1 %>% group_by("score"), "GroupedGenomicRanges")
   expect_identical(gr1 %>% group_by(score), gr1 %>% group_by("score"))
 })
 
@@ -41,10 +42,10 @@ test_that("ungrouping works as expected", {
 
 test_that("grouping after filter or mutate leaves groups in tact", {
             by_strand <- gr1 %>% group_by(strand) %>% mutate(new_score = mean(score))
-            expect_s4_class(by_strand, "GRangesGrouped")
+            expect_s4_class(by_strand, "GroupedGenomicRanges")
             expect_equal("strand", group_vars(by_strand))
             by_strand_filter <- gr1 %>% group_by(score) %>% filter(n() >= 2)
-            expect_s4_class(by_strand_filter, "GRangesGrouped")
+            expect_s4_class(by_strand_filter, "GroupedGenomicRanges")
             expect_equal("score", group_vars(by_strand_filter))
 })
 

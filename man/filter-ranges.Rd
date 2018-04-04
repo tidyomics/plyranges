@@ -2,10 +2,10 @@
 % Please edit documentation in R/dplyr-filter.R
 \name{filter-ranges}
 \alias{filter-ranges}
-\alias{filter.GenomicRanges}
+\alias{filter.Ranges}
 \title{Subset a \code{Ranges} object}
 \usage{
-\method{filter}{GenomicRanges}(.data, ...)
+\method{filter}{Ranges}(.data, ...)
 }
 \arguments{
 \item{.data}{A \code{Ranges} object}

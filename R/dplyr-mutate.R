@@ -67,7 +67,7 @@ mutate_rng <- function(.data, dots) {
 #' @importFrom dplyr mutate
 #' @rdname mutate-ranges
 #' @return a Ranges object
-#' @method mutate GenomicRanges
+#' @method mutate Ranges
 #'
 #' @examples
 #' df <- data.frame(start = 1:10,
@@ -89,38 +89,69 @@ mutate_rng <- function(.data, dots) {
 #'     mutate(avg_gc = mean(gc), row_id = 1:n())
 #'
 #' @export
-mutate.GenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  mutate_rng(.data, dots)
-
-}
-
-#' @rdname mutate-ranges
-#' @method mutate Ranges
-#' @export
 mutate.Ranges <- function(.data, ...) {
   dots <- quos(...)
   mutate_rng(.data, dots)
 }
 
 #' @rdname mutate-ranges
-#' @method mutate GRangesGrouped
+#' @method mutate DelegatingGenomicRanges
 #' @export
-mutate.GRangesGrouped <- function(.data, ...) {
+mutate.DelegatingGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
-  groups <- groups(.data)
-  split_ranges <- split_groups(.data, populate_mcols = FALSE, drop = TRUE)
-  result <- unlist(endoapply(split_ranges, mutate_rng, dots), use.names = FALSE)
-  new("GRangesGrouped", result, groups = groups)
+  delegate <- .data@delegate
+  .data@delegate <- mutate_rng(delegate, dots)
+  return(.data)
 }
 
 #' @rdname mutate-ranges
-#' @method mutate IRangesGrouped
+#' @method mutate DelegatingIntegerRanges
 #' @export
-mutate.IRangesGrouped <- function(.data, ...) {
+mutate.DelegatingIntegerRanges <- function(.data, ...) {
   dots <- quos(...)
-  groups <- groups(.data)
-  split_ranges <- split_groups(.data, populate_mcols = FALSE, drop = TRUE)
-  result <- unlist(endoapply(split_ranges, mutate_rng, dots), use.names = FALSE)
-  new("IRangesGrouped", result, groups = groups)
+  delegate <- .data@delegate
+  .data@delegate <- mutate_rng(delegate, dots)
+  return(.data)
+}
+
+#' @rdname mutate-ranges
+#' @method mutate GroupedGenomicRanges
+#' @export
+mutate.GroupedGenomicRanges <- function(.data, ...) {
+  dots <- quos(...)
+  delegate <- .data@delegate
+  inx <- .data@inx
+  rng <- lapply(inx, function(i) {
+    x <- delegate[i]
+    mutate_rng(x, dots)
+    
+  })
+
+  rng <- bind_ranges(rng)[order(unlist(inx))]
+
+  new("GroupedGenomicRanges",
+      elementMetadata =  .data@elementMetadata, 
+      delegate = rng, 
+      groups =  groups(.data), 
+      inx = inx)
+}
+
+#' @rdname mutate-ranges
+#' @method mutate GroupedIntegerRanges
+#' @export
+mutate.GroupedIntegerRanges <- function(.data, ...) {
+  dots <- quos(...)
+  delegate <- .data@delegate
+  inx <- .data@inx
+  rng <- lapply(inx, function(i) {
+    x <- delegate[i]
+    mutate_rng(x, dots)  
+  })
+
+  rng <- bind_ranges(rng)[order(unlist(inx))]
+
+  new("GroupedIntegerRanges",
+      delegate = rng, 
+      groups =  groups(.data), 
+      inx = inx)
 }

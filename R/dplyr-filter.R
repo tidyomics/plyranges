@@ -11,15 +11,8 @@ filter_rng <- function(.data, dots) {
       stop("Argument to filter condition must evaluate to a logical vector or logical-Rle")
     }
   }
-  if (length(r) == 1) {
-    if (r) {
-      return(.data)
-    } else {
-      new(class(.data))
-    }
-  }
   # drop missing values in r
-  .data[r & !is.na(r),]
+  r & !is.na(r)
 }
 
 
@@ -44,7 +37,6 @@ filter_rng <- function(.data, dots) {
 #' @importFrom S4Vectors runValue endoapply
 #' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
 #' @seealso [dplyr::filter()]
-#' @method filter GenomicRanges
 #' @name filter-ranges
 #' @rdname filter-ranges
 #'
@@ -73,38 +65,57 @@ filter_rng <- function(.data, dots) {
 #'   group_by(strand) %>%
 #'   filter(gc > 0.5)
 #'
-#' @export
-filter.GenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  filter_rng(.data, dots)
-}
-
 #' @method filter Ranges
 #' @export
 filter.Ranges <- function(.data, ...) {
   dots <- quos(...)
-  filter_rng(.data, dots)
+  .data[filter_rng(.data, dots)]
 }
 
-#' @method filter GRangesGrouped
+#' @method filter DelegatingGenomicRanges
 #' @export
-filter.GRangesGrouped <- function(.data, ...) {
-    dots <- quos(...)
-    split_ranges <- split_groups(.data)
-    new("GRangesGrouped",
-        unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE),
-        groups = groups(.data)
-    )
-
-}
-
-#' @method filter IRangesGrouped
-#' @export
-filter.IRangesGrouped <- function(.data, ...) {
+filter.DelegatingGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
-  split_ranges <- split_groups(.data)
-  new("IRangesGrouped",
-      unlist(endoapply(split_ranges, filter_rng, dots), use.names = FALSE),
-      groups = groups(.data)
+  delegate <- .data@delegate
+  .data@delegate <- delegate[filter_rng(delegate, dots)]
+  return(.data)
+}
+
+#' @method filter DelegatingIntegerRanges
+#' @export
+filter.DelegatingIntegerRanges <- function(.data, ...) {
+  dots <- quos(...)
+  delegate <- .data@delegate
+  .data@delegate <- delegate[filter_rng(delegate, dots)]
+  return(.data)
+}
+
+
+#' @method filter GroupedGenomicRanges
+#' @export
+filter.GroupedGenomicRanges <- function(.data, ...) {
+    dots <- quos(...)
+    inx_update <- unlist(
+      lapply(.data@inx, function(i) {
+        rng <- .data@delegate[i]
+        i[filter_rng(rng, dots)]
+       }),
+       use.names = FALSE
+    )
+    rng <- .data@delegate[sort(inx_update)]
+    new_grouped_gr(rng, UQS(groups(.data)))
+}
+
+#' @method filter GroupedIntegerRanges
+#' @export
+filter.GroupedIntegerRanges <- function(.data, ...) {
+  dots <- quos(...)
+  inx_update <- unlist(
+      lapply(.data@inx, function(i) {
+        rng <- .data@delegate[i]
+        i[filter_rng(rng, dots)]
+       })
   )
+  rng <- .data@delegate[sort(inx_update)]
+  new_grouped_ir(rng, UQS(groups(.data)))
 }

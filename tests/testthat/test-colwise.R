@@ -45,8 +45,6 @@ test_that("mutating by groups", {
   gr2 <- gr1
   mcols(gr2)$gt_grp_score <- (score(gr1) > 3.6 & mcols(gr1)$grp == "A") |
     (score(gr1) > 6 & mcols(gr1)$grp == "B")
-  gr2 <- gr2[order(gr2$grp)]
-  # this is still buggy in the sense it returns the results ordered
   expect_identical(gr1 %>%
                      group_by(grp) %>%
                      mutate(gt_grp_score = score > mean(score)) %>%
@@ -55,7 +53,6 @@ test_that("mutating by groups", {
   ir2 <- ir1
   mcols(ir2)$lt_grp_score <- (mcols(ir1)$score < 3.6 & mcols(ir1)$grp == "A") |
     (mcols(ir1)$score < 6 & mcols(ir1)$grp == "B")
-  ir2 <- ir2[order(mcols(ir2)$grp)]
   expect_identical(ir1 %>%
                      group_by(grp) %>%
                      mutate(lt_grp_score = score < mean(score)) %>%

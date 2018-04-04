@@ -1,9 +1,15 @@
 summarize_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
-  overscope_eval_update(overscope, dots)
+  DataFrame(overscope_eval_update(overscope, dots))
 }
 
+rename_dots <- function(dots) {
+  unnamed_dots <- nchar(names(dots)) == 0
+  rename_dots <- unlist(lapply(dots[unnamed_dots], rlang::quo_name))
+  names(dots)[unnamed_dots] <- rename_dots
+  dots
+}
 
 #' Aggregate a Ranges object
 #'
@@ -14,7 +20,6 @@ summarize_rng <- function(.data, dots) {
 #' @seealso [dplyr::summarise()]
 #' @importFrom S4Vectors rbind cbind
 #' @importFrom dplyr summarise summarize
-#' @method summarise GenomicRanges
 #' @rdname ranges-summarise
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
@@ -22,47 +27,71 @@ summarize_rng <- function(.data, dots) {
 #' rng <- as_granges(df)
 #' rng %>% summarise(gc = mean(gc))
 #' rng %>% group_by(strand) %>% summarise(gc = mean(gc))
-#' @export
-summarise.GenomicRanges <- function(.data, ...) {
-
-  dots <- quos(...)
-  DataFrame(summarize_rng(.data, dots))
-
-}
-
 #' @method summarise Ranges
 #' @rdname ranges-summarise
 #' @export
 summarise.Ranges <- function(.data, ...) {
-
   dots <- quos(...)
-  DataFrame(summarize_rng(.data, dots))
+  dots <- rename_dots(dots)
+  summarize_rng(.data, dots)
+}
 
+#' @method summarise DelegatingGenomicRanges
+#' @rdname ranges-summarise
+#' @export
+summarise.DelegatingGenomicRanges <- function(.data, ...) {
+  dots <- quos(...)
+  dots <- rename_dots(dots)
+  delegate <- .data@delegate
+  summarize_rng(delegate, dots)
+}
+
+#' @method summarise DelegatingGenomicRanges
+#' @rdname ranges-summarise
+#' @export
+summarise.DelegatingIntegerRanges <- function(.data, ...) {
+  dots <- quos(...)
+  dots <- rename_dots(dots)
+  delegate <- .data@delegate
+  summarize_rng(delegate, dots)
 }
 
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
-#' @method summarise GRangesGrouped
+#' @method summarise GroupedGenomicRanges
 #' @rdname ranges-summarise
 #' @export
-summarise.GRangesGrouped <- function(.data, ...) {
-
+summarise.GroupedGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
-  split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
-  groups_summary <- lapply(split_ranges, summarize_rng, dots)
-  groups_summary <- do.call(rbind, lapply(groups_summary, as, "DataFrame"))
-  cbind(mcols(split_ranges), groups_summary)
-
+  dots <- rename_dots(dots)
+  delegate <- .data@delegate
+  inx <- .data@inx
+  groups_summary <- as(
+    lapply(
+          extractList(delegate, inx),
+          summarize_rng, 
+          dots
+          ),
+          "List"
+  )
+  cbind(mcols(inx), unlist(groups_summary, use.names = FALSE))
 }
 
-#' @method summarise IRangesGrouped
+#' @method summarise GroupedIntegerRanges
 #' @rdname ranges-summarise
 #' @export
-summarise.IRangesGrouped <- function(.data, ...) {
+summarise.GroupedIntegerRanges <- function(.data, ...) {
   dots <- quos(...)
-  split_ranges <- split_groups(.data, populate_mcols = TRUE, drop = TRUE)
-  groups_summary <- lapply(split_ranges, summarize_rng, dots)
-  groups_summary <- do.call(rbind, lapply(groups_summary, as, "DataFrame"))
-  cbind(mcols(split_ranges), groups_summary)
+  dots <- rename_dots(dots)
+  delegate <- .data@delegate
+  inx <- .data@inx
+  groups_summary <- as(
+    lapply(
+          extractList(delegate, inx),
+          summarize_rng, 
+          dots
+          ),
+          "List"
+  )
+  cbind(mcols(inx), unlist(groups_summary, use.names = FALSE))
 }
-
