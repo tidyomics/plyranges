@@ -1,11 +1,11 @@
 context("Anchored ranges")
 
-test_that("IRangesAnchored", {
+test_that("AnchoredIntegerRanges and friends", {
   ir <- IRanges()
   astart <- anchor_start(ir)
   # check class and accessors
   expect_true(is(astart, "AnchoredIntegerRanges"))
-  expect_s4_class(astart, "IRangesAnchored")
+  expect_s4_class(astart, "AnchoredIntegerRanges")
   expect_equal(anchor(astart), "start")
   # adding a new anchored overrides existing one
   expect_equal(anchor(anchor_center(astart)), "center")
@@ -18,6 +18,7 @@ test_that("IRangesAnchored", {
   # anchoring coordinates leaves respective positions fixed
   ir <- IRanges(start = c(1, 20, 25, 25, 33),
                 width = c(19, 5, 0, 8, 5))
+  expect_equal(start(ir), start(anchor_center(ir)))
   correct_start <- start(ir)
   test_start <- ir %>% anchor_start() %>% stretch(10L) %>% start()
   expect_equal(test_start, correct_start)
@@ -29,12 +30,12 @@ test_that("IRangesAnchored", {
   expect_identical(correct_center, test_center)
 })
 
-test_that("AnchoredGenomicRanges constructor works", {
+test_that("AnchoredGenomicRanges and friends", {
 
   gr <- GRanges()
   # check class and acessors
   expect_true(is(anchor_5p(gr), "AnchoredGenomicRanges"))
-  expect_s4_class(anchor_start(gr), "GRangesAnchored")
+  expect_s4_class(anchor_start(gr), "AnchoredGenomicRanges")
   by_3p <- anchor_3p(gr)
   expect_equal(anchor(by_3p), "3p")
   # unanchored returns error

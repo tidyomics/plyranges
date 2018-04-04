@@ -1,8 +1,6 @@
-# ranges-anchors-class.R
-
 # A virtual class that delegates anchoring, so we can decorate
 # a Ranges derivative object with an anchor.
-# -- for GenomicRanges derivatives
+# --- GenomicRanges and friends ---
 validAnchoredGenomicRanges <- function(object) {
   valid_anchors <- c("start", "end", "center", "centre", "5p", "3p")
   
@@ -17,19 +15,18 @@ validAnchoredGenomicRanges <- function(object) {
 
 setClass("AnchoredGenomicRanges",
          representation = representation(anchor = "character"),
-         contains = c("DelegatingGenomicRanges"),
+         contains = "DelegatingGenomicRanges",
          validity = validAnchoredGenomicRanges)
 
-setMethod("seqnames", "AnchoredGenomicRanges",
-          function(x) seqnames(x@delegate))
+# constructor
+new_anchored_gr <- function(rng, anchor) {
+  new("AnchoredGenomicRanges", 
+      elementMetadata =  S4Vectors:::make_zero_col_DataFrame(length(rng)), 
+      delegate = rng, 
+      anchor = anchor)
+}
 
-setMethod("ranges", "AnchoredGenomicRanges",
-          function(x, ...) ranges(x@delegate, ...))
-
-setMethod("strand", "AnchoredGenomicRanges", function(x) strand(x@delegate))
-
-setMethod("seqinfo", "AnchoredGenomicRanges", function(x) seqinfo(x@delegate))
-
+# mcols method for DelegatingGenomicRanges
 setMethod("mcols", "DelegatingGenomicRanges", function(x, ...) {
   mcols(x@delegate, ...)
 })
@@ -42,22 +39,21 @@ setMethod("show", "AnchoredGenomicRanges", function(object) {
   cat(output, sep = "\n")
 })
 
-new_anchored_gr <- function(rng, anchor) {
-  cls <- class(rng)
-  new_cls <- paste0(cls, "Anchored")
-  setClass(new_cls, contains = c("AnchoredGenomicRanges"), where = parent.frame())
-  new(new_cls, 
-      elementMetadata =  S4Vectors:::make_zero_col_DataFrame(length(rng)), 
-      delegate = rng, 
-      anchor = anchor)
-}
-
-# -- for IntegerRanges derivatives
-# # equivalent of DelegatingGenomicRanges for IRanges objects
+# --- IntegerRanges and friends ---
+# Equivalent of DelegatingGenomicRanges for IntegerRanges class
 setClass("DelegatingIntegerRanges",
           representation = representation(delegate = "IntegerRanges"),
           contains = c("VIRTUAL", "IntegerRanges"))
- 
+
+# methods for DelegatingIntegerRanges
+setMethod("start", "DelegatingIntegerRanges", function(x, ...) start(x@delegate))
+setMethod("end", "DelegatingIntegerRanges", function(x, ...) end(x@delegate))
+setMethod("width", "DelegatingIntegerRanges", function(x) width(x@delegate))
+setMethod("mcols", "DelegatingIntegerRanges", function(x, ...) {
+    mcols(x@delegate, ...)
+})
+
+# --- ready for our AnchoredIntegerRanges ---
 validAnchoredIntegerRanges <- function(object) {
   valid_anchors <- c("start", "end", "center", "centre")
 
@@ -75,9 +71,7 @@ setClass("AnchoredIntegerRanges",
          contains = "DelegatingIntegerRanges",
          validity = validAnchoredIntegerRanges)
 
-setMethod("start", "AnchoredIntegerRanges", function(x, ...) start(x@delegate))
-setMethod("end", "AnchoredIntegerRanges", function(x, ...) end(x@delegate))
-setMethod("width", "AnchoredIntegerRanges", function(x) width(x@delegate))
+
 
 setMethod("show", "AnchoredIntegerRanges", function(object) {
   output <- c("", utils::capture.output(show(object@delegate)))
@@ -88,8 +82,5 @@ setMethod("show", "AnchoredIntegerRanges", function(object) {
 })
 
 new_anchored_ir <- function(rng, anchor) {
-  cls <- class(rng)
-  new_cls <- paste0(cls, "Anchored")
-  setClass(new_cls, contains =  "AnchoredIntegerRanges", where = parent.frame())
-  new(new_cls, delegate = rng, anchor = anchor)
+  new("AnchoredIntegerRanges", delegate = rng, anchor = anchor)
 }
