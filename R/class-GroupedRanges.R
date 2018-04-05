@@ -19,6 +19,8 @@ validGroupedGenomicRanges <- function(object) {
 }
 
 #' @rdname group_by-ranges
+#' @importFrom IRanges extractList splitAsList
+#' @importFrom BiocGenerics unlist
 #' @export
 setClass("GroupedGenomicRanges",
          slot = c(groups = "list",
