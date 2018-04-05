@@ -58,6 +58,7 @@ interweave <- function(left, right, .id = NULL) {
 #'bind_ranges(list(a = gr, b = gr2), c = gr, .id = "origin")
 #'
 #' @export
+#' @importFrom methods as
 bind_ranges <- function(..., .id = NULL) {
   x <- unlist(rlang::dots_values(...))
 
