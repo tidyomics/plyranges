@@ -58,10 +58,6 @@
 #' @importFrom methods setClass setValidity setMethod show
 #' @rdname ranges-anchor
 #' @export
-
-
-#' @rdname ranges-anchor
-#' @export
 anchor <- function(x) { UseMethod("anchor") }
 
 #' @export
@@ -70,9 +66,7 @@ anchor.AnchoredGenomicRanges <- function(x) {
 }
 
 #' @export
-anchor.AnchoredIntegerRanges <- function(x) {
-  x@anchor
-}
+anchor.AnchoredIntegerRanges <- anchor.AnchoredGenomicRanges
 
 #' @rdname ranges-anchor
 #' @export
@@ -84,9 +78,7 @@ unanchor.AnchoredGenomicRanges <- function(x) {
 }
 
 #' @export
-unanchor.AnchoredIntegerRanges <- function(x) {
-  x@delegate
-}
+unanchor.AnchoredIntegerRanges <- unanchor.AnchoredGenomicRanges
 
 
 #' @rdname ranges-anchor
@@ -100,7 +92,7 @@ anchor_start.IntegerRanges <- function(x) {
 
 #' @export
 anchor_start.GenomicRanges <- function(x) {
-  new_anchored_gr(x, anchor = "start")
+  new_anchored_gr(x, "start")
 }
 
 
@@ -129,7 +121,7 @@ anchor_center.IntegerRanges <- function(x) {
 
 #' @export
 anchor_center.GenomicRanges <- function(x) {
-  new_anchored_gr(x, anchor = "center")
+  new_anchored_gr(x, "center")
 }
 
 #' @rdname ranges-anchor
@@ -142,7 +134,7 @@ anchor_3p <- function(x) { UseMethod("anchor_3p") }
 
 #' @export
 anchor_3p.GenomicRanges <- function(x) {
-  new_anchored_gr(x, anchor = "3p")
+  new_anchored_gr(x, "3p")
 }
 
 #' @rdname ranges-anchor
@@ -151,5 +143,5 @@ anchor_5p <- function(x) { UseMethod("anchor_5p") }
 
 #' @export
 anchor_5p.GenomicRanges <- function(x) {
-  new_anchored_gr(x, anchor = "5p")
+  new_anchored_gr(x, "5p")
 }

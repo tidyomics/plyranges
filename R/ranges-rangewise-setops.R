@@ -34,7 +34,7 @@ intersect_ranges <- function(x,y) { UseMethod("intersect_ranges") }
 
 #' @importFrom IRanges intersect
 #' @export
-intersect_ranges.Ranges <- function(x,y) {
+intersect_ranges.IntegerRanges <- function(x,y) {
   intersect(x,y)
 }
 
