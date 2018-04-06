@@ -6,8 +6,8 @@
 \alias{GroupedIntegerRanges-class}
 \alias{group_by-ranges}
 \alias{group_by.GenomicRanges}
-\alias{ungroup.GroupedGenomicRanges}
 \alias{group_by.IntegerRanges}
+\alias{ungroup.GroupedGenomicRanges}
 \alias{ungroup.GroupedIntegerRanges}
 \alias{groups.GroupedGenomicRanges}
 \alias{group_vars.GroupedGenomicRanges}
@@ -17,9 +17,9 @@
 \usage{
 \method{group_by}{GenomicRanges}(.data, ...)
 
-\method{ungroup}{GroupedGenomicRanges}(x, ...)
-
 \method{group_by}{IntegerRanges}(.data, ...)
+
+\method{ungroup}{GroupedGenomicRanges}(x, ...)
 
 \method{ungroup}{GroupedIntegerRanges}(x, ...)
 

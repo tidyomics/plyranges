@@ -40,12 +40,7 @@ arrange.DelegatingGenomicRanges <- function(.data, ...) {
   .data
 }
 
-#' @method arrange DelegatingGenomicRanges
+#' @method arrange DelegatingIntegerRanges
 #' @export
-arrange.DelegatingIntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  delegate <- .data@delegate
-  .data@delegate <- rng_arrange(delegate, dots)
-  .data
-}
+arrange.DelegatingIntegerRanges <- arrange.DelegatingGenomicRanges
 # -- TODO: allow sorting by group?

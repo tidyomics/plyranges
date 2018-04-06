@@ -80,18 +80,4 @@ summarise.GroupedGenomicRanges <- function(.data, ...) {
 #' @method summarise GroupedIntegerRanges
 #' @rdname ranges-summarise
 #' @export
-summarise.GroupedIntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  dots <- rename_dots(dots)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  groups_summary <- as(
-    lapply(
-          extractList(delegate, inx),
-          summarize_rng, 
-          dots
-          ),
-          "List"
-  )
-  cbind(mcols(inx), unlist(groups_summary, use.names = FALSE))
-}
+summarise.GroupedIntegerRanges <- summarise.GroupedGenomicRanges

@@ -71,6 +71,14 @@ group_by.GenomicRanges <- function(.data, ...) {
   new_grouped_gr(.data, ...)
 }
 
+#' @rdname group_by-ranges
+#' @method group_by IntegerRanges
+#' @export
+group_by.IntegerRanges <- function(.data, ...) {
+  new_grouped_ir(.data, ...)
+}
+
+
 #' @importFrom dplyr ungroup
 #' @rdname group_by-ranges
 #' @method ungroup GroupedGenomicRanges
@@ -84,33 +92,16 @@ ungroup.GroupedGenomicRanges <- function(x, ...) {
   } else {
     groups_update <- setdiff(groups, ungroups)
     groups_update <- syms(groups_update)
-    new_grouped_gr(x@delegate, UQS(groups_update))
+    groupings <- make_group_inx(x@delegate, UQS(groups_update))
+    new(class(x), delegate = x@delegate, groups = groupings$groups, inx = groupings$inx)
   }
 }
 
-#' @rdname group_by-ranges
-#' @method group_by IntegerRanges
-#' @export
-group_by.IntegerRanges <- function(.data, ...) {
-  new_grouped_ir(.data, ...)
-}
 
 #' @rdname group_by-ranges
 #' @method ungroup GroupedIntegerRanges
 #' @export
-ungroup.GroupedIntegerRanges <- function(x, ...) {
-  groups <- as.character(unlist(groups(x)))
-  capture_groups <- quos(...)
-  ungroups <- lapply(capture_groups, function(x) quo_name(x))
-  if (length(ungroups) == 0L) {
-    return(x@delegate)
-  } else {
-    groups_update <- setdiff(groups, ungroups)
-    groups_update <- syms(groups_update)
-    new_grouped_ir(x@delegate, UQS(groups_update))
-  }
-}
-
+ungroup.GroupedIntegerRanges <- ungroup.GroupedGenomicRanges
 
 #' @importFrom dplyr groups
 #' @method groups GroupedGenomicRanges
@@ -127,9 +118,9 @@ group_vars.GroupedGenomicRanges <- function(x) { as.character(unlist(x@groups)) 
 #' @method groups GroupedIntegerRanges
 #' @rdname group_by-ranges
 #' @export
-groups.GroupedIntegerRanges <- function(x) { x@groups }
+groups.GroupedIntegerRanges <- groups.GroupedGenomicRanges
 
 #' @method group_vars GroupedIntegerRanges
 #' @rdname group_by-ranges
 #' @export
-group_vars.GroupedIntegerRanges <- function(x) { as.character(unlist(x@groups)) }
+group_vars.GroupedIntegerRanges <- group_vars.GroupedGenomicRanges

@@ -15,6 +15,19 @@ filter_rng <- function(.data, dots) {
   r & !is.na(r)
 }
 
+filter_grp <- function(.data, ...) {
+    dots <- quos(...)
+    inx_update <- lapply(.data@inx, function(i) {
+        x <- .data@delegate[i]
+        i[filter_rng(x, dots)]
+       })
+    inx_update <- as(inx_update, "IntegerList")
+    rng <- .data@delegate[sort(unlist(inx_update))]
+    new(class(.data), 
+        delegate = rng,
+        groups = groups(.data),
+        inx = inx_update[lengths(inx_update) > 0] )
+}
 
 #' Subset a `Ranges` object
 #'
@@ -83,38 +96,14 @@ filter.DelegatingGenomicRanges <- function(.data, ...) {
 
 #' @method filter DelegatingIntegerRanges
 #' @export
-filter.DelegatingIntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  delegate <- .data@delegate
-  .data@delegate <- delegate[filter_rng(delegate, dots)]
-  return(.data)
-}
+filter.DelegatingIntegerRanges <- filter.DelegatingGenomicRanges
 
 #' @method filter GroupedGenomicRanges
 #' @export
 filter.GroupedGenomicRanges <- function(.data, ...) {
-    dots <- quos(...)
-    inx_update <- unlist(
-      lapply(.data@inx, function(i) {
-        rng <- .data@delegate[i]
-        i[filter_rng(rng, dots)]
-       }),
-       use.names = FALSE
-    )
-    rng <- .data@delegate[sort(inx_update)]
-    new_grouped_gr(rng, UQS(groups(.data)))
+  filter_grp(.data, ...)
 }
 
 #' @method filter GroupedIntegerRanges
 #' @export
-filter.GroupedIntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  inx_update <- unlist(
-      lapply(.data@inx, function(i) {
-        rng <- .data@delegate[i]
-        i[filter_rng(rng, dots)]
-       })
-  )
-  rng <- .data@delegate[sort(inx_update)]
-  new_grouped_ir(rng, UQS(groups(.data)))
-}
+filter.GroupedIntegerRanges <- filter.GroupedGenomicRanges
