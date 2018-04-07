@@ -65,22 +65,14 @@ join_nearest <- function(x, y, suffix = c(".x", ".y")) {
 
 #' @export
 join_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
-  hits <- nearest(x,y, select = "arbitrary")
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  return(left)
+  hits <- make_hits(x, y, nearest, select = "arbitrary")
+  expand_by_hits(x, y, suffix, hits)
 }
 
 #' @export
 join_nearest.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
-  hits <- nearest(x,y, select = "arbitrary", ignore.strand = TRUE)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  return(left)
+  hits <- make_hits(x, y, nearest, select = "arbitrary", ignore.strand = TRUE)
+  expand_by_hits(x, y, suffix, hits)
 }
 
 #' @rdname ranges-nearest
@@ -91,26 +83,20 @@ join_nearest_left <- function(x, y, suffix = c(".x", ".y")) {
 
 #' @export
 join_nearest_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
-  hits <- nearest(x,y, select = "all")
+  hits <- make_hits(x, y, nearest, select = "all")
   mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
     end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y, suffix, hits)
 }
 
 #' @export
 join_nearest_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
-  hits <- nearest(x,y, select = "all", ignore.strand = TRUE)
+  hits <- make_hits(x, y, nearest, select = "all", ignore.strand = TRUE)
   mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
     end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y, suffix, hits)
 }
 
 #' @importFrom IRanges nearest
@@ -120,24 +106,18 @@ join_nearest_right <- function(x, y,  suffix = c(".x", ".y")) { UseMethod("join_
 
 #' @export
 join_nearest_right.IntegerRanges <- function(x, y, suffix = c(".x", ".y")) {
-  hits <- nearest(x,y, select = "all")
+  hits <- make_hits(x, y, nearest, select = "all")
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y, suffix, hits)
 }
 
 #' @export
 join_nearest_right.GenomicRanges <- function(x, y,  suffix = c(".x", ".y")) {
-  hits <- nearest(x,y, select = "all", ignore.strand = TRUE)
+  hits <- make_hits(x, y, nearest, select = "all", ignore.strand = TRUE)
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y, suffix, hits)
 }
 
 
@@ -155,10 +135,7 @@ join_nearest_upstream.GenomicRanges <- function(x, y,  suffix = c(".x", ".y")) {
                                     mcols(hits)$is_left,
                                     mcols(hits)$is_right)
   hits <- hits[mcols(hits)$is_upstream]
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x, y, suffix, hits)
 }
 
 #' @rdname ranges-nearest
@@ -179,8 +156,5 @@ join_nearest_downstream.GenomicRanges <- function(x, y, suffix = c(".x", ".y")) 
                                     mcols(hits)$is_right)
 
   hits <- hits[mcols(hits)$is_downstream]
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y, suffix, hits)
 }

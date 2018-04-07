@@ -54,21 +54,13 @@ join_follow <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_follow") 
 #' @export
 join_follow.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  return(left)
+  expand_by_hits(x, y, suffix, hits)
 }
 
 #' @export
 join_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, ignore.strand = TRUE)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x, y, suffix, hits)
 }
 
 #' @rdname ranges-follow
@@ -79,18 +71,14 @@ join_follow_left <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_foll
 #' @export
 join_follow_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all")
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left}
+  expand_by_hits(x,y, suffix, hits)
+}
+
 
 #' @export
 join_follow_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all", ignore.strand = TRUE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y,suffix, hits)
 }
 
 #' @rdname ranges-follow
@@ -101,8 +89,5 @@ join_follow_upstream <- function(x,y, suffix = c(".x", ".y")) {UseMethod("join_f
 #' @export
 join_follow_upstream.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, select = "all", ignore.strand = FALSE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y,suffix, hits)
 }

@@ -53,21 +53,13 @@ join_precede <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_precede"
 #' @export
 join_precede.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  return(left)
+  expand_by_hits(x,y, suffix, hits)
 }
 
 #' @export
 join_precede.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y, ignore.strand = TRUE)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  return(left)
+  expand_by_hits(x,y,suffix,hits)
 }
 
 
@@ -79,19 +71,13 @@ join_precede_right <- function(x,y, suffix = c(".x", ".y")) { UseMethod("join_pr
 #' @export
 join_precede_right.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y, select = "all")
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y,suffix,hits)
 }
 
 #' @export
 join_precede_right.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y, select = "all", ignore.strand = TRUE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y,suffix,hits)
 }
 
 
@@ -103,8 +89,5 @@ join_precede_downstream <- function(x,y, suffix = c(".x", ".y")) {UseMethod("joi
 #' @export
 join_precede_downstream.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y, select = "all", ignore.strand = FALSE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  expand_by_hits(x,y,suffix,hits)
 }

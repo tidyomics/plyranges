@@ -54,18 +54,14 @@ pair_overlaps <- function(x, y, maxgap, minoverlap, suffix) {
 #' @export
 pair_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y, suffix, hits, return_data_frame = TRUE)
 }
 
 #' @export
 pair_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   hits <- findOverlaps(x,y, maxgap, minoverlap,
                        type = "any", select = "all", ignore.strand = TRUE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y, suffix, hits, return_data_frame = TRUE)
 }
 
 #' @rdname ranges-pairs
@@ -77,19 +73,13 @@ pair_nearest <- function(x, y, suffix) {
 #' @export
 pair_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- nearest(x,y, select = "arbitrary")
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y, suffix, hits, return_data_frame = TRUE)
 }
 
 #' @export
 pair_nearest.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- nearest(x,y, select = "arbitrary", ignore.strand = TRUE)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y, suffix, hits, return_data_frame = TRUE)
 }
 
 #' @rdname ranges-pairs
@@ -101,19 +91,13 @@ pair_precede <- function(x, y, suffix) {
 #' @export
 pair_precede.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y,suffix, hits, return_data_frame = TRUE)
 }
 
 #' @export
 pair_precede.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- precede(x,y, ignore.strand = TRUE)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y, suffix, hits, return_data_frame = TRUE)
 }
 
 #' @rdname ranges-pairs
@@ -124,17 +108,11 @@ pair_follow <- function(x, y, suffix) {
 #' @export
 pair_follow.IntegerRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y,suffix, hits, return_data_frame = TRUE)
 }
 
 #' @export
 pair_follow.GenomicRanges <- function(x,y, suffix = c(".x", ".y")) {
   hits <- follow(x,y, ignore.strand = TRUE)
-  no_hits_id <- !is.na(hits)
-  left <- x[no_hits_id, ]
-  right <- y[hits[no_hits_id], ]
-  mcols_overlaps_update(left, right, suffix, return_data_frame = TRUE)
+  expand_by_hits(x,y, suffix, hits, return_data_frame =  TRUE)
 }

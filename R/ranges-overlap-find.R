@@ -47,6 +47,37 @@ mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE
   additional_mcols
 }
 
+# backend function for olaps and related methods
+# takes the pair of ranges, a suffix, optional arguments
+# and f_in an anyonymous function that generates a Hits object
+make_hits <- function(x, y, f_in, ...) {
+  f_in(x, y, ...)
+}
+
+# expand x,y, based on Hits object
+expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE) {
+  if (is(hits, "Hits")) {
+    left <- x[queryHits(hits), ]
+    right <- y[subjectHits(hits), ]
+  } else {
+    # for vector case
+    no_hits_id <- !is.na(hits)
+    left <- x[no_hits_id, ]
+    right <- y[hits[no_hits_id], ]
+  }
+
+  if (return_data_frame) {
+    return(mcols_overlaps_update(left, right, suffix, return_data_frame))
+  }
+  mcols(left) <-  mcols_overlaps_update(left, right, suffix)
+  left
+}
+
+.find_overlaps <- function(x,y, suffix, f_in, ...) {
+  hits <- make_hits(x, y, f_in, ...)
+  expand_by_hits(x,y, suffix, hits)
+}
+
 #' Find overlap between two Ranges
 #'
 #' @rdname ranges-overlaps
@@ -119,22 +150,23 @@ find_overlaps <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
 #' @rdname ranges-overlaps
 #' @export
 find_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
-  hits <- findOverlaps(x,y, maxgap, minoverlap, type = "any", select = "all")
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  .find_overlaps(x,y, suffix, findOverlaps, 
+                 maxgap = maxgap, 
+                 minoverlap = minoverlap, 
+                 type = "any",
+                 select = "all")
 }
 
 #' @rdname ranges-overlaps
 #' @export
 find_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
-  hits <- findOverlaps(x,y, maxgap, minoverlap,
-                       type = "any", select = "all", ignore.strand = TRUE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  .find_overlaps(x,y, suffix, 
+                 findOverlaps, 
+                 maxgap = maxgap, 
+                 minoverlap = minoverlap, 
+                 type = "any",
+                 select = "all",
+                 ignore.strand = TRUE)
 }
 
 #' @rdname ranges-overlaps
@@ -146,22 +178,22 @@ find_overlaps_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"
 #' @rdname ranges-overlaps
 #' @export
 find_overlaps_within.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
-  hits <- findOverlaps(x,y, maxgap, minoverlap, type = "within", select = "all")
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  .find_overlaps(x,y, suffix, findOverlaps, 
+                 maxgap = maxgap, 
+                 minoverlap = minoverlap, 
+                 type = "within",
+                 select = "all")
 }
 
 #' @rdname ranges-overlaps
 #' @export
 find_overlaps_within.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
-  hits <- findOverlaps(x,y, maxgap, minoverlap,
-                       type = "within", select = "all", ignore.strand = TRUE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  .find_overlaps(x,y, suffix, findOverlaps, 
+                 maxgap = maxgap, 
+                 minoverlap = minoverlap, 
+                 type = "within",
+                 select = "all",
+                 ignore.strand = TRUE)
 }
 
 #' @rdname ranges-overlaps
@@ -173,10 +205,10 @@ find_overlaps_directed <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".
 #' @rdname ranges-overlaps
 #' @export
 find_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
-  hits <- findOverlaps(x,y, maxgap, minoverlap,
-                       type = "any", select = "all", ignore.strand = FALSE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right, suffix)
-  left
+  .find_overlaps(x,y, suffix, findOverlaps, 
+                 maxgap = maxgap, 
+                 minoverlap = minoverlap, 
+                 type = "any",
+                 select = "all",
+                 ignore.strand = FALSE)
 }

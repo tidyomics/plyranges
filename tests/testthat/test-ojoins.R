@@ -56,7 +56,7 @@ test_that("intersect join returns correct results",{
 
   # within
   b_with <- b[3]
-  exp <- GRanges("chr1", IRanges(101, 100), strand = c("+"),
+  exp <- GRanges("chr1", IRanges(101, 110), strand = c("+"),
                  name.x = "b3", score.x = 3L, name.y = "a2", score.y = 2)
 
   target <- join_overlap_intersect_within(b_with, a)

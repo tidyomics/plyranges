@@ -6,14 +6,8 @@ group_by_overlaps <- function(x, y, maxgap, minoverlap) { UseMethod("group_by_ov
 #' @rdname ranges-overlaps
 #' @export
 group_by_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
-
-  hits <- findOverlaps(x, y, maxgap, minoverlap,
-                       type = "any", select = "all")
-
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right,
-                                       suffix = c(".query", ".subject"))
+  hits <- make_hits(x, y, findOverlaps, maxgap = maxgap, minoverlap = minoverlap)
+  left <- expand_by_hits(x, y, c(".query", ".subject"), hits)
   mcols(left)$query <- queryHits(hits)
   new_grouped_ir(left, UQS(rlang::syms("query")))
 }
@@ -21,15 +15,11 @@ group_by_overlaps.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L)
 #' @rdname ranges-overlaps
 #' @export
 group_by_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L) {
-
-  hits <- findOverlaps(x,y, maxgap, minoverlap,
-                       type = "any", select = "all", ignore.strand = TRUE)
-  left <- x[queryHits(hits), ]
-  right <- y[subjectHits(hits), ]
-  mcols(left) <- mcols_overlaps_update(left, right,
-                                       suffix = c(".query", ".subject"))
+  hits <- make_hits(x, y, findOverlaps, 
+                    maxgap = maxgap, 
+                    minoverlap = minoverlap,
+                    ignore.strand = TRUE)
+  left <- expand_by_hits(x, y, c(".query", ".subject"), hits)
   mcols(left)$query <- queryHits(hits)
   new_grouped_gr(left,  UQS(rlang::syms("query")))
 }
-
-

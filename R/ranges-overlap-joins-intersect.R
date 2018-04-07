@@ -1,3 +1,19 @@
+.join_intersect <- function(x, y, suffix, f_in = findOverlapPairs, ...) {
+
+  pairs <- f_in(x, y, ...)
+  strand_arg <- quos(...)
+  strand_arg <- strand_arg[names(strand_arg) == "ignore.strand"]
+  if (length(strand_arg) == 1L) {
+      inner_rng <- pintersect(pairs, ignore.strand = eval_tidy(strand_arg[[1]]))
+  } else {
+    inner_rng <- pintersect(pairs)
+  }
+  left_rng <- first(pairs)
+  right_rng <- second(pairs)
+  mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
+  inner_rng
+}
+
 #' Join by overlapping Ranges
 #'
 #' @param x,y Objects representing ranges
@@ -11,8 +27,7 @@
 #' the genomic intervals that are the overlapping ranges between x and y and
 #' returns a new ranges object with metadata columns from x and y.
 #'
-#' The function `join_inner_overlaps` is equivalent to `find_overlaps`
-#' it returns all ranges in x that overlap ranges in y.
+#' The function `join_inner_overlaps` is equivalent to `find_overlaps`.
 #'
 #' The function `join_left_overlaps` performs a left outer join between x
 #' and y. It returns all ranges in x that overlap or do not overlap ranges in y
@@ -53,33 +68,22 @@ join_overlap_intersect <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".
 #' @export
 join_overlap_intersect.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                           suffix = c(".x", ".y")) {
-  pairs <- findOverlapPairs(x, y,
-                            type = "any",
-                            maxgap = maxgap,
-                            minoverlap = minoverlap)
-  inner_rng <- pintersect(pairs)
-  left_rng <- first(pairs)
-  right_rng <- second(pairs)
-  mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
-  inner_rng
-
+  .join_intersect(x, y, 
+                  suffix, 
+                  type = "any", 
+                  maxgap = maxgap, 
+                  minoverlap = minoverlap)
 }
 
 #' @export
 join_overlap_intersect.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                                  suffix = c(".x", ".y")) {
-  pairs <- findOverlapPairs(x, y,
-                            type = "any",
-                            maxgap = maxgap,
-                            minoverlap = minoverlap,
-                            ignore.strand = TRUE)
-
-  inner_rng <- pintersect(pairs, ignore.strand = TRUE)
-
-  left_rng <- first(pairs)
-  right_rng <- second(pairs)
-  mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
-  inner_rng
+  .join_intersect(x, y, 
+                  suffix, 
+                  type = "any", 
+                  maxgap = maxgap, 
+                  minoverlap = minoverlap,
+                  ignore.strand = TRUE)
 
 }
 #' @rdname overlap-joins
@@ -92,30 +96,22 @@ join_overlap_intersect_within <- function(x, y, maxgap, minoverlap,
 #' @export
 join_overlap_intersect_within.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                              suffix = c(".x", ".y")) {
-  pairs <- findOverlapPairs(x, y,
-                            type = "within",
-                            maxgap = maxgap,
-                            minoverlap = minoverlap)
-  inner_rng <- pintersect(pairs)
-  left_rng <- first(pairs)
-  right_rng <- second(pairs)
-  mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
-  inner_rng
+  .join_intersect(x, y, 
+                  suffix, 
+                  type = "within", 
+                  maxgap = maxgap, 
+                  minoverlap = minoverlap)
 }
 
 #' @export
 join_overlap_intersect_within.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L,
                                                     suffix = c(".x", ".y")) {
-  pairs <- findOverlapPairs(x, y,
-                            type = "within",
-                            maxgap = maxgap,
-                            minoverlap = minoverlap,
-                            ignore.strand = TRUE)
-  inner_rng <- pintersect(pairs)
-  left_rng <- first(pairs)
-  right_rng <- second(pairs)
-  mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
-  inner_rng
+  .join_intersect(x, y, 
+                  suffix, 
+                  type = "within", 
+                  maxgap = maxgap, 
+                  minoverlap = minoverlap,
+                  ignore.strand = TRUE)
 }
 
 
@@ -131,16 +127,27 @@ join_overlap_intersect_directed.GenomicRanges <- function(x, y,
                                                           maxgap = -1L,
                                                           minoverlap = 0L,
                                                           suffix = c(".x", ".y")) {
-  pairs <- findOverlapPairs(x, y,
-                            type = "any",
-                            maxgap = maxgap,
-                            minoverlap = minoverlap,
-                            ignore.strand = FALSE)
+  .join_intersect(x, y, suffix,
+                  type = "any",
+                  maxgap = maxgap,
+                  minoverlap = minoverlap,
+                  ignore.strand = FALSE)
+}
 
-  inner_rng <- pintersect(pairs, ignore.strand = FALSE)
+#' @rdname overlap-joins
+#' @export
+join_overlap_inner <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+  UseMethod("find_overlaps")
+}
 
-  left_rng <- first(pairs)
-  right_rng <- second(pairs)
-  mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
-  inner_rng
+#' @rdname overlap-joins
+#' @export
+join_overlap_inner_within <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+  UseMethod("find_overlaps_within")
+}
+
+#' @rdname overlap-joins
+#' @export
+join_overlap_inner_directed <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+  UseMethod("find_overlaps_directed")
 }
