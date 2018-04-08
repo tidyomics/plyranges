@@ -7,8 +7,49 @@ reduce_rng <- function(.data, reduced, dots) {
 
   reduced_summary <- as(lapply(ranges_list, summarize_rng, dots), "List")
 
-  mcols(reduced) <- do.call(rbind, lapply(reduced_summary, as, "DataFrame"))
+  mcols(reduced) <- unlist(reduced_summary)
   return(reduced)
+}
+
+reduce_single <- function(.data, ..., rfun = reduce) {
+  dots <- quos(...)
+  if (length(dots) == 0L) {
+    return(rfun(.data))
+  }
+  reduced <- rfun(.data, with.revmap = TRUE)
+  reduce_rng(.data, reduced, dots)
+}
+
+reduce_by_grp <- function(.data, ..., rfun = IRanges::reduce) {
+  dots <- quos(...)
+  delegate <- .data@delegate
+  inx <- .data@inx
+  groups <- group_vars(.data)
+  split_ranges <- extractList(delegate, inx)
+  mcols(split_ranges) <- mcols(inx)
+  
+  if (length(dots) == 0L) {
+    rng <- IRanges::stack(rfun(split_ranges))
+    if (is(rng, "IntegerRanges")) {
+      mcols(rng) <- mcols(inx[mcols(rng)[["name"]]])[, groups, drop = FALSE]
+    } else {
+      mcols(rng) <- mcols(rng)[, groups, drop = FALSE]
+    }
+    return(rng)
+  }
+  
+  reduced <- rfun(split_ranges, with.revmap = TRUE)
+  rng <- Map(function(x, y) {reduce_rng(x, y, dots)}, 
+             split_ranges, 
+             reduced)
+  rng <- as(rng, "List")
+  mcols(rng) <- mcols(split_ranges)
+  rng <- IRanges::stack(rng)
+  # drop 'name' col from stack
+  mcols(rng) <- mcols(rng)[, -1, drop = FALSE]
+  # reorder columns
+  mcols(rng) <- mcols(rng)[, rev(seq_along(mcols(rng)))]
+  rng
 }
 
 #' Reduce then aggregate a Ranges object
@@ -21,101 +62,58 @@ reduce_rng <- function(.data, reduced, dots) {
 #' @importFrom IRanges reduce
 #' @importFrom utils relist
 #' @examples
-#' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
-#' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
+#' set.seed(10)
+#' df <- data.frame(start = sample(1:10), 
+#'                  width = 5,  
+#'                  seqnames = "seq1",
+#'                  strand = sample(c("+", "-", "*"), 10, replace = TRUE), 
+#'                  gc = runif(10))
+#'                  
 #' rng <- as_granges(df)
 #' rng %>% reduce_ranges()
 #' rng %>% reduce_ranges(gc = mean(gc))
 #' rng %>% reduce_ranges_directed(gc = mean(gc))
-#'
-#' x <- data.frame(start = c(11:13, 2, 7:6), width=3, id=letters[1:6],
-#' score=1:6)
+#' 
+#' x <- data.frame(start = c(11:13, 2, 7:6), 
+#'                width=3, 
+#'                id=sample(letters[1:3], 6, replace = TRUE),
+#'                score= sample(1:6))
 #' x <- as_iranges(x)
 #' x %>% reduce_ranges()
 #' x %>% reduce_ranges(score = sum(score))
+#' x %>% group_by(id) %>% reduce_ranges(score = sum(score))
 #' @export
 reduce_ranges <- function(.data, ...) { UseMethod("reduce_ranges") }
 
 #' @method reduce_ranges IntegerRanges
 #' @export
 reduce_ranges.IntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  if (length(dots) == 0L) {
-    return(reduce(.data))
-  }
-
-  reduced <- reduce(.data, with.revmap = TRUE)
-
-  reduce_rng(.data, reduced, dots)
-
+  reduce_single(.data, ...)
 }
 
 #' @method reduce_ranges GroupedIntegerRanges
 #' @export
 reduce_ranges.GroupedIntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  split_ranges <- extractList(delegate, inx)
-  mcols(split_ranges) <- mcols(inx)
-  
-  if (length(dots) == 0L) {
-    ir_r <- IRanges::stack(reduce(split_ranges))
-    mcols(ir_r) <- mcols(ir_r)[, group_vars(.data), drop = FALSE]
-    return(ir_r)
-  }
-
-  reduced <- reduce(split_ranges, with.revmap = TRUE)
-
-  ir_r <- S4Vectors::List(Map(function(i)
-    reduce_rng(split_ranges[[i]], reduced[[i]], dots),
-    seq_along(split_ranges)))
-  mcols(ir_r) <- mcols(split_ranges)
-  ir_r <- IRanges::stack(ir_r)
-  mcols(ir_r) <- mcols(ir_r)[, -1, drop = FALSE]
-  mcols(ir_r) <- mcols(ir_r)[, rev(seq_along(mcols(ir_r)))]
-  return(ir_r)
+  reduce_by_grp(.data, ...)
 }
 
 
 #' @method reduce_ranges GroupedGenomicRanges
 #' @export
 reduce_ranges.GroupedGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  split_ranges <- extractList(delegate, inx)
-  mcols(split_ranges) <- mcols(inx)
-  
-  if (length(dots) == 0L) {
-    gr_r <- IRanges::stack(reduce(split_ranges, ignore.strand = TRUE))
-    mcols(gr_r) <- mcols(gr_r)[, group_vars(.data), drop = FALSE]
-    return(gr_r)
-  }
-
-  reduced <- reduce(split_ranges, with.revmap = TRUE, ignore.strand = TRUE)
-
-  gr_r <- S4Vectors::List(Map(function(i)
-    reduce_rng(split_ranges[[i]], reduced[[i]], dots),
-    seq_along(split_ranges)))
-  mcols(gr_r) <- mcols(split_ranges)
-  gr_r <- IRanges::stack(gr_r)
-  mcols(gr_r) <- mcols(gr_r)[, -1, drop = FALSE]
-  mcols(gr_r) <- mcols(gr_r)[, rev(seq_along(mcols(gr_r)))]
-  return(gr_r)
+  reduce_by_grp(.data, ..., 
+                rfun = function(x, ...) {
+                  reduce(x, ..., ignore.strand = TRUE)
+                  })
 }
 
 #' @method reduce_ranges GenomicRanges
 #' @export
 reduce_ranges.GenomicRanges <- function(.data, ...) {
-
-  dots <- quos(...)
-  if (length(dots) == 0L) {
-    return(reduce(.data,ignore.strand = TRUE))
-  }
-
-  reduced <- reduce(.data, with.revmap = TRUE, ignore.strand = TRUE)
-  reduce_rng(.data, reduced, dots)
+  reduce_single(.data, ..., 
+                rfun = function(x, ...) {
+                  reduce(x, ..., ignore.strand = TRUE)
+                })
 }
 
 #' @rdname ranges-reduce
@@ -128,39 +126,17 @@ reduce_ranges_directed <- function(.data, ...) {
 #' @method reduce_ranges_directed GenomicRanges
 #' @export
 reduce_ranges_directed.GenomicRanges <- function(.data, ...) {
-
-  dots <- quos(...)
-  if (length(dots) == 0L) {
-    return(reduce(.data,ignore.strand = FALSE))
-  }
-  reduced <- reduce(.data, with.revmap = TRUE, ignore.strand = FALSE)
-  reduce_rng(.data, reduced, dots)
-
+  reduce_single(.data, ..., 
+                rfun = function(x, ...) {
+                  reduce(x, ..., ignore.strand = FALSE)
+                })
 }
 
 #' @method reduce_ranges_directed GroupedGenomicRanges
 #' @export
 reduce_ranges_directed.GroupedGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  split_ranges <- extractList(delegate, inx)
-  mcols(split_ranges) <- mcols(inx)
-  
-  if (length(dots) == 0L) {
-    gr_r <- IRanges::stack(reduce(split_ranges, ignore.strand = FALSE))
-    mcols(gr_r) <- mcols(gr_r)[, group_vars(.data), drop = FALSE]
-    return(gr_r)
-  }
-
-  reduced <- reduce(split_ranges, with.revmap = TRUE, ignore.strand = FALSE)
-
-  gr_r <- S4Vectors::List(Map(function(i)
-    reduce_rng(split_ranges[[i]], reduced[[i]], dots),
-    seq_along(split_ranges)))
-  mcols(gr_r) <- mcols(split_ranges)
-  gr_r <- IRanges::stack(gr_r)
-  mcols(gr_r) <- mcols(gr_r)[, -1, drop = FALSE]
-  mcols(gr_r) <- mcols(gr_r)[, rev(seq_along(mcols(gr_r)))]
-  return(gr_r)
+  reduce_by_grp(.data, ..., 
+                rfun = function(x, ...) {
+                  reduce(x, ..., ignore.strand = FALSE)
+                })
 }

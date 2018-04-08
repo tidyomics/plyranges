@@ -21,16 +21,24 @@ a Ranges object with the
 Reduce then aggregate a Ranges object
 }
 \examples{
-df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
-strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
+set.seed(10)
+df <- data.frame(start = sample(1:10), 
+                 width = 5,  
+                 seqnames = "seq1",
+                 strand = sample(c("+", "-", "*"), 10, replace = TRUE), 
+                 gc = runif(10))
+                 
 rng <- as_granges(df)
 rng \%>\% reduce_ranges()
 rng \%>\% reduce_ranges(gc = mean(gc))
 rng \%>\% reduce_ranges_directed(gc = mean(gc))
 
-x <- data.frame(start = c(11:13, 2, 7:6), width=3, id=letters[1:6],
-score=1:6)
+x <- data.frame(start = c(11:13, 2, 7:6), 
+               width=3, 
+               id=sample(letters[1:3], 6, replace = TRUE),
+               score= sample(1:6))
 x <- as_iranges(x)
 x \%>\% reduce_ranges()
 x \%>\% reduce_ranges(score = sum(score))
+x \%>\% group_by(id) \%>\% reduce_ranges(score = sum(score))
 }
