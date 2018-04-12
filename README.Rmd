@@ -41,9 +41,18 @@ For more details on the features of plryanges, read the
 
 # Installation
 
-The package is currently under review for submission in the next release
-of Bioconductor. A development version for R (>= 3.4.2) is available to install
-via github with the following code:
+The package is currently on the development branch of Bioconductor
+and will become available in the next release in May. To install the 
+development version do the following:
+
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+useDevel()
+biocLite("plyranges")
+```
+
+
+A version for R (>= 3.4.2) is available to install via github with the following code:
 ```{r, eval=FALSE}
 source("https://bioconductor.org/biocLite.R")
 biocLite("sa-lee/plyranges@current-r-release")
