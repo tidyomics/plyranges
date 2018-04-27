@@ -25,9 +25,7 @@ stretch <- function(x, extend) { UseMethod("stretch") }
 
 #' @export
 stretch.Ranges <- function(x, extend = 0L) {
-    start(x) <- start(x) - extend
-    end(x) <- end(x) + extend
-    return(x)
+  stretch_center(x, extend)
 }
 
 #' @export
