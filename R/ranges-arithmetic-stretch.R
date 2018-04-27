@@ -57,9 +57,9 @@ stretch.AnchoredGenomicRanges <- function(x, extend = 0L) {
 
 
 stretch_center <- function(x, extend) {
-  m <- (end(x) + start(x)) %/% 2
-  ns <-  m - extend
-  ne <- m + extend
+  m <- mid(x)
+  ns <-  m - as.integer(extend / 2)
+  ne <- m + as.integer(extend / 2)
   start(x) <- ns
   end(x) <- ne
   x
