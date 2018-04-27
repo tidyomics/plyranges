@@ -11,7 +11,6 @@ test_that("matches IRanges", {
   expect_identical(stretch(anchor_start(ir1), 10), ir3)
   # will cause negative width
   expect_error(stretch(anchor_end(ir1), -10))
-
 })
 
 test_that("matches GenomicRanges", {
