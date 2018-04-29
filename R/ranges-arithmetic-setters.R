@@ -7,7 +7,7 @@ set_start.Ranges <- function(x, start = 0L) {
   x
 }
 
-set_end <- function(x, end = 0L) { UseMethod("set_start") }
+set_end <- function(x, end = 0L) { UseMethod("set_end") }
 
 set_end.Ranges <- function(x, end = 0L) {
   end(x) <- end
@@ -21,7 +21,7 @@ set_seqnames.GenomicRanges <- function(x, seqnames) {
   x
 }
 
-set_strand <- function(x, seqnames) { UseMethod("set_seqnames") }
+set_strand <- function(x, seqnames) { UseMethod("set_strand") }
 
 set_strand.GenomicRanges <- function(x, strand = "*") {
   strand(x) <- strand
