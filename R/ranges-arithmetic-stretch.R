@@ -56,6 +56,7 @@ stretch.AnchoredGenomicRanges <- function(x, extend = 0L) {
 }
 
 
+#' @importFrom IRanges mid
 stretch_center <- function(x, extend) {
   m <- mid(x)
   ns <-  m - as.integer(extend / 2)
