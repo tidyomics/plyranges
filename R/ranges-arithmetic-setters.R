@@ -1,5 +1,6 @@
 #' Internal methods for `mutate`
 #' functional setters for Ranges objects
+
 #' @importFrom IRanges resize
 #' @export
 set_width <- function(x, width) UseMethod("set_width")
