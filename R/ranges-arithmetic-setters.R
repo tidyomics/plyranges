@@ -1,5 +1,6 @@
 #' Internal methods for `mutate`
 #' functional setters for Ranges objects
+#' @export
 set_start <- function(x, start = 0L) { UseMethod("set_start") }
 
 set_start.Ranges <- function(x, start = 0L) {
@@ -7,6 +8,7 @@ set_start.Ranges <- function(x, start = 0L) {
   x
 }
 
+#' @export
 set_end <- function(x, end = 0L) { UseMethod("set_end") }
 
 set_end.Ranges <- function(x, end = 0L) {
@@ -14,6 +16,7 @@ set_end.Ranges <- function(x, end = 0L) {
   x
 }
 
+#' @export
 set_seqnames <- function(x, seqnames) { UseMethod("set_seqnames") }
 
 set_seqnames.GenomicRanges <- function(x, seqnames) {
@@ -21,7 +24,8 @@ set_seqnames.GenomicRanges <- function(x, seqnames) {
   x
 }
 
-set_strand <- function(x, seqnames) { UseMethod("set_strand") }
+#' @export
+set_strand <- function(x, strand) { UseMethod("set_strand") }
 
 set_strand.GenomicRanges <- function(x, strand = "*") {
   strand(x) <- strand

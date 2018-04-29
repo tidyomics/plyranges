@@ -1,5 +1,6 @@
 # ranges-eval-utils.R
 # some helpers for 'tidy' NSE on ranges
+#' @export
 overscope_ranges <- function(x, envir = parent.frame()) {
   UseMethod("overscope_ranges")
 }

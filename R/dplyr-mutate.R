@@ -46,7 +46,7 @@ mutate_rng <- function(.data, dots) {
   #dots <- UQS(dots)
   col_names <- names(dots)
   if (any(col_names %in% "")) {
-    stop("mutate must have name-variable pairs as input", .call = FALSE)
+    stop("mutate must have name-variable pairs as input", call. = FALSE)
   }
 
   overscope <- overscope_ranges(.data)
@@ -55,7 +55,6 @@ mutate_rng <- function(.data, dots) {
 
   .data <- mutate_core(.data, .mutated)
   mutate_mcols(.data, .mutated)
-
 }
 
 mutate_grp <- function(.data, ...) {
@@ -132,12 +131,12 @@ mutate.Ranges <- function(.data, ...) {
 #' @rdname mutate-ranges
 #' @method mutate AnchoredIntegerRanges
 #' @export
-mutate.AnhoredIntegerRanges <- mutate.Ranges
+mutate.AnchoredIntegerRanges <- mutate.Ranges
 
 #' @rdname mutate-ranges
 #' @method mutate AnchoredGenomicRanges
 #' @export
-mutate.AnhoredGenomicRanges <- mutate.Ranges
+mutate.AnchoredGenomicRanges <- mutate.Ranges
 
 #' @rdname mutate-ranges
 #' @method mutate DelegatingGenomicRanges
