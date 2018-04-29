@@ -80,15 +80,15 @@ rng <- as_iranges(df)
 rng_by_start <- anchor_start(rng)
 rng_by_start
 anchor(rng_by_start)
-set_width(rng_by_start, 3L)
+mutate(rng_by_start, width = 3L)
 grng <- as_granges(df,
                    seqnames = "chr1",
                    strand = c(rep("-", 5), rep("+", 5)))
 rng_by_5p <- anchor_5p(grng)
 rng_by_5p
-set_width(rng_by_5p, 3L)
+mutate(rng_by_5p, width = 3L)
 
 }
 \seealso{
-\link{set_width}, \link{stretch}
+\link{mutate}, \link{stretch}
 }

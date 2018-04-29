@@ -1,3 +1,9 @@
-# plyranges 0.1.0
+# plyranges 0.99.10
 
+* refactored set_width out so it's called internally by mutate
+* along with set_width there are other internal set_ methods
+* add within_directed variants for overlaps methods
+* modified overscope_ranges to be an S3 method, should enable more refactoring in the future
+
+# plyranges 0.99.9
 * Added a `NEWS.md` file to track changes to the package.

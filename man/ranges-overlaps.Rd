@@ -10,6 +10,8 @@
 \alias{find_overlaps_within.GenomicRanges}
 \alias{find_overlaps_directed}
 \alias{find_overlaps_directed.GenomicRanges}
+\alias{find_overlaps_within_directed}
+\alias{find_overlaps_within_directed.GenomicRanges}
 \alias{group_by_overlaps}
 \alias{group_by_overlaps.IntegerRanges}
 \alias{group_by_overlaps.GenomicRanges}
@@ -35,6 +37,12 @@ find_overlaps_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 \method{find_overlaps_directed}{GenomicRanges}(x, y, maxgap = -1L,
   minoverlap = 0L, suffix = c(".x", ".y"))
+
+find_overlaps_within_directed(x, y, maxgap, minoverlap, suffix = c(".x",
+  ".y"))
+
+\method{find_overlaps_within_directed}{GenomicRanges}(x, y, maxgap, minoverlap,
+  suffix = c(".x", ".y"))
 
 group_by_overlaps(x, y, maxgap, minoverlap)
 

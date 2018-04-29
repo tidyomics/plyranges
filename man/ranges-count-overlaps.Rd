@@ -9,6 +9,8 @@
 \alias{count_overlaps_within.GenomicRanges}
 \alias{count_overlaps_directed}
 \alias{count_overlaps_directed.GenomicRanges}
+\alias{count_overlaps_within_directed}
+\alias{count_overlaps_within_directed.GenomicRanges}
 \title{Count the number of overlaps between two Ranges objects}
 \usage{
 count_overlaps(x, y, maxgap, minoverlap)
@@ -28,6 +30,11 @@ count_overlaps_within(x, y, maxgap, minoverlap)
 count_overlaps_directed(x, y, maxgap, minoverlap)
 
 \method{count_overlaps_directed}{GenomicRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L)
+
+count_overlaps_within_directed(x, y, maxgap, minoverlap)
+
+\method{count_overlaps_within_directed}{GenomicRanges}(x, y, maxgap = -1L,
   minoverlap = 0L)
 }
 \arguments{
