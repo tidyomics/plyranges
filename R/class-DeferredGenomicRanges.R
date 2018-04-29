@@ -39,21 +39,20 @@ new_DeferredGenomicRanges <- function(delegate, ops) {
 is_empty_delegate <- function(.data) length(.data@delegate) == 0L
 
 # --- dplyr verbs for deferred classes
-#' @method select DeferredGenomicRanges
-#' @importFrom Rsamtools bamWhat<- bamTag<-
-#' @export
-select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
-  dots <- quos(...)
-
-  if (any(names(dots) != "")) {
-    stop("Invalid input: ... must not be named.")
-  }
-  # if no cache update ops
-  if (is_empty_delegate(.data)) {
-      ops <- select(.data@ops, UQS(dots), .drop_ranges)
-      new_DeferredGenomicRanges(delegate = load_genomic_file(ops), ops = ops)
-  } else {
-    return(select(.data, UQS(dots), .drop_ranges))  
-  }
- 
-}
+#' #' @method select DeferredGenomicRanges
+#' #' @importFrom Rsamtools bamWhat<- bamTag<-
+#' #' @export
+#' select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
+#'   dots <- quos(...)
+#' 
+#'   if (any(names(dots) != "")) {
+#'     stop("Invalid input: ... must not be named.")
+#'   }
+#'   # if no cache update ops
+#'   if (is_empty_delegate(.data)) {
+#'       ops <- select(.data@ops, UQS(dots), .drop_ranges)
+#'       new_DeferredGenomicRanges(delegate = load_genomic_file(ops), ops = ops)
+#'   } else {
+#'     return(select(.data, UQS(dots), .drop_ranges))  
+#'   }
+#' }
