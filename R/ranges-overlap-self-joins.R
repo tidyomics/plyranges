@@ -73,3 +73,14 @@ join_overlap_self_directed <- function(x, maxgap, minoverlap) {
 join_overlap_self_directed.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
   find_overlaps_directed(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
 }
+
+#' @rdname ranges-overlaps-self
+#' @export
+join_overlap_self_within_directed <- function(x, maxgap, minoverlap) {
+  UseMethod("join_overlap_self_within_directed")
+}
+
+#' @export
+join_overlap_self_within_directed.GenomicRanges <- function(x, maxgap = -1L, minoverlap = 0L) {
+  find_overlaps_within_directed(x,x, maxgap, minoverlap, suffix = c("", ".overlap"))
+}

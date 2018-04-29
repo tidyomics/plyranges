@@ -136,6 +136,26 @@ join_overlap_intersect_directed.GenomicRanges <- function(x, y,
 
 #' @rdname overlap-joins
 #' @export
+join_overlap_intersect_within_directed <- function(x, y, maxgap, minoverlap,
+                                            suffix = c(".x", ".y")) {
+  UseMethod("join_overlap_intersect_within_directed")
+}
+
+#' @export
+join_overlap_intersect_within_directed.GenomicRanges <- function(x, y,
+                                                          maxgap = -1L,
+                                                          minoverlap = 0L,
+                                                          suffix = c(".x", ".y")) {
+  .join_intersect(x, y, suffix,
+                  type = "within",
+                  maxgap = maxgap,
+                  minoverlap = minoverlap,
+                  ignore.strand = FALSE)
+}
+
+
+#' @rdname overlap-joins
+#' @export
 join_overlap_inner <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   UseMethod("find_overlaps")
 }
@@ -150,4 +170,10 @@ join_overlap_inner_within <- function(x, y, maxgap = -1L, minoverlap = 0L, suffi
 #' @export
 join_overlap_inner_directed <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   UseMethod("find_overlaps_directed")
+}
+
+#' @rdname overlap-joins
+#' @export
+join_overlap_inner_within_directed <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+  UseMethod("find_overlaps_within_directed")
 }

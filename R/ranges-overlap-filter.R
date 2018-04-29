@@ -73,3 +73,5 @@ filter_by_non_overlaps.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap =
                    invert = TRUE,
                    ignore.strand = TRUE)
 }
+
+# TODO -- add in more variants here?

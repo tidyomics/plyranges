@@ -23,3 +23,5 @@ group_by_overlaps.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L)
   mcols(left)$query <- queryHits(hits)
   new_grouped_gr(left,  UQS(rlang::syms("query")))
 }
+
+# TODO add in more variants here?
