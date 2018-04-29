@@ -35,10 +35,9 @@ mutate_core <- function(.data, .mutated) {
   }
 
   for (col in core_cols) {
-    accessor <- selectMethod(paste0(col, "<-"), class(.data))
-    .data <- accessor(.data, value = .mutated[[col]])
+    modifier <- match.fun(paste0("set_", col))
+    .data <- modifier(.data, .mutated[[col]])
   }
-
   .data
 }
 
@@ -47,7 +46,7 @@ mutate_rng <- function(.data, dots) {
   #dots <- UQS(dots)
   col_names <- names(dots)
   if (any(col_names %in% "")) {
-    stop("mutate must have name-variable pairs as input", .call = FALSE)
+    stop("mutate must have name-variable pairs as input", call. = FALSE)
   }
 
   overscope <- overscope_ranges(.data)
@@ -56,7 +55,6 @@ mutate_rng <- function(.data, dots) {
 
   .data <- mutate_core(.data, .mutated)
   mutate_mcols(.data, .mutated)
-
 }
 
 mutate_grp <- function(.data, ...) {
@@ -103,11 +101,42 @@ mutate_grp <- function(.data, ...) {
 #'     group_by(strand) %>%
 #'     mutate(avg_gc = mean(gc), row_id = 1:n())
 #'
+#' # mutate can be used in conjuction with anchoring to resize ranges
+#' rng %>%
+#'     mutate(width = 10)
+#' # by default width modfication fixes by start
+#' rng %>%
+#'     anchor_start() %>%
+#'     mutate(width = 10)
+#' # fix by end or midpoint
+#' rng %>%
+#'     anchor_end() %>%
+#'     mutate(width = width + 1)
+#' rng %>%
+#'     anchor_center() %>%
+#'     mutate(width = width + 1)
+#' # anchoring by strand
+#' rng %>%
+#'     anchor_3p() %>%
+#'     mutate(width = width * 2)
+#' rng %>%
+#'     anchor_5p() %>%
+#'     mutate(width = width * 2)
 #' @export
 mutate.Ranges <- function(.data, ...) {
   dots <- quos(...)
   mutate_rng(.data, dots)
 }
+
+#' @rdname mutate-ranges
+#' @method mutate AnchoredIntegerRanges
+#' @export
+mutate.AnchoredIntegerRanges <- mutate.Ranges
+
+#' @rdname mutate-ranges
+#' @method mutate AnchoredGenomicRanges
+#' @export
+mutate.AnchoredGenomicRanges <- mutate.Ranges
 
 #' @rdname mutate-ranges
 #' @method mutate DelegatingGenomicRanges

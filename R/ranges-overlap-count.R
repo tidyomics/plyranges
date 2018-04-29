@@ -16,50 +16,62 @@
 #'                  n_olap_within = count_overlaps_within(., subject))
 #'
 #' @importFrom IRanges countOverlaps
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps <- function(x, y, maxgap, minoverlap) {
   UseMethod("count_overlaps")
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "any")
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "any", ignore.strand = TRUE)
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps_within <- function(x, y, maxgap, minoverlap) {
   UseMethod("count_overlaps_within")
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps_within.IntegerRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "within")
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps_within.GenomicRanges <- function(x,y, maxgap = 0L, minoverlap = 1L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "within", ignore.strand = TRUE)
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps_directed <- function(x, y, maxgap, minoverlap) {
   UseMethod("count_overlaps_directed")
 }
 
-#' @rdname ranges-count-overlaps.Rd
+#' @rdname ranges-count-overlaps
 #' @export
 count_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   countOverlaps(x,y, maxgap, minoverlap, type = "any", ignore.strand = FALSE)
+}
+
+#' @rdname ranges-count-overlaps
+#' @export
+count_overlaps_within_directed <- function(x, y, maxgap, minoverlap) {
+  UseMethod("count_overlaps_directed")
+}
+
+#' @rdname ranges-count-overlaps
+#' @export
+count_overlaps_within_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
+  countOverlaps(x,y, maxgap, minoverlap, type = "within", ignore.strand = FALSE)
 }

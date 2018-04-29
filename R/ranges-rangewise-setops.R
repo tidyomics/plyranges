@@ -1,13 +1,14 @@
 # ranges-rangewise-setops.R
 
-#' Vector-wise Range set-opterations
+#' Vector-wise Range set-operations
 #'
 #' @param x,y Two Ranges objects to compare.
 #'
 #' @details These are usual set-operations that act on the sets of the
 #' ranges represented in x and y. By default these operations will ignore
 #' any strand information. The directed versions of these functions will
-#' take into account strand.
+#' take into account strand for GRanges objects.
+#'
 #' @return A Ranges object
 #'
 #' @examples
@@ -27,6 +28,9 @@
 #'
 #' setdiff_ranges(gr1, gr2)
 #' setdiff_ranges_directed(gr1, gr2)
+#' # taking the complement of a ranges requires annotation information
+#' gr1 <- set_genome_info(gr1, seqlengths = 100)
+#' complement_ranges(gr1)
 #'
 #' @rdname ranges-setops
 #' @export
@@ -104,4 +108,35 @@ setdiff_ranges_directed <- function(x,y) { UseMethod("setdiff_ranges_directed") 
 #' @importFrom GenomicRanges setdiff
 setdiff_ranges_directed.GenomicRanges <- function(x,y) {
   setdiff(x,y, ignore.strand = FALSE)
+}
+
+#' @rdname ranges-setops
+#' @export
+complement_ranges  <- function(x) { UseMethod("complement_ranges") }
+
+#' @export
+complement_ranges.IntegerRanges <- function(x) {
+  setdiff(IRanges(start = min(start(x)), end = max(end(x))), x)
+}
+
+#' @export
+complement_ranges.GenomicRanges <- function(x) {
+  y <- try(get_genome_info(x), silent = TRUE)
+  if (is(y, "try-error")) {
+    stop("complement_ranges requires sequence lengths information", call. = FALSE)
+  }
+  setdiff_ranges(y, x)
+}
+
+#' @rdname ranges-setops
+#' @export
+complement_ranges_directed <- function(x) {UseMethod("complement_ranges_directed")}
+
+#' @export
+complement_ranges_directed.GenomicRanges <- function(x) {
+  y <- try(get_genome_info(x), silent = TRUE)
+  if (is(y, "try-error")) {
+    stop("complement_ranges_directed requires sequence lengths information", call. = FALSE)
+  }
+  setdiff_ranges_directed(y, x)
 }

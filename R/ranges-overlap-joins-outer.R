@@ -135,3 +135,23 @@ join_overlap_left_directed.GenomicRanges <- function(x, y, maxgap = -1L, minover
                      select = "all",
                      ignore.strand = FALSE)
 }
+
+#' @rdname overlap-joins
+#' @export
+join_overlap_left_within_directed <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+  UseMethod("join_overlap_left_within_directed")
+}
+
+
+#' @export
+join_overlap_left_within_directed.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+  .join_overlap_left(add_na_seqlevels(x),
+                     add_na_seqlevels(y), 
+                     suffix, 
+                     findOverlaps, 
+                     maxgap = maxgap, 
+                     minoverlap = minoverlap, 
+                     type = "within",
+                     select = "all",
+                     ignore.strand = FALSE)
+}

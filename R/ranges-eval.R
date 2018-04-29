@@ -1,10 +1,21 @@
 # ranges-eval-utils.R
 # some helpers for 'tidy' NSE on ranges
+
 overscope_ranges <- function(x, envir = parent.frame()) {
+  UseMethod("overscope_ranges")
+}
+
+overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
   x_env <- as.env(x, envir)
   os <- new_overscope(x_env, top = parent.env(x_env))
   return(os)
 }
+
+overscope_ranges.DelegatingGenomicRanges <- function(x, envir = parent.frame()) {
+  overscope_ranges(x@delegate, envir)
+}
+
+overscope_ranges.DelegatingIntegerRanges <- overscope_ranges.DelegatingGenomicRanges
 
 #' @importFrom rlang env_bind := new_overscope overscope_eval_next
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {

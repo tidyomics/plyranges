@@ -5,12 +5,15 @@
 \alias{join_overlap_intersect}
 \alias{join_overlap_intersect_within}
 \alias{join_overlap_intersect_directed}
+\alias{join_overlap_intersect_within_directed}
 \alias{join_overlap_inner}
 \alias{join_overlap_inner_within}
 \alias{join_overlap_inner_directed}
+\alias{join_overlap_inner_within_directed}
 \alias{join_overlap_left}
 \alias{join_overlap_left_within}
 \alias{join_overlap_left_directed}
+\alias{join_overlap_left_within_directed}
 \title{Join by overlapping Ranges}
 \usage{
 join_overlap_intersect(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
@@ -21,6 +24,9 @@ join_overlap_intersect_within(x, y, maxgap, minoverlap, suffix = c(".x",
 join_overlap_intersect_directed(x, y, maxgap, minoverlap, suffix = c(".x",
   ".y"))
 
+join_overlap_intersect_within_directed(x, y, maxgap, minoverlap,
+  suffix = c(".x", ".y"))
+
 join_overlap_inner(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x",
   ".y"))
 
@@ -30,11 +36,17 @@ join_overlap_inner_within(x, y, maxgap = -1L, minoverlap = 0L,
 join_overlap_inner_directed(x, y, maxgap = -1L, minoverlap = 0L,
   suffix = c(".x", ".y"))
 
+join_overlap_inner_within_directed(x, y, maxgap = -1L, minoverlap = 0L,
+  suffix = c(".x", ".y"))
+
 join_overlap_left(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 join_overlap_left_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
 join_overlap_left_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
+
+join_overlap_left_within_directed(x, y, maxgap, minoverlap, suffix = c(".x",
+  ".y"))
 }
 \arguments{
 \item{x, y}{Objects representing ranges}

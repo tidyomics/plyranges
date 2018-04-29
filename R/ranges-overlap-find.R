@@ -212,3 +212,20 @@ find_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap =
                  select = "all",
                  ignore.strand = FALSE)
 }
+
+#' @rdname ranges-overlaps
+#' @export
+find_overlaps_within_directed <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+  UseMethod("find_overlaps_within_directed")
+}
+
+#' @rdname ranges-overlaps
+#' @export
+find_overlaps_within_directed.GenomicRanges <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+  .find_overlaps(x,y, suffix, findOverlaps, 
+                 maxgap = maxgap, 
+                 minoverlap = minoverlap, 
+                 type = "within",
+                 select = "all",
+                 ignore.strand = FALSE)
+}

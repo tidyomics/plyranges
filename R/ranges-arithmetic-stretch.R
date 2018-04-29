@@ -25,9 +25,7 @@ stretch <- function(x, extend) { UseMethod("stretch") }
 
 #' @export
 stretch.Ranges <- function(x, extend = 0L) {
-    start(x) <- start(x) - extend
-    end(x) <- end(x) + extend
-    return(x)
+  stretch_center(x, extend)
 }
 
 #' @export
@@ -58,10 +56,11 @@ stretch.AnchoredGenomicRanges <- function(x, extend = 0L) {
 }
 
 
+#' @importFrom IRanges mid
 stretch_center <- function(x, extend) {
-  m <- (end(x) + start(x)) %/% 2
-  ns <-  m - extend
-  ne <- m + extend
+  m <- mid(x)
+  ns <-  m - as.integer(extend / 2)
+  ne <- m + as.integer(extend / 2)
   start(x) <- ns
   end(x) <- ne
   x
