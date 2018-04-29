@@ -74,11 +74,11 @@ grng
 
 Sometimes you want to modify a genomic interval by altering the width of the 
 interval while leaving the start, end or midpoint of the coordinates unaltered. 
-This is achieved with the `set_width` verb along with `anchor_*` adverbs. 
+This is achieved with the `mutate` verb along with `anchor_*` adverbs. 
 
 The act of anchoring fixes either the start, end, center coordinates of the 
 `Range` object, as shown in the figure and code below and anchors are used in
-combination with either `set_width` or `stretch`.
+combination with either `mutate` or `stretch`.
 
 ```{r, echo = FALSE, out.width="400px", fig.align="center"}
 knitr::include_graphics("anchors.png", dpi = 150)
@@ -89,12 +89,12 @@ rng <- as_iranges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8)))
 grng <- as_granges(data.frame(start=c(1, 2, 3), end=c(5, 2, 8), 
                           seqnames = "seq1",
                           strand = c("+", "*", "-")))
-set_width(rng, 10)
-set_width(anchor_start(rng), 10)
-set_width(anchor_end(rng), 10)
-set_width(anchor_center(rng), 10)
-set_width(anchor_3p(grng), 10) # leave negative strand fixed
-set_width(anchor_5p(grng), 10) # leave positve strand fixed
+mutate(rng, width = 10)
+mutate(anchor_start(rng), width = 10)
+mutate(anchor_end(rng), width = 10)
+mutate(anchor_center(rng), width = 10)
+mutate(anchor_3p(grng), width = 10) # leave negative strand fixed
+mutate(anchor_5p(grng), width = 10) # leave positve strand fixed
 ```
 
 Similarly, you can modify the width of an interval using the `stretch` verb.
@@ -443,8 +443,8 @@ any strandedness, unless the strand of the range is anchored.
 | `plyranges` functions | Description | `GenomicRanges/IRanges` command |
 |-----------------------|-------------|---------------------------------|
 | `anchor_(start/end/center/3p/5p)` | Fix the `start/end/center/` coordinates or positive/negative strand of range. Can be used in combination with any of the following   | Available in functions that have a `fix` argument. |
-| `set_width(x, width)` | Modify the width of a `Ranges` | `resize` |
-| `stretch(x, extend)` | Extend the start and end coordinates in opposite directions by a fixed amount. | `start(x)<- start(x) + extend%/%2`, `end(x) <- end(x) -extend%/%2` |
+| `mutate(x, width = width + modifier)` | Modify the width of a `Ranges` | `resize` |
+| `stretch(x, extend)` | Extend the start and end coordinates in opposite directions by a fixed amount. | `start(x)<- start(x) - extend%/%2`, `end(x) <- end(x)  + extend%/%2` |
 
 ## Operations on range width (invariant) 
 
