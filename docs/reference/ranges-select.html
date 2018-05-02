@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Select metadata columns of the Ranges object by name or position — select.GenomicRanges • plyranges</title>
+<title>Select metadata columns of the Ranges object by name or position — select.Ranges • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Select metadata columns of the Ranges object by name or position — select.GenomicRanges" />
+
+
+
+<meta property="og:title" content="Select metadata columns of the Ranges object by name or position — select.Ranges" />
 
 <meta property="og:description" content="Select metadata columns of the Ranges object by name or position" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,23 +97,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select metadata columns of the Ranges object by name or position</h1>
+    
+    <div class="hidden name"><code>ranges-select.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Select metadata columns of the Ranges object by name or position</p>
     
+    </div>
 
-    <pre class="usage"><span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.drop_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='co'># S3 method for Ranges</span>
+    <pre class="usage"><span class='co'># S3 method for Ranges</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>.drop_ranges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -136,7 +145,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -146,72 +155,72 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, -<span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |    counts
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;    [1]     seq1  [ 1,  5]      - |         0
-#&gt;    [2]     seq1  [ 2,  6]      + |         1
-#&gt;    [3]     seq1  [ 3,  7]      + |         2
-#&gt;    [4]     seq1  [ 4,  8]      * |         4
-#&gt;    [5]     seq1  [ 5,  9]      * |         1
-#&gt;    [6]     seq1  [ 6, 10]      - |         1
-#&gt;    [7]     seq1  [ 7, 11]      - |         2
-#&gt;    [8]     seq1  [ 8, 12]      + |         3
-#&gt;    [9]     seq1  [ 9, 13]      - |         3
-#&gt;   [10]     seq1  [10, 14]      + |         3
+#&gt;    [1]     seq1       1-5      + |         2
+#&gt;    [2]     seq1       2-6      * |         1
+#&gt;    [3]     seq1       3-7      + |         3
+#&gt;    [4]     seq1       4-8      + |         3
+#&gt;    [5]     seq1       5-9      + |         2
+#&gt;    [6]     seq1      6-10      - |         2
+#&gt;    [7]     seq1      7-11      + |         0
+#&gt;    [8]     seq1      8-12      * |         1
+#&gt;    [9]     seq1      9-13      - |         0
+#&gt;   [10]     seq1     10-14      * |         2
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 1,  5]      - |  0.463154416298494
-#&gt;    [2]     seq1  [ 2,  6]      + |  0.629994767950848
-#&gt;    [3]     seq1  [ 3,  7]      + |   0.67324928776361
-#&gt;    [4]     seq1  [ 4,  8]      * | 0.0870346706360579
-#&gt;    [5]     seq1  [ 5,  9]      * |   0.14358379971236
-#&gt;    [6]     seq1  [ 6, 10]      - |  0.908478498924524
-#&gt;    [7]     seq1  [ 7, 11]      - |  0.122532590059564
-#&gt;    [8]     seq1  [ 8, 12]      + |  0.728862792486325
-#&gt;    [9]     seq1  [ 9, 13]      - |  0.950377176282927
-#&gt;   [10]     seq1  [10, 14]      + | 0.0433559149969369
+#&gt;    [1]     seq1       1-5      + |  0.245866392273456
+#&gt;    [2]     seq1       2-6      * |  0.473141461377963
+#&gt;    [3]     seq1       3-7      + |  0.191560871200636
+#&gt;    [4]     seq1       4-8      + |  0.583221969893202
+#&gt;    [5]     seq1       5-9      + |  0.459473189897835
+#&gt;    [6]     seq1      6-10      - |  0.467434047954157
+#&gt;    [7]     seq1      7-11      + |  0.399832555558532
+#&gt;    [8]     seq1      8-12      * |  0.505285596242175
+#&gt;    [9]     seq1      9-13      - | 0.0318881559651345
+#&gt;   [10]     seq1     10-14      * |  0.114467588020489
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>counts</span>, <span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
 #&gt;        seqnames    ranges strand |    counts                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 1,  5]      - |         0  0.463154416298494
-#&gt;    [2]     seq1  [ 2,  6]      + |         1  0.629994767950848
-#&gt;    [3]     seq1  [ 3,  7]      + |         2   0.67324928776361
-#&gt;    [4]     seq1  [ 4,  8]      * |         4 0.0870346706360579
-#&gt;    [5]     seq1  [ 5,  9]      * |         1   0.14358379971236
-#&gt;    [6]     seq1  [ 6, 10]      - |         1  0.908478498924524
-#&gt;    [7]     seq1  [ 7, 11]      - |         2  0.122532590059564
-#&gt;    [8]     seq1  [ 8, 12]      + |         3  0.728862792486325
-#&gt;    [9]     seq1  [ 9, 13]      - |         3  0.950377176282927
-#&gt;   [10]     seq1  [10, 14]      + |         3 0.0433559149969369
+#&gt;    [1]     seq1       1-5      + |         2  0.245866392273456
+#&gt;    [2]     seq1       2-6      * |         1  0.473141461377963
+#&gt;    [3]     seq1       3-7      + |         3  0.191560871200636
+#&gt;    [4]     seq1       4-8      + |         3  0.583221969893202
+#&gt;    [5]     seq1       5-9      + |         2  0.459473189897835
+#&gt;    [6]     seq1      6-10      - |         2  0.467434047954157
+#&gt;    [7]     seq1      7-11      + |         0  0.399832555558532
+#&gt;    [8]     seq1      8-12      * |         1  0.505285596242175
+#&gt;    [9]     seq1      9-13      - |         0 0.0318881559651345
+#&gt;   [10]     seq1     10-14      * |         2  0.114467588020489
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='fl'>2</span>:<span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
 #&gt;        seqnames    ranges strand |    counts                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 1,  5]      - |         0  0.463154416298494
-#&gt;    [2]     seq1  [ 2,  6]      + |         1  0.629994767950848
-#&gt;    [3]     seq1  [ 3,  7]      + |         2   0.67324928776361
-#&gt;    [4]     seq1  [ 4,  8]      * |         4 0.0870346706360579
-#&gt;    [5]     seq1  [ 5,  9]      * |         1   0.14358379971236
-#&gt;    [6]     seq1  [ 6, 10]      - |         1  0.908478498924524
-#&gt;    [7]     seq1  [ 7, 11]      - |         2  0.122532590059564
-#&gt;    [8]     seq1  [ 8, 12]      + |         3  0.728862792486325
-#&gt;    [9]     seq1  [ 9, 13]      - |         3  0.950377176282927
-#&gt;   [10]     seq1  [10, 14]      + |         3 0.0433559149969369
+#&gt;    [1]     seq1       1-5      + |         2  0.245866392273456
+#&gt;    [2]     seq1       2-6      * |         1  0.473141461377963
+#&gt;    [3]     seq1       3-7      + |         3  0.191560871200636
+#&gt;    [4]     seq1       4-8      + |         3  0.583221969893202
+#&gt;    [5]     seq1       5-9      + |         2  0.459473189897835
+#&gt;    [6]     seq1      6-10      - |         2  0.467434047954157
+#&gt;    [7]     seq1      7-11      + |         0  0.399832555558532
+#&gt;    [8]     seq1      8-12      * |         1  0.505285596242175
+#&gt;    [9]     seq1      9-13      - |         0 0.0318881559651345
+#&gt;   [10]     seq1     10-14      * |         2  0.114467588020489
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>seqnames</span>, <span class='no'>strand</span>, <span class='kw'>.drop_ranges</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; DataFrame with 10 rows and 2 columns
 #&gt;    seqnames strand
 #&gt;       &lt;Rle&gt;  &lt;Rle&gt;
-#&gt; 1      seq1      -
-#&gt; 2      seq1      +
+#&gt; 1      seq1      +
+#&gt; 2      seq1      *
 #&gt; 3      seq1      +
-#&gt; 4      seq1      *
-#&gt; 5      seq1      *
+#&gt; 4      seq1      +
+#&gt; 5      seq1      +
 #&gt; 6      seq1      -
-#&gt; 7      seq1      -
-#&gt; 8      seq1      +
+#&gt; 7      seq1      +
+#&gt; 8      seq1      *
 #&gt; 9      seq1      -
-#&gt; 10     seq1      +</div></pre>
+#&gt; 10     seq1      *</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -242,5 +251,8 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a BigWig file — read_bigwig • plyranges</title>
+<title>Functional setters for Ranges objects — set_width • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,9 +28,9 @@
 
 
 
-<meta property="og:title" content="Read a BigWig file — read_bigwig" />
+<meta property="og:title" content="Functional setters for Ranges objects — set_width" />
 
-<meta property="og:description" content="Read a BigWig file" />
+<meta property="og:description" content="Functional setters for Ranges objects" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -100,68 +100,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a BigWig file</h1>
+    <h1>Functional setters for Ranges objects</h1>
     
-    <div class="hidden name"><code>io-bigwig-read.Rd</code></div>
+    <div class="hidden name"><code>ranges-setters.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Read a BigWig file</p>
+    <p>Functional setters for Ranges objects</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_bigwig</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>set_width</span>(<span class='no'>x</span>, <span class='no'>width</span>)
+
+<span class='fu'>set_start</span>(<span class='no'>x</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>set_end</span>(<span class='no'>x</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>set_seqnames</span>(<span class='no'>x</span>, <span class='no'>seqnames</span>)
+
+<span class='fu'>set_strand</span>(<span class='no'>x</span>, <span class='no'>strand</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>A path to a file or URL.</p></td>
+      <th>x</th>
+      <td><p>a Ranges object</p></td>
     </tr>
     <tr>
-      <th>genome_info</th>
-      <td><p>An optional character string or a Ranges object
-that contains information about the genome build. For example the identifier
-"hg19" will add build information to the returned GRanges.</p></td>
+      <th>width</th>
+      <td><p>integer amount to modify width by</p></td>
     </tr>
     <tr>
-      <th>overlap_ranges</th>
-      <td><p>An optional Ranges object. Only the intervals in the file
-that overlap the Ranges will be loaded.</p></td>
+      <th>start</th>
+      <td><p>integer amount to modify start by</p></td>
+    </tr>
+    <tr>
+      <th>end</th>
+      <td><p>integer amount to modify end by</p></td>
+    </tr>
+    <tr>
+      <th>seqnames</th>
+      <td><p>update seqnames column</p></td>
+    </tr>
+    <tr>
+      <th>strand</th>
+      <td><p>update strand column</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a GRanges object</p>
+    <p>a Ranges object</p>
     
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BigWigFile'>rtracklayer::BigWigFile()</a></code></p></div>
+    <p>These methods are used internally in <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> to modify
+core columns in Ranges objects.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
-  <span class='no'>test_path</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"tests"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtracklayer"</span>)
-  <span class='no'>bw_file</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>test_path</span>, <span class='st'>"test.bw"</span>)
-  <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bigwig</span>(<span class='no'>bw_file</span>)
-  <span class='no'>gr</span>
-}</div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |     score
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     chr2     1-300      * |        -1
-#&gt;   [2]     chr2   301-600      * |     -0.75
-#&gt;   [3]     chr2   601-900      * |      -0.5
-#&gt;   [4]     chr2  901-1200      * |     -0.25
-#&gt;   [5]     chr2 1201-1500      * |         0
-#&gt;   [6]    chr19 1501-1800      * |      0.25
-#&gt;   [7]    chr19 1801-2100      * |       0.5
-#&gt;   [8]    chr19 2101-2400      * |      0.75
-#&gt;   [9]    chr19 2401-2700      * |         1
-#&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -170,10 +168,8 @@ that overlap the Ranges will be loaded.</p></td>
       
       <li><a href="#value">Value</a></li>
 
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

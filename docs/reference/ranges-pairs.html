@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Pair together two ranges objects — pair_overlaps" />
 
 <meta property="og:description" content="Pair together two ranges objects" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,15 +97,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Pair together two ranges objects</h1>
+    
+    <div class="hidden name"><code>ranges-pairs.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Pair together two ranges objects</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>pair_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='no'>suffix</span>)
 
@@ -107,7 +119,7 @@
 
 <span class='fu'>pair_follow</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>suffix</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -139,7 +151,7 @@ representing paired alignments with plyranges.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>[join_nearest()][join_overlap_inner()][join_precede()][join_follow()]</p>
+    <div class='dont-index'><p>[join_nearest()][join_overlap_inner()][join_precede()][join_follow()]</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -149,23 +161,23 @@ representing paired alignments with plyranges.</p>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
 <span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 6 rows and 4 columns
-#&gt;    ranges.x  ranges.y        gc    label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;factor&gt;
-#&gt; 1  [ 5,  9]   [3,  6] 0.3274151        b
-#&gt; 2  [ 5,  9]   [4,  8] 0.3274151        c
-#&gt; 3  [ 5,  9]   [5, 10] 0.3274151        d
-#&gt; 4  [ 5,  9]   [6, 12] 0.3274151        e
-#&gt; 5  [10, 14]   [5, 10] 0.3894787        d
-#&gt; 6  [10, 14]   [6, 12] 0.3894787        e</div><div class='input'><span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; DataFrame with 1 row and 4 columns
-#&gt;    ranges.x  ranges.y        gc    label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;factor&gt;
-#&gt; 1    [5, 9]   [5, 10] 0.3274151        d</div><div class='input'><span class='fu'>pair_nearest</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 4 rows and 4 columns
-#&gt;    ranges.x  ranges.y         gc    label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;  &lt;numeric&gt; &lt;factor&gt;
-#&gt; 1  [ 5,  9]   [6, 12] 0.32741508        e
-#&gt; 2  [10, 14]   [6, 12] 0.38947869        e
-#&gt; 3  [15, 19]   [6, 12] 0.04105275        e
-#&gt; 4  [20, 24]   [6, 12] 0.36139663        e</div><div class='input'>
+#&gt;    ranges.x  ranges.y                gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;         &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1       5-9       3-6 0.327415082138032        b
+#&gt; 2       5-9       4-8 0.327415082138032        c
+#&gt; 3       5-9      5-10 0.327415082138032        d
+#&gt; 4       5-9      6-12 0.327415082138032        e
+#&gt; 5     10-14      5-10 0.389478693250567        d
+#&gt; 6     10-14      6-12 0.389478693250567        e</div><div class='input'><span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; DataFrame with 1 row and 4 columns
+#&gt;    ranges.x  ranges.y                gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;         &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1       5-9      5-10 0.327415082138032        d</div><div class='input'><span class='fu'>pair_nearest</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 4 rows and 4 columns
+#&gt;    ranges.x  ranges.y                 gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;          &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1       5-9      6-12  0.327415082138032        e
+#&gt; 2     10-14      6-12  0.389478693250567        e
+#&gt; 3     15-19      6-12 0.0410527545027435        e
+#&gt; 4     20-24      6-12  0.361396634485573        e</div><div class='input'>
 
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
@@ -246,5 +258,8 @@ representing paired alignments with plyranges.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

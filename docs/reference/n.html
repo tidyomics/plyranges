@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Compute the number of ranges in each group. — n" />
 
 <meta property="og:description" content="This function should only be used
 within summarise(), mutate() and filter()." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ within summarise(), mutate() and filter()." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +90,7 @@ within summarise(), mutate() and filter()." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,16 +98,20 @@ within summarise(), mutate() and filter()." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Compute the number of ranges in each group.</h1>
+    
+    <div class="hidden name"><code>n.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function should only be used
 within <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>, <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> and <code><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>n</span>()</pre>
         
@@ -123,7 +135,7 @@ returns an integer.</p>
 #&gt; 1        a         5
 #&gt; 2        b         3
 #&gt; 3        c         2</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>by_names</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>n</span>())</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
-#&gt; Groups: name
+#&gt; Groups: name [3]
 #&gt;            start       end     width |     name         n
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt; &lt;integer&gt;
 #&gt;    [1]         1         5         5 |        a         5
@@ -136,7 +148,7 @@ returns an integer.</p>
 #&gt;    [8]         8        12         5 |        b         3
 #&gt;    [9]         9        13         5 |        c         2
 #&gt;   [10]        10        14         5 |        c         2</div><div class='input'><span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>by_names</span>, <span class='fu'>n</span>() <span class='kw'>&gt;=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 1 metadata column:
-#&gt; Groups: name
+#&gt; Groups: name [2]
 #&gt;           start       end     width |     name
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt;
 #&gt;   [1]         1         5         5 |        a
@@ -172,5 +184,8 @@ returns an integer.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

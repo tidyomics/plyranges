@@ -31,6 +31,7 @@ Imports:
   S4Vectors (>= 0.17.41), 
   utils
 biocViews: Infrastructure, DataRepresentation, WorkflowStep, Coverage
+BugReports: https://support.bioconductor.org/
 License: Artistic-2.0
 Encoding: UTF-8
 ByteCompile: true

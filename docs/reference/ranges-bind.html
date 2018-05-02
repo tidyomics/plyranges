@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Combine Ranges by concatentating them together — bind_ranges" />
 
 <meta property="og:description" content="Combine Ranges by concatentating them together" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,19 +97,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Combine Ranges by concatentating them together</h1>
+    
+    <div class="hidden name"><code>ranges-bind.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Combine Ranges by concatentating them together</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>bind_ranges</span>(<span class='no'>...</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -133,63 +145,63 @@ supplied.</p></td>
 <span class='fu'>bind_ranges</span>(<span class='no'>gr</span>, <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;    [1]     seq1  [10, 14]      *
-#&gt;    [2]     seq1  [11, 15]      *
-#&gt;    [3]     seq1  [12, 16]      *
-#&gt;    [4]     seq1  [13, 17]      *
-#&gt;    [5]     seq1  [14, 18]      *
-#&gt;    [6]     seq1  [15, 19]      *
-#&gt;    [7]     seq2  [11, 11]      *
-#&gt;    [8]     seq2  [12, 13]      *
-#&gt;    [9]     seq2  [13, 15]      *
-#&gt;   [10]     seq2  [14, 17]      *
+#&gt;    [1]     seq1     10-14      *
+#&gt;    [2]     seq1     11-15      *
+#&gt;    [3]     seq1     12-16      *
+#&gt;    [4]     seq1     13-17      *
+#&gt;    [5]     seq1     14-18      *
+#&gt;    [6]     seq1     15-19      *
+#&gt;    [7]     seq2        11      *
+#&gt;    [8]     seq2     12-13      *
+#&gt;    [9]     seq2     13-15      *
+#&gt;   [10]     seq2     14-17      *
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>bind_ranges</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>gr2</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"origin"</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |      origin
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-#&gt;    [1]     seq1  [10, 14]      * |           a
-#&gt;    [2]     seq1  [11, 15]      * |           a
-#&gt;    [3]     seq1  [12, 16]      * |           a
-#&gt;    [4]     seq1  [13, 17]      * |           a
-#&gt;    [5]     seq1  [14, 18]      * |           a
-#&gt;    [6]     seq1  [15, 19]      * |           a
-#&gt;    [7]     seq2  [11, 11]      * |           b
-#&gt;    [8]     seq2  [12, 13]      * |           b
-#&gt;    [9]     seq2  [13, 15]      * |           b
-#&gt;   [10]     seq2  [14, 17]      * |           b
+#&gt;    [1]     seq1     10-14      * |           a
+#&gt;    [2]     seq1     11-15      * |           a
+#&gt;    [3]     seq1     12-16      * |           a
+#&gt;    [4]     seq1     13-17      * |           a
+#&gt;    [5]     seq1     14-18      * |           a
+#&gt;    [6]     seq1     15-19      * |           a
+#&gt;    [7]     seq2        11      * |           b
+#&gt;    [8]     seq2     12-13      * |           b
+#&gt;    [9]     seq2     13-15      * |           b
+#&gt;   [10]     seq2     14-17      * |           b
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>bind_ranges</span>(<span class='no'>gr</span>, <span class='fu'>list</span>(<span class='no'>gr</span>, <span class='no'>gr2</span>), <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 20 ranges and 0 metadata columns:
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;    [1]     seq1  [10, 14]      *
-#&gt;    [2]     seq1  [11, 15]      *
-#&gt;    [3]     seq1  [12, 16]      *
-#&gt;    [4]     seq1  [13, 17]      *
-#&gt;    [5]     seq1  [14, 18]      *
+#&gt;    [1]     seq1     10-14      *
+#&gt;    [2]     seq1     11-15      *
+#&gt;    [3]     seq1     12-16      *
+#&gt;    [4]     seq1     13-17      *
+#&gt;    [5]     seq1     14-18      *
 #&gt;    ...      ...       ...    ...
-#&gt;   [16]     seq2  [14, 17]      *
-#&gt;   [17]     seq2  [11, 11]      *
-#&gt;   [18]     seq2  [12, 13]      *
-#&gt;   [19]     seq2  [13, 15]      *
-#&gt;   [20]     seq2  [14, 17]      *
+#&gt;   [16]     seq2     14-17      *
+#&gt;   [17]     seq2        11      *
+#&gt;   [18]     seq2     12-13      *
+#&gt;   [19]     seq2     13-15      *
+#&gt;   [20]     seq2     14-17      *
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>bind_ranges</span>(<span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>gr2</span>), <span class='kw'>c</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"origin"</span>)</div><div class='output co'>#&gt; GRanges object with 16 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |      origin
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-#&gt;    [1]     seq1  [10, 14]      * |           a
-#&gt;    [2]     seq1  [11, 15]      * |           a
-#&gt;    [3]     seq1  [12, 16]      * |           a
-#&gt;    [4]     seq1  [13, 17]      * |           a
-#&gt;    [5]     seq1  [14, 18]      * |           a
+#&gt;    [1]     seq1     10-14      * |           a
+#&gt;    [2]     seq1     11-15      * |           a
+#&gt;    [3]     seq1     12-16      * |           a
+#&gt;    [4]     seq1     13-17      * |           a
+#&gt;    [5]     seq1     14-18      * |           a
 #&gt;    ...      ...       ...    ... .         ...
-#&gt;   [12]     seq1  [11, 15]      * |           c
-#&gt;   [13]     seq1  [12, 16]      * |           c
-#&gt;   [14]     seq1  [13, 17]      * |           c
-#&gt;   [15]     seq1  [14, 18]      * |           c
-#&gt;   [16]     seq1  [15, 19]      * |           c
+#&gt;   [12]     seq1     11-15      * |           c
+#&gt;   [13]     seq1     12-16      * |           c
+#&gt;   [14]     seq1     13-17      * |           c
+#&gt;   [15]     seq1     14-18      * |           c
+#&gt;   [16]     seq1     15-19      * |           c
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 </div></pre>
@@ -219,5 +231,8 @@ supplied.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
