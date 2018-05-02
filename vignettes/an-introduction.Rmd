@@ -172,9 +172,9 @@ ir0 %>% filter_by_non_overlaps(ir1)
 
 # Summarising `Ranges`
 
-The `summarise` function will return a tibble because the information required
-to return a `Ranges` object is lost. It is often most useful to use `summarise`
-in combination with the `group_by` family of functions. 
+The `summarise` function will return a `DataFrame` because the information required
+to return a `Ranges` object is lost. It is often most useful to use `summarise()`
+in combination with the `group_by()` family of functions. 
 
 ```{r}
 ir1 <- ir1 %>%
@@ -187,11 +187,7 @@ ir0 %>%
 
 # Joins, or another way at looking at overlaps between `Ranges`
 
-We can think about finding overlaps as a type of join between two `Ranges`
-where we are using the intervals as keys. Of most use are the 
-`join_overlap_intersect`, `join_overlap_inner` and `join_overlap_left` functions. 
-
-To begin we'll define a query and subject `GRanges` object.
+A join acts on two GRanges objects, a query and a subject.
 
 ```{r}
 query <- data.frame(seqnames = "chr1",
@@ -226,17 +222,28 @@ ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = 1, ymax = 3)) +
         axis.title.y = element_blank())
 ```
 
-The first function, `join_overlap_intersect` will return a `Ranges`` object 
-where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input `Ranges`. It also returns any metadata
-in the subject range if the subject overlaps the query. Note that by default
-the join functions ignore strandedness.
+The join operator is relational in the sense that metadata 
+from the query and subject ranges is retained in the joined range.  All join operators in the `plyranges` DSL generate a set of hits based on overlap or proximity of ranges and use those hits to merge the two 
+datasets in different ways. 
+There are four supported matching algorithms: _overlap_,
+_nearest_, _precede_, and _follow_. We can further restrict the
+matching by whether the query is completely _within_ the subject, and
+adding the _directed_ suffix ensures that matching ranges have the
+same direction (strand).
+
+
+```{r echo = FALSE, out.width="600px"}
+knitr::include_graphics("olaps.png")
+```
+
+The first function, `join_overlap_intersect()` will return a `Ranges` object where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input `Ranges`. It also returns any metadatain the subject range if the subject overlaps the query.
 
 ```{r}
 intersect_rng <- join_overlap_intersect(query, subject)
 intersect_rng
 ```
 
-```{r}
+```{r echo = FALSE, fig.cap="Intersect Join"}
 intersect_df <- as.data.frame(intersect_rng)[, -c(6,7)]
 intersect_df$key <- "Intersect Join"
 melted_ranges <- rbind(query_df, subject_df, intersect_df)
@@ -253,8 +260,8 @@ ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = 1, ymax = 3)) +
 ```
 
 
-The `join_overlap_inner` function will return the `Ranges` in the query that
-overlap any `Ranges` in the subject. Like the `join_overlap_intersect` function
+The `join_overlap_inner()` function will return the `Ranges` in the query that
+overlap any `Ranges` in the subject. Like the `join_overlap_intersect()` function
 metadata of the subject `Range` is returned if it overlaps the query. 
 
 ```{r}
@@ -285,24 +292,23 @@ ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
         axis.title.y = element_blank())
 ```
 
-We also provide a convienence method called `find_overlaps` that computes the 
-same result as `join_overlap_inner`.
+We also provide a convienence method called `find_overlaps` that computes the same result as `join_overlap_inner()`.
 
 ```{r}
 find_overlaps(query, subject)
 ```
 
-The `join_overlap_left` method will perform an outer left join. 
+The `join_overlap_left()` method will perform an outer left join. 
 
 
-First any overlaps that are found will be returned similar to `join_overlap_inner`. Then any non-overlapping ranges will be returned, with missing values on the metadata columns. 
+First any overlaps that are found will be returned similar to `join_overlap_inner()`. Then any non-overlapping ranges will be returned, with missing values on the metadata columns. 
 
 ```{r}
 left_rng <- join_overlap_left(query, subject)
 left_rng
 ```
 
-```{r, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
+```{r, echo = FALSE, fig.cap = "Left Join", message = FALSE}
 left_df <- as.data.frame(left_rng)[, -c(6,7)]
 left_df$ymin <- c(1,4, 1)
 left_df$ymax <- c(3,6, 3)
@@ -324,9 +330,25 @@ ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
         axis.title.y = element_blank())
 ```
 
-Compared with `filter_by_overlaps` above, the overlap left join expands the
+Compared with `filter_by_overlaps()` above, the overlap left join expands the
 `Ranges` to give information about each interval on the query `Ranges` that 
 overlap those on the subject `Ranges` as well as the intervals on the left that do not overlap any range on the right.
+
+## Finding your neighbours
+We also provide methods for finding nearest, preceding or following `Ranges`. Conceputally this is identical to our approach for finding
+overlaps, except the semantics of the join are different.
+
+```{r echo = FALSE, out.width="600px"}
+knitr::include_graphics("neighbours.png")
+```
+
+```{r}
+join_nearest(ir0, ir1)
+join_follow(ir0, ir1)
+join_precede(ir0, ir1) # nothing precedes returns empty `Ranges`
+join_precede(ir1, ir0)
+```
+
 
 ## Example: dealing with multimapping
 This example is taken from the Bioconductor support [site](https://support.bioconductor.org/p/100046/).
@@ -375,25 +397,6 @@ olap %>%
   summarise(n = n())
 ```
 
-## Finding your neighbours
-We also provide methods for finding nearest, preceding or following `Ranges`.
-
-<!--- ![Nearest neighbour joins](neighbours.png) --->
-
-These methods are similar to the overlap joins described above. 
-
-```{r}
-join_nearest(ir0, ir1)
-join_follow(ir0, ir1)
-join_precede(ir0, ir1) # nothing precedes returns empty `Ranges`
-join_precede(ir1, ir0)
-```
-
-For `GRanges` objects by default strand is not considered when performing
-overlap joins. To include strand when finding overlaps use append the prefix
-`directed`. To restrict overlapping `Ranges` to those within the query range
-use the prefix `within`.
-
 ## Grouping by overlaps
 
 It's also possible to group by overlaps. Using this approach we can count the
@@ -407,7 +410,7 @@ grp_by_olap %>%
   mutate(n_overlaps = n())
 ```
 
-Of course we can also add overlap counts via the `count_overlaps` function.
+Of course we can also add overlap counts via the `count_overlaps()` function.
 
 ```{r}
 ir0 %>%
@@ -426,7 +429,7 @@ for reading/writing the following data formats to/from `Ranges` objects.
 | `read_bedgraph()`/ `write_bedgraph()` | BEDGraph |
 | `read_narrowpeaks()`/ `write_narrowpeaks()` | narrowPeaks |
 | `read_gff()` / `write_gff()` | GFF(1-3) / GTF |
-| `read_bw()` / `write_bw()` |  BigWig |
+| `read_bigwig()` / `write_bigwig()` |  BigWig |
 | `read_wig()` / `write_wig()` | Wig |
 
 
