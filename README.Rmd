@@ -45,7 +45,6 @@ The package is currently available from Bioconductor.
 
 ```{r, eval=FALSE}
 source("https://bioconductor.org/biocLite.R")
-useDevel()
 biocLite("plyranges")
 ```
 
