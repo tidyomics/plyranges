@@ -360,7 +360,7 @@
 <h1 class="hasAnchor">
 <a href="#summarising-ranges" class="anchor"></a>Summarising <code>Ranges</code>
 </h1>
-<p>The <code>summarise</code> function will return a tibble because the information required to return a <code>Ranges</code> object is lost. It is often most useful to use <code>summarise</code> in combination with the <code>group_by</code> family of functions.</p>
+<p>The <code>summarise</code> function will return a <code>DataFrame</code> because the information required to return a <code>Ranges</code> object is lost. It is often most useful to use <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> in combination with the <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> family of functions.</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">ir1 &lt;-<span class="st"> </span>ir1 <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb49-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">gc =</span> <span class="kw">runif</span>(<span class="kw">length</span>(.)))</a>
 <a class="sourceLine" id="cb49-3" data-line-number="3"></a>
@@ -377,8 +377,7 @@
 <h1 class="hasAnchor">
 <a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges" class="anchor"></a>Joins, or another way at looking at overlaps between <code>Ranges</code>
 </h1>
-<p>We can think about finding overlaps as a type of join between two <code>Ranges</code> where we are using the intervals as keys. Of most use are the <code>join_overlap_intersect</code>, <code>join_overlap_inner</code> and <code>join_overlap_left</code> functions.</p>
-<p>To begin we’ll define a query and subject <code>GRanges</code> object.</p>
+<p>A join acts on two GRanges objects, a query and a subject.</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">query &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"chr1"</span>,</a>
 <a class="sourceLine" id="cb51-2" data-line-number="2">               <span class="dt">strand =</span> <span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"-"</span>),</a>
 <a class="sourceLine" id="cb51-3" data-line-number="3">               <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">9</span>), </a>
@@ -397,7 +396,9 @@
 Query and Subject Ranges
 </p>
 </div>
-<p>The first function, <code>join_overlap_intersect</code> will return a <code>Ranges`` object  where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input</code>Ranges`. It also returns any metadata in the subject range if the subject overlaps the query. Note that by default the join functions ignore strandedness.</p>
+<p>The join operator is relational in the sense that metadata from the query and subject ranges is retained in the joined range. All join operators in the <code>plyranges</code> DSL generate a set of hits based on overlap or proximity of ranges and use those hits to merge the two datasets in different ways. There are four supported matching algorithms: <em>overlap</em>, <em>nearest</em>, <em>precede</em>, and <em>follow</em>. We can further restrict the matching by whether the query is completely <em>within</em> the subject, and adding the <em>directed</em> suffix ensures that matching ranges have the same direction (strand).</p>
+<p><img src="olaps.png" width="600px"></p>
+<p>The first function, <code><a href="../reference/overlap-joins.html">join_overlap_intersect()</a></code> will return a <code>Ranges</code> object where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input <code>Ranges</code>. It also returns any metadatain the subject range if the subject overlaps the query.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">intersect_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(query, subject)</a>
 <a class="sourceLine" id="cb52-2" data-line-number="2">intersect_rng</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 2 metadata columns:
@@ -407,23 +408,14 @@ Query and Subject Ranges
 ##   [2]     chr1       6-7      + |        a        B
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">intersect_df &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(intersect_rng)[, <span class="op">-</span><span class="kw">c</span>(<span class="dv">6</span>,<span class="dv">7</span>)]</a>
-<a class="sourceLine" id="cb54-2" data-line-number="2">intersect_df<span class="op">$</span>key &lt;-<span class="st"> "Intersect Join"</span></a>
-<a class="sourceLine" id="cb54-3" data-line-number="3">melted_ranges &lt;-<span class="st"> </span><span class="kw">rbind</span>(query_df, subject_df, intersect_df)</a>
-<a class="sourceLine" id="cb54-4" data-line-number="4">melted_ranges<span class="op">$</span>key &lt;-<span class="st"> </span><span class="kw">factor</span>(melted_ranges<span class="op">$</span>key, </a>
-<a class="sourceLine" id="cb54-5" data-line-number="5">                              <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">"Query"</span>, <span class="st">"Subject"</span>, <span class="st">"Intersect Join"</span>))</a>
-<a class="sourceLine" id="cb54-6" data-line-number="6"><span class="kw">ggplot</span>(melted_ranges, <span class="kw">aes</span>(<span class="dt">xmin =</span> start, <span class="dt">xmax =</span> end, <span class="dt">ymin =</span> <span class="dv">1</span>, <span class="dt">ymax =</span> <span class="dv">3</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_rect</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-8" data-line-number="8"><span class="st">  </span><span class="kw">facet_grid</span>(key <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="dt">by =</span> <span class="dv">1</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-10" data-line-number="10"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">"Position"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-11" data-line-number="11"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.y =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb54-12" data-line-number="12">        <span class="dt">axis.ticks.y =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb54-13" data-line-number="13">        <span class="dt">axis.title.y =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
-<p><img src="an-introduction_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<p>The <code>join_overlap_inner</code> function will return the <code>Ranges</code> in the query that overlap any <code>Ranges</code> in the subject. Like the <code>join_overlap_intersect</code> function metadata of the subject <code>Range</code> is returned if it overlaps the query.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">inner_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(query, subject)</a>
-<a class="sourceLine" id="cb55-2" data-line-number="2">inner_rng</a></code></pre></div>
+<div class="figure">
+<img src="an-introduction_files/figure-html/unnamed-chunk-15-1.png" alt="Intersect Join" width="700"><p class="caption">
+Intersect Join
+</p>
+</div>
+<p>The <code><a href="../reference/overlap-joins.html">join_overlap_inner()</a></code> function will return the <code>Ranges</code> in the query that overlap any <code>Ranges</code> in the subject. Like the <code><a href="../reference/overlap-joins.html">join_overlap_intersect()</a></code> function metadata of the subject <code>Range</code> is returned if it overlaps the query.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">inner_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(query, subject)</a>
+<a class="sourceLine" id="cb54-2" data-line-number="2">inner_rng</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 2 metadata columns:
 ##       seqnames    ranges strand |    key.a    key.b
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
@@ -432,12 +424,12 @@ Query and Subject Ranges
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="figure">
-<img src="an-introduction_files/figure-html/unnamed-chunk-16-1.png" alt="Inner Join" width="700"><p class="caption">
+<img src="an-introduction_files/figure-html/unnamed-chunk-17-1.png" alt="Inner Join" width="700"><p class="caption">
 Inner Join
 </p>
 </div>
-<p>We also provide a convienence method called <code>find_overlaps</code> that computes the same result as <code>join_overlap_inner</code>.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-overlaps.html">find_overlaps</a></span>(query, subject)</a></code></pre></div>
+<p>We also provide a convienence method called <code>find_overlaps</code> that computes the same result as <code><a href="../reference/overlap-joins.html">join_overlap_inner()</a></code>.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-overlaps.html">find_overlaps</a></span>(query, subject)</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 2 metadata columns:
 ##       seqnames    ranges strand |    key.a    key.b
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
@@ -445,10 +437,10 @@ Inner Join
 ##   [2]     chr1       1-7      + |        a        B
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<p>The <code>join_overlap_left</code> method will perform an outer left join.</p>
-<p>First any overlaps that are found will be returned similar to <code>join_overlap_inner</code>. Then any non-overlapping ranges will be returned, with missing values on the metadata columns.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">left_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(query, subject)</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2">left_rng</a></code></pre></div>
+<p>The <code><a href="../reference/overlap-joins.html">join_overlap_left()</a></code> method will perform an outer left join.</p>
+<p>First any overlaps that are found will be returned similar to <code><a href="../reference/overlap-joins.html">join_overlap_inner()</a></code>. Then any non-overlapping ranges will be returned, with missing values on the metadata columns.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1">left_rng &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(query, subject)</a>
+<a class="sourceLine" id="cb58-2" data-line-number="2">left_rng</a></code></pre></div>
 <pre><code>## GRanges object with 3 ranges and 2 metadata columns:
 ##       seqnames    ranges strand |    key.a    key.b
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
@@ -458,11 +450,46 @@ Inner Join
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <div class="figure">
-<img src="an-introduction_files/figure-html/unnamed-chunk-19-1.png" alt="Inner Join" width="700"><p class="caption">
-Inner Join
+<img src="an-introduction_files/figure-html/unnamed-chunk-20-1.png" alt="Left Join" width="700"><p class="caption">
+Left Join
 </p>
 </div>
-<p>Compared with <code>filter_by_overlaps</code> above, the overlap left join expands the <code>Ranges</code> to give information about each interval on the query <code>Ranges</code> that overlap those on the subject <code>Ranges</code> as well as the intervals on the left that do not overlap any range on the right.</p>
+<p>Compared with <code><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps()</a></code> above, the overlap left join expands the <code>Ranges</code> to give information about each interval on the query <code>Ranges</code> that overlap those on the subject <code>Ranges</code> as well as the intervals on the left that do not overlap any range on the right.</p>
+<div id="finding-your-neighbours" class="section level2">
+<h2 class="hasAnchor">
+<a href="#finding-your-neighbours" class="anchor"></a>Finding your neighbours</h2>
+<p>We also provide methods for finding nearest, preceding or following <code>Ranges</code>. Conceputally this is identical to our approach for finding overlaps, except the semantics of the join are different.</p>
+<p><img src="neighbours.png" width="600px"></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-nearest.html">join_nearest</a></span>(ir0, ir1)</a></code></pre></div>
+<pre><code>## IRanges object with 4 ranges and 1 metadata column:
+##           start       end     width |                gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+##   [1]         5         9         5 | 0.780358511023223
+##   [2]        10        14         5 | 0.780358511023223
+##   [3]        15        19         5 | 0.780358511023223
+##   [4]        20        24         5 | 0.780358511023223</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-follow.html">join_follow</a></span>(ir0, ir1)</a></code></pre></div>
+<pre><code>## IRanges object with 4 ranges and 1 metadata column:
+##           start       end     width |                gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+##   [1]         5         9         5 | 0.777584439376369
+##   [2]        10        14         5 | 0.603324356488883
+##   [3]        15        19         5 | 0.780358511023223
+##   [4]        20        24         5 | 0.780358511023223</code></pre>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-precede.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></a></code></pre></div>
+<pre><code>## IRanges object with 0 ranges and 1 metadata column:
+##        start       end     width |        gc
+##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-precede.html">join_precede</a></span>(ir1, ir0)</a></code></pre></div>
+<pre><code>## IRanges object with 5 ranges and 1 metadata column:
+##           start       end     width |                gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+##   [1]         2         4         3 | 0.777584439376369
+##   [2]         3         6         4 | 0.827303449623287
+##   [3]         4         8         5 | 0.603324356488883
+##   [4]         5        10         6 | 0.491231821943074
+##   [5]         6        12         7 | 0.780358511023223</code></pre>
+</div>
 <div id="example-dealing-with-multimapping" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-dealing-with-multimapping" class="anchor"></a>Example: dealing with multimapping</h2>
@@ -470,12 +497,12 @@ Inner Join
 <p>We have two <code>Ranges</code> objects. The first contains single nucleotide positions corresponding to an intensity measurement such as a ChiP-seq experiment, while the other contains coordinates for two genes of interest.</p>
 <p>We want to identify which positions in the <code>intensties</code> <code>Ranges</code> overlap the genes, where each row corresponds to a position that overlaps a single gene.</p>
 <p>First we create the two <code>Ranges</code> objects</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">intensities &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>,</a>
-<a class="sourceLine" id="cb61-2" data-line-number="2">                          <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3320</span><span class="op">:</span><span class="dv">3321</span>,<span class="dv">3330</span><span class="op">:</span><span class="dv">3331</span>,<span class="dv">3341</span><span class="op">:</span><span class="dv">3342</span>),</a>
-<a class="sourceLine" id="cb61-3" data-line-number="3">                          <span class="dt">width =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()</a>
-<a class="sourceLine" id="cb61-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb61-6" data-line-number="6">intensities </a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">intensities &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>,</a>
+<a class="sourceLine" id="cb68-2" data-line-number="2">                          <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3320</span><span class="op">:</span><span class="dv">3321</span>,<span class="dv">3330</span><span class="op">:</span><span class="dv">3331</span>,<span class="dv">3341</span><span class="op">:</span><span class="dv">3342</span>),</a>
+<a class="sourceLine" id="cb68-3" data-line-number="3">                          <span class="dt">width =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb68-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()</a>
+<a class="sourceLine" id="cb68-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb68-6" data-line-number="6">intensities </a></code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -487,13 +514,13 @@ Inner Join
 ##   [6]       VI      3342      *
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>, </a>
-<a class="sourceLine" id="cb63-2" data-line-number="2">                    <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3322</span>, <span class="dv">3030</span>),</a>
-<a class="sourceLine" id="cb63-3" data-line-number="3">                    <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">3846</span>, <span class="dv">3338</span>),</a>
-<a class="sourceLine" id="cb63-4" data-line-number="4">                    <span class="dt">gene_id=</span><span class="kw">c</span>(<span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb63-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()</a>
-<a class="sourceLine" id="cb63-6" data-line-number="6">                    </a>
-<a class="sourceLine" id="cb63-7" data-line-number="7">genes</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">genes &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>, </a>
+<a class="sourceLine" id="cb70-2" data-line-number="2">                    <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">3322</span>, <span class="dv">3030</span>),</a>
+<a class="sourceLine" id="cb70-3" data-line-number="3">                    <span class="dt">end =</span> <span class="kw">c</span>(<span class="dv">3846</span>, <span class="dv">3338</span>),</a>
+<a class="sourceLine" id="cb70-4" data-line-number="4">                    <span class="dt">gene_id=</span><span class="kw">c</span>(<span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb70-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>()</a>
+<a class="sourceLine" id="cb70-6" data-line-number="6">                    </a>
+<a class="sourceLine" id="cb70-7" data-line-number="7">genes</a></code></pre></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
 ##       seqnames    ranges strand |  gene_id
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
@@ -502,9 +529,9 @@ Inner Join
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Now to find where the positions overlap each gene, we can perform an overlap join. This will automatically carry over the gene_id information as well as their coordinates (we can drop those by only selecting the gene_id).</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(intensities, genes) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(gene_id)</a>
-<a class="sourceLine" id="cb65-3" data-line-number="3">olap</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">olap &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(intensities, genes) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(gene_id)</a>
+<a class="sourceLine" id="cb72-3" data-line-number="3">olap</a></code></pre></div>
 <pre><code>## GRanges object with 8 ranges and 1 metadata column:
 ##       seqnames    ranges strand |  gene_id
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
@@ -519,9 +546,9 @@ Inner Join
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Several positions match to both genes. We can count them using <code>summarise</code> and grouping by the <code>start</code> position:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">olap <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(start) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw"><a href="../reference/n.html">n</a></span>())</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">olap <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(start) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw"><a href="../reference/n.html">n</a></span>())</a></code></pre></div>
 <pre><code>## DataFrame with 6 rows and 2 columns
 ##       start         n
 ##   &lt;integer&gt; &lt;integer&gt;
@@ -532,50 +559,13 @@ Inner Join
 ## 5      3341         1
 ## 6      3342         1</code></pre>
 </div>
-<div id="finding-your-neighbours" class="section level2">
-<h2 class="hasAnchor">
-<a href="#finding-your-neighbours" class="anchor"></a>Finding your neighbours</h2>
-<p>We also provide methods for finding nearest, preceding or following <code>Ranges</code>.</p>
-<!--- ![Nearest neighbour joins](neighbours.png) --->
-<p>These methods are similar to the overlap joins described above.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-nearest.html">join_nearest</a></span>(ir0, ir1)</a></code></pre></div>
-<pre><code>## IRanges object with 4 ranges and 1 metadata column:
-##           start       end     width |                gc
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
-##   [1]         5         9         5 | 0.780358511023223
-##   [2]        10        14         5 | 0.780358511023223
-##   [3]        15        19         5 | 0.780358511023223
-##   [4]        20        24         5 | 0.780358511023223</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-follow.html">join_follow</a></span>(ir0, ir1)</a></code></pre></div>
-<pre><code>## IRanges object with 4 ranges and 1 metadata column:
-##           start       end     width |                gc
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
-##   [1]         5         9         5 | 0.777584439376369
-##   [2]        10        14         5 | 0.603324356488883
-##   [3]        15        19         5 | 0.780358511023223
-##   [4]        20        24         5 | 0.780358511023223</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-precede.html">join_precede</a></span>(ir0, ir1) <span class="co"># nothing precedes returns empty `Ranges`</span></a></code></pre></div>
-<pre><code>## IRanges object with 0 ranges and 1 metadata column:
-##        start       end     width |        gc
-##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-precede.html">join_precede</a></span>(ir1, ir0)</a></code></pre></div>
-<pre><code>## IRanges object with 5 ranges and 1 metadata column:
-##           start       end     width |                gc
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
-##   [1]         2         4         3 | 0.777584439376369
-##   [2]         3         6         4 | 0.827303449623287
-##   [3]         4         8         5 | 0.603324356488883
-##   [4]         5        10         6 | 0.491231821943074
-##   [5]         6        12         7 | 0.780358511023223</code></pre>
-<p>For <code>GRanges</code> objects by default strand is not considered when performing overlap joins. To include strand when finding overlaps use append the prefix <code>directed</code>. To restrict overlapping <code>Ranges</code> to those within the query range use the prefix <code>within</code>.</p>
-</div>
 <div id="grouping-by-overlaps" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grouping-by-overlaps" class="anchor"></a>Grouping by overlaps</h2>
 <p>It’s also possible to group by overlaps. Using this approach we can count the number of overlaps that are greater than 0.</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1">grp_by_olap &lt;-<span class="st"> </span>ir0 <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb77-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1)</a>
-<a class="sourceLine" id="cb77-3" data-line-number="3">grp_by_olap</a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">grp_by_olap &lt;-<span class="st"> </span>ir0 <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(ir1)</a>
+<a class="sourceLine" id="cb76-3" data-line-number="3">grp_by_olap</a></code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 2 metadata columns:
 ## Groups: query [2]
 ##           start       end     width |                gc     query
@@ -586,8 +576,8 @@ Inner Join
 ##   [4]         5         9         5 | 0.780358511023223         1
 ##   [5]        10        14         5 | 0.491231821943074         2
 ##   [6]        10        14         5 | 0.780358511023223         2</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1">grp_by_olap <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb79-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/n.html">n</a></span>())</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">grp_by_olap <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb78-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/n.html">n</a></span>())</a></code></pre></div>
 <pre><code>## IRanges object with 6 ranges and 3 metadata columns:
 ## Groups: query [2]
 ##           start       end     width |                gc     query
@@ -606,9 +596,9 @@ Inner Join
 ##   [4]          4
 ##   [5]          2
 ##   [6]          2</code></pre>
-<p>Of course we can also add overlap counts via the <code>count_overlaps</code> function.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">ir0 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(., ir1))</a></code></pre></div>
+<p>Of course we can also add overlap counts via the <code><a href="../reference/ranges-count-overlaps.html">count_overlaps()</a></code> function.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" data-line-number="1">ir0 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb80-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">n_overlaps =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(., ir1))</a></code></pre></div>
 <pre><code>## IRanges object with 4 ranges and 1 metadata column:
 ##           start       end     width | n_overlaps
 ##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;integer&gt;
@@ -659,7 +649,7 @@ Inner Join
 </tr>
 <tr class="even">
 <td>
-<code>read_bw()</code> / <code>write_bw()</code>
+<code><a href="../reference/io-bigwig-read.html">read_bigwig()</a></code> / <code><a href="../reference/io-bigwig-write.html">write_bigwig()</a></code>
 </td>
 <td>BigWig</td>
 </tr>
@@ -882,7 +872,7 @@ Inner Join
 <div id="appendix" class="section level1">
 <h1 class="hasAnchor">
 <a href="#appendix" class="anchor"></a>Appendix</h1>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1"><span class="kw">sessionInfo</span>()</a></code></pre></div>
 <pre><code>## R version 3.5.0 (2018-04-23)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
 ## Running under: macOS Sierra 10.12.6
@@ -953,8 +943,8 @@ Inner Join
       <li><a href="#summarising-ranges">Summarising <code>Ranges</code></a></li>
       <li>
 <a href="#joins-or-another-way-at-looking-at-overlaps-between-ranges">Joins, or another way at looking at overlaps between <code>Ranges</code></a><ul class="nav nav-pills nav-stacked">
-<li><a href="#example-dealing-with-multimapping">Example: dealing with multimapping</a></li>
-      <li><a href="#finding-your-neighbours">Finding your neighbours</a></li>
+<li><a href="#finding-your-neighbours">Finding your neighbours</a></li>
+      <li><a href="#example-dealing-with-multimapping">Example: dealing with multimapping</a></li>
       <li><a href="#grouping-by-overlaps">Grouping by overlaps</a></li>
       </ul>
 </li>
