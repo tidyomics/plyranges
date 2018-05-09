@@ -6,21 +6,21 @@
 #' or single end (FALSE).
 #'
 #' @details Reading a BAM file is deferred until an action
-#' such as selecting tags or filtering by overlapping ranges
-#' or filtering by tags is performed on it. If paired is set to
-#' TRUE, when alignments are load, the GRanges has two additional
+#' such as using `summarise()` or `mutate()`. If paired is set to
+#' TRUE, when alignments are loaded, the GRanges has two additional
 #' columns called read_pair_id and read_pair_group corresponding
-#' to paired reads (by default paired = TRUE will only select
-#' reads that are proper pairs).
+#' to paired reads and is grouped by the read_pair_group.
 #'
-#' For `select` valid columns are the either the fields of the
+#' For `select()` valid columns are the either the fields of the
 #' BAM file. Valid entries are qname (QNAME), flag (FLAG),
 #' rname (RNAME), strand, pos (POS), qwidth (width of query),
 #' mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
 #' (TLEN), seq (SEQ), and qual (QUAL). Any two character
 #' tags in the BAM file are also valid.
 #'
-#' For `filter` the following fields are valid
+#' For `filter()` the following fields are valid, to select the FALSE option
+#' place `!` in front of the field:
+#' 
 #' is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
 #' is_proper_pair Select either improperly paired (FALSE) or properly
 #' paired (TRUE) reads. This is dependent on the alignment software used.
@@ -42,13 +42,10 @@
 #' duplicated (TRUE). This may represent reads that are PCR or
 #' optical duplicates.
 #'
-#'
 #' @importFrom GenomicAlignments readGAlignments readGAlignmentPairs
 #' @importFrom Rsamtools BamFile ScanBamParam
-#' @importFrom rlang new_environment
 #' @export
 #' @examples
-#'
 #' if (require(pasillaBamSubset)) {
 #'    bamfile <- untreated1_chr4()
 #'    # nothing is read until an action has been performed
@@ -56,73 +53,14 @@
 #'    # define a region of interest
 #'    roi <- data.frame(seqnames = "chr4", start = 5e5, end = 7e5) %>%
 #'             as_granges()
-#'    # add map quality scores
-#'    rng_mapq <- read_bam(bamfile) %>% select(mapq)
-#'    print(rng_mapq)
-#'    # filter_by_ovleraps will only read alignments if they overlap roi
-#'    by_olap <- read_bam(bamfile) %>% filter_by_overlaps(roi)
-#'    print(by_olap)
+#'    rng <- read_bam(bamfile) %>% 
+#'             select(mapq) %>%
+#'             filter_by_overlaps(roi)
 #' }
 #'
-#' @return A GRangesDeferred object
+#' @return A DeferredGenomicRanges object
 #' @rdname io-bam-read
 read_bam <- function(file, index = file, paired = FALSE) {
-  if (is.null(index)) {
-    index <- character()
-  }
-  env <- rlang::new_environment(
-    list(input = Rsamtools::BamFile(file, index = index),
-         param = Rsamtools::ScanBamParam(),
-         paired = paired)
-    )
-  GRangesDeferred(operation = env)
+  ops <- new_bam_ops(file, index, paired)
+  new_DeferredGenomicRanges(GRanges(), ops)
 }
-
-
-#' @importFrom Rsamtools bamFlag bamWhich ScanBamParam
-#' @importFrom GenomicAlignments readGAlignments readGAlignmentPairs
-load_alignments <- function(.data) {
-
-  if (length(bamWhich(.data@operation$param)) > 0) {
-    with.which_label <- TRUE
-  } else {
-    with.which_label <- FALSE
-  }
-
-  if (.data@operation$paired) {
-    alignments <- GenomicAlignments::readGAlignmentPairs(
-      .data@operation$input,
-      param = .data@operation$param,
-      with.which_label = with.which_label
-    )
-    r1 <- first(alignments)
-    r2 <- second(alignments)
-    r1_grng <- galn_to_grng(r1)
-    mcols(r1_grng)[["read_pair_id"]] <- seq_along(r1_grng)
-    mcols(r1_grng)[["read_pair_group"]] <- 1L
-    r2_grng <- galn_to_grng(r2)
-    mcols(r2_grng)[["read_pair_id"]] <- seq_along(r1_grng)
-    mcols(r2_grng)[["read_pair_group"]] <- 2L
-    grng <- c(r1_grng, r2_grng)
-    grng <- grng[order(grng$read_pair_id)]
-    return(group_by(grng, "read_pair_id"))
-  }
-  alignments <-  suppressWarnings(
-    GenomicAlignments::readGAlignments(file = .data@operation$input,
-                      param = .data@operation$param,
-                      with.which_label = with.which_label)
-    )
-
-  galn_to_grng(alignments)
-}
-
-
-galn_to_grng <- function(alignments) {
-  grng <- granges(alignments, use.mcols = TRUE)
-  mcols(grng)[["cigar"]] <- GenomicAlignments::cigar(alignments)
-  mcols(grng)[["qwidth"]] <- GenomicAlignments::qwidth(alignments)
-  mcols(grng)[["njunc"]] <- GenomicAlignments::njunc(alignments)
-  seqinfo(grng) <- seqinfo(alignments)
-  grng
-}
-
