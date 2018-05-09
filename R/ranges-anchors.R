@@ -37,7 +37,7 @@
 #' `IRanges` object or one of
 #' `c("start", "end", "center", "3p", "5p")` for a `GRanges` object.
 #'
-#' @seealso \link{set_width}, \link{stretch}
+#' @seealso \link{mutate}, \link{stretch}
 #'
 #' @return a RangesAnchored object which has the same appearance as a regular
 #' Ranges object but with an additional slot displaying an anchor.
@@ -47,13 +47,13 @@
 #' rng_by_start <- anchor_start(rng)
 #' rng_by_start
 #' anchor(rng_by_start)
-#' set_width(rng_by_start, 3L)
+#' mutate(rng_by_start, width = 3L)
 #' grng <- as_granges(df,
 #'                    seqnames = "chr1",
 #'                    strand = c(rep("-", 5), rep("+", 5)))
 #' rng_by_5p <- anchor_5p(grng)
 #' rng_by_5p
-#' set_width(rng_by_5p, 3L)
+#' mutate(rng_by_5p, width = 3L)
 #'
 #' @importFrom methods setClass setValidity setMethod show
 #' @rdname ranges-anchor

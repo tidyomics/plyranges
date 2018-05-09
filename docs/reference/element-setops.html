@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Row-wise set operations on Ranges objects — %union%" />
 
 <meta property="og:description" content="Row-wise set operations on Ranges objects" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,15 +97,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Row-wise set operations on Ranges objects</h1>
+    
+    <div class="hidden name"><code>element-setops.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Row-wise set operations on Ranges objects</p>
     
+    </div>
 
     <pre class="usage"><span class='no'>x</span> <span class='kw'>%union%</span> <span class='no'>y</span>
 
@@ -109,7 +121,7 @@
 
 <span class='fu'>span</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -138,7 +150,7 @@ two ranges.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>[IRanges::punion()][IRanges::pintersect()][IRanges::pgap()][IRanges::psetdiff()]</p>
+    <div class='dont-index'><p>[IRanges::punion()][IRanges::pintersect()][IRanges::pgap()][IRanges::psetdiff()]</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -256,5 +268,8 @@ two ranges.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

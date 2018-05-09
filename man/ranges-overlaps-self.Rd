@@ -4,6 +4,7 @@
 \alias{join_overlap_self}
 \alias{join_overlap_self_within}
 \alias{join_overlap_self_directed}
+\alias{join_overlap_self_within_directed}
 \title{Find overlaps within a Ranges object}
 \usage{
 join_overlap_self(x, maxgap, minoverlap)
@@ -11,6 +12,8 @@ join_overlap_self(x, maxgap, minoverlap)
 join_overlap_self_within(x, maxgap, minoverlap)
 
 join_overlap_self_directed(x, maxgap, minoverlap)
+
+join_overlap_self_within_directed(x, maxgap, minoverlap)
 }
 \arguments{
 \item{x}{A Ranges object}

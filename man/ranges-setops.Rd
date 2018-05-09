@@ -7,7 +7,9 @@
 \alias{union_ranges_directed}
 \alias{setdiff_ranges}
 \alias{setdiff_ranges_directed}
-\title{Vector-wise Range set-opterations}
+\alias{complement_ranges}
+\alias{complement_ranges_directed}
+\title{Vector-wise Range set-operations}
 \usage{
 intersect_ranges(x, y)
 
@@ -20,6 +22,10 @@ union_ranges_directed(x, y)
 setdiff_ranges(x, y)
 
 setdiff_ranges_directed(x, y)
+
+complement_ranges(x)
+
+complement_ranges_directed(x)
 }
 \arguments{
 \item{x, y}{Two Ranges objects to compare.}
@@ -28,13 +34,13 @@ setdiff_ranges_directed(x, y)
 A Ranges object
 }
 \description{
-Vector-wise Range set-opterations
+Vector-wise Range set-operations
 }
 \details{
 These are usual set-operations that act on the sets of the
 ranges represented in x and y. By default these operations will ignore
 any strand information. The directed versions of these functions will
-take into account strand.
+take into account strand for GRanges objects.
 }
 \examples{
 gr1 <- data.frame(seqnames = "chr1",
@@ -53,5 +59,8 @@ intersect_ranges_directed(gr1, gr2)
 
 setdiff_ranges(gr1, gr2)
 setdiff_ranges_directed(gr1, gr2)
+# taking the complement of a ranges requires annotation information
+gr1 <- set_genome_info(gr1, seqlengths = 100)
+complement_ranges(gr1)
 
 }

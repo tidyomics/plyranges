@@ -1,3 +1,15 @@
-# plyranges 0.1.0
 
-* Added a `NEWS.md` file to track changes to the package.
+# plyranges 0.99.10 (30/04/2018)
+
+* refactored `set_width` out so it's called internally by mutate
+* along with `set_width` there are other internal `set_` methods
+* add `_within_directed` variants for overlaps methods
+* modified `overscope_ranges` to be an S3 method, should enable more refactoring in the future
+
+# plyranges 0.99.9 (12/04/2018)
+
+https://bioconductor.org/packages/devel/bioc/html/plyranges.html
+
+- package passed review and is now on Bioconductor devel branch!
+- I've been pretty slack with updating the NEWS file but will be more
+diligent in the future.

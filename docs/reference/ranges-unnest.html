@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Expand list-columns in a Ranges object — unnest.GenomicRanges" />
 
 <meta property="og:description" content="Expand list-columns in a Ranges object" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,21 +97,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Expand list-columns in a Ranges object</h1>
+    
+    <div class="hidden name"><code>ranges-unnest.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Expand list-columns in a Ranges object</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for GenomicRanges</span>
 <span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>.drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>.sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -141,24 +153,24 @@ by <code>.sep</code>, currently not implemented.</p></td>
     <pre class="examples"><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>20</span>:<span class='fl'>23</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>1000</span>))
 <span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>grng</span>, <span class='kw'>exon_id</span> <span class='kw'>=</span> <span class='fu'>IntegerList</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>4</span>,<span class='fl'>5</span>), <span class='kw'>c</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>d</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>5</span>)))
 <span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></span>(<span class='no'>grng</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 1 metadata column:
-#&gt;       seqnames     ranges strand |   exon_id
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
-#&gt;   [1]     chr1 [20, 1019]      * |         1
-#&gt;   [2]     chr1 [21, 1020]      * |         4
-#&gt;   [3]     chr1 [21, 1020]      * |         5
-#&gt;   [4]     chr1 [22, 1021]      * |         3
-#&gt;   [5]     chr1 [23, 1022]      * |         2
-#&gt;   [6]     chr1 [23, 1022]      * |         5
+#&gt;       seqnames    ranges strand |   exon_id
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
+#&gt;   [1]     chr1   20-1019      * |         1
+#&gt;   [2]     chr1   21-1020      * |         4
+#&gt;   [3]     chr1   21-1020      * |         5
+#&gt;   [4]     chr1   22-1021      * |         3
+#&gt;   [5]     chr1   23-1022      * |         2
+#&gt;   [6]     chr1   23-1022      * |         5
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/tidyr/topics/unnest'>unnest</a></span>(<span class='no'>grng</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"name"</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 2 metadata columns:
-#&gt;       seqnames     ranges strand |   exon_id        name
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt;
-#&gt;   [1]     chr1 [20, 1019]      * |         1           a
-#&gt;   [2]     chr1 [21, 1020]      * |         4           b
-#&gt;   [3]     chr1 [21, 1020]      * |         5           b
-#&gt;   [4]     chr1 [22, 1021]      * |         3           c
-#&gt;   [5]     chr1 [23, 1022]      * |         2           d
-#&gt;   [6]     chr1 [23, 1022]      * |         5           d
+#&gt;       seqnames    ranges strand |   exon_id        name
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt;
+#&gt;   [1]     chr1   20-1019      * |         1           a
+#&gt;   [2]     chr1   21-1020      * |         4           b
+#&gt;   [3]     chr1   21-1020      * |         5           b
+#&gt;   [4]     chr1   22-1021      * |         3           c
+#&gt;   [5]     chr1   23-1022      * |         2           d
+#&gt;   [6]     chr1   23-1022      * |         5           d
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -187,5 +199,8 @@ by <code>.sep</code>, currently not implemented.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

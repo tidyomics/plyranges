@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Disjoin then aggregate a Ranges object — disjoin_ranges" />
 
 <meta property="og:description" content="Disjoin then aggregate a Ranges object" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,21 +97,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Disjoin then aggregate a Ranges object</h1>
+    
+    <div class="hidden name"><code>ranges-disjoin.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Disjoin then aggregate a Ranges object</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>disjoin_ranges</span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
 <span class='fu'>disjoin_ranges_directed</span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -128,47 +140,47 @@
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'>disjoin_ranges</span>()</div><div class='output co'>#&gt; GRanges object with 14 ranges and 0 metadata columns:
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;    [1]     seq1    [1, 1]      *
-#&gt;    [2]     seq1    [2, 2]      *
-#&gt;    [3]     seq1    [3, 3]      *
-#&gt;    [4]     seq1    [4, 4]      *
-#&gt;    [5]     seq1    [5, 5]      *
+#&gt;    [1]     seq1         1      *
+#&gt;    [2]     seq1         2      *
+#&gt;    [3]     seq1         3      *
+#&gt;    [4]     seq1         4      *
+#&gt;    [5]     seq1         5      *
 #&gt;    ...      ...       ...    ...
-#&gt;   [10]     seq1  [10, 10]      *
-#&gt;   [11]     seq1  [11, 11]      *
-#&gt;   [12]     seq1  [12, 12]      *
-#&gt;   [13]     seq1  [13, 13]      *
-#&gt;   [14]     seq1  [14, 14]      *
+#&gt;   [10]     seq1        10      *
+#&gt;   [11]     seq1        11      *
+#&gt;   [12]     seq1        12      *
+#&gt;   [13]     seq1        13      *
+#&gt;   [14]     seq1        14      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'>disjoin_ranges</span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 14 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |                gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
-#&gt;    [1]     seq1    [1, 1]      * | 0.661779022077098
-#&gt;    [2]     seq1    [2, 2]      * | 0.643238369491883
-#&gt;    [3]     seq1    [3, 3]      * |  0.71437659386235
-#&gt;    [4]     seq1    [4, 4]      * | 0.729477167420555
-#&gt;    [5]     seq1    [5, 5]      * | 0.750387153681368
+#&gt;    [1]     seq1         1      * | 0.661779022077098
+#&gt;    [2]     seq1         2      * | 0.643238369491883
+#&gt;    [3]     seq1         3      * |  0.71437659386235
+#&gt;    [4]     seq1         4      * | 0.729477167420555
+#&gt;    [5]     seq1         5      * | 0.750387153681368
 #&gt;    ...      ...       ...    ... .               ...
-#&gt;   [10]     seq1  [10, 10]      * | 0.610595981869847
-#&gt;   [11]     seq1  [11, 11]      * | 0.740367407677695
-#&gt;   [12]     seq1  [12, 12]      * | 0.833981381341194
-#&gt;   [13]     seq1  [13, 13]      * | 0.951272994047031
-#&gt;   [14]     seq1  [14, 14]      * | 0.982824077364057
+#&gt;   [10]     seq1        10      * | 0.610595981869847
+#&gt;   [11]     seq1        11      * | 0.740367407677695
+#&gt;   [12]     seq1        12      * | 0.833981381341194
+#&gt;   [13]     seq1        13      * | 0.951272994047031
+#&gt;   [14]     seq1        14      * | 0.982824077364057
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'>disjoin_ranges_directed</span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 15 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |                 gc
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt;
-#&gt;    [1]     seq1  [ 5,  7]      + |  0.834027098724619
-#&gt;    [2]     seq1  [ 8,  9]      + |   0.71671262732707
-#&gt;    [3]     seq1  [10, 12]      + |  0.599398155929521
-#&gt;    [4]     seq1  [ 1,  1]      - |  0.661779022077098
-#&gt;    [5]     seq1  [ 2,  2]      - |  0.643238369491883
+#&gt;    [1]     seq1       5-7      + |  0.834027098724619
+#&gt;    [2]     seq1       8-9      + |   0.71671262732707
+#&gt;    [3]     seq1     10-12      + |  0.599398155929521
+#&gt;    [4]     seq1         1      - |  0.661779022077098
+#&gt;    [5]     seq1         2      - |  0.643238369491883
 #&gt;    ...      ...       ...    ... .                ...
-#&gt;   [11]     seq1  [ 9, 11]      - |  0.689623698708601
-#&gt;   [12]     seq1  [12, 13]      - |  0.919721910730004
-#&gt;   [13]     seq1  [ 6,  9]      * | 0.0915102786384523
-#&gt;   [14]     seq1  [10, 10]      * |  0.537167178001255
-#&gt;   [15]     seq1  [11, 14]      * |  0.982824077364057
+#&gt;   [11]     seq1      9-11      - |  0.689623698708601
+#&gt;   [12]     seq1     12-13      - |  0.919721910730004
+#&gt;   [13]     seq1       6-9      * | 0.0915102786384523
+#&gt;   [14]     seq1        10      * |  0.537167178001255
+#&gt;   [15]     seq1     11-14      * |  0.982824077364057
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -197,5 +209,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

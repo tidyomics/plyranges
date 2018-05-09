@@ -8,6 +8,8 @@
 #' @param seqnames update seqnames column
 #' @param strand update strand column
 #' 
+#' @return a Ranges object
+#' 
 #' @rdname ranges-setters
 #' @importFrom IRanges resize
 #' @export

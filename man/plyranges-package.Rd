@@ -38,6 +38,13 @@ of functions.
 For more details on the features of plryanges, read the vignette:
 \code{browseVignettes(package = "plyranges")}
 }
+\seealso{
+Useful links:
+\itemize{
+  \item Report bugs at \url{https://support.bioconductor.org/}
+}
+
+}
 \author{
 \strong{Maintainer}: Stuart Lee \email{lee.s@wehi.edu.au}
 

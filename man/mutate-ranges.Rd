@@ -2,6 +2,8 @@
 % Please edit documentation in R/dplyr-mutate.R
 \name{mutate.Ranges}
 \alias{mutate.Ranges}
+\alias{mutate.AnchoredIntegerRanges}
+\alias{mutate.AnchoredGenomicRanges}
 \alias{mutate.DelegatingGenomicRanges}
 \alias{mutate.DelegatingIntegerRanges}
 \alias{mutate.GroupedGenomicRanges}
@@ -9,6 +11,10 @@
 \title{Modify a Ranges object}
 \usage{
 \method{mutate}{Ranges}(.data, ...)
+
+\method{mutate}{AnchoredIntegerRanges}(.data, ...)
+
+\method{mutate}{AnchoredGenomicRanges}(.data, ...)
 
 \method{mutate}{DelegatingGenomicRanges}(.data, ...)
 
@@ -49,4 +55,25 @@ rng \%>\%
     group_by(strand) \%>\%
     mutate(avg_gc = mean(gc), row_id = 1:n())
 
+# mutate can be used in conjuction with anchoring to resize ranges
+rng \%>\%
+    mutate(width = 10)
+# by default width modfication fixes by start
+rng \%>\%
+    anchor_start() \%>\%
+    mutate(width = 10)
+# fix by end or midpoint
+rng \%>\%
+    anchor_end() \%>\%
+    mutate(width = width + 1)
+rng \%>\%
+    anchor_center() \%>\%
+    mutate(width = width + 1)
+# anchoring by strand
+rng \%>\%
+    anchor_3p() \%>\%
+    mutate(width = width * 2)
+rng \%>\%
+    anchor_5p() \%>\%
+    mutate(width = width * 2)
 }

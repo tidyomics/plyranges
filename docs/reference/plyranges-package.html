@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="plyranges: a grammar of genomic data manipulation — plyranges-package" />
 
 <meta property="og:description" content="plyranges is a dplyr like API to the Ranges/GenomicRanges infrastructure
 in Bioconductor." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ in Bioconductor." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +90,7 @@ in Bioconductor." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,16 +98,20 @@ in Bioconductor." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>plyranges: a grammar of genomic data manipulation</h1>
+    
+    <div class="hidden name"><code>plyranges-package.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>plyranges is a dplyr like API to the Ranges/GenomicRanges infrastructure
 in Bioconductor.</p>
     
+    </div>
 
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -109,7 +121,7 @@ wrangling genomics data from a variety of sources. The package defines a
 grammar of genomic data manipulation through a set of verbs. These verbs
 can be used to construct human readable analysis pipelines based on Ranges
 objects.</p><ul>
-<li><p>Modify genomic regions with the <code><a href='set_width.html'>set_width()</a></code> and <code><a href='stretch.html'>stretch()</a></code> functions.</p><ul>
+<li><p>Modify genomic regions with the <code><a href='ranges-setters.html'>set_width()</a></code> and <code><a href='stretch.html'>stretch()</a></code> functions.</p><ul>
 <li><p>Modify genomic regions while fixing the start/end/center coordinates
 with the <code>anchors()</code> family of functions.</p></li>
 <li><p>Sort genomic ranges with <code><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange()</a></code>.</p></li>
@@ -164,5 +176,8 @@ Authors:
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

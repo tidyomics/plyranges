@@ -25,14 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Read a BED or BEDGraph file — read_bed" />
 
 <meta property="og:description" content="This is a lightweight wrapper to the import family
 of functions defined in rtracklayer.
 Read common interval based formats as GRanges." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +58,12 @@ Read common interval based formats as GRanges." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -84,6 +91,7 @@ Read common interval based formats as GRanges." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -91,17 +99,21 @@ Read common interval based formats as GRanges." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read a BED or BEDGraph file</h1>
+    
+    <div class="hidden name"><code>io-bed-read.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This is a lightweight wrapper to the import family
 of functions defined in <span class="pkg">rtracklayer</span>.</p>
 <p>Read common interval based formats as GRanges.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>read_bed</span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -112,7 +124,7 @@ of functions defined in <span class="pkg">rtracklayer</span>.</p>
 <span class='fu'>read_narrowpeaks</span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -157,7 +169,7 @@ the narrowPeaks spec):</p><ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BEDFile-class'>rtracklayer::BEDFile()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BEDFile-class'>rtracklayer::BEDFile()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -166,81 +178,79 @@ the narrowPeaks spec):</p><ul>
  <span class='no'>bed_file</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>test_path</span>, <span class='st'>"test.bed"</span>)
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>)
 <span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
-#&gt;       seqnames                 ranges strand |        name     score
-#&gt;          &lt;Rle&gt;              &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
-#&gt;   [1]     chr7 [127471197, 127472363]      + |        Pos1         0
-#&gt;   [2]     chr7 [127472364, 127473530]      + |        Pos2         2
-#&gt;   [3]     chr7 [127473531, 127474697]      - |        Neg1         0
-#&gt;   [4]     chr9 [127474698, 127475864]      + |        Pos3         5
-#&gt;   [5]     chr9 [127475865, 127477031]      - |        Neg2         5
-#&gt;           itemRgb                  thick                                 blocks
-#&gt;       &lt;character&gt;              &lt;IRanges&gt;                          &lt;IRangesList&gt;
-#&gt;   [1]     #FF0000 [127471197, 127472363] [   1,  300] [ 501,  700] [1068, 1167]
-#&gt;   [2]     #FF0000 [127472364, 127473530]                [  1,  250] [668, 1167]
-#&gt;   [3]     #FF0000 [127473531, 127474697]                              [1, 1167]
-#&gt;   [4]     #FF0000 [127474698, 127475864]                              [1, 1167]
-#&gt;   [5]     #0000FF [127475865, 127477031]                              [1, 1167]
+#&gt;       seqnames              ranges strand |        name     score     itemRgb
+#&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt; &lt;character&gt;
+#&gt;   [1]     chr7 127471197-127472363      + |        Pos1         0     #FF0000
+#&gt;   [2]     chr7 127472364-127473530      + |        Pos2         2     #FF0000
+#&gt;   [3]     chr7 127473531-127474697      - |        Neg1         0     #FF0000
+#&gt;   [4]     chr9 127474698-127475864      + |        Pos3         5     #FF0000
+#&gt;   [5]     chr9 127475865-127477031      - |        Neg2         5     #0000FF
+#&gt;                     thick                  blocks
+#&gt;                 &lt;IRanges&gt;           &lt;IRangesList&gt;
+#&gt;   [1] 127471197-127472363 1-300,501-700,1068-1167
+#&gt;   [2] 127472364-127473530          1-250,668-1167
+#&gt;   [3] 127473531-127474697                  1-1167
+#&gt;   [4] 127474698-127475864                  1-1167
+#&gt;   [5] 127475865-127477031                  1-1167
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘Biostrings’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    strsplit</span></div><div class='input'><span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
-#&gt;       seqnames                 ranges strand |        name     score
-#&gt;          &lt;Rle&gt;              &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
-#&gt;   [1]     chr7 [127471197, 127472363]      + |        Pos1         0
-#&gt;   [2]     chr7 [127472364, 127473530]      + |        Pos2         2
-#&gt;   [3]     chr7 [127473531, 127474697]      - |        Neg1         0
-#&gt;   [4]     chr9 [127474698, 127475864]      + |        Pos3         5
-#&gt;   [5]     chr9 [127475865, 127477031]      - |        Neg2         5
-#&gt;           itemRgb                  thick                                 blocks
-#&gt;       &lt;character&gt;              &lt;IRanges&gt;                          &lt;IRangesList&gt;
-#&gt;   [1]     #FF0000 [127471197, 127472363] [   1,  300] [ 501,  700] [1068, 1167]
-#&gt;   [2]     #FF0000 [127472364, 127473530]                [  1,  250] [668, 1167]
-#&gt;   [3]     #FF0000 [127473531, 127474697]                              [1, 1167]
-#&gt;   [4]     #FF0000 [127474698, 127475864]                              [1, 1167]
-#&gt;   [5]     #0000FF [127475865, 127477031]                              [1, 1167]
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)
+<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
+#&gt;       seqnames              ranges strand |        name     score     itemRgb
+#&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt; &lt;character&gt;
+#&gt;   [1]     chr7 127471197-127472363      + |        Pos1         0     #FF0000
+#&gt;   [2]     chr7 127472364-127473530      + |        Pos2         2     #FF0000
+#&gt;   [3]     chr7 127473531-127474697      - |        Neg1         0     #FF0000
+#&gt;   [4]     chr9 127474698-127475864      + |        Pos3         5     #FF0000
+#&gt;   [5]     chr9 127475865-127477031      - |        Neg2         5     #0000FF
+#&gt;                     thick                  blocks
+#&gt;                 &lt;IRanges&gt;           &lt;IRangesList&gt;
+#&gt;   [1] 127471197-127472363 1-300,501-700,1068-1167
+#&gt;   [2] 127472364-127473530          1-250,668-1167
+#&gt;   [3] 127473531-127474697                  1-1167
+#&gt;   [4] 127474698-127475864                  1-1167
+#&gt;   [5] 127475865-127477031                  1-1167
 #&gt;   -------
-#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</div><div class='input'><span class='no'>olap</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr7"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>127473000</span>))
+#&gt;   seqinfo: 93 sequences from hg19 genome</div><div class='input'><span class='no'>olap</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr7"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>127473000</span>))
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>,
               <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='no'>olap</span>)
 <span class='co'># bedGraph</span>
 <span class='no'>bg_file</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>test_path</span>, <span class='st'>"test.bedGraph"</span>)
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed_graph</span>(<span class='no'>bg_file</span>)
 <span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
-#&gt;       seqnames               ranges strand |     score
-#&gt;          &lt;Rle&gt;            &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]    chr19 [59102001, 59102300]      * |        -1
-#&gt;   [2]    chr19 [59102301, 59102600]      * |     -0.75
-#&gt;   [3]    chr19 [59102601, 59102900]      * |      -0.5
-#&gt;   [4]    chr19 [59102901, 59103200]      * |     -0.25
-#&gt;   [5]    chr19 [59103201, 59103500]      * |         0
-#&gt;   [6]    chr19 [59103501, 59103800]      * |      0.25
-#&gt;   [7]    chr17 [59103801, 59104100]      * |       0.5
-#&gt;   [8]    chr18 [59104101, 59104400]      * |      0.75
-#&gt;   [9]    chr18 [59104401, 59104700]      * |         1
+#&gt;       seqnames            ranges strand |     score
+#&gt;          &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;   [1]    chr19 59102001-59102300      * |        -1
+#&gt;   [2]    chr19 59102301-59102600      * |     -0.75
+#&gt;   [3]    chr19 59102601-59102900      * |      -0.5
+#&gt;   [4]    chr19 59102901-59103200      * |     -0.25
+#&gt;   [5]    chr19 59103201-59103500      * |         0
+#&gt;   [6]    chr19 59103501-59103800      * |      0.25
+#&gt;   [7]    chr17 59103801-59104100      * |       0.5
+#&gt;   [8]    chr18 59104101-59104400      * |      0.75
+#&gt;   [9]    chr18 59104401-59104700      * |         1
 #&gt;   -------
 #&gt;   seqinfo: 3 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># narrowpeaks</span>
 <span class='no'>np_file</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"demo.narrowPeak.gz"</span>,  <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"rtracklayer"</span>)
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_narrowpeaks</span>(<span class='no'>np_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)
 <span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 6 ranges and 6 metadata columns:
-#&gt;       seqnames                 ranges strand |        name     score
-#&gt;          &lt;Rle&gt;              &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
-#&gt;   [1]    chr19 [   893203,    893659]      * |        &lt;NA&gt;         0
-#&gt;   [2]    chr19 [ 45981393,  45982404]      * |        &lt;NA&gt;         0
-#&gt;   [3]     chr9 [137029517, 137029957]      * |        &lt;NA&gt;         0
-#&gt;   [4]     chr7 [148680558, 148681129]      * |        &lt;NA&gt;         0
-#&gt;   [5]     chr7 [148638202, 148638769]      * |        &lt;NA&gt;         0
-#&gt;   [6]     chr6 [ 52860024,  52860589]      * |        &lt;NA&gt;         0
-#&gt;       signalValue    pValue       qValue      peak
-#&gt;         &lt;numeric&gt; &lt;numeric&gt;    &lt;numeric&gt; &lt;integer&gt;
-#&gt;   [1]      16.705    85.879 3.311255e-82       240
-#&gt;   [2]       7.853    83.114 1.445619e-79       587
-#&gt;   [3]      19.135    78.886 1.954987e-75       208
-#&gt;   [4]      10.418    70.532 3.680973e-67       263
-#&gt;   [5]       8.161    60.506 2.605382e-57       341
-#&gt;   [6]       9.332    54.023 7.130400e-51       349
+#&gt;       seqnames              ranges strand |        name     score signalValue
+#&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;   &lt;numeric&gt;
+#&gt;   [1]    chr19       893203-893659      * |        &lt;NA&gt;         0      16.705
+#&gt;   [2]    chr19   45981393-45982404      * |        &lt;NA&gt;         0       7.853
+#&gt;   [3]     chr9 137029517-137029957      * |        &lt;NA&gt;         0      19.135
+#&gt;   [4]     chr7 148680558-148681129      * |        &lt;NA&gt;         0      10.418
+#&gt;   [5]     chr7 148638202-148638769      * |        &lt;NA&gt;         0       8.161
+#&gt;   [6]     chr6   52860024-52860589      * |        &lt;NA&gt;         0       9.332
+#&gt;          pValue       qValue      peak
+#&gt;       &lt;numeric&gt;    &lt;numeric&gt; &lt;integer&gt;
+#&gt;   [1]    85.879 3.311255e-82       240
+#&gt;   [2]    83.114 1.445619e-79       587
+#&gt;   [3]    78.886 1.954987e-75       208
+#&gt;   [4]    70.532 3.680973e-67       263
+#&gt;   [5]    60.506 2.605382e-57       341
+#&gt;   [6]    54.023   7.1304e-51       349
 #&gt;   -------
-#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</div></pre>
+#&gt;   seqinfo: 93 sequences from hg19 genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -271,5 +281,8 @@ the narrowPeaks spec):</p><ul>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

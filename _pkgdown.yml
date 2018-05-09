@@ -21,20 +21,19 @@ reference:
 - title:  Arithmetic
   contents:
     - starts_with("anchor")
-    - set_width
     - stretch
     - shift_downstream
     - flank_upstream
 
 - title: Core verbs
   contents:
-    - mutate.GenomicRanges
-    - summarise.GenomicRanges
-    - filter.GenomicRanges
-    - arrange.GenomicRanges
-    - select.GenomicRanges
+    - mutate.Ranges
+    - summarise.Ranges
+    - filter.Ranges
+    - arrange.Ranges
+    - select.Ranges
     - unnest.GenomicRanges
-    - group_by.GRanges
+    - group_by.GenomicRanges
     - starts_with("reduce")
     - starts_with("disjoin")
     - compute_coverage
@@ -80,9 +79,9 @@ reference:
 
 - title: Utilities
   contents:
-    - split_groups
     - matches("^n$")
     - as_ranges
+    - set_width
     - reexports
 
 navbar:

@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="GRangesDeferred Class — GRangesDeferred-class" />
 
 <meta property="og:description" content="Enables deferred reading of BAM files by caching
 after performing file operations." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ after performing file operations." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +90,7 @@ after performing file operations." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,16 +98,20 @@ after performing file operations." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>GRangesDeferred Class</h1>
+    
+    <div class="hidden name"><code>ranges-deferred.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Enables deferred reading of BAM files by caching
 after performing file operations.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>GRangesDeferred</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fu'>GRanges</span>(), <span class='no'>operation</span>)
 
@@ -109,7 +121,7 @@ after performing file operations.</p>
 
 <span class='fu'>get_operation</span>(<span class='no'>.data</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -142,7 +154,7 @@ shows what's in the cache.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>read_bam</p>
+    <div class='dont-index'><p>read_bam</p></div>
     
 
   </div>
@@ -173,5 +185,8 @@ shows what's in the cache.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

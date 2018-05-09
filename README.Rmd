@@ -21,7 +21,7 @@ wrangling genomics data from a variety of sources. The package defines a grammar
 set of verbs for developing analysis pipelines based on _Ranges_ objects
 that represent genomic regions:
 
-* Modify genomic regions with the `set_width()` and `stretch()` functions.
+* Modify genomic regions with the `mutate()` and `stretch()` functions.
 * Modify genomic regions while fixing the start/end/center coordinates with the `anchor_` family of functions.
 * Sort genomic ranges with `arrange()`.
 * Modify, subset, and aggregate genomic data with the `mutate()`, 
@@ -41,12 +41,18 @@ For more details on the features of plryanges, read the
 
 # Installation
 
-The package is currently under review for submission in the next release
-of Bioconductor. A development version for R (>= 3.4.2) is available to install
-via github with the following code:
+The package is currently available from Bioconductor. 
+
 ```{r, eval=FALSE}
 source("https://bioconductor.org/biocLite.R")
-biocLite("sa-lee/plyranges@current-r-release")
+biocLite("plyranges")
+```
+
+To install the development version from GitHub:
+
+```{r, eval=FALSE}
+source("https://bioconductor.org/biocLite.R")
+biocLite("sa-lee/plyranges")
 ```
 
 # Quick overview
