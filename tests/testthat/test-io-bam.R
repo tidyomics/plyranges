@@ -36,3 +36,15 @@ test_that("selection works with pipes", {
   expect_true(result$fo_na)
 })
 
+test_that("chop_by works", {
+  fl <- system.file("extdata", "ex1.bam", package="Rsamtools")
+  exp <- DataFrame(intron = Rle(FALSE), n = 3271L)
+  expect_identical(read_bam(fl) %>%
+                     chop_by_introns() %>%
+                     summarise(n = n()), exp)
+  exp <- DataFrame(gaps = Rle(c(FALSE, TRUE)), n = c(3269L, 2L))
+  expect_identical(read_bam(fl) %>%
+                     chop_by_gaps() %>%
+                     summarise(n = n()), exp)
+})
+

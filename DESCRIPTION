@@ -76,6 +76,7 @@ Collate:
     'ranges-arithmetic-shift.R'
     'ranges-arithmetic-stretch.R'
     'ranges-bind.R'
+    'ranges-chop.R'
     'ranges-construct.R'
     'ranges-disjoin.R'
     'ranges-eval.R'
