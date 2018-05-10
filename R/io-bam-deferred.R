@@ -26,7 +26,6 @@ select.GRangesDeferred <- function(.data, ..., .drop_ranges = FALSE) {
                      FUN.VALUE = logical(1))
 
   tags <- all_fields_tags[tags_inx]
-  print(.data@operation$param)
   if (length(tags) > 0 ) bamTag(.data@operation$param) <- tags
 
   fields <- all_fields_tags[!tags_inx]
