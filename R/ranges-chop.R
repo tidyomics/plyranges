@@ -1,3 +1,30 @@
+expand_rng_by_cigar <- function(x, type) {
+  # check for cigar column
+  stopifnot(any(names(mcols(x)) %in% "cigar"))
+  if (type == "gaps") {
+    drop.D.ranges <- TRUE
+  } else {
+    drop.D.ranges <- FALSE
+  }
+  # extract alignment ranges, returns an IRanges list
+  rng <- extractAlignmentRangesOnReference(mcols(x)$cigar, 
+                                           pos=start(x), 
+                                           drop.D.ranges = drop.D.ranges)
+  
+  n <- elementNROWS(rng)
+  seqnames <- BiocGenerics::rep.int(seqnames(x), n)
+  strand <- BiocGenerics::rep.int(strand(x), n)
+  grng <- GRanges(seqnames = seqnames, 
+                  strand = strand, 
+                  ranges = rng@unlistData)
+  
+  seqinfo(grng) <- seqinfo(x)
+  grp <- BiocGenerics::rep.int(seq_along(x), n)
+  mcols(grng) <- mcols(x)[grp,]
+  mcols(grng)[[type]] <- grp
+  group_by(grng, UQ(type))
+}
+
 #' Group a GRanges object by introns or gaps
 #' 
 #' @param x a GenomicRanges object with a cigar string column
@@ -11,18 +38,16 @@
 #' create a new column called "gaps" where TRUE indicates
 #' the alignment has a deletion from the reference or has an intron.  
 #' 
-#' @importFrom S4Vectors Rle
+#' @importFrom BiocGenerics rep.int
+#' @importFrom S4Vectors Rle elementNROWS
+#' @importFrom GenomicAlignments extractAlignmentRangesOnReference
 #' @rdname ranges-chop
 #' @export
 chop_by_introns <- function(x) UseMethod("chop_by_introns")
 
 #' @export
 chop_by_introns.GenomicRanges <- function(x) {
-  # check for cigar column
-  stopifnot(any(names(mcols(x)) %in% "cigar"))
-  # add grouping var
-  mcols(x)$intron <- Rle(grepl("N", mcols(x)$cigar, fixed = TRUE))
-  group_by(x, "intron")
+  expand_rng_by_cigar(x, "introns")
 }
 
 chop_by_introns.DeferredGenomicRanges <- function(x) {
@@ -34,11 +59,7 @@ chop_by_introns.DeferredGenomicRanges <- function(x) {
 chop_by_gaps <- function(x) UseMethod("chop_by_gaps")
 
 chop_by_gaps.GenomicRanges <- function(x) {
-  # check for cigar column
-  stopifnot(any(names(mcols(x)) %in% "cigar"))
-  # add grouping var
-  mcols(x)$gaps <- Rle(grepl("N|D", mcols(x)$cigar))
-  group_by(x, "gaps")
+  expand_rng_by_cigar(x, "gaps")
 }
 
 chop_by_gaps.DeferredGenomicRanges <- function(x) {
