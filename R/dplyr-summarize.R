@@ -1,7 +1,6 @@
 summarize_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
-  on.exit(overscope_clean(overscope))
-  results <- DataFrame(overscope_eval_update(overscope, dots))
+  results <- DataFrame(overscope_eval_update(overscope, dots, FALSE))
   rownames(results) <- NULL
   results
 }

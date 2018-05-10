@@ -33,7 +33,7 @@ test_that("grouped filter checks", {
                      ungroup(),
                    gr0[1:4])
   expect_identical(gr0 %>% group_by(strand) %>%
-                     filter(score > mean(score)) %>%
+                     filter(score > BiocGenerics::mean(score)) %>%
                      ungroup(),
                    gr_gfilter)
 })

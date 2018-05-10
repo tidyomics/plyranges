@@ -1,14 +1,23 @@
 # ranges-eval-utils.R
 # some helpers for 'tidy' NSE on ranges
 
-overscope_ranges <- function(x, envir = parent.frame()) {
+#' Create an overscoped environment from a Ranges object
+#' 
+#' @param x a Ranges object
+#' @param envir the environment to place the Ranges in (default = `parent.frame()`)
+#' 
+#' @details This is the backend for non-standard evaluation in `plyranges`.
+#' 
+#' @seealso [rlang::new_data_mask()], [rlang::eval_tidy()]
+#' 
+#' @export
+overscope_ranges <- function(x, envir = rlang::base_env()) {
   UseMethod("overscope_ranges")
 }
 
 overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
   x_env <- as.env(x, envir)
-  os <- new_overscope(x_env, top = parent.env(x_env))
-  return(os)
+  new_data_mask(x_env, top = parent.env(x_env))
 }
 
 overscope_ranges.DelegatingGenomicRanges <- function(x, envir = parent.frame()) {
@@ -21,19 +30,18 @@ overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
   x_env <- as.env(x@delegate, 
                   envir, 
                   tform = function(col) unname(IRanges::extractList(col, x@inx)))
-  os <- new_overscope(x_env, top = parent.env(x_env))
-  os
+  new_data_mask(x_env, top = parent.env(x_env))
 }
 
 overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
 
-#' @importFrom rlang env_bind := new_overscope overscope_eval_next
+
+#' @importFrom rlang env_bind := new_data_mask eval_tidy
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
-
   names(update) <- names(dots)
   for (i in seq_along(update)) {
-    update[[i]] <- overscope_eval_next(overscope, dots[[i]])
+    update[[i]] <- eval_tidy(dots[[i]], data = overscope)
     # sometimes we want to compute on previously constructed columns
     # we can do this by binding the evaluated expression to
     # the overscope environment
