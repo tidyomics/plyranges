@@ -1,13 +1,11 @@
 # filter.R
 filter_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
-
-  r <- lapply(dots, overscope_eval_next, overscope = overscope)
+  r <- overscope_eval_update(overscope, dots, bind_envir = FALSE)
   on.exit(overscope_clean(overscope))
   r <- Reduce(`&`, r)
-
-  if (!is.logical(r)) {
-    if (!is(r, "Rle")) {
+  if (!(is.logical(r) || is(r, "LogicalList"))) {
+    if (!(is(r, "Rle") || is(r, "RleList"))) {
       stop("Argument to filter condition must evaluate to a logical vector or logical-Rle")
     }
   }
@@ -17,11 +15,8 @@ filter_rng <- function(.data, dots) {
 
 filter_grp <- function(.data, ...) {
     dots <- quos(...)
-    inx_update <- lapply(.data@inx, function(i) {
-        x <- .data@delegate[i]
-        i[filter_rng(x, dots)]
-       })
-    inx_update <- as(inx_update, "IntegerList")
+    ii <- filter_rng(.data, dots)
+    inx_update <- .data@inx[ii]
     rng <- .data@delegate[sort(unlist(inx_update))]
     new(class(.data), 
         delegate = rng,

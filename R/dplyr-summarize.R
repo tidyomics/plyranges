@@ -1,7 +1,9 @@
 summarize_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
-  DataFrame(overscope_eval_update(overscope, dots))
+  results <- DataFrame(overscope_eval_update(overscope, dots))
+  rownames(results) <- NULL
+  results
 }
 
 rename_dots <- function(dots) {
@@ -64,17 +66,7 @@ summarise.DelegatingIntegerRanges <- function(.data, ...) {
 summarise.GroupedGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
   dots <- rename_dots(dots)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  groups_summary <- as(
-    lapply(
-          extractList(delegate, inx),
-          summarize_rng, 
-          dots
-          ),
-          "List"
-  )
-  cbind(mcols(inx), unlist(groups_summary, use.names = FALSE))
+  cbind(mcols(.data@inx), summarize_rng(.data, dots))
 }
 
 #' @method summarise GroupedIntegerRanges

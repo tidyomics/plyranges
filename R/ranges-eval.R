@@ -17,6 +17,16 @@ overscope_ranges.DelegatingGenomicRanges <- function(x, envir = parent.frame()) 
 
 overscope_ranges.DelegatingIntegerRanges <- overscope_ranges.DelegatingGenomicRanges
 
+overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
+  x_env <- as.env(x@delegate, 
+                  envir, 
+                  tform = function(col) unname(IRanges::extractList(col, x@inx)))
+  os <- new_overscope(x_env, top = parent.env(x_env))
+  os
+}
+
+overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
+
 #' @importFrom rlang env_bind := new_overscope overscope_eval_next
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
@@ -77,7 +87,12 @@ n <- function() {
   if (is(.data, "try-error")) {
     stop("This function should not be called directly.")
   }
-  return(length(.data))
+  
+  if (is(.data, "List")) {
+    lengths(.data)
+  } else {
+    length(.data)
+  }
 }
 
 # dplyr's join syntax uses a function called tbl_vars to get
