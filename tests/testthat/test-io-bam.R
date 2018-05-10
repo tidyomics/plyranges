@@ -28,8 +28,8 @@ test_that("selection works with pipes", {
   result <- read_bam(fl) %>% 
     select(NM) %>% 
     summarise(nm_sum = sum(NM))
-  
   expect_identical(result, exp)
+  
   result <- read_bam(fl) %>% 
     select(FO) %>% 
     summarise(fo_na = all(is.na(FO)))
