@@ -15,28 +15,28 @@ read_bam(file, index = file, paired = FALSE)
 or single end (FALSE).}
 }
 \value{
-A GRangesDeferred object
+A DeferredGenomicRanges object
 }
 \description{
 Read a BAM file
 }
 \details{
 Reading a BAM file is deferred until an action
-such as selecting tags or filtering by overlapping ranges
-or filtering by tags is performed on it. If paired is set to
-TRUE, when alignments are load, the GRanges has two additional
+such as using \code{summarise()} or \code{mutate()}. If paired is set to
+TRUE, when alignments are loaded, the GRanges has two additional
 columns called read_pair_id and read_pair_group corresponding
-to paired reads (by default paired = TRUE will only select
-reads that are proper pairs).
+to paired reads and is grouped by the read_pair_group.
 
-For \code{select} valid columns are the either the fields of the
+For \code{select()} valid columns are the either the fields of the
 BAM file. Valid entries are qname (QNAME), flag (FLAG),
 rname (RNAME), strand, pos (POS), qwidth (width of query),
 mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
 (TLEN), seq (SEQ), and qual (QUAL). Any two character
 tags in the BAM file are also valid.
 
-For \code{filter} the following fields are valid
+For \code{filter()} the following fields are valid, to select the FALSE option
+place \code{!} in front of the field:
+
 is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
 is_proper_pair Select either improperly paired (FALSE) or properly
 paired (TRUE) reads. This is dependent on the alignment software used.
@@ -59,7 +59,6 @@ duplicated (TRUE). This may represent reads that are PCR or
 optical duplicates.
 }
 \examples{
-
 if (require(pasillaBamSubset)) {
    bamfile <- untreated1_chr4()
    # nothing is read until an action has been performed
@@ -67,12 +66,9 @@ if (require(pasillaBamSubset)) {
    # define a region of interest
    roi <- data.frame(seqnames = "chr4", start = 5e5, end = 7e5) \%>\%
             as_granges()
-   # add map quality scores
-   rng_mapq <- read_bam(bamfile) \%>\% select(mapq)
-   print(rng_mapq)
-   # filter_by_ovleraps will only read alignments if they overlap roi
-   by_olap <- read_bam(bamfile) \%>\% filter_by_overlaps(roi)
-   print(by_olap)
+   rng <- read_bam(bamfile) \%>\% 
+            select(mapq) \%>\%
+            filter_by_overlaps(roi)
 }
 
 }
