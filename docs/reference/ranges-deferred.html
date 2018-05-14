@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GRangesDeferred Class — GRangesDeferred-class • plyranges</title>
+<title>DeferredGenomiRanges objects — DeferredGenomicRanges-class • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,10 +28,10 @@
 
 
 
-<meta property="og:title" content="GRangesDeferred Class — GRangesDeferred-class" />
+<meta property="og:title" content="DeferredGenomiRanges objects — DeferredGenomicRanges-class" />
 
-<meta property="og:description" content="Enables deferred reading of BAM files by caching
-after performing file operations." />
+<meta property="og:description" content="Enables deferred reading of files (currently only BAM files) by
+caching results after a plyranges verb is called." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -59,7 +59,7 @@ after performing file operations." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
       </span>
     </div>
 
@@ -101,71 +101,38 @@ after performing file operations." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>GRangesDeferred Class</h1>
+    <h1>DeferredGenomiRanges objects</h1>
     
     <div class="hidden name"><code>ranges-deferred.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Enables deferred reading of BAM files by caching
-after performing file operations.</p>
+    <p>Enables deferred reading of files (currently only BAM files) by
+caching results after a plyranges verb is called.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>GRangesDeferred</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='fu'>GRanges</span>(), <span class='no'>operation</span>)
+        
+    <h2 class="hasAnchor" id="slots"><a class="anchor" href="#slots"></a>Slots</h2>
 
-<span class='fu'>has_cache_contents</span>(<span class='no'>.data</span>)
-
-<span class='fu'>get_cache</span>(<span class='no'>.data</span>)
-
-<span class='fu'>get_operation</span>(<span class='no'>.data</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>cache</th>
-      <td><p>a GRanges object</p></td>
-    </tr>
-    <tr>
-      <th>operation</th>
-      <td><p>an environment containing operations to perform
-to generate the cache.</p></td>
-    </tr>
-    <tr>
-      <th>.data</th>
-      <td><p>a GRangesDeferred object</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a GRangesDeferred object.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>To see what is loaded in the cache use
-<code>get_cache</code> and to see the file operations being performed
-use <code>get_operation</code>. To check whether the cache is full
-use <code>has_cache_contents</code>.
-By default the <code>show</code> method for a GRangesDeferred object
-shows what's in the cache.</p>
+    <dl class='dl-horizontal'>
+<dt><code>delegate</code></dt><dd><p>a GenomicRanges object to be cached</p></dd>
+    <dt><code>ops</code></dt><dd><p>A FileOperator object</p></dd>
+</dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>read_bam</p></div>
+    <div class='dont-index'><p><code><a href='io-bam-read.html'>read_bam()</a></code></p></div>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
+      <li><a href="#slots">Slots</a></li>
 
       <li><a href="#see-also">See also</a></li>
           </ul>

@@ -55,7 +55,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
       </span>
     </div>
 
@@ -164,6 +164,12 @@
           <p><code><a href="flank-ranges.html">flank_left()</a></code> <code><a href="flank-ranges.html">flank_right()</a></code> <code><a href="flank-ranges.html">flank_upstream()</a></code> <code><a href="flank-ranges.html">flank_downstream()</a></code> </p>
         </td>
         <td><p>Generate flanking regions</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="ranges-chop.html">chop_by_introns()</a></code> <code><a href="ranges-chop.html">chop_by_gaps()</a></code> </p>
+        </td>
+        <td><p>Group a GRanges object by introns or gaps</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -361,12 +367,6 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="ranges-deferred.html">GRangesDeferred()</a></code> <code><a href="ranges-deferred.html">has_cache_contents()</a></code> <code><a href="ranges-deferred.html">get_cache()</a></code> <code><a href="ranges-deferred.html">get_operation()</a></code> </p>
-        </td>
-        <td><p>GRangesDeferred Class</p></td>
-      </tr><tr>
-        <!--  -->
-        <td>
           <p><code><a href="io-bed-read.html">read_bed()</a></code> <code><a href="io-bed-read.html">read_bed_graph()</a></code> <code><a href="io-bed-read.html">read_narrowpeaks()</a></code> </p>
         </td>
         <td><p>Read a BED or BEDGraph file</p></td>
@@ -412,6 +412,18 @@
           <p><code><a href="io-gff-write.html">write_gff()</a></code> <code><a href="io-gff-write.html">write_gff1()</a></code> <code><a href="io-gff-write.html">write_gff2()</a></code> <code><a href="io-gff-write.html">write_gff3()</a></code> </p>
         </td>
         <td><p>Write a GFF(123) file</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="ranges-class.html">FileOperator-class</a></code> </p>
+        </td>
+        <td><p>An abstract class to represent operations performed over a file</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="ranges-deferred.html">DeferredGenomicRanges-class</a></code> </p>
+        </td>
+        <td><p>DeferredGenomiRanges objects</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -438,6 +450,12 @@
           <p><code><a href="ranges-setters.html">set_width()</a></code> <code><a href="ranges-setters.html">set_start()</a></code> <code><a href="ranges-setters.html">set_end()</a></code> <code><a href="ranges-setters.html">set_seqnames()</a></code> <code><a href="ranges-setters.html">set_strand()</a></code> </p>
         </td>
         <td><p>Functional setters for Ranges objects</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="overscope_ranges.html">overscope_ranges()</a></code> </p>
+        </td>
+        <td><p>Create an overscoped environment from a Ranges object</p></td>
       </tr><tr>
         <!--  -->
         <td>

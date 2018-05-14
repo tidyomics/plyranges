@@ -1,3 +1,7 @@
+# plyranges 1.1.2 (14/05/2018)
+
+* speed up of `group_by` methods
+* refactor of BAM reading utilities
 
 # plyranges 0.99.10 (30/04/2018)
 

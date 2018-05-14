@@ -24,6 +24,7 @@ reference:
     - stretch
     - shift_downstream
     - flank_upstream
+    - chop_by_introns
 
 - title: Core verbs
   contents:
@@ -72,16 +73,19 @@ reference:
 - title: Reading and Writing Genomics Data
   contents:
     - ends_with("bam")
-    - GRangesDeferred
     - ends_with("bed")
     - ends_with("wig")
     - ends_with("gff")
+    - FileOperator-class
+    - DeferredGenomicRanges-class
+
 
 - title: Utilities
   contents:
     - matches("^n$")
     - as_ranges
     - set_width
+    - overscope_ranges
     - reexports
 
 navbar:
