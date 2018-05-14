@@ -42,18 +42,36 @@ valid_flag_filters <- function() {
   )
 }
 
+#' @importFrom Rsamtools bamMapqFilter<-
 filter.BamFileOperator <- function(.data, ...) {
   dots <- quos(...)
   filters <- unlist(valid_flag_filters())
   
   flags <- unlist(lapply(dots, quo_name))
   
-  args <- !grepl("^!", flags)
-  names(args) <- gsub("^!", "", flags)
+  # mapq filter 
+  mapq_filter <- grepl("mapq", flags)
+  mapq_args <- flags[mapq_filter]
+  if (length(mapq_args) > 0) {
+    mapq_vals <- as.integer(sub(".*>", "", mapq_args))
+    if (any(is.na(mapq_vals))) {
+      message("mapq filter only accepts greater than statements")
+    }
+    mapq_vals <- mapq_vals[!is.na(mapq_vals)]
+    if (length(mapq_vals) > 1) {
+      message("mapq filter only accepts singular mapq filters; taking first
+              argument")
+    } 
+    bamMapqFilter(.data@param) <- mapq_vals
+  }
+  
+  # flag filters
+  args <- !grepl("^!", flags[!mapq_filter])
+  names(args) <- gsub("^!", "", flags[!mapq_filter])
   
   valid_flags <- intersect(names(filters), names(args))
   
-  if (length(valid_flags) == 0L) {
+  if (length(valid_flags) == 0L & length(mapq_args) == 0L) {
     stop("no valid flags found in filter", call. = FALSE)
   }
   

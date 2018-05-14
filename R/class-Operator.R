@@ -1,9 +1,20 @@
 # abstract class to represent operations 
 # performed over a File
+
+#' An abstract class to represent operations performed over a file
+#' 
+#' @details This class is used internally by DeferredGenomicRanges objects.
+#' Currently, this class is only implemented for bam files (as a 
+#' BamFileOperator) but will eventually be extended to the other avaialable
+#' readers.
+#' 
+#' @rdname ranges-class
+#' @export
 setClass("FileOperator", contains = "VIRTUAL")
 
 #' @importFrom Rsamtools BamFile ScanBamParam 
 #' @export
+#' @rdname ranges-class
 setClass("BamFileOperator", 
          slots = c(
            input = "BamFile",

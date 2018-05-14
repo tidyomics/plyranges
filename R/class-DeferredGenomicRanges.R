@@ -8,7 +8,7 @@
 #' @slot delegate a GenomicRanges object to be cached
 #' @slot ops  A FileOperator object
 #' 
-#' @seealso read_bam
+#' @seealso `read_bam()`
 #' @export
 #' @rdname ranges-deferred
 setClass("DeferredGenomicRanges", 
@@ -22,6 +22,7 @@ new_DeferredGenomicRanges <- function(delegate, ops) {
 
 is_empty_delegate <- function(.data) length(.data@delegate) == 0L
 
+# make a generic accessor for delegating Ranges?
 load_delegate <-   function(.data) {
   if (is_empty_delegate(.data)) {
     load_genomic_file(.data@ops)

@@ -17,5 +17,5 @@ caching results after a plyranges verb is called.
 }}
 
 \seealso{
-read_bam
+\code{read_bam()}
 }
