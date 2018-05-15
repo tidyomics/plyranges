@@ -49,7 +49,7 @@ chop_by_introns <- function(x) UseMethod("chop_by_introns")
 chop_by_introns.GenomicRanges <- function(x) {
   expand_rng_by_cigar(x, "introns")
 }
-
+#' @export
 chop_by_introns.DeferredGenomicRanges <- function(x) {
   chop_by_introns(load_delegate(x))
 }
@@ -58,10 +58,12 @@ chop_by_introns.DeferredGenomicRanges <- function(x) {
 #' @export
 chop_by_gaps <- function(x) UseMethod("chop_by_gaps")
 
+#' @export
 chop_by_gaps.GenomicRanges <- function(x) {
   expand_rng_by_cigar(x, "gaps")
 }
 
+#' @export
 chop_by_gaps.DeferredGenomicRanges <- function(x) {
   chop_by_gaps(load_delegate(x))
 }

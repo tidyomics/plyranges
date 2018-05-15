@@ -11,7 +11,7 @@
 #' @seealso [rlang::new_data_mask()], [rlang::eval_tidy()]
 #' 
 #' @export
-overscope_ranges <- function(x, envir = rlang::base_env()) {
+overscope_ranges <- function(x, envir = parent.frame()) {
   UseMethod("overscope_ranges")
 }
 
@@ -90,17 +90,15 @@ ranges_vars <- function(x) {
 n <- function() {
   up_env <- parent.frame()
   parent_env <- rlang::env_parent(up_env)
-  .data <- try(rlang::env_get(parent_env, "start"),
-               silent = TRUE)
-  if (is(.data, "try-error")) {
-    stop("This function should not be called directly.")
+  if (rlang::env_has(parent_env, "start")) {
+    .data <- rlang::env_get(parent_env, "start")
+    if (is(.data, "IntegerList")) {
+      return(BiocGenerics::lengths(.data))
+    } else {
+      return(length(.data))
+    }
   }
-  
-  if (is(.data, "List")) {
-    lengths(.data)
-  } else {
-    length(.data)
-  }
+  stop("This function should not be called directly")
 }
 
 # dplyr's join syntax uses a function called tbl_vars to get
