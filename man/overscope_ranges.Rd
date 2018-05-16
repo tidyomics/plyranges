@@ -4,7 +4,7 @@
 \alias{overscope_ranges}
 \title{Create an overscoped environment from a Ranges object}
 \usage{
-overscope_ranges(x, envir = rlang::base_env())
+overscope_ranges(x, envir = parent.frame())
 }
 \arguments{
 \item{x}{a Ranges object}

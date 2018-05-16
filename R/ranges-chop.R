@@ -6,7 +6,7 @@ expand_rng_by_cigar <- function(x, type) {
   } else {
     drop.D.ranges <- FALSE
   }
-  # extract alignment ranges, returns an IRanges list
+  # extract alignment ranges, returns an IRangesList
   rng <- extractAlignmentRangesOnReference(mcols(x)$cigar, 
                                            pos=start(x), 
                                            drop.D.ranges = drop.D.ranges)
