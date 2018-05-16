@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
       </span>
     </div>
 
@@ -174,7 +174,7 @@ optical duplicates.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>pasillaBamSubset</span>)) {
-   <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'>untreated1_chr4</span>()
+   <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/pasillaBamSubset/topics/pasillaBamSubset-package'>untreated1_chr4</a></span>()
    <span class='co'># nothing is read until an action has been performed</span>
    <span class='fu'>print</span>(<span class='fu'>read_bam</span>(<span class='no'>bamfile</span>))
    <span class='co'># define a region of interest</span>
@@ -183,7 +183,11 @@ optical duplicates.</p>
    <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span>
             <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mapq</span>) <span class='kw'>%&gt;%</span>
             <span class='fu'><a href='ranges-filter-overlaps.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called ‘pasillaBamSubset’</span></div><div class='input'>
+}</div><div class='output co'>#&gt; DeferredGenomicRanges object with 0 ranges and 0 metadata columns:
+#&gt;    seqnames    ranges strand
+#&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   -------
+#&gt;   seqinfo: no sequences</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

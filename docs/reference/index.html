@@ -55,7 +55,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
       </span>
     </div>
 
@@ -110,6 +110,20 @@
     <tbody>
       <tr>
         <th colspan="2">
+          <h2 id="section-about-plyranges" class="hasAnchor"><a href="#section-about-plyranges" class="anchor"></a>About plyranges</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plyranges-package.html">plyranges-package</a></code> </p>
+        </td>
+        <td><p>plyranges: a grammar of genomic data manipulation</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
           <h2 id="section-ranges" class="hasAnchor"><a href="#section-ranges" class="anchor"></a>Ranges</h2>
           <p class="section-desc"></p>
         </th>
@@ -132,6 +146,12 @@
           <p><code><a href="ranges-bind.html">bind_ranges()</a></code> </p>
         </td>
         <td><p>Combine Ranges by concatentating them together</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="ranges-tile.html">tile_ranges()</a></code> <code><a href="ranges-tile.html">slide_ranges()</a></code> </p>
+        </td>
+        <td><p>Slide or tile over a Ranges object</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -181,13 +201,13 @@
       <tr>
         <!--  -->
         <td>
-          <p><code><a href="mutate-ranges.html">mutate(<i>&lt;Ranges&gt;</i>)</a></code> <code><a href="mutate-ranges.html">mutate(<i>&lt;AnchoredIntegerRanges&gt;</i>)</a></code> <code><a href="mutate-ranges.html">mutate(<i>&lt;AnchoredGenomicRanges&gt;</i>)</a></code> <code><a href="mutate-ranges.html">mutate(<i>&lt;DelegatingGenomicRanges&gt;</i>)</a></code> <code><a href="mutate-ranges.html">mutate(<i>&lt;DelegatingIntegerRanges&gt;</i>)</a></code> <code><a href="mutate-ranges.html">mutate(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="mutate-ranges.html">mutate(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> </p>
+          <p><code><a href="mutate-ranges.html">mutate(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Modify a Ranges object</p></td>
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="ranges-summarise.html">summarise(<i>&lt;Ranges&gt;</i>)</a></code> <code><a href="ranges-summarise.html">summarise(<i>&lt;DelegatingGenomicRanges&gt;</i>)</a></code> <code><a href="ranges-summarise.html">summarise(<i>&lt;DelegatingGenomicRanges&gt;</i>)</a></code> <code><a href="ranges-summarise.html">summarise(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="ranges-summarise.html">summarise(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> </p>
+          <p><code><a href="ranges-summarise.html">summarise(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Aggregate a Ranges object</p></td>
       </tr><tr>
@@ -217,7 +237,7 @@
       </tr><tr>
         <!--  -->
         <td>
-          <p><code><a href="group_by-ranges.html">group_by(<i>&lt;GenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">group_by(<i>&lt;IntegerRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">ungroup(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">ungroup(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">groups(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">group_vars(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">groups(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">group_vars(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> </p>
+          <p><code><a href="group_by-ranges.html">group_by(<i>&lt;GenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">ungroup(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">groups(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">groups(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Group a Ranges by one or more variables</p></td>
       </tr><tr>
@@ -470,6 +490,7 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#section-about-plyranges">About plyranges</a></li>
       <li><a href="#section-ranges">Ranges</a></li>
       <li><a href="#section-arithmetic">Arithmetic</a></li>
       <li><a href="#section-core-verbs">Core verbs</a></li>

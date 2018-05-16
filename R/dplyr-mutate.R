@@ -128,17 +128,14 @@ mutate.Ranges <- function(.data, ...) {
   mutate_rng(.data, dots)
 }
 
-#' @rdname mutate-ranges
 #' @method mutate AnchoredIntegerRanges
 #' @export
 mutate.AnchoredIntegerRanges <- mutate.Ranges
 
-#' @rdname mutate-ranges
 #' @method mutate AnchoredGenomicRanges
 #' @export
 mutate.AnchoredGenomicRanges <- mutate.Ranges
 
-#' @rdname mutate-ranges
 #' @method mutate DelegatingGenomicRanges
 #' @export
 mutate.DelegatingGenomicRanges <- function(.data, ...) {
@@ -148,19 +145,16 @@ mutate.DelegatingGenomicRanges <- function(.data, ...) {
   return(.data)
 }
 
-#' @rdname mutate-ranges
 #' @method mutate DelegatingIntegerRanges
 #' @export
 mutate.DelegatingIntegerRanges <- mutate.DelegatingGenomicRanges
 
-#' @rdname mutate-ranges
 #' @method mutate GroupedGenomicRanges
 #' @export
 mutate.GroupedGenomicRanges <- function(.data, ...) {
   mutate_grp(.data, ...)
 }
 
-#' @rdname mutate-ranges
 #' @method mutate GroupedIntegerRanges
 #' @export
 mutate.GroupedIntegerRanges <- mutate.GroupedGenomicRanges

@@ -38,7 +38,6 @@ summarise.Ranges <- function(.data, ...) {
 }
 
 #' @method summarise DelegatingGenomicRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.DelegatingGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
@@ -48,7 +47,6 @@ summarise.DelegatingGenomicRanges <- function(.data, ...) {
 }
 
 #' @method summarise DelegatingGenomicRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.DelegatingIntegerRanges <- function(.data, ...) {
   dots <- quos(...)
@@ -60,7 +58,6 @@ summarise.DelegatingIntegerRanges <- function(.data, ...) {
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
 #' @method summarise GroupedGenomicRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.GroupedGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
@@ -69,6 +66,5 @@ summarise.GroupedGenomicRanges <- function(.data, ...) {
 }
 
 #' @method summarise GroupedIntegerRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.GroupedIntegerRanges <- summarise.GroupedGenomicRanges

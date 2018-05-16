@@ -2,27 +2,9 @@
 % Please edit documentation in R/dplyr-mutate.R
 \name{mutate.Ranges}
 \alias{mutate.Ranges}
-\alias{mutate.AnchoredIntegerRanges}
-\alias{mutate.AnchoredGenomicRanges}
-\alias{mutate.DelegatingGenomicRanges}
-\alias{mutate.DelegatingIntegerRanges}
-\alias{mutate.GroupedGenomicRanges}
-\alias{mutate.GroupedIntegerRanges}
 \title{Modify a Ranges object}
 \usage{
 \method{mutate}{Ranges}(.data, ...)
-
-\method{mutate}{AnchoredIntegerRanges}(.data, ...)
-
-\method{mutate}{AnchoredGenomicRanges}(.data, ...)
-
-\method{mutate}{DelegatingGenomicRanges}(.data, ...)
-
-\method{mutate}{DelegatingIntegerRanges}(.data, ...)
-
-\method{mutate}{GroupedGenomicRanges}(.data, ...)
-
-\method{mutate}{GroupedIntegerRanges}(.data, ...)
 }
 \arguments{
 \item{.data}{a \code{Ranges} object}

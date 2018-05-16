@@ -5,18 +5,23 @@ template:
 authors:
   Stuart Lee:
     href: http://stuartlee.org
-  Di Cook:
-    href: http://dicook.org
   Michael Lawrence:
     href: https://github.com/lawremi
+  Di Cook:
+    href: http://dicook.org
 
 reference:
+- title: About plyranges
+  contents:
+    - plyranges-package
+
 - title: Ranges
   contents:
     - as_granges
     - as_iranges
     - interweave
     - bind_ranges
+    - tile_ranges
 
 - title:  Arithmetic
   contents:

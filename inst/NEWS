@@ -1,3 +1,12 @@
+# plyranges 1.1.5 (15/05/2018)
+
+* added tile/window methods
+* fixed up documentation
+
+# plyranges 1.1.3 (14/05/2018)
+
+* doc updates
+
 # plyranges 1.1.2 (14/05/2018)
 
 * speed up of `group_by` methods
