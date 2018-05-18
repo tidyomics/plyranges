@@ -33,7 +33,26 @@ test_that("grouped filter checks", {
                      ungroup(),
                    gr0[1:4])
   expect_identical(gr0 %>% group_by(strand) %>%
-                     filter(score > BiocGenerics::mean(score)) %>%
+                     filter(score > mean(score)) %>%
                      ungroup(),
                    gr_gfilter)
+})
+
+# see https://github.com/sa-lee/plyranges/issues/36
+test_that("using `::` works", {
+  expect_identical(gr0 %>% group_by(strand) %>%
+                     filter(score > mean(score)) %>%
+                     ungroup(),
+                   gr_gfilter)
+  gr <- data.frame(seqnames = c("chr1", "chr2", "chr2", "chr1", "chr2"),
+                   start = 1:5,
+                   width = 5) %>%
+    as_granges()
+  expect_identical(filter(gr, seqnames %in% c("chr1", "chr2")),
+                   gr)
+  expect_identical(gr %>% 
+                     group_by(seqnames) %>% 
+                     filter(seqnames %in% c("chr1", "chr2")) %>%
+                     ungroup(),
+                   gr)
 })

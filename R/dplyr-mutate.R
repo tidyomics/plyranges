@@ -14,12 +14,11 @@ mutate_mcols <- function(.data, .mutated) {
 
   if (!all(idx_mcols)) {
     if (is.null(mcols(.data))) {
-      mcols(.data) <- do.call("DataFrame", .mutated[!idx_mcols])
+      mcols(.data) <- S4Vectors::DataFrame(.mutated[!idx_mcols])
     } else {
-      mcols(.data) <- do.call("DataFrame",
-                              list(mcols(.data), .mutated[!idx_mcols]))
+      mcols(.data) <- S4Vectors::DataFrame(list(mcols(.data), 
+                                                .mutated[!idx_mcols]))
     }
-
   }
 
   .data
@@ -52,7 +51,6 @@ mutate_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
   .mutated <- overscope_eval_update(overscope, dots)
-
   .data <- mutate_core(.data, .mutated)
   mutate_mcols(.data, .mutated)
 }

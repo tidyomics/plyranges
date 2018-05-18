@@ -1,6 +1,36 @@
 # ranges-eval-utils.R
 # some helpers for 'tidy' NSE on ranges
 
+are_bioc_pkgs_scoped <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
+  all(vapply(paste0("package:", pkgs), 
+             rlang::is_scoped, 
+             logical(1)))
+}
+
+#' @importFrom methods getGeneric getGenerics
+bioc_generics <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
+  pkgs <- lapply(pkgs, asNamespace)
+  generics <-  getGenerics(pkgs)
+  fn <- mapply(getGeneric, 
+               f = generics@.Data, 
+               package = generics@package, 
+               SIMPLIFY = FALSE)
+  Filter(function(x) {
+    fun = try(x@default, silent = TRUE)
+    if (is(fun, "try-error")) FALSE
+    !is.primitive(fun)
+  },
+  fn)
+}
+
+scope_plyranges <- function(env) {
+  generics <- bioc_generics()
+  nms <- setdiff(names(generics), c(ls(env), ls(parent.env(env))))
+  generics <- generics[nms]
+  rlang::env_bind(env, UQS(generics))
+  env
+}
+
 #' Create an overscoped environment from a Ranges object
 #' 
 #' @param x a Ranges object
@@ -16,8 +46,9 @@ overscope_ranges <- function(x, envir = parent.frame()) {
 }
 
 overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
-  x_env <- as.env(x, envir)
-  new_data_mask(x_env, top = parent.env(x_env))
+  env <- as.env(x, envir)
+  env <- scope_plyranges(env)
+  new_data_mask(env, top = parent.env(env))
 }
 
 overscope_ranges.DelegatingGenomicRanges <- function(x, envir = parent.frame()) {
@@ -27,19 +58,22 @@ overscope_ranges.DelegatingGenomicRanges <- function(x, envir = parent.frame()) 
 overscope_ranges.DelegatingIntegerRanges <- overscope_ranges.DelegatingGenomicRanges
 
 overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
-  x_env <- as.env(x@delegate, 
+  env <- as.env(x@delegate, 
                   envir, 
                   tform = function(col) unname(IRanges::extractList(col, x@inx)))
-  new_data_mask(x_env, top = parent.env(x_env))
+  env <- scope_plyranges(env)
+  new_data_mask(env, top = parent.env(env))
 }
 
 overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
+
 
 
 #' @importFrom rlang env_bind := new_data_mask eval_tidy
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
   names(update) <- names(dots)
+
   for (i in seq_along(update)) {
     update[[i]] <- eval_tidy(dots[[i]], data = overscope)
     # sometimes we want to compute on previously constructed columns
@@ -49,7 +83,6 @@ overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
       new_col <- names(dots)[[i]]
       rlang::env_bind(overscope, !!new_col := update[[i]])
     }
-
   }
   return(update)
 }
@@ -106,4 +139,27 @@ n <- function() {
 # as a data.frame in a join.
 tbl_vars.GenomicRanges <- function(x) {
   ranges_vars(x)
+}
+
+
+detach_depends <- function() {
+  sapply(paste0("package:", 
+                c("GenomicRanges",
+                  "GenomeInfoDb",
+                  "IRanges",
+                  "S4Vectors",
+                  "BiocGenerics")),
+         detach, 
+         character.only = TRUE)
+}
+
+reattach_depends <- function() {
+  sapply(c("GenomicRanges",
+           "GenomeInfoDb",
+           "IRanges",
+           "S4Vectors",
+           "BiocGenerics"),
+         library,
+         character.only = TRUE,
+         quietly = TRUE)
 }

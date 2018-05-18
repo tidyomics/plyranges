@@ -18,11 +18,11 @@ test_that("summarise evaluates correctly", {
   gdf <- DataFrame(grp = c("A", "B"), mean = c(3.6, 6), sum = c(18L, 30L))
   expect_equal(ir1 %>% 
                  group_by(grp) %>% 
-                 summarise(mean = BiocGenerics::mean(score), sum = sum(score)), 
+                 summarise(mean = mean(score), sum = sum(score)), 
                gdf)
   expect_equal(gr1 %>% 
                  group_by(grp) %>% 
-                 summarise(mean = BiocGenerics::mean(score), sum = sum(score)), 
+                 summarise(mean = mean(score), sum = sum(score)), 
                gdf)
 
   gdf <- DataFrame(grp = c("A", "B"), n = c(5L,5L))
