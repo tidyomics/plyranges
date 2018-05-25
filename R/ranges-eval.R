@@ -23,12 +23,16 @@ bioc_generics <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
   fn)
 }
 
-scope_plyranges <- function(env) {
-  generics <- bioc_generics()
-  nms <- setdiff(names(generics), c(ls(env), ls(parent.env(env))))
-  generics <- generics[nms]
-  rlang::env_bind(env, UQS(generics))
-  env
+scope_plyranges <- function(env, generics) {
+  
+  if (!identical(env, rlang::empty_env())) {
+    nms <- setdiff(names(generics), c(ls(env), ls(parent.env(env))))
+    generics <- generics[nms]
+  }
+    
+  child <- rlang::child_env(env,
+                            UQS(generics))
+  child
 }
 
 #' Create an overscoped environment from a Ranges object
@@ -47,7 +51,6 @@ overscope_ranges <- function(x, envir = parent.frame()) {
 
 overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
   env <- as.env(x, envir)
-  env <- scope_plyranges(env)
   new_data_mask(env, top = parent.env(env))
 }
 
@@ -61,7 +64,6 @@ overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
   env <- as.env(x@delegate, 
                   envir, 
                   tform = function(col) unname(IRanges::extractList(col, x@inx)))
-  env <- scope_plyranges(env)
   new_data_mask(env, top = parent.env(env))
 }
 
@@ -73,9 +75,12 @@ overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
   names(update) <- names(dots)
-
+  generics <- bioc_generics()
   for (i in seq_along(update)) {
-    update[[i]] <- eval_tidy(dots[[i]], data = overscope)
+    quo <- dots[[i]]
+    qenv <- rlang::quo_get_env(quo)
+    quo <- rlang::quo_set_env(quo, scope_plyranges(qenv, generics))
+    update[[i]] <- eval_tidy(quo, data = overscope)
     # sometimes we want to compute on previously constructed columns
     # we can do this by binding the evaluated expression to
     # the overscope environment
