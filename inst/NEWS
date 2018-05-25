@@ -1,4 +1,10 @@
-# plyranges 1.1.5 (15/05/2018)
+
+# plyranges 1.1.5 (25/05/2018)
+
+* enable write generics to be called upon invoking plyranges functions
+without loading plyranges
+
+# plyranges 1.1.4 (15/05/2018)
 
 * added tile/window methods
 * fixed up documentation
