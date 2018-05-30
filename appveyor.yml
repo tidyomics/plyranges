@@ -23,7 +23,7 @@ build_script:
   - echo Current directory=%CD%
   - travis-tool.sh install_r rlang dplyr covr magrittr devtools ggplot2 tidyr tidyselect
   - travis-tool.sh install_deps
-  - travis-tool.sh install_bioc DelayedArray rtracklayer BiocStyle HelloRanges HelloRangesData GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
+  - travis-tool.sh install_bioc XVector DelayedArray rtracklayer BiocStyle HelloRanges HelloRangesData GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
   - travis-tool.sh install_bioc_deps
 
 
