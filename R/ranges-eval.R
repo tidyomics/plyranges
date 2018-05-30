@@ -24,12 +24,17 @@ bioc_generics <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
 }
 
 scope_plyranges <- function(env, generics) {
-  
-  if (!identical(env, rlang::empty_env())) {
-    nms <- setdiff(names(generics), c(ls(env), ls(parent.env(env))))
-    generics <- generics[nms]
+  tail <- env
+  nms <- character(0)
+  # recurse through parent environments until we get to the empty env
+  while(!identical(tail, rlang::empty_env())) {
+    env_nms <- rlang::env_names(tail)
+    nms <- unique(c(nms, intersect(names(generics), env_nms)))
+    tail <- rlang::env_parent(tail)
   }
-    
+  nms <- setdiff(nms, rlang::env_names(rlang::global_env()))
+  generics <- generics[nms]
+  
   child <- rlang::child_env(env,
                             UQS(generics))
   child
