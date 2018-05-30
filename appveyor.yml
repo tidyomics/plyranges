@@ -8,11 +8,14 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 
 install:
-  ps: Bootstrap
+  ps: |
+        Bootstrap
+        InstallRtools
 
 branches:
   only:
     - master
+    
 cache:
   - C:\RLibrary
 
@@ -20,8 +23,9 @@ cache:
 build_script:
   - echo Current directory=%CD%
   - travis-tool.sh install_r rlang dplyr covr magrittr devtools ggplot2 tidyr tidyselect
-  - travis-tool.sh install_bioc GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
   - travis-tool.sh install_bioc_deps
+  - travis-tool.sh install_bioc rtracklayer BiocStyle HelloRanges HelloRangesData GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
+
 
 test_script:
   - travis-tool.sh run_tests
@@ -39,6 +43,7 @@ on_success:
 environment:
   global:
     WARNINGS_ARE_ERRORS: 1
+    USE_RTOOLS: true ## to be able to use Remotes (i.e. packages from non-CRAN sources)
 
   matrix:
     - R_VERSION: devel
