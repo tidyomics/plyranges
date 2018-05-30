@@ -10,7 +10,6 @@ init:
 install:
   ps: |
         Bootstrap
-        InstallRtools
 
 branches:
   only:
@@ -43,11 +42,11 @@ on_success:
 environment:
   global:
     WARNINGS_ARE_ERRORS: 1
-    USE_RTOOLS: true ## to be able to use Remotes (i.e. packages from non-CRAN sources)
-
+  
   matrix:
     - R_VERSION: devel
       R_ARCH: x64
+      GCC_PATH: mingw_64
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
