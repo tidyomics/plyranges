@@ -118,4 +118,25 @@ test_that("grouping then reducing works as expected", {
   test_n <- reduce_ranges(gr_by_group, n = n())$n
   expect_identical(correct_n, test_n)
   setwd(oldwd)
+  
 })
+
+
+test_that("expected behaviour for grouped filter w reduce #37",
+          {
+            # see https://github.com/sa-lee/plyranges/issues/37
+            set.seed(2018)
+            n <- 10
+            r <- GRanges(seqnames = rep("chr1", n),
+                         ranges = IRanges(start = sample(20, n, replace = T),
+                                          width = sample(6,  n, replace = T))
+            )
+            mcols(r) <- data.frame(score = runif(n, 0, 100), 
+                                   condition = rep_len(c("One","Two"), n))
+            red1 <- r %>% group_by(condition) %>% reduce_ranges
+            
+            red2 <- r %>% filter(score > 2) %>% group_by(condition) %>% reduce_ranges
+            
+            expect_identical(red1, red2)
+          }
+)
