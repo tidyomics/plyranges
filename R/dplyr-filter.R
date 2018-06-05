@@ -18,10 +18,7 @@ filter_grp <- function(.data, ...) {
     ii <- filter_rng(.data, dots)
     inx_update <- .data@inx[ii]
     rng <- .data@delegate[sort(unlist(inx_update))]
-    new(class(.data), 
-        delegate = rng,
-        groups = groups(.data),
-        inx = inx_update[lengths(inx_update) > 0] )
+    group_by(rng, UQS(groups(.data)))
 }
 
 #' Subset a `Ranges` object
