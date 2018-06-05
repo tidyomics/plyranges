@@ -11,6 +11,9 @@ overscope_ranges(x, envir = parent.frame())
 
 \item{envir}{the environment to place the Ranges in (default = \code{parent.frame()})}
 }
+\value{
+an environment
+}
 \description{
 Create an overscoped environment from a Ranges object
 }

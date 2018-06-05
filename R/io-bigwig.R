@@ -45,7 +45,7 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
   rng
 }
 
-#' Write a BED file
+#' Write a BigWig file
 #'
 #' @param x A GRanges object
 #' @param file File name, URL or connection specifying a file to write x to.
@@ -59,6 +59,18 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 #' @seealso [rtracklayer::BigWigFile()]
 #' @export
 #' @return The write functions return a BigWigFile invisibly
+#' @examples 
+#' \dontrun{
+#'  if (.Platform$OS.type != "windows") {
+#'   test_path <- system.file("tests", package = "rtracklayer")
+#'   bw_file <- file.path(test_path, "test.bw")
+#'   gr <- read_bigwig(bw_file)
+#'   gr
+#'   bw_out <- file.path(tempdir(), "test_out.bw")
+#'   write_bigwig(gr ,bw_out)
+#'   read_bigwig(bw_out)
+#'  }
+#' }
 #' @rdname io-bigwig-write
 write_bigwig <- function(x, file) {
   export.bw(x, file)

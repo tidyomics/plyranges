@@ -30,6 +30,16 @@ The write function returns a GFFFile object invisibly
 This is a lightweight wrapper to the export family
 of functions defined in \pkg{rtracklayer}.
 }
+\examples{
+\dontrun{
+ test_path <- system.file("tests", package = "rtracklayer")
+ test_gff3 <- file.path(test_path, "genes.gff3")
+ gr <- read_gff3(test_gff3)
+ out_gff3 <- file.path(tempdir(), "test.gff3")
+ write_gff3(gr, out_gff3)
+ read_gff3(out_gff3)
+}
+}
 \seealso{
 \code{\link[rtracklayer:GFFFile]{rtracklayer::GFFFile()}}
 }

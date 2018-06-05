@@ -48,6 +48,7 @@ scope_plyranges <- function(env, generics) {
 #' @details This is the backend for non-standard evaluation in `plyranges`.
 #' 
 #' @seealso [rlang::new_data_mask()], [rlang::eval_tidy()]
+#' @return an environment
 #' 
 #' @export
 overscope_ranges <- function(x, envir = parent.frame()) {

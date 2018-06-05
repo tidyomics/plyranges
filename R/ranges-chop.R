@@ -38,6 +38,22 @@ expand_rng_by_cigar <- function(x, type) {
 #' create a new column called "gaps" where TRUE indicates
 #' the alignment has a deletion from the reference or has an intron.  
 #' 
+#' @return a GRanges object
+#' @examples 
+#' if (require(pasillaBamSubset)) {
+#'    bamfile <- untreated1_chr4()
+#'    # define a region of interest
+#'    roi <- data.frame(seqnames = "chr4", start = 5e5, end = 7e5) %>%
+#'             as_granges()
+#'    # results in a grouped ranges object
+#'    rng <- read_bam(bamfile) %>% 
+#'             filter_by_overlaps(roi) %>%
+#'             chop_by_gaps()
+#'    # to find ranges that have gaps use filter with `n()`
+#'    rng %>% filter(n() > 2)
+#'   
+#' }
+#' 
 #' @importFrom BiocGenerics rep.int
 #' @importFrom S4Vectors Rle elementNROWS
 #' @importFrom GenomicAlignments extractAlignmentRangesOnReference
