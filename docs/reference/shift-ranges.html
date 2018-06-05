@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Shift all coordinates in a genomic interval left or right, upstream or downstream — shift_left" />
 
 <meta property="og:description" content="Shift all coordinates in a genomic interval left or right, upstream or downstream" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,15 +97,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Shift all coordinates in a genomic interval left or right, upstream or downstream</h1>
+    
+    <div class="hidden name"><code>shift-ranges.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>shift_left</span>(<span class='no'>x</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
 
@@ -107,7 +119,7 @@
 
 <span class='fu'>shift_downstream</span>(<span class='no'>x</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -135,7 +147,7 @@ default, unstranded features are treated as positive.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/IRanges/topics/intra-range-methods'>IRanges::shift()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/IRanges/topics/intra-range-methods'>IRanges::shift()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -163,22 +175,22 @@ default, unstranded features are treated as positive.</p>
 <span class='fu'>shift_upstream</span>(<span class='no'>gr</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     seq1  [ 5,  9]      +
-#&gt;   [2]     seq1  [ 6, 10]      +
-#&gt;   [3]     seq1  [17, 21]      -
-#&gt;   [4]     seq1  [18, 22]      -
-#&gt;   [5]     seq1  [ 9, 13]      +
-#&gt;   [6]     seq1  [15, 19]      *
+#&gt;   [1]     seq1       5-9      +
+#&gt;   [2]     seq1      6-10      +
+#&gt;   [3]     seq1     17-21      -
+#&gt;   [4]     seq1     18-22      -
+#&gt;   [5]     seq1      9-13      +
+#&gt;   [6]     seq1     15-19      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>shift_downstream</span>(<span class='no'>gr</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     seq1  [15, 19]      +
-#&gt;   [2]     seq1  [16, 20]      +
-#&gt;   [3]     seq1  [ 7, 11]      -
-#&gt;   [4]     seq1  [ 8, 12]      -
-#&gt;   [5]     seq1  [19, 23]      +
-#&gt;   [6]     seq1  [15, 19]      *
+#&gt;   [1]     seq1     15-19      +
+#&gt;   [2]     seq1     16-20      +
+#&gt;   [3]     seq1      7-11      -
+#&gt;   [4]     seq1      8-12      -
+#&gt;   [5]     seq1     19-23      +
+#&gt;   [6]     seq1     15-19      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -211,5 +223,8 @@ default, unstranded features are treated as positive.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

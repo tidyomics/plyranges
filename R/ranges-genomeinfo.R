@@ -114,3 +114,13 @@ get_genome_info.Seqinfo <- function(.data) {
   as(.data, "GRanges")
 }
 
+#' @export
+get_genome_info.BamFileOperator <- function(.data) {
+  get_genome_info(seqinfo(.data@input))
+}
+
+#' @export
+get_genome_info.DeferredGenomicRanges <- function(.data) {
+  get_genome_info(.data@ops)
+}
+

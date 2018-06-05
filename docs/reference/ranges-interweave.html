@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Interweave a pair of Ranges objects together — interweave" />
 
 <meta property="og:description" content="Interweave a pair of Ranges objects together" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,19 +97,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Interweave a pair of Ranges objects together</h1>
+    
+    <div class="hidden name"><code>ranges-interweave.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Interweave a pair of Ranges objects together</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>interweave</span>(<span class='no'>left</span>, <span class='no'>right</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -135,32 +147,32 @@ the resulting Range comes from (eit)</p>
 <span class='fu'>interweave</span>(<span class='fu'><a href='flank-ranges.html'>flank_left</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>), <span class='fu'><a href='flank-ranges.html'>flank_right</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>))</div><div class='output co'>#&gt; GRanges object with 12 ranges and 0 metadata columns:
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;    [1]     seq1  [ 5,  9]      +
-#&gt;    [2]     seq1  [15, 19]      +
-#&gt;    [3]     seq1  [ 6, 10]      +
-#&gt;    [4]     seq1  [16, 20]      +
-#&gt;    [5]     seq1  [ 7, 11]      -
+#&gt;    [1]     seq1       5-9      +
+#&gt;    [2]     seq1     15-19      +
+#&gt;    [3]     seq1      6-10      +
+#&gt;    [4]     seq1     16-20      +
+#&gt;    [5]     seq1      7-11      -
 #&gt;    ...      ...       ...    ...
-#&gt;    [8]     seq1  [18, 22]      -
-#&gt;    [9]     seq1  [ 9, 13]      +
-#&gt;   [10]     seq1  [19, 23]      +
-#&gt;   [11]     seq1  [10, 14]      *
-#&gt;   [12]     seq1  [20, 24]      *
+#&gt;    [8]     seq1     18-22      -
+#&gt;    [9]     seq1      9-13      +
+#&gt;   [10]     seq1     19-23      +
+#&gt;   [11]     seq1     10-14      *
+#&gt;   [12]     seq1     20-24      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>interweave</span>(<span class='fu'><a href='flank-ranges.html'>flank_left</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>), <span class='fu'><a href='flank-ranges.html'>flank_right</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>), <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"origin"</span>)</div><div class='output co'>#&gt; GRanges object with 12 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |      origin
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-#&gt;    [1]     seq1  [ 5,  9]      + |        left
-#&gt;    [2]     seq1  [15, 19]      + |       right
-#&gt;    [3]     seq1  [ 6, 10]      + |        left
-#&gt;    [4]     seq1  [16, 20]      + |       right
-#&gt;    [5]     seq1  [ 7, 11]      - |        left
+#&gt;    [1]     seq1       5-9      + |        left
+#&gt;    [2]     seq1     15-19      + |       right
+#&gt;    [3]     seq1      6-10      + |        left
+#&gt;    [4]     seq1     16-20      + |       right
+#&gt;    [5]     seq1      7-11      - |        left
 #&gt;    ...      ...       ...    ... .         ...
-#&gt;    [8]     seq1  [18, 22]      - |       right
-#&gt;    [9]     seq1  [ 9, 13]      + |        left
-#&gt;   [10]     seq1  [19, 23]      + |       right
-#&gt;   [11]     seq1  [10, 14]      * |        left
-#&gt;   [12]     seq1  [20, 24]      * |       right
+#&gt;    [8]     seq1     18-22      - |       right
+#&gt;    [9]     seq1      9-13      + |        left
+#&gt;   [10]     seq1     19-23      + |       right
+#&gt;   [11]     seq1     10-14      * |        left
+#&gt;   [12]     seq1     20-24      * |       right
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -191,5 +203,8 @@ the resulting Range comes from (eit)</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

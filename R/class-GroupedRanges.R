@@ -59,11 +59,12 @@ make_group_inx <- function(rng, ...) {
     capture_groups <- quos(...)
     group_names <- unlist(lapply(capture_groups, quo_name))
     groups <- rlang::syms(group_names)
-    names(groups) <- group_names
+    capture_groups <- lapply(groups, rlang::as_quosure)
+    names(capture_groups) <- group_names
     # eval groups
     os <- overscope_ranges(rng)
-    on.exit(rlang::overscope_clean(os))
-    groups_values <- as(overscope_eval_update(os, groups), "DataFrame")
+    groups_values <- as(lapply(capture_groups, eval_tidy, data = os), 
+                        "DataFrame")
     inx <- IRanges::splitAsList(seq_along(rng), groups_values, drop = TRUE)
     mcols(inx) <- BiocGenerics::unlist(extractList(groups_values, 
                               endoapply(inx, function(.) .[1])))

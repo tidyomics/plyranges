@@ -5,36 +5,41 @@ template:
 authors:
   Stuart Lee:
     href: http://stuartlee.org
-  Di Cook:
-    href: http://dicook.org
   Michael Lawrence:
     href: https://github.com/lawremi
+  Di Cook:
+    href: http://dicook.org
 
 reference:
+- title: About plyranges
+  contents:
+    - plyranges-package
+
 - title: Ranges
   contents:
     - as_granges
     - as_iranges
     - interweave
     - bind_ranges
+    - tile_ranges
 
 - title:  Arithmetic
   contents:
     - starts_with("anchor")
-    - set_width
     - stretch
     - shift_downstream
     - flank_upstream
+    - chop_by_introns
 
 - title: Core verbs
   contents:
-    - mutate.GenomicRanges
-    - summarise.GenomicRanges
-    - filter.GenomicRanges
-    - arrange.GenomicRanges
-    - select.GenomicRanges
+    - mutate.Ranges
+    - summarise.Ranges
+    - filter.Ranges
+    - arrange.Ranges
+    - select.Ranges
     - unnest.GenomicRanges
-    - group_by.GRanges
+    - group_by.GenomicRanges
     - starts_with("reduce")
     - starts_with("disjoin")
     - compute_coverage
@@ -73,16 +78,19 @@ reference:
 - title: Reading and Writing Genomics Data
   contents:
     - ends_with("bam")
-    - GRangesDeferred
     - ends_with("bed")
     - ends_with("wig")
     - ends_with("gff")
+    - FileOperator-class
+    - DeferredGenomicRanges-class
+
 
 - title: Utilities
   contents:
-    - split_groups
     - matches("^n$")
     - as_ranges
+    - set_width
+    - overscope_ranges
     - reexports
 
 navbar:

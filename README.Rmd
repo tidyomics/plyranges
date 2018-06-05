@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 [![Build Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/sa-lee/plyranges?branch=master&svg=true)](https://ci.appveyor.com/project/sa-lee/plyranges)
 [![Coverage Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
 
 # plyranges
@@ -21,7 +22,7 @@ wrangling genomics data from a variety of sources. The package defines a grammar
 set of verbs for developing analysis pipelines based on _Ranges_ objects
 that represent genomic regions:
 
-* Modify genomic regions with the `set_width()` and `stretch()` functions.
+* Modify genomic regions with the `mutate()` and `stretch()` functions.
 * Modify genomic regions while fixing the start/end/center coordinates with the `anchor_` family of functions.
 * Sort genomic ranges with `arrange()`.
 * Modify, subset, and aggregate genomic data with the `mutate()`, 
@@ -41,21 +42,18 @@ For more details on the features of plryanges, read the
 
 # Installation
 
-The package is currently on the development branch of Bioconductor
-and will become available in the next release in May. To install the 
-development version do the following:
+The package is currently available from Bioconductor. 
 
 ```{r, eval=FALSE}
 source("https://bioconductor.org/biocLite.R")
-useDevel()
 biocLite("plyranges")
 ```
 
+To install the development version from GitHub:
 
-A version for R (>= 3.4.2) is available to install via github with the following code:
 ```{r, eval=FALSE}
 source("https://bioconductor.org/biocLite.R")
-biocLite("sa-lee/plyranges@current-r-release")
+biocLite("sa-lee/plyranges")
 ```
 
 # Quick overview

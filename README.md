@@ -3,6 +3,8 @@
 
 [![Build
 Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/sa-lee/plyranges?branch=master&svg=true)](https://ci.appveyor.com/project/sa-lee/plyranges)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
 
@@ -15,7 +17,7 @@ packages `IRanges`, `GenomicRanges`, and `rtracklayer`. It does this by
 providing a set of verbs for developing analysis pipelines based on
 *Ranges* objects that represent genomic regions:
 
-  - Modify genomic regions with the `set_width()` and `stretch()`
+  - Modify genomic regions with the `mutate()` and `stretch()`
     functions.
   - Modify genomic regions while fixing the start/end/center coordinates
     with the `anchor_` family of functions.
@@ -39,22 +41,18 @@ vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
 
 # Installation
 
-The package is currently on the development branch of Bioconductor and
-will become available in the next release in May. To install the
-development version do the following:
+The package is currently available from Bioconductor.
 
 ``` r
 source("https://bioconductor.org/biocLite.R")
-useDevel()
 biocLite("plyranges")
 ```
 
-A version for R (\>= 3.4.2) is available to install via github with the
-following code:
+To install the development version from GitHub:
 
 ``` r
 source("https://bioconductor.org/biocLite.R")
-biocLite("sa-lee/plyranges@current-r-release")
+biocLite("sa-lee/plyranges")
 ```
 
 # Quick overview
@@ -113,11 +111,11 @@ as_granges(df)
 #> GRanges object with 5 ranges and 0 metadata columns:
 #>       seqnames    ranges strand
 #>          <Rle> <IRanges>  <Rle>
-#>   [1]     chr1    [1, 5]      *
-#>   [2]     chr2    [2, 6]      *
-#>   [3]     chr2    [3, 7]      *
-#>   [4]     chr1    [4, 8]      *
-#>   [5]     chr2    [5, 9]      *
+#>   [1]     chr1       1-5      *
+#>   [2]     chr2       2-6      *
+#>   [3]     chr2       3-7      *
+#>   [4]     chr1       4-8      *
+#>   [5]     chr2       5-9      *
 #>   -------
 #>   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 # strand can be specified with `+`, `*` (mising) and `-`
@@ -126,11 +124,11 @@ as_granges(df)
 #> GRanges object with 5 ranges and 0 metadata columns:
 #>       seqnames    ranges strand
 #>          <Rle> <IRanges>  <Rle>
-#>   [1]     chr1    [1, 5]      +
-#>   [2]     chr2    [2, 6]      +
-#>   [3]     chr2    [3, 7]      -
-#>   [4]     chr1    [4, 8]      -
-#>   [5]     chr2    [5, 9]      *
+#>   [1]     chr1       1-5      +
+#>   [2]     chr2       2-6      +
+#>   [3]     chr2       3-7      -
+#>   [4]     chr1       4-8      -
+#>   [5]     chr2       5-9      *
 #>   -------
 #>   seqinfo: 2 sequences from an unspecified genome; no seqlengths
 ```
@@ -152,19 +150,19 @@ We could check the number of exons per chromosome using `group_by` and
 ``` r
 exons 
 #> GRanges object with 459752 ranges and 2 metadata columns:
-#>            seqnames               ranges strand |
-#>               <Rle>            <IRanges>  <Rle> |
-#>        [1]     chr1       [11874, 12227]      + |
-#>        [2]     chr1       [12613, 12721]      + |
-#>        [3]     chr1       [13221, 14409]      + |
-#>        [4]     chr1       [14362, 14829]      - |
-#>        [5]     chr1       [14970, 15038]      - |
-#>        ...      ...                  ...    ... .
-#>   [459748]     chrY [59338754, 59338859]      + |
-#>   [459749]     chrY [59338754, 59338859]      + |
-#>   [459750]     chrY [59340194, 59340278]      + |
-#>   [459751]     chrY [59342487, 59343488]      + |
-#>   [459752]     chrY [59342487, 59343488]      + |
+#>            seqnames            ranges strand |
+#>               <Rle>         <IRanges>  <Rle> |
+#>        [1]     chr1       11874-12227      + |
+#>        [2]     chr1       12613-12721      + |
+#>        [3]     chr1       13221-14409      + |
+#>        [4]     chr1       14362-14829      - |
+#>        [5]     chr1       14970-15038      - |
+#>        ...      ...               ...    ... .
+#>   [459748]     chrY 59338754-59338859      + |
+#>   [459749]     chrY 59338754-59338859      + |
+#>   [459750]     chrY 59340194-59340278      + |
+#>   [459751]     chrY 59342487-59343488      + |
+#>   [459752]     chrY 59342487-59343488      + |
 #>                                          name     score
 #>                                   <character> <numeric>
 #>        [1]    NR_046018_exon_0_0_chr1_11874_f         0
@@ -185,7 +183,7 @@ exons %>%
   summarise(n = n())
 #> DataFrame with 49 rows and 2 columns
 #>                 seqnames         n
-#>                 <factor> <integer>
+#>                    <Rle> <integer>
 #> 1                   chr1     43366
 #> 2   chr1_gl000191_random        42
 #> 3   chr1_gl000192_random        46
@@ -214,19 +212,19 @@ overlap exons, as well as metadata from both objects.
 olap <- join_overlap_inner(gwas, exons)
 olap
 #> GRanges object with 3439 ranges and 4 metadata columns:
-#>          seqnames                 ranges strand |      name.x
-#>             <Rle>              <IRanges>  <Rle> | <character>
-#>      [1]     chr1     [1079198, 1079198]      * |  rs11260603
-#>      [2]     chr1     [1247494, 1247494]      * |     rs12103
-#>      [3]     chr1     [1247494, 1247494]      * |     rs12103
-#>      [4]     chr1     [1247494, 1247494]      * |     rs12103
-#>      [5]     chr1     [1247494, 1247494]      * |     rs12103
-#>      ...      ...                    ...    ... .         ...
-#>   [3435]     chrX [153764217, 153764217]      * |   rs1050828
-#>   [3436]     chrX [153764217, 153764217]      * |   rs1050828
-#>   [3437]     chrX [153764217, 153764217]      * |   rs1050828
-#>   [3438]     chrX [153764217, 153764217]      * |   rs1050828
-#>   [3439]     chrX [153764217, 153764217]      * |   rs1050828
+#>          seqnames    ranges strand |      name.x
+#>             <Rle> <IRanges>  <Rle> | <character>
+#>      [1]     chr1   1079198      * |  rs11260603
+#>      [2]     chr1   1247494      * |     rs12103
+#>      [3]     chr1   1247494      * |     rs12103
+#>      [4]     chr1   1247494      * |     rs12103
+#>      [5]     chr1   1247494      * |     rs12103
+#>      ...      ...       ...    ... .         ...
+#>   [3435]     chrX 153764217      * |   rs1050828
+#>   [3436]     chrX 153764217      * |   rs1050828
+#>   [3437]     chrX 153764217      * |   rs1050828
+#>   [3438]     chrX 153764217      * |   rs1050828
+#>   [3439]     chrX 153764217      * |   rs1050828
 #>                                          name.y     score        tx_id
 #>                                     <character> <numeric>  <character>
 #>      [1]      NR_038869_exon_2_0_chr1_1078119_f         0    NR_038869
@@ -277,19 +275,19 @@ right_ss <- flank_right(exons, 2L)
 all_ss <- interweave(left_ss, right_ss, .id = "side")
 all_ss
 #> GRanges object with 919504 ranges and 4 metadata columns:
-#>            seqnames               ranges strand |
-#>               <Rle>            <IRanges>  <Rle> |
-#>        [1]     chr1       [11872, 11873]      + |
-#>        [2]     chr1       [12228, 12229]      + |
-#>        [3]     chr1       [12611, 12612]      + |
-#>        [4]     chr1       [12722, 12723]      + |
-#>        [5]     chr1       [13219, 13220]      + |
-#>        ...      ...                  ...    ... .
-#>   [919500]     chrY [59340279, 59340280]      + |
-#>   [919501]     chrY [59342485, 59342486]      + |
-#>   [919502]     chrY [59343489, 59343490]      + |
-#>   [919503]     chrY [59342485, 59342486]      + |
-#>   [919504]     chrY [59343489, 59343490]      + |
+#>            seqnames            ranges strand |
+#>               <Rle>         <IRanges>  <Rle> |
+#>        [1]     chr1       11872-11873      + |
+#>        [2]     chr1       12228-12229      + |
+#>        [3]     chr1       12611-12612      + |
+#>        [4]     chr1       12722-12723      + |
+#>        [5]     chr1       13219-13220      + |
+#>        ...      ...               ...    ... .
+#>   [919500]     chrY 59340279-59340280      + |
+#>   [919501]     chrY 59342485-59342486      + |
+#>   [919502]     chrY 59343489-59343490      + |
+#>   [919503]     chrY 59342485-59342486      + |
+#>   [919504]     chrY 59343489-59343490      + |
 #>                                          name     score       tx_id
 #>                                   <character> <numeric> <character>
 #>        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018

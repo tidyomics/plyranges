@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find overlaps within a Ranges object — join_overlap_self • plyranges</title>
+<title>Create an overscoped environment from a Ranges object — overscope_ranges • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Find overlaps within a Ranges object — join_overlap_self" />
 
-<meta property="og:description" content="Find overlaps within a Ranges object" />
+
+
+<meta property="og:title" content="Create an overscoped environment from a Ranges object — overscope_ranges" />
+
+<meta property="og:description" content="Create an overscoped environment from a Ranges object" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,42 +97,42 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find overlaps within a Ranges object</h1>
+    <h1>Create an overscoped environment from a Ranges object</h1>
+    
+    <div class="hidden name"><code>overscope_ranges.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Find overlaps within a Ranges object</p>
+    <p>Create an overscoped environment from a Ranges object</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>join_overlap_self</span>(<span class='no'>x</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
-
-<span class='fu'>join_overlap_within_self</span>(<span class='no'>x</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
-
-<span class='fu'>join_overlap_self_inner</span>(<span class='no'>x</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)</pre>
+    <pre class="usage"><span class='fu'>overscope_ranges</span>(<span class='no'>x</span>, <span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>parent.frame</span>())</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A Ranges object</p></td>
+      <td><p>a Ranges object</p></td>
     </tr>
     <tr>
-      <th>maxgap, minoverlap</th>
-      <td><p>The maximimum gap between intervals as an integer
-greater than or equal to zero. The minimum amount of overlap between intervals
-as an integer greater than zero, accounting for the maximum gap.</p></td>
+      <th>envir</th>
+      <td><p>the environment to place the Ranges in (default = <code>parent.frame()</code>)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Self overlaps find any overlaps (or overlaps contained) within a
-ranges and append the overlapping details as metadata columns. A self inner
-overlap join will update the ranges object with all self intersecting ranges.</p>
+    <p>This is the backend for non-standard evaluation in <code>plyranges</code>.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/rlang/topics/as_data_mask'>rlang::new_data_mask()</a></code>, <code><a href='http://www.rdocumentation.org/packages/rlang/topics/eval_tidy'>rlang::eval_tidy()</a></code></p></div>
     
 
   </div>
@@ -134,6 +142,8 @@ overlap join will update the ranges object with all self intersecting ranges.</p
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
           </ul>
 
   </div>
@@ -151,5 +161,8 @@ overlap join will update the ranges object with all self intersecting ranges.</p
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

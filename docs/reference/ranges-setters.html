@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Combine pairs of Ranges in order — combine_ranges • plyranges</title>
+<title>Functional setters for Ranges objects — set_width • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Combine pairs of Ranges in order — combine_ranges" />
 
-<meta property="og:description" content="Combine pairs of Ranges in order" />
+
+
+<meta property="og:title" content="Functional setters for Ranges objects — set_width" />
+
+<meta property="og:description" content="Functional setters for Ranges objects" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,26 +97,67 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Combine pairs of Ranges in order</h1>
+    <h1>Functional setters for Ranges objects</h1>
+    
+    <div class="hidden name"><code>ranges-setters.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Combine pairs of Ranges in order</p>
+    <p>Functional setters for Ranges objects</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>combine_ranges</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+    <pre class="usage"><span class='fu'>set_width</span>(<span class='no'>x</span>, <span class='no'>width</span>)
+
+<span class='fu'>set_start</span>(<span class='no'>x</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>set_end</span>(<span class='no'>x</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>set_seqnames</span>(<span class='no'>x</span>, <span class='no'>seqnames</span>)
+
+<span class='fu'>set_strand</span>(<span class='no'>x</span>, <span class='no'>strand</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x, y</th>
-      <td><p>Ranges objects.</p></td>
+      <th>x</th>
+      <td><p>a Ranges object</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>integer amount to modify width by</p></td>
+    </tr>
+    <tr>
+      <th>start</th>
+      <td><p>integer amount to modify start by</p></td>
+    </tr>
+    <tr>
+      <th>end</th>
+      <td><p>integer amount to modify end by</p></td>
+    </tr>
+    <tr>
+      <th>seqnames</th>
+      <td><p>update seqnames column</p></td>
+    </tr>
+    <tr>
+      <th>strand</th>
+      <td><p>update strand column</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a Ranges object</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>These methods are used internally in <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> to modify
+core columns in Ranges objects.</p>
     
 
   </div>
@@ -116,7 +165,11 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>
@@ -133,5 +186,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

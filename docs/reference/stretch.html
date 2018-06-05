@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Stretch a genomic interval — stretch" />
 
 <meta property="og:description" content="Without anchoring, this function will extend the interval
 in either direction by the integer vector in extend." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ in either direction by the integer vector in extend." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -83,6 +90,7 @@ in either direction by the integer vector in extend." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,20 +98,24 @@ in either direction by the integer vector in extend." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Stretch a genomic interval</h1>
+    
+    <div class="hidden name"><code>stretch.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Without anchoring, this function will extend the interval
 in either direction by the integer vector in extend.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>stretch</span>(<span class='no'>x</span>, <span class='no'>extend</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -131,46 +143,46 @@ integer vector of length 1 or an integer vector the same length as x.</p></td>
 <span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_start</a></span>(<span class='no'>rng2</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;   [1]        -9        21        31
-#&gt;   [2]        -9        21        31
-#&gt;   [3]       -10        20        31
-#&gt;   [4]       -10        20        31
-#&gt;   [5]         3        33        31
-#&gt;   [6]         4        34        31
-#&gt;   [7]         4        34        31</div><div class='input'><span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_end</a></span>(<span class='no'>rng2</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
+#&gt;   [1]        -3        17        21
+#&gt;   [2]        -4        16        21
+#&gt;   [3]        -5        15        21
+#&gt;   [4]        -5        15        21
+#&gt;   [5]         8        28        21
+#&gt;   [6]         9        29        21
+#&gt;   [7]        10        30        21</div><div class='input'><span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_end</a></span>(<span class='no'>rng2</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;   [1]       -19        11        31
-#&gt;   [2]       -19        11        31
-#&gt;   [3]       -20        10        31
-#&gt;   [4]       -20        10        31
-#&gt;   [5]        -7        23        31
-#&gt;   [6]        -6        24        31
-#&gt;   [7]        -6        24        31</div><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
+#&gt;   [1]       -13         7        21
+#&gt;   [2]       -14         6        21
+#&gt;   [3]       -15         5        21
+#&gt;   [4]       -15         5        21
+#&gt;   [5]        -2        18        21
+#&gt;   [6]        -1        19        21
+#&gt;   [7]         0        20        21</div><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                          <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>),
                          <span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>:-<span class='fl'>1</span>, <span class='fl'>13</span>:<span class='fl'>15</span>),
                          <span class='kw'>width</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>3</span>, <span class='fl'>2</span>:<span class='fl'>0</span>)))
 <span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_3p</a></span>(<span class='no'>grng</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chr1 [ -8,  1]      +
-#&gt;   [2]     chr1 [  1, 11]      -
-#&gt;   [3]     chr1 [  0, 11]      -
-#&gt;   [4]     chr1 [-11,  1]      +
-#&gt;   [5]     chr1 [  3, 14]      +
-#&gt;   [6]     chr1 [ 14, 24]      -
-#&gt;   [7]     chr1 [  5, 14]      +
+#&gt;   [1]     chr1      -8-1      +
+#&gt;   [2]     chr1      1-11      -
+#&gt;   [3]     chr1      0-11      -
+#&gt;   [4]     chr1     -11-1      +
+#&gt;   [5]     chr1      3-14      +
+#&gt;   [6]     chr1     14-24      -
+#&gt;   [7]     chr1      5-14      +
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_5p</a></span>(<span class='no'>grng</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chr1 [  2, 11]      +
-#&gt;   [2]     chr1 [ -9,  1]      -
-#&gt;   [3]     chr1 [-10,  1]      -
-#&gt;   [4]     chr1 [ -1, 11]      +
-#&gt;   [5]     chr1 [ 13, 24]      +
-#&gt;   [6]     chr1 [  4, 14]      -
-#&gt;   [7]     chr1 [ 15, 24]      +
+#&gt;   [1]     chr1      2-11      +
+#&gt;   [2]     chr1      -9-1      -
+#&gt;   [3]     chr1     -10-1      -
+#&gt;   [4]     chr1     -1-11      +
+#&gt;   [5]     chr1     13-24      +
+#&gt;   [6]     chr1      4-14      -
+#&gt;   [7]     chr1     15-24      +
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -199,5 +211,8 @@ integer vector of length 1 or an integer vector the same length as x.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

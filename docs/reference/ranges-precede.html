@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Find preceding Ranges — join_precede" />
 
 <meta property="og:description" content="Find preceding Ranges" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,15 +97,19 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Find preceding Ranges</h1>
+    
+    <div class="hidden name"><code>ranges-precede.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Find preceding Ranges</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>join_precede</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
@@ -105,7 +117,7 @@
 
 <span class='fu'>join_precede_downstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -144,13 +156,13 @@ strand it will result in ranges in y that are left of those in x.</p>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
 <span class='fu'>join_precede</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; IRanges object with 5 ranges and 2 metadata columns:
-#&gt;           start       end     width |    label        gc
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt; &lt;numeric&gt;
-#&gt;   [1]         2         4         3 |        a 0.5709781
-#&gt;   [2]         3         6         4 |        b 0.6848802
-#&gt;   [3]         4         8         5 |        c 0.6848802
-#&gt;   [4]         5        10         6 |        d 0.9711167
-#&gt;   [5]         6        12         7 |        e 0.9711167</div><div class='input'>
+#&gt;           start       end     width |    label                gc
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt;         &lt;numeric&gt;
+#&gt;   [1]         2         4         3 |        a 0.570978083880618
+#&gt;   [2]         3         6         4 |        b 0.684880241984501
+#&gt;   [3]         4         8         5 |        c 0.684880241984501
+#&gt;   [4]         5        10         6 |        d 0.971116747008637
+#&gt;   [5]         6        12         7 |        e 0.971116747008637</div><div class='input'>
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
                <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>21</span>, <span class='fl'>200</span>),
@@ -167,21 +179,21 @@ strand it will result in ranges in y that are left of those in x.</p>
                    <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
 
 <span class='fu'>join_precede</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
-#&gt;       seqnames     ranges strand |   name.x   score.x   name.y   score.y
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
-#&gt;   [1]     chr1 [ 11,  21]      + |       a1         1       b2         2
-#&gt;   [2]     chr1 [101, 200]      - |       a2         2       b4         4
+#&gt;       seqnames    ranges strand |   name.x   score.x   name.y   score.y
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
+#&gt;   [1]     chr1     11-21      + |       a1         1       b2         2
+#&gt;   [2]     chr1   101-200      - |       a2         2       b4         4
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>join_precede_right</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
-#&gt;       seqnames     ranges strand |   name.x   score.x   name.y   score.y
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
-#&gt;   [1]     chr1 [ 11,  21]      + |       a1         1       b2         2
-#&gt;   [2]     chr1 [101, 200]      - |       a2         2       b4         4
+#&gt;       seqnames    ranges strand |   name.x   score.x   name.y   score.y
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
+#&gt;   [1]     chr1     11-21      + |       a1         1       b2         2
+#&gt;   [2]     chr1   101-200      - |       a2         2       b4         4
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>join_precede_downstream</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 4 metadata columns:
 #&gt;       seqnames    ranges strand |   name.x   score.x   name.y   score.y
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt; &lt;factor&gt; &lt;integer&gt;
-#&gt;   [1]     chr1  [11, 21]      + |       a1         1       b3         3
+#&gt;   [1]     chr1     11-21      + |       a1         1       b3         3
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -212,5 +224,8 @@ strand it will result in ranges in y that are left of those in x.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

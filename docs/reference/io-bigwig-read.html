@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Read a BigWig file — read_bigwig" />
 
 <meta property="og:description" content="Read a BigWig file" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,19 +97,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read a BigWig file</h1>
+    
+    <div class="hidden name"><code>io-bigwig-read.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Read a BigWig file</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>read_bigwig</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -127,7 +139,7 @@ that overlap the Ranges will be loaded.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BigWigFile'>rtracklayer::BigWigFile()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/rtracklayer/topics/BigWigFile'>rtracklayer::BigWigFile()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -137,17 +149,17 @@ that overlap the Ranges will be loaded.</p></td>
   <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bigwig</span>(<span class='no'>bw_file</span>)
   <span class='no'>gr</span>
 }</div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
-#&gt;       seqnames       ranges strand |     score
-#&gt;          &lt;Rle&gt;    &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     chr2 [   1,  300]      * |        -1
-#&gt;   [2]     chr2 [ 301,  600]      * |     -0.75
-#&gt;   [3]     chr2 [ 601,  900]      * |      -0.5
-#&gt;   [4]     chr2 [ 901, 1200]      * |     -0.25
-#&gt;   [5]     chr2 [1201, 1500]      * |         0
-#&gt;   [6]    chr19 [1501, 1800]      * |      0.25
-#&gt;   [7]    chr19 [1801, 2100]      * |       0.5
-#&gt;   [8]    chr19 [2101, 2400]      * |      0.75
-#&gt;   [9]    chr19 [2401, 2700]      * |         1
+#&gt;       seqnames    ranges strand |     score
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;   [1]     chr2     1-300      * |        -1
+#&gt;   [2]     chr2   301-600      * |     -0.75
+#&gt;   [3]     chr2   601-900      * |      -0.5
+#&gt;   [4]     chr2  901-1200      * |     -0.25
+#&gt;   [5]     chr2 1201-1500      * |         0
+#&gt;   [6]    chr19 1501-1800      * |      0.25
+#&gt;   [7]    chr19 1801-2100      * |       0.5
+#&gt;   [8]    chr19 2101-2400      * |      0.75
+#&gt;   [9]    chr19 2401-2700      * |         1
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome</div></pre>
   </div>
@@ -178,5 +190,8 @@ that overlap the Ranges will be loaded.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -25,8 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Construct a I/GRanges object from a tibble or data.frame — as_iranges" />
 
 <meta property="og:description" content="The as_i(g)ranges function looks for column names in .data called start,
@@ -34,6 +35,8 @@ end, width, seqnames and strand in order to construct an IRanges or GRanges
 object. By default other columns in .data are placed into the mcols (
 metadata columns) slot of the returned object." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +59,12 @@ metadata columns) slot of the returned object." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -85,6 +92,7 @@ metadata columns) slot of the returned object." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,24 +100,28 @@ metadata columns) slot of the returned object." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Construct a I/GRanges object from a tibble or data.frame</h1>
+    
+    <div class="hidden name"><code>ranges-construct.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>The as_i(g)ranges function looks for column names in .data called start,
 end, width, seqnames and strand in order to construct an IRanges or GRanges
 object. By default other columns in .data are placed into the mcols (
 metadata columns) slot of the returned object.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>as_iranges</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>keep_mcols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>as_granges</span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>keep_mcols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -135,7 +147,7 @@ containin the core components a Ranges object.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>IRanges::IRanges()</a></p>
+    <div class='dont-index'><p><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/GRanges-class'>IRanges::IRanges()</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -167,13 +179,13 @@ containin the core components a Ranges object.</p></td>
 <span class='fu'>as_granges</span>(<span class='no'>df</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chr1  [ 2,  1]      +
-#&gt;   [2]     chr1  [ 1,  1]      +
-#&gt;   [3]     chr1  [ 0,  1]      +
-#&gt;   [4]     chr1  [-1,  1]      +
-#&gt;   [5]     chr1  [13, 14]      +
-#&gt;   [6]     chr1  [14, 14]      +
-#&gt;   [7]     chr1  [15, 14]      +
+#&gt;   [1]     chr1       2-1      +
+#&gt;   [2]     chr1         1      +
+#&gt;   [3]     chr1       0-1      +
+#&gt;   [4]     chr1      -1-1      +
+#&gt;   [5]     chr1     13-14      +
+#&gt;   [6]     chr1        14      +
+#&gt;   [7]     chr1     15-14      +
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='co'># as_g/iranges understand alternate name specification</span>
@@ -182,13 +194,13 @@ containin the core components a Ranges object.</p></td>
 <span class='fu'>as_granges</span>(<span class='no'>df</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='no'>chr</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   [1]     chr1  [ 2,  1]      +
-#&gt;   [2]     chr1  [ 1,  1]      +
-#&gt;   [3]     chr1  [ 0,  1]      +
-#&gt;   [4]     chr1  [-1,  1]      +
-#&gt;   [5]     chr1  [13, 14]      +
-#&gt;   [6]     chr1  [14, 14]      +
-#&gt;   [7]     chr1  [15, 14]      +
+#&gt;   [1]     chr1       2-1      +
+#&gt;   [2]     chr1         1      +
+#&gt;   [3]     chr1       0-1      +
+#&gt;   [4]     chr1      -1-1      +
+#&gt;   [5]     chr1     13-14      +
+#&gt;   [6]     chr1        14      +
+#&gt;   [7]     chr1     15-14      +
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 </div></pre>
@@ -220,5 +232,8 @@ containin the core components a Ranges object.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

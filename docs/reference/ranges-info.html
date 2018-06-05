@@ -25,8 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Construct annotation information — ranges-info" />
 
 <meta property="og:description" content="To construct annotations by supplying annotation information
@@ -35,6 +36,8 @@ via GenomeInfoDb::fetchExtendedChromInfoFromUCSC(). To add
 annotations to an existing Ranges object use set_genome_info. To retrieve
 an annotation as a Ranges object use get_genome_info." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -57,8 +60,12 @@ an annotation as a Ranges object use get_genome_info." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -86,6 +93,7 @@ an annotation as a Ranges object use get_genome_info." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -93,12 +101,15 @@ an annotation as a Ranges object use get_genome_info." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Construct annotation information</h1>
+    
+    <div class="hidden name"><code>ranges-info.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>To construct annotations by supplying annotation information
 use <code>genome_info</code>. This function allows you to get UCSC build information
@@ -106,6 +117,7 @@ via <code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fe
 annotations to an existing Ranges object use <code>set_genome_info</code>. To retrieve
 an annotation as a Ranges object use <code>get_genome_info</code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>genome_info</span>(<span class='kw'>genome</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>seqlengths</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>is_circular</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
@@ -115,7 +127,7 @@ an annotation as a Ranges object use <code>get_genome_info</code>.</p>
 
 <span class='fu'>get_genome_info</span>(<span class='no'>.data</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -149,7 +161,7 @@ as a Ranges object use <code>get_genome_info</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/Seqinfo-class'>GenomeInfoDb::Seqinfo()</a></code>, <code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fetchExtendedChromInfoFromUCSC'>GenomeInfoDb::fetchExtendedChromInfoFromUCSC()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/Seqinfo-class'>GenomeInfoDb::Seqinfo()</a></code>, <code><a href='http://www.rdocumentation.org/packages/GenomeInfoDb/topics/fetchExtendedChromInfoFromUCSC'>GenomeInfoDb::fetchExtendedChromInfoFromUCSC()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -160,27 +172,27 @@ as a Ranges object use <code>get_genome_info</code>.</p>
 <span class='no'>x</span></div><div class='output co'>#&gt; GRanges object with 4 ranges and 0 metadata columns:
 #&gt;     seqnames    ranges strand
 #&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   a        a  [1, 100]      *
-#&gt;   b        b  [1, 300]      *
-#&gt;   c        c  [1,  15]      *
-#&gt;   d        d  [1, 600]      *
+#&gt;   a        a     1-100      *
+#&gt;   b        b     1-300      *
+#&gt;   c        c      1-15      *
+#&gt;   d        d     1-600      *
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences (1 circular) from toy genome</div><div class='input'>
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"a"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>30</span>:<span class='fl'>50</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>))
 <span class='no'>rng</span></div><div class='output co'>#&gt; GRanges object with 21 ranges and 0 metadata columns:
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;    [1]        a  [30, 39]      *
-#&gt;    [2]        a  [31, 40]      *
-#&gt;    [3]        a  [32, 41]      *
-#&gt;    [4]        a  [33, 42]      *
-#&gt;    [5]        a  [34, 43]      *
+#&gt;    [1]        a     30-39      *
+#&gt;    [2]        a     31-40      *
+#&gt;    [3]        a     32-41      *
+#&gt;    [4]        a     33-42      *
+#&gt;    [5]        a     34-43      *
 #&gt;    ...      ...       ...    ...
-#&gt;   [17]        a  [46, 55]      *
-#&gt;   [18]        a  [47, 56]      *
-#&gt;   [19]        a  [48, 57]      *
-#&gt;   [20]        a  [49, 58]      *
-#&gt;   [21]        a  [50, 59]      *
+#&gt;   [17]        a     46-55      *
+#&gt;   [18]        a     47-56      *
+#&gt;   [19]        a     48-57      *
+#&gt;   [20]        a     49-58      *
+#&gt;   [21]        a     50-59      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>set_genome_info</span>(<span class='no'>rng</span>,
                        <span class='kw'>genome</span> <span class='kw'>=</span> <span class='st'>"toy"</span>,
@@ -190,10 +202,10 @@ as a Ranges object use <code>get_genome_info</code>.</p>
 <span class='fu'>get_genome_info</span>(<span class='no'>rng</span>)</div><div class='output co'>#&gt; GRanges object with 4 ranges and 0 metadata columns:
 #&gt;     seqnames    ranges strand
 #&gt;        &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;   a        a  [1, 100]      *
-#&gt;   b        b  [1, 300]      *
-#&gt;   c        c  [1,  15]      *
-#&gt;   d        d  [1, 600]      *
+#&gt;   a        a     1-100      *
+#&gt;   b        b     1-300      *
+#&gt;   c        c      1-15      *
+#&gt;   d        d     1-600      *
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences (1 circular) from toy genome</div><div class='input'>
 </div><span class='co'># NOT RUN {</span>
@@ -231,5 +243,8 @@ as a Ranges object use <code>get_genome_info</code>.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

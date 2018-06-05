@@ -9,6 +9,10 @@ sudo: false
 r:
   - bioc-devel
 
+branches:
+  - master
+  - RELEASE_3_7
+
 bioc_packages:
   - HelloRanges
   - HelloRangesData

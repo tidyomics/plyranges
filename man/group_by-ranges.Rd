@@ -6,30 +6,18 @@
 \alias{GroupedIntegerRanges-class}
 \alias{group_by-ranges}
 \alias{group_by.GenomicRanges}
-\alias{group_by.IntegerRanges}
 \alias{ungroup.GroupedGenomicRanges}
-\alias{ungroup.GroupedIntegerRanges}
 \alias{groups.GroupedGenomicRanges}
-\alias{group_vars.GroupedGenomicRanges}
 \alias{groups.GroupedIntegerRanges}
-\alias{group_vars.GroupedIntegerRanges}
 \title{Group a Ranges by one or more variables}
 \usage{
 \method{group_by}{GenomicRanges}(.data, ...)
 
-\method{group_by}{IntegerRanges}(.data, ...)
-
 \method{ungroup}{GroupedGenomicRanges}(x, ...)
-
-\method{ungroup}{GroupedIntegerRanges}(x, ...)
 
 \method{groups}{GroupedGenomicRanges}(x)
 
-\method{group_vars}{GroupedGenomicRanges}(x)
-
 \method{groups}{GroupedIntegerRanges}(x)
-
-\method{group_vars}{GroupedIntegerRanges}(x)
 }
 \arguments{
 \item{.data}{a Ranges object.}

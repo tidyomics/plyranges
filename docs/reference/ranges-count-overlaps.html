@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Count the number of overlaps between two Ranges objects — count_overlaps" />
 
 <meta property="og:description" content="Count the number of overlaps between two Ranges objects" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,19 +97,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Count the number of overlaps between two Ranges objects</h1>
+    
+    <div class="hidden name"><code>ranges-count-overlaps.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Count the number of overlaps between two Ranges objects</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>count_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
 
-<span class='co'># S3 method for Ranges</span>
+<span class='co'># S3 method for IntegerRanges</span>
 <span class='fu'>count_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
 
 <span class='co'># S3 method for GenomicRanges</span>
@@ -109,14 +121,27 @@
 
 <span class='fu'>count_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
 
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'>count_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+<span class='co'># S3 method for IntegerRanges</span>
+<span class='fu'>count_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
 
 <span class='co'># S3 method for GenomicRanges</span>
 <span class='fu'>count_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>1L</span>)</pre>
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>1L</span>)
+
+<span class='fu'>count_overlaps_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
+
+<span class='co'># S3 method for GenomicRanges</span>
+<span class='fu'>count_overlaps_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>count_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
+
+<span class='co'># S3 method for GenomicRanges</span>
+<span class='fu'>count_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -176,5 +201,8 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

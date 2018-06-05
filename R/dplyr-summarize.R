@@ -1,7 +1,8 @@
 summarize_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
-  on.exit(overscope_clean(overscope))
-  DataFrame(overscope_eval_update(overscope, dots))
+  results <- DataFrame(overscope_eval_update(overscope, dots, FALSE))
+  rownames(results) <- NULL
+  results
 }
 
 rename_dots <- function(dots) {
@@ -37,7 +38,6 @@ summarise.Ranges <- function(.data, ...) {
 }
 
 #' @method summarise DelegatingGenomicRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.DelegatingGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
@@ -47,7 +47,6 @@ summarise.DelegatingGenomicRanges <- function(.data, ...) {
 }
 
 #' @method summarise DelegatingGenomicRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.DelegatingIntegerRanges <- function(.data, ...) {
   dots <- quos(...)
@@ -59,25 +58,13 @@ summarise.DelegatingIntegerRanges <- function(.data, ...) {
 #' @importFrom rlang UQS quos
 #' @importFrom dplyr bind_cols bind_rows
 #' @method summarise GroupedGenomicRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.GroupedGenomicRanges <- function(.data, ...) {
   dots <- quos(...)
   dots <- rename_dots(dots)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  groups_summary <- as(
-    lapply(
-          extractList(delegate, inx),
-          summarize_rng, 
-          dots
-          ),
-          "List"
-  )
-  cbind(mcols(inx), unlist(groups_summary, use.names = FALSE))
+  cbind(mcols(.data@inx), summarize_rng(.data, dots))
 }
 
 #' @method summarise GroupedIntegerRanges
-#' @rdname ranges-summarise
 #' @export
 summarise.GroupedIntegerRanges <- summarise.GroupedGenomicRanges

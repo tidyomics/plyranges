@@ -10,3 +10,4 @@ TODO.md
 Makefile
 ^docs$
 ^_pkgdown\.yml$
+^appveyor\.yml$

@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Find overlap between two Ranges — find_overlaps" />
 
 <meta property="og:description" content="Find overlap between two Ranges" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,19 +97,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Find overlap between two Ranges</h1>
+    
+    <div class="hidden name"><code>ranges-overlaps.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Find overlap between two Ranges</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='co'># S3 method for Ranges</span>
+<span class='co'># S3 method for IntegerRanges</span>
 <span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
   <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
@@ -111,9 +123,9 @@
 
 <span class='fu'>find_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'>find_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='co'># S3 method for IntegerRanges</span>
+<span class='fu'>find_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
 <span class='co'># S3 method for GenomicRanges</span>
 <span class='fu'>find_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
@@ -125,16 +137,24 @@
 <span class='fu'>find_overlaps_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
   <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
+<span class='fu'>find_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>,
+  <span class='st'>".y"</span>))
+
+<span class='co'># S3 method for GenomicRanges</span>
+<span class='fu'>find_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+
 <span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
 
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+<span class='co'># S3 method for IntegerRanges</span>
+<span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
 
 <span class='co'># S3 method for GenomicRanges</span>
 <span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
   <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -157,21 +177,27 @@ coming from x and y.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A Ranges object with rows corresponding to the
-ranges in x that overlap y.  In the case of <code>group_by_overlaps</code>, returns
+ranges in x that overlap y.  In the case of <code>group_by_overlaps()</code>, returns
 a GroupedRanges object, grouped by the number of overlaps
 of ranges in x that overlap y (stored in a column called query).</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>find_overlaps</code> will search for any overlaps between ranges
-x and y and return a ranges object of the same length as x but with additional
-metadata colums corresponding to the metadata columns in y. <code>find_overlaps_within</code> is
-the same but will only search for overlaps within y. For GRanges strand is
-ignored, unless <code>find_overlaps_directed</code> is used.</p>
+    <p><code>find_overlaps()</code> will search for any overlaps between ranges
+x and y and return a Ranges object of length equal to the number of times x
+overlaps y. This  Ranges object will have additional metadata columns
+corresponding to the metadata columns in y. <code>find_overlaps_within()</code> is
+the same but will only search for overlaps within y. For GRanges objects strand is
+ignored, unless <code>find_overlaps_directed()</code> is used. If the Ranges objects have no
+metadata, one could use <code>group_by_overlaps()</code> to be able to
+identify the index of the input Range x that overlaps a Range in y.
+Alternatively,
+<code><a href='ranges-pairs.html'>pair_overlaps()</a></code> could be used to place the x ranges next to the range
+in y they overlap.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/findOverlaps-methods'>GenomicRanges::findOverlaps()</a></code>, <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/findOverlaps-methods'>IRanges::findOverlaps()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/GenomicRanges/topics/findOverlaps-methods'>GenomicRanges::findOverlaps()</a></code>, <code><a href='http://www.rdocumentation.org/packages/IRanges/topics/findOverlaps-methods'>IRanges::findOverlaps()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -181,30 +207,30 @@ ignored, unless <code>find_overlaps_directed</code> is used.</p>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
 <span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 2 metadata columns:
-#&gt;           start       end     width |        gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.5174597        b
-#&gt;   [2]         5         9         5 | 0.5174597        c
-#&gt;   [3]         5         9         5 | 0.5174597        d
-#&gt;   [4]         5         9         5 | 0.5174597        e
-#&gt;   [5]        10        14         5 | 0.1252391        d
-#&gt;   [6]        10        14         5 | 0.1252391        e</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
-#&gt;           start       end     width |        gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.5174597        d</div><div class='input'><span class='fu'>find_overlaps_within</span>(<span class='no'>query</span>, <span class='no'>subject</span>) <span class='co'># same result as minoverlap</span></div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
-#&gt;           start       end     width |        gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.5174597        d</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 2 metadata columns:
-#&gt;           start       end     width |        gc    label
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]         5         9         5 | 0.5174597        a
-#&gt;   [2]         5         9         5 | 0.5174597        b
-#&gt;   [3]         5         9         5 | 0.5174597        c
-#&gt;   [4]         5         9         5 | 0.5174597        d
-#&gt;   [5]         5         9         5 | 0.5174597        e
-#&gt;   [6]        10        14         5 | 0.1252391        c
-#&gt;   [7]        10        14         5 | 0.1252391        d
-#&gt;   [8]        10        14         5 | 0.1252391        e</div><div class='input'>
+#&gt;           start       end     width |                gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.517459749476984        b
+#&gt;   [2]         5         9         5 | 0.517459749476984        c
+#&gt;   [3]         5         9         5 | 0.517459749476984        d
+#&gt;   [4]         5         9         5 | 0.517459749476984        e
+#&gt;   [5]        10        14         5 | 0.125239087734371        d
+#&gt;   [6]        10        14         5 | 0.125239087734371        e</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
+#&gt;           start       end     width |                gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.517459749476984        d</div><div class='input'><span class='fu'>find_overlaps_within</span>(<span class='no'>query</span>, <span class='no'>subject</span>) <span class='co'># same result as minoverlap</span></div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
+#&gt;           start       end     width |                gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.517459749476984        d</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 2 metadata columns:
+#&gt;           start       end     width |                gc    label
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]         5         9         5 | 0.517459749476984        a
+#&gt;   [2]         5         9         5 | 0.517459749476984        b
+#&gt;   [3]         5         9         5 | 0.517459749476984        c
+#&gt;   [4]         5         9         5 | 0.517459749476984        d
+#&gt;   [5]         5         9         5 | 0.517459749476984        e
+#&gt;   [6]        10        14         5 | 0.125239087734371        c
+#&gt;   [7]        10        14         5 | 0.125239087734371        d
+#&gt;   [8]        10        14         5 | 0.125239087734371        e</div><div class='input'>
 <span class='co'># -- GRanges objects, strand is ignored by default</span>
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
@@ -223,11 +249,11 @@ ignored, unless <code>find_overlaps_directed</code> is used.</p>
 
 <span class='co'># ignores strandedness</span>
 <span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; GRanges object with 3 ranges and 4 metadata columns:
-#&gt;       seqnames     ranges strand | name.query score.query name.subject
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
-#&gt;   [1]     chr1 [ 11,  21]      + |         a1           1           b1
-#&gt;   [2]     chr1 [101, 200]      - |         a2           2           b2
-#&gt;   [3]     chr1 [101, 200]      - |         a2           2           b3
+#&gt;       seqnames    ranges strand | name.query score.query name.subject
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt;   [1]     chr1     11-21      + |         a1           1           b1
+#&gt;   [2]     chr1   101-200      - |         a2           2           b2
+#&gt;   [3]     chr1   101-200      - |         a2           2           b3
 #&gt;       score.subject
 #&gt;           &lt;integer&gt;
 #&gt;   [1]             1
@@ -235,19 +261,19 @@ ignored, unless <code>find_overlaps_directed</code> is used.</p>
 #&gt;   [3]             3
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>), <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 4 metadata columns:
-#&gt;       seqnames     ranges strand | name.query score.query name.subject
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
-#&gt;   [1]     chr1 [101, 200]      - |         a2           2           b3
+#&gt;       seqnames    ranges strand | name.query score.query name.subject
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt;   [1]     chr1   101-200      - |         a2           2           b3
 #&gt;       score.subject
 #&gt;           &lt;integer&gt;
 #&gt;   [1]             3
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># adding directed prefix includes strand</span>
 <span class='fu'>find_overlaps_directed</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
-#&gt;       seqnames     ranges strand | name.query score.query name.subject
-#&gt;          &lt;Rle&gt;  &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
-#&gt;   [1]     chr1 [ 11,  21]      + |         a1           1           b1
-#&gt;   [2]     chr1 [101, 200]      - |         a2           2           b2
+#&gt;       seqnames    ranges strand | name.query score.query name.subject
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt;   [1]     chr1     11-21      + |         a1           1           b1
+#&gt;   [2]     chr1   101-200      - |         a2           2           b2
 #&gt;       score.subject
 #&gt;           &lt;integer&gt;
 #&gt;   [1]             1
@@ -285,5 +311,8 @@ ignored, unless <code>find_overlaps_directed</code> is used.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

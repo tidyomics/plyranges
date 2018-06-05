@@ -11,10 +11,9 @@ select_rng <- function(.data, .drop_ranges, dots) {
 
     if (is(.data, "Ranges")) {
       exclude <- c("start", "end", "width")
-    } else {
+    } else if (is(.data, "GenomicRanges")) {
       exclude <- c("start", "end", "width", "strand", "seqnames")
     }
-
     selected_vars <- tidyselect::vars_select(var_names, UQS(dots),
                                              .exclude = exclude)
   }

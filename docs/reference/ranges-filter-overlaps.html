@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Filter by overlapping/non-overlapping ranges — filter_by_overlaps" />
 
 <meta property="og:description" content="Filter by overlapping/non-overlapping ranges" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,21 +97,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Filter by overlapping/non-overlapping ranges</h1>
+    
+    <div class="hidden name"><code>ranges-filter-overlaps.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Filter by overlapping/non-overlapping ranges</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>filter_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
 
 <span class='fu'>filter_by_non_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -141,7 +153,7 @@ overlapping between ranges, to consider there to be overlap.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/IRanges/topics/findOverlaps-methods'>IRanges::subsetByOverlaps()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/IRanges/topics/findOverlaps-methods'>IRanges::subsetByOverlaps()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -162,21 +174,21 @@ overlapping between ranges, to consider there to be overlap.</p>
 <span class='fu'>filter_by_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 3 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     name
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
-#&gt;   [1]     chr1   [1, 10]      - |        a
-#&gt;   [2]     chr2   [2, 10]      + |        b
-#&gt;   [3]     chr2   [3, 10]      + |        c
+#&gt;   [1]     chr1      1-10      - |        a
+#&gt;   [2]     chr2      2-10      + |        b
+#&gt;   [3]     chr2      3-10      + |        c
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>filter_by_non_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     name
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
-#&gt;   [1]     chr3  [ 4, 10]      * |        d
-#&gt;   [2]     chr3  [ 5, 10]      * |        e
-#&gt;   [3]     chr3  [ 6, 10]      + |        f
-#&gt;   [4]     chr4  [ 7, 10]      + |        g
-#&gt;   [5]     chr4  [ 8, 10]      + |        h
-#&gt;   [6]     chr4  [ 9, 10]      - |        i
-#&gt;   [7]     chr4  [10, 10]      - |        j
+#&gt;   [1]     chr3      4-10      * |        d
+#&gt;   [2]     chr3      5-10      * |        e
+#&gt;   [3]     chr3      6-10      + |        f
+#&gt;   [4]     chr4      7-10      + |        g
+#&gt;   [5]     chr4      8-10      + |        h
+#&gt;   [6]     chr4      9-10      - |        i
+#&gt;   [7]     chr4        10      - |        j
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 </div></pre>
@@ -210,5 +222,8 @@ overlapping between ranges, to consider there to be overlap.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

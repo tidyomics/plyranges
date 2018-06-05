@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find preceding Ranges — join_precede • plyranges</title>
+<title>Group a GRanges object by introns or gaps — chop_by_introns • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Find preceding Ranges — join_precede" />
 
-<meta property="og:description" content="Find preceding Ranges" />
+
+
+<meta property="og:title" content="Group a GRanges object by introns or gaps — chop_by_introns" />
+
+<meta property="og:description" content="Group a GRanges object by introns or gaps" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,52 +97,43 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find preceding Ranges</h1>
+    <h1>Group a GRanges object by introns or gaps</h1>
+    
+    <div class="hidden name"><code>ranges-chop.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Find preceding Ranges</p>
+    <p>Group a GRanges object by introns or gaps</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>join_precede</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+    <pre class="usage"><span class='fu'>chop_by_introns</span>(<span class='no'>x</span>)
 
-<span class='fu'>join_precede_right</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
-
-<span class='fu'>join_precede_downstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))</pre>
+<span class='fu'>chop_by_gaps</span>(<span class='no'>x</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x, y</th>
-      <td><p>Ranges objects, which ranges in x precede those in y.</p></td>
-    </tr>
-    <tr>
-      <th>suffix</th>
-      <td><p>A character vector of length two used to identify
-metadata columns coming from x and y.</p></td>
+      <th>x</th>
+      <td><p>a GenomicRanges object with a cigar string column</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A Ranges object corresponding to the ranges in `y` that are
-preceded by the ranges in `x`, all metadata is copied over from the
-right-hand side ranges `y`.</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default <code>join_precede</code> will return the ranges
-in x that come before the ranges in y and ignore any strand information.
-The function <code>join_precede_right</code> will find all ranges in y
-that are on the right-hand side of the ranges in x ignoring any strand
-information. Finally, <code>join_precede_downstream</code> will find all ranges in y
-that are that are downstream of the ranges in x. On the positive strand this
-will result in ranges in y that are right of those in x and on the negative
-strand it will result in ranges in y that are left of those in x.</p>
+    <p>Creates a grouped Ranges object from a cigar string
+column, for <code>chop_by_introns()</code> will check for the presence of
+"N" in the cigar string and create a new column called
+<code>intron</code> where TRUE indicates the alignment has a skipped
+region from the reference. For <code>chop_by_gaps()</code> will check
+for the presence of "N" or "D" in the cigar string and
+create a new column called "gaps" where TRUE indicates
+the alignment has a deletion from the reference or has an intron.</p>
     
 
   </div>
@@ -143,8 +142,6 @@ strand it will result in ranges in y that are left of those in x.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
           </ul>
 
@@ -163,5 +160,8 @@ strand it will result in ranges in y that are left of those in x.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

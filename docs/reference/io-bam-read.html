@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Read a BAM file — read_bam" />
 
 <meta property="og:description" content="Read a BAM file" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,19 +97,23 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read a BAM file</h1>
+    
+    <div class="hidden name"><code>io-bam-read.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Read a BAM file</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>read_bam</span>(<span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='no'>file</span>, <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -121,25 +133,24 @@ or single end (FALSE).</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A GRangesDeferred object</p>
+    <p>A DeferredGenomicRanges object</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Reading a BAM file is deferred until an action
-such as selecting tags or filtering by overlapping ranges
-or filtering by tags is performed on it. If paired is set to
-TRUE, when alignments are load, the GRanges has two additional
+such as using <code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> or <code><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>. If paired is set to
+TRUE, when alignments are loaded, the GRanges has two additional
 columns called read_pair_id and read_pair_group corresponding
-to paired reads (by default paired = TRUE will only select
-reads that are proper pairs).</p>
-<p>For <code>select</code> valid columns are the either the fields of the
+to paired reads and is grouped by the read_pair_group.</p>
+<p>For <code><a href='http://dplyr.tidyverse.org/reference/select.html'>select()</a></code> valid columns are the either the fields of the
 BAM file. Valid entries are qname (QNAME), flag (FLAG),
 rname (RNAME), strand, pos (POS), qwidth (width of query),
 mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
 (TLEN), seq (SEQ), and qual (QUAL). Any two character
 tags in the BAM file are also valid.</p>
-<p>For <code>filter</code> the following fields are valid
-is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
+<p>For <code><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> the following fields are valid, to select the FALSE option
+place <code>!</code> in front of the field:</p>
+<p>is_paired Select either unpaired (FALSE) or paired (TRUE) reads.
 is_proper_pair Select either improperly paired (FALSE) or properly
 paired (TRUE) reads. This is dependent on the alignment software used.
 is_unmapped_query	Select unmapped (TRUE) or mapped (FALSE) reads.
@@ -162,83 +173,21 @@ optical duplicates.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>pasillaBamSubset</span>)) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>pasillaBamSubset</span>)) {
    <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/pasillaBamSubset/topics/pasillaBamSubset-package'>untreated1_chr4</a></span>()
    <span class='co'># nothing is read until an action has been performed</span>
    <span class='fu'>print</span>(<span class='fu'>read_bam</span>(<span class='no'>bamfile</span>))
    <span class='co'># define a region of interest</span>
    <span class='no'>roi</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr4"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>5e5</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>7e5</span>) <span class='kw'>%&gt;%</span>
             <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
-   <span class='co'># add map quality scores</span>
-   <span class='no'>rng_mapq</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mapq</span>)
-   <span class='fu'>print</span>(<span class='no'>rng_mapq</span>)
-   <span class='co'># filter_by_ovleraps will only read alignments if they overlap roi</span>
-   <span class='no'>by_olap</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='ranges-filter-overlaps.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
-   <span class='fu'>print</span>(<span class='no'>by_olap</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; GRanges object with 0 ranges and 0 metadata columns:
+   <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span>
+            <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>mapq</span>) <span class='kw'>%&gt;%</span>
+            <span class='fu'><a href='ranges-filter-overlaps.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
+}</div><div class='output co'>#&gt; DeferredGenomicRanges object with 0 ranges and 0 metadata columns:
 #&gt;    seqnames    ranges strand
 #&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   -------
-#&gt;   seqinfo: no sequences
-#&gt; GRanges object with 204355 ranges and 4 metadata columns:
-#&gt;            seqnames             ranges strand |      mapq       cigar    qwidth
-#&gt;               &lt;Rle&gt;          &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt; &lt;integer&gt;
-#&gt;        [1]     chr4        [892,  966]      - |       255         75M        75
-#&gt;        [2]     chr4        [919,  993]      - |       255         75M        75
-#&gt;        [3]     chr4        [924,  998]      + |         3         75M        75
-#&gt;        [4]     chr4        [936, 1010]      + |         3         75M        75
-#&gt;        [5]     chr4        [949, 1023]      + |         1         75M        75
-#&gt;        ...      ...                ...    ... .       ...         ...       ...
-#&gt;   [204351]     chr4 [1348268, 1348342]      + |         3         75M        75
-#&gt;   [204352]     chr4 [1348268, 1348342]      + |         3         75M        75
-#&gt;   [204353]     chr4 [1348268, 1348342]      + |         3         75M        75
-#&gt;   [204354]     chr4 [1348449, 1348523]      - |         0         75M        75
-#&gt;   [204355]     chr4 [1350124, 1350198]      - |         0         75M        75
-#&gt;                njunc
-#&gt;            &lt;integer&gt;
-#&gt;        [1]         0
-#&gt;        [2]         0
-#&gt;        [3]         0
-#&gt;        [4]         0
-#&gt;        [5]         0
-#&gt;        ...       ...
-#&gt;   [204351]         0
-#&gt;   [204352]         0
-#&gt;   [204353]         0
-#&gt;   [204354]         0
-#&gt;   [204355]         0
-#&gt;   -------
-#&gt;   seqinfo: 8 sequences from an unspecified genome
-#&gt; GRanges object with 28368 ranges and 4 metadata columns:
-#&gt;           seqnames           ranges strand |        which_label       cigar
-#&gt;              &lt;Rle&gt;        &lt;IRanges&gt;  &lt;Rle&gt; |              &lt;Rle&gt; &lt;character&gt;
-#&gt;       [1]     chr4 [499946, 500020]      + | chr4:500000-700000         75M
-#&gt;       [2]     chr4 [500023, 500097]      + | chr4:500000-700000         75M
-#&gt;       [3]     chr4 [500421, 500495]      - | chr4:500000-700000         75M
-#&gt;       [4]     chr4 [500684, 500758]      - | chr4:500000-700000         75M
-#&gt;       [5]     chr4 [500753, 500827]      - | chr4:500000-700000         75M
-#&gt;       ...      ...              ...    ... .                ...         ...
-#&gt;   [28364]     chr4 [699956, 700030]      + | chr4:500000-700000         75M
-#&gt;   [28365]     chr4 [699957, 700031]      + | chr4:500000-700000         75M
-#&gt;   [28366]     chr4 [699960, 700034]      - | chr4:500000-700000         75M
-#&gt;   [28367]     chr4 [699962, 700036]      + | chr4:500000-700000         75M
-#&gt;   [28368]     chr4 [699963, 700037]      + | chr4:500000-700000         75M
-#&gt;              qwidth     njunc
-#&gt;           &lt;integer&gt; &lt;integer&gt;
-#&gt;       [1]        75         0
-#&gt;       [2]        75         0
-#&gt;       [3]        75         0
-#&gt;       [4]        75         0
-#&gt;       [5]        75         0
-#&gt;       ...       ...       ...
-#&gt;   [28364]        75         0
-#&gt;   [28365]        75         0
-#&gt;   [28366]        75         0
-#&gt;   [28367]        75         0
-#&gt;   [28368]        75         0
-#&gt;   -------
-#&gt;   seqinfo: 8 sequences from an unspecified genome</div><div class='input'>
+#&gt;   seqinfo: no sequences</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -268,5 +217,8 @@ optical duplicates.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

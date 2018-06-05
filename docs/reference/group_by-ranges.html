@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Group a Ranges by one or more variables — group_by-ranges • plyranges</title>
+<title>Group a Ranges by one or more variables — GroupedGenomicRanges-class • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,14 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Group a Ranges by one or more variables — group_by-ranges" />
+
+
+
+<meta property="og:title" content="Group a Ranges by one or more variables — GroupedGenomicRanges-class" />
 
 <meta property="og:description" content="The function group_by takes a Ranges object and defines
 groups by one or more variables. Operations are then performed on the Ranges
 by their "group". ungroup() removes grouping." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +58,12 @@ by their "group". ungroup() removes grouping." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -84,6 +91,7 @@ by their "group". ungroup() removes grouping." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -91,43 +99,35 @@ by their "group". ungroup() removes grouping." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Group a Ranges by one or more variables</h1>
+    
+    <div class="hidden name"><code>group_by-ranges.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>The function <code>group_by</code> takes a Ranges object and defines
 groups by one or more variables. Operations are then performed on the Ranges
 by their "group". <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup()</a></code> removes grouping.</p>
     
+    </div>
 
-    <pre class="usage"><span class='co'># S3 method for GRanges</span>
+    <pre class="usage"><span class='co'># S3 method for GenomicRanges</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for GRangesGrouped</span>
+<span class='co'># S3 method for GroupedGenomicRanges</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='co'># S3 method for IRanges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for IRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for GRangesGrouped</span>
+<span class='co'># S3 method for GroupedGenomicRanges</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>x</span>)
 
-<span class='co'># S3 method for GRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>group_vars</a></span>(<span class='no'>x</span>)
-
-<span class='co'># S3 method for IRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>x</span>)
-
-<span class='co'># S3 method for IRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>group_vars</a></span>(<span class='no'>x</span>)</pre>
+<span class='co'># S3 method for GroupedIntegerRanges</span>
+<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>x</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -154,7 +154,7 @@ additional groups slot.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code> creates a new object of class <code>GRangesGrouped</code> if
-the input is a <code>GRanges</code> object or an object of class <code>IRangesGrouped</code>
+the input is a <code>GRanges</code> object or an object of class <code>GroupedIntegerRanges</code>
 if the input is a <code>IRanges</code> object. Both of these classes contain a slot
 called <code>groups</code> corresponding to the names of grouping variables. They
 also inherit from their parent classes, <code>Ranges</code> and <code>GenomicRanges</code>
@@ -180,73 +180,73 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 <span class='no'>rng_by_cat</span> <span class='kw'>&lt;-</span> <span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cat</span>)
 <span class='co'># grouping does not change appearance or shape of Ranges</span>
 <span class='no'>rng_by_cat</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
-#&gt; Groups: cat
-#&gt;            start       end     width |         gc      cat
-#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;    [1]         1         5         5 | 0.30776611        b
-#&gt;    [2]         2         6         5 | 0.25767250        b
-#&gt;    [3]         3         7         5 | 0.55232243        a
-#&gt;    [4]         4         8         5 | 0.05638315        a
-#&gt;    [5]         5         9         5 | 0.46854928        b
-#&gt;    [6]         6        10         5 | 0.48377074        b
-#&gt;    [7]         7        11         5 | 0.81240262        a
-#&gt;    [8]         8        12         5 | 0.37032054        a
-#&gt;    [9]         9        13         5 | 0.54655860        a
-#&gt;   [10]        10        14         5 | 0.17026205        b</div><div class='input'><span class='co'># a list of symbols</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; [[1]]
+#&gt; Groups: cat [2]
+#&gt;            start       end     width |                 gc      cat
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |          &lt;numeric&gt; &lt;factor&gt;
+#&gt;    [1]         1         5         5 |  0.307766110869125        b
+#&gt;    [2]         2         6         5 |  0.257672501029447        b
+#&gt;    [3]         3         7         5 |  0.552322433330119        a
+#&gt;    [4]         4         8         5 | 0.0563831503968686        a
+#&gt;    [5]         5         9         5 |  0.468549283919856        b
+#&gt;    [6]         6        10         5 |  0.483770735096186        b
+#&gt;    [7]         7        11         5 |  0.812402617651969        a
+#&gt;    [8]         8        12         5 |  0.370320537127554        a
+#&gt;    [9]         9        13         5 |  0.546558595029637        a
+#&gt;   [10]        10        14         5 |  0.170262051047757        b</div><div class='input'><span class='co'># a list of symbols</span>
+<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; $cat
 #&gt; cat
 #&gt; </div><div class='input'><span class='co'># ungroup removes any grouping</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
-#&gt;            start       end     width |         gc      cat
-#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;    [1]         1         5         5 | 0.30776611        b
-#&gt;    [2]         2         6         5 | 0.25767250        b
-#&gt;    [3]         3         7         5 | 0.55232243        a
-#&gt;    [4]         4         8         5 | 0.05638315        a
-#&gt;    [5]         5         9         5 | 0.46854928        b
-#&gt;    [6]         6        10         5 | 0.48377074        b
-#&gt;    [7]         7        11         5 | 0.81240262        a
-#&gt;    [8]         8        12         5 | 0.37032054        a
-#&gt;    [9]         9        13         5 | 0.54655860        a
-#&gt;   [10]        10        14         5 | 0.17026205        b</div><div class='input'><span class='co'># group_by works best with other verbs</span>
+#&gt;            start       end     width |                 gc      cat
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |          &lt;numeric&gt; &lt;factor&gt;
+#&gt;    [1]         1         5         5 |  0.307766110869125        b
+#&gt;    [2]         2         6         5 |  0.257672501029447        b
+#&gt;    [3]         3         7         5 |  0.552322433330119        a
+#&gt;    [4]         4         8         5 | 0.0563831503968686        a
+#&gt;    [5]         5         9         5 |  0.468549283919856        b
+#&gt;    [6]         6        10         5 |  0.483770735096186        b
+#&gt;    [7]         7        11         5 |  0.812402617651969        a
+#&gt;    [8]         8        12         5 |  0.370320537127554        a
+#&gt;    [9]         9        13         5 |  0.546558595029637        a
+#&gt;   [10]        10        14         5 |  0.170262051047757        b</div><div class='input'><span class='co'># group_by works best with other verbs</span>
 <span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>,
                    <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                    <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 
 <span class='no'>grng_by_strand</span> <span class='kw'>&lt;-</span> <span class='no'>grng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>strand</span>)
 <span class='no'>grng_by_strand</span></div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
-#&gt; Groups: strand
-#&gt;        seqnames    ranges strand |         gc      cat
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;    [1]     chr1  [ 1,  5]      - | 0.30776611        b
-#&gt;    [2]     chr1  [ 2,  6]      - | 0.25767250        b
-#&gt;    [3]     chr1  [ 3,  7]      - | 0.55232243        a
-#&gt;    [4]     chr1  [ 4,  8]      - | 0.05638315        a
-#&gt;    [5]     chr1  [ 5,  9]      + | 0.46854928        b
-#&gt;    [6]     chr1  [ 6, 10]      + | 0.48377074        b
-#&gt;    [7]     chr1  [ 7, 11]      - | 0.81240262        a
-#&gt;    [8]     chr1  [ 8, 12]      - | 0.37032054        a
-#&gt;    [9]     chr1  [ 9, 13]      - | 0.54655860        a
-#&gt;   [10]     chr1  [10, 14]      + | 0.17026205        b
+#&gt; Groups: strand [2]
+#&gt;        seqnames    ranges strand |                 gc      cat
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt; &lt;factor&gt;
+#&gt;    [1]     chr1       1-5      - |  0.307766110869125        b
+#&gt;    [2]     chr1       2-6      - |  0.257672501029447        b
+#&gt;    [3]     chr1       3-7      - |  0.552322433330119        a
+#&gt;    [4]     chr1       4-8      - | 0.0563831503968686        a
+#&gt;    [5]     chr1       5-9      + |  0.468549283919856        b
+#&gt;    [6]     chr1      6-10      + |  0.483770735096186        b
+#&gt;    [7]     chr1      7-11      - |  0.812402617651969        a
+#&gt;    [8]     chr1      8-12      - |  0.370320537127554        a
+#&gt;    [9]     chr1      9-13      - |  0.546558595029637        a
+#&gt;   [10]     chr1     10-14      + |  0.170262051047757        b
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># grouping with other verbs</span>
 <span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
-#&gt;     strand        gc
-#&gt;   &lt;factor&gt; &lt;numeric&gt;
-#&gt; 1        + 0.3741940
-#&gt; 2        - 0.4147751</div><div class='input'><span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>gc</span> <span class='kw'>==</span> <span class='fu'>min</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 2 ranges and 2 metadata columns:
-#&gt; Groups: strand
-#&gt;       seqnames    ranges strand |         gc      cat
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;numeric&gt; &lt;factor&gt;
-#&gt;   [1]     chr1  [10, 14]      + | 0.17026205        b
-#&gt;   [2]     chr1  [ 4,  8]      - | 0.05638315        a
+#&gt;   strand                gc
+#&gt;    &lt;Rle&gt;         &lt;numeric&gt;
+#&gt; 1      +   0.3741940233546
+#&gt; 2      - 0.414775135062103</div><div class='input'><span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>gc</span> <span class='kw'>==</span> <span class='fu'>min</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 2 ranges and 2 metadata columns:
+#&gt; Groups: strand [2]
+#&gt;       seqnames    ranges strand |                 gc      cat
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt; &lt;factor&gt;
+#&gt;   [1]     chr1       4-8      - | 0.0563831503968686        a
+#&gt;   [2]     chr1     10-14      + |  0.170262051047757        b
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 1 row and 1 column
-#&gt;          gc
-#&gt;   &lt;numeric&gt;
-#&gt; 1 0.4026008</div><div class='input'>
+#&gt;                  gc
+#&gt;           &lt;numeric&gt;
+#&gt; 1 0.402600801549852</div><div class='input'>
 
 </div></pre>
   </div>
@@ -279,5 +279,8 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

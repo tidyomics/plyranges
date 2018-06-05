@@ -14,12 +14,11 @@ mutate_mcols <- function(.data, .mutated) {
 
   if (!all(idx_mcols)) {
     if (is.null(mcols(.data))) {
-      mcols(.data) <- do.call("DataFrame", .mutated[!idx_mcols])
+      mcols(.data) <- S4Vectors::DataFrame(.mutated[!idx_mcols])
     } else {
-      mcols(.data) <- do.call("DataFrame",
-                              list(mcols(.data), .mutated[!idx_mcols]))
+      mcols(.data) <- S4Vectors::DataFrame(list(mcols(.data), 
+                                                .mutated[!idx_mcols]))
     }
-
   }
 
   .data
@@ -52,7 +51,6 @@ mutate_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   on.exit(overscope_clean(overscope))
   .mutated <- overscope_eval_update(overscope, dots)
-
   .data <- mutate_core(.data, .mutated)
   mutate_mcols(.data, .mutated)
 }
@@ -128,17 +126,14 @@ mutate.Ranges <- function(.data, ...) {
   mutate_rng(.data, dots)
 }
 
-#' @rdname mutate-ranges
 #' @method mutate AnchoredIntegerRanges
 #' @export
 mutate.AnchoredIntegerRanges <- mutate.Ranges
 
-#' @rdname mutate-ranges
 #' @method mutate AnchoredGenomicRanges
 #' @export
 mutate.AnchoredGenomicRanges <- mutate.Ranges
 
-#' @rdname mutate-ranges
 #' @method mutate DelegatingGenomicRanges
 #' @export
 mutate.DelegatingGenomicRanges <- function(.data, ...) {
@@ -148,19 +143,16 @@ mutate.DelegatingGenomicRanges <- function(.data, ...) {
   return(.data)
 }
 
-#' @rdname mutate-ranges
 #' @method mutate DelegatingIntegerRanges
 #' @export
 mutate.DelegatingIntegerRanges <- mutate.DelegatingGenomicRanges
 
-#' @rdname mutate-ranges
 #' @method mutate GroupedGenomicRanges
 #' @export
 mutate.GroupedGenomicRanges <- function(.data, ...) {
   mutate_grp(.data, ...)
 }
 
-#' @rdname mutate-ranges
 #' @method mutate GroupedIntegerRanges
 #' @export
 mutate.GroupedIntegerRanges <- mutate.GroupedGenomicRanges

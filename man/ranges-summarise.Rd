@@ -2,21 +2,9 @@
 % Please edit documentation in R/dplyr-summarize.R
 \name{summarise.Ranges}
 \alias{summarise.Ranges}
-\alias{summarise.DelegatingGenomicRanges}
-\alias{summarise.DelegatingIntegerRanges}
-\alias{summarise.GroupedGenomicRanges}
-\alias{summarise.GroupedIntegerRanges}
 \title{Aggregate a Ranges object}
 \usage{
 \method{summarise}{Ranges}(.data, ...)
-
-\method{summarise}{DelegatingGenomicRanges}(.data, ...)
-
-\method{summarise}{DelegatingGenomicRanges}(.data, ...)
-
-\method{summarise}{GroupedGenomicRanges}(.data, ...)
-
-\method{summarise}{GroupedIntegerRanges}(.data, ...)
 }
 \arguments{
 \item{.data}{a Ranges object}

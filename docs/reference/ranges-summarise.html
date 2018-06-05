@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Aggregate a Ranges object — summarise.GenomicRanges • plyranges</title>
+<title>Aggregate a Ranges object — summarise.Ranges • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Aggregate a Ranges object — summarise.GenomicRanges" />
+
+
+
+<meta property="og:title" content="Aggregate a Ranges object — summarise.Ranges" />
 
 <meta property="og:description" content="Aggregate a Ranges object" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,29 +97,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Aggregate a Ranges object</h1>
+    
+    <div class="hidden name"><code>ranges-summarise.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Aggregate a Ranges object</p>
     
+    </div>
 
-    <pre class="usage"><span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for Ranges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for GRangesGrouped</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for IRangesGrouped</span>
+    <pre class="usage"><span class='co'># S3 method for Ranges</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -130,7 +133,7 @@
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise()</a></code></p>
+    <div class='dont-index'><p><code><a href='http://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -138,14 +141,14 @@
 <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"*"</span>), <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>))
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>)
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 1 row and 1 column
-#&gt;          gc
-#&gt;   &lt;numeric&gt;
-#&gt; 1 0.6613756</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>strand</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 3 rows and 2 columns
-#&gt;     strand        gc
-#&gt;   &lt;factor&gt; &lt;numeric&gt;
-#&gt; 1        + 0.7326419
-#&gt; 2        - 0.5013930
-#&gt; 3        * 0.6492534</div></pre>
+#&gt;                  gc
+#&gt;           &lt;numeric&gt;
+#&gt; 1 0.367872588802129</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>strand</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 3 rows and 2 columns
+#&gt;   strand                gc
+#&gt;    &lt;Rle&gt;         &lt;numeric&gt;
+#&gt; 1      + 0.180136174273988
+#&gt; 2      - 0.475098506361246
+#&gt; 3      * 0.381412416696548</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -174,5 +177,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Split a Grouped Ranges object into a RangesList — split_groups • plyranges</title>
+<title>An abstract class to represent operations performed over a file — FileOperator-class • plyranges</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Split a Grouped Ranges object into a RangesList — split_groups" />
 
-<meta property="og:description" content="Split a Grouped Ranges object into a RangesList" />
+
+
+<meta property="og:title" content="An abstract class to represent operations performed over a file — FileOperator-class" />
+
+<meta property="og:description" content="An abstract class to represent operations performed over a file" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -53,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">plyranges</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">plyranges</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -82,6 +89,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,47 +97,35 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Split a Grouped Ranges object into a RangesList</h1>
+    <h1>An abstract class to represent operations performed over a file</h1>
+    
+    <div class="hidden name"><code>ranges-class.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Split a Grouped Ranges object into a RangesList</p>
+    <p>An abstract class to represent operations performed over a file</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>split_groups</span>(<span class='no'>.data_grouped</span>, <span class='kw'>populate_mcols</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>.data_grouped</th>
-      <td><p>A grouped ranges object</p></td>
-    </tr>
-    <tr>
-      <th>populate_mcols</th>
-      <td><p>add grouping to metadata slot of RangesList</p></td>
-    </tr>
-    <tr>
-      <th>drop</th>
-      <td><p>drop unused group levels</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>a RangesList object</p>
+    <p>This class is used internally by DeferredGenomicRanges objects.
+Currently, this class is only implemented for bam files (as a
+BamFileOperator) but will eventually be extended to the other avaialable
+readers.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
           </ul>
 
   </div>
@@ -147,5 +143,8 @@
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
