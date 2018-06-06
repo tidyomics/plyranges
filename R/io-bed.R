@@ -53,7 +53,7 @@ norm_args_reader <- function(genome_info) {
 #' @examples
 #'
 #' test_path <- system.file("tests", package = "rtracklayer")
-#'  bed_file <- file.path(test_path, "test.bed")
+#' bed_file <- file.path(test_path, "test.bed")
 #' gr <- read_bed(bed_file)
 #' gr
 #' gr <- read_bed(bed_file, genome_info = "hg19")
@@ -103,6 +103,27 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' @export
 #' @return The write functions return a BED(Graph)File invisibly
 #' @rdname io-bed-write
+#' @examples 
+#' \dontrun{
+#'   test_path <- system.file("tests", package = "rtracklayer")
+#'   bed_file <- file.path(test_path, "test.bed")
+#'   gr <- read_bed(bed_file)
+#'   bed_file_out <- file.path(tempdir(), "new.bed")
+#'   write_bed(gr, bed_file_out)
+#'   read_bed(bed_file_out)
+#'   #' bedgraph
+#'   bg_file <- file.path(test_path, "test.bedGraph")
+#'   gr <- read_bed_graph(bg_file)
+#'   bg_file_out <- file.path(tempdir(), "new.bg")
+#'   write_bed(gr, bg_file_out)
+#'   read_bed(bg_file_out)
+#'   # narrowpeaks
+#'   np_file <- system.file("extdata", "demo.narrowPeak.gz",package="rtracklayer")
+#'   gr <- read_narrowpeaks(np_file, genome_info = "hg19")
+#'   np_file_out <- file.path(tempdir(), "new.bg")
+#'   write_narrowpeaks(gr, np_file_out)
+#'   read_narrowpeaks(np_file_out)
+#' }
 write_bed <- function(x, file, index = FALSE) {
   export.bed(x, file, index = index)
 }
@@ -129,7 +150,6 @@ read_bed_graph <- function(file, col_names = NULL, genome_info = NULL,
 write_bed_graph <- function(x, file, index = FALSE) {
   export.bedGraph(x, file, index = index)
 }
-
 
 #' @export
 #' @rdname io-bed-read

@@ -12,6 +12,9 @@ chop_by_gaps(x)
 \arguments{
 \item{x}{a GenomicRanges object with a cigar string column}
 }
+\value{
+a GRanges object
+}
 \description{
 Group a GRanges object by introns or gaps
 }
@@ -24,4 +27,20 @@ region from the reference. For \code{chop_by_gaps()} will check
 for the presence of "N" or "D" in the cigar string and
 create a new column called "gaps" where TRUE indicates
 the alignment has a deletion from the reference or has an intron.
+}
+\examples{
+if (require(pasillaBamSubset)) {
+   bamfile <- untreated1_chr4()
+   # define a region of interest
+   roi <- data.frame(seqnames = "chr4", start = 5e5, end = 7e5) \%>\%
+            as_granges()
+   # results in a grouped ranges object
+   rng <- read_bam(bamfile) \%>\% 
+            filter_by_overlaps(roi) \%>\%
+            chop_by_gaps()
+   # to find ranges that have gaps use filter with `n()`
+   rng \%>\% filter(n() > 2)
+  
+}
+
 }

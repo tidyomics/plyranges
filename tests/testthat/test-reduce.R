@@ -125,7 +125,7 @@ test_that("grouping then reducing works as expected", {
 test_that("expected behaviour for grouped filter w reduce #37",
           {
             # see https://github.com/sa-lee/plyranges/issues/37
-            set.seed(2018)
+            set.seed(2019)
             n <- 10
             r <- GRanges(seqnames = rep("chr1", n),
                          ranges = IRanges(start = sample(20, n, replace = T),
@@ -135,8 +135,27 @@ test_that("expected behaviour for grouped filter w reduce #37",
                                    condition = rep_len(c("One","Two"), n))
             red1 <- r %>% group_by(condition) %>% reduce_ranges
             
-            red2 <- r %>% filter(score > 2) %>% group_by(condition) %>% reduce_ranges
+            exp <- S4Vectors::split(r, r$condition) %>% 
+              reduce() %>%
+              unlist()
+            exp <- exp %>%
+              mutate(condition = as.factor(names(.)))
+            names(exp) <- NULL
             
-            expect_identical(red1, red2)
+            expect_identical(red1, exp)
+            
+            red2 <- r %>%  
+              group_by(condition) %>% 
+              filter(score > 2) %>% 
+              reduce_ranges
+            
+            exp <- S4Vectors::split(r, r$condition) 
+            is_gt2 <- as(lapply(exp, function(x) x$score > 2), "List")
+            exp <- exp[is_gt2] %>% reduce() %>% unlist()
+            exp <- exp %>%
+              mutate(condition = as.factor(names(.)))
+            names(exp) <- NULL
+            
+            expect_identical(red2, exp)
           }
 )
