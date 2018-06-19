@@ -80,6 +80,7 @@ Collate:
     'ranges-chop.R'
     'ranges-construct.R'
     'ranges-disjoin.R'
+    'ranges-eval-quo.R'
     'ranges-eval.R'
     'ranges-genomeinfo.R'
     'ranges-join-follow.R'
