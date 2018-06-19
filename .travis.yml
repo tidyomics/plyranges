@@ -6,8 +6,7 @@ cache: packages
 
 sudo: false
 
-r:
-  - bioc-devel
+r: bioc-devel
 
 branches:
   only:
