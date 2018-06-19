@@ -1,6 +1,5 @@
 # ranges-eval-utils.R
 # some helpers for 'tidy' NSE on ranges
-
 are_bioc_pkgs_scoped <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
   all(vapply(paste0("package:", pkgs), 
              rlang::is_scoped, 
@@ -150,27 +149,4 @@ n <- function() {
 # as a data.frame in a join.
 tbl_vars.GenomicRanges <- function(x) {
   ranges_vars(x)
-}
-
-
-detach_depends <- function() {
-  sapply(paste0("package:", 
-                c("GenomicRanges",
-                  "GenomeInfoDb",
-                  "IRanges",
-                  "S4Vectors",
-                  "BiocGenerics")),
-         detach, 
-         character.only = TRUE)
-}
-
-reattach_depends <- function() {
-  sapply(c("GenomicRanges",
-           "GenomeInfoDb",
-           "IRanges",
-           "S4Vectors",
-           "BiocGenerics"),
-         library,
-         character.only = TRUE,
-         quietly = TRUE)
 }

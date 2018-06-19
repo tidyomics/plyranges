@@ -128,8 +128,8 @@ test_that("expected behaviour for grouped filter w reduce #37",
             set.seed(2019)
             n <- 10
             r <- GRanges(seqnames = rep("chr1", n),
-                         ranges = IRanges(start = sample(20, n, replace = T),
-                                          width = sample(6,  n, replace = T))
+                         ranges = IRanges(start = sample(20, n, replace = TRUE),
+                                          width = sample(6,  n, replace = TRUE))
             )
             mcols(r) <- data.frame(score = runif(n, 0, 100), 
                                    condition = rep_len(c("One","Two"), n))
