@@ -1,17 +1,18 @@
-warnings_are_errors: false
-
 language: r
-
-cache: packages
 
 sudo: false
 
-r: bioc-devel
+cache: packages
 
-bioc_packages:
-  - HelloRanges
-  - HelloRangesData
-  - BSgenome.Hsapiens.UCSC.hg19
+r: bioc-devel
+bioc_check: true
+
+warnings_are_errors: false
+
+branches:
+  only:
+    - master
+    - RELEASE_3_7
 
 r_packages:
   - rlang
@@ -20,5 +21,17 @@ r_packages:
   - ggplot2
   - covr
 
+bioc_packages:
+  - BiocGenerics
+  - BiocCheck
+  - S4Vectors
+  - GenomicRanges
+  - IRanges
+  - BiocStyle
+  - HelloRanges
+  - HelloRangesData
+  - BSgenome.Hsapiens.UCSC.hg19
+
+
 after_success:
-  - Rscript -e 'library(covr); codecov()'
+  - Rscript -e 'library(covr);codecov()'
