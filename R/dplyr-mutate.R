@@ -20,7 +20,6 @@ mutate_mcols <- function(.data, .mutated) {
                                                 .mutated[!idx_mcols]))
     }
   }
-
   .data
 }
 
@@ -64,6 +63,7 @@ mutate_grp <- function(.data, ...) {
     mutate_rng(x, dots)    
   })
   rng <- bind_ranges(rng)[order(unlist(inx))]
+  names(rng) <- NULL
   new(class(.data),
       delegate = rng, 
       groups =  groups(.data), 
