@@ -55,7 +55,7 @@ mutate_rng <- function(.data, dots) {
 }
 
 mutate_grp <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- set_dots_named(...)
   delegate <- .data@delegate
   inx <- .data@inx
   rng <- lapply(inx, function(i) {
@@ -122,7 +122,7 @@ mutate_grp <- function(.data, ...) {
 #'     mutate(width = width * 2)
 #' @export
 mutate.Ranges <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- set_dots_named(...)
   mutate_rng(.data, dots)
 }
 
@@ -137,7 +137,7 @@ mutate.AnchoredGenomicRanges <- mutate.Ranges
 #' @method mutate DelegatingGenomicRanges
 #' @export
 mutate.DelegatingGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- set_dots_named(...)
   delegate <- .data@delegate
   .data@delegate <- mutate_rng(delegate, dots)
   return(.data)

@@ -1,43 +1,6 @@
 # ranges-eval-utils.R
-# some helpers for 'tidy' NSE on ranges
-are_bioc_pkgs_scoped <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
-  all(vapply(paste0("package:", pkgs), 
-             rlang::is_scoped, 
-             logical(1)))
-}
+# some helpers for 'tidy' evaluation on ranges
 
-#' @importFrom methods getGeneric getGenerics
-bioc_generics <- function(pkgs = c("BiocGenerics", "IRanges", "S4Vectors")) {
-  pkgs <- lapply(pkgs, asNamespace)
-  generics <-  getGenerics(pkgs)
-  fn <- mapply(getGeneric, 
-               f = generics@.Data, 
-               package = generics@package, 
-               SIMPLIFY = FALSE)
-  Filter(function(x) {
-    fun = try(x@default, silent = TRUE)
-    if (is(fun, "try-error")) FALSE
-    !is.primitive(fun)
-  },
-  fn)
-}
-
-scope_plyranges <- function(env, generics) {
-  tail <- env
-  nms <- character(0)
-  # recurse through parent environments until we get to the empty env
-  while(!identical(tail, rlang::empty_env())) {
-    env_nms <- rlang::env_names(tail)
-    nms <- unique(c(nms, intersect(names(generics), env_nms)))
-    tail <- rlang::env_parent(tail)
-  }
-  nms <- setdiff(nms, rlang::env_names(rlang::global_env()))
-  generics <- generics[nms]
-  
-  child <- rlang::child_env(env,
-                            UQS(generics))
-  child
-}
 
 #' Create an overscoped environment from a Ranges object
 #' 
@@ -80,11 +43,8 @@ overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
 overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   update <- vector("list", length(dots))
   names(update) <- names(dots)
-  generics <- bioc_generics()
   for (i in seq_along(update)) {
     quo <- dots[[i]]
-    qenv <- rlang::quo_get_env(quo)
-    quo <- rlang::quo_set_env(quo, scope_plyranges(qenv, generics))
     update[[i]] <- eval_tidy(quo, data = overscope)
     # sometimes we want to compute on previously constructed columns
     # we can do this by binding the evaluated expression to

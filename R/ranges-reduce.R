@@ -12,7 +12,7 @@ reduce_rng <- function(.data, reduced, dots) {
 }
 
 reduce_single <- function(.data, ..., rfun = reduce) {
-  dots <- quos(...)
+  dots <- set_dots_named(...)
   if (length(dots) == 0L) {
     return(rfun(.data))
   }
@@ -21,7 +21,7 @@ reduce_single <- function(.data, ..., rfun = reduce) {
 }
 
 reduce_by_grp <- function(.data, ..., rfun = IRanges::reduce) {
-  dots <- quos(...)
+  dots <- set_dots_named(...)
   delegate <- .data@delegate
   inx <- .data@inx
   groups <- group_vars(.data)

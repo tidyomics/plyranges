@@ -16,7 +16,6 @@ rng_arrange <- function(.data, dots) {
 #' @param ... Comma seperated list of variable names.
 #'
 #' @importFrom dplyr arrange
-#' @importFrom rlang quos
 #' @examples
 #' rng <- as_iranges(data.frame(start = 1:10, width = 10:1))
 #' rng <- mutate(rng, score = runif(10))
@@ -27,14 +26,14 @@ rng_arrange <- function(.data, dots) {
 #' @method arrange Ranges
 #' @export
 arrange.Ranges <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- rlang::enquos(...)
   rng_arrange(.data, dots)
 }
 
 #' @method arrange DelegatingGenomicRanges
 #' @export
 arrange.DelegatingGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- rlang::enquos(...)
   delegate <- .data@delegate
   .data@delegate <- rng_arrange(delegate, dots)
   .data

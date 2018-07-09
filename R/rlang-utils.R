@@ -1,10 +1,8 @@
 # rlang-utils
+# allows programming with plyranges
 
 #' @export
 rlang::enquo
-
-#' @export
-rlang::quos
 
 #' @export
 rlang::UQS

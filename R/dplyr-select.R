@@ -65,7 +65,7 @@ select_rng <- function(.data, .drop_ranges, dots) {
 #' @method select Ranges
 #' @export
 select.Ranges <- function(.data, ..., .drop_ranges = FALSE) {
-  dots <- quos(...)
+  dots <- rlang::enquos(...)
 
   # no selection? - return .data
   if (length(dots) == 0) {
@@ -82,7 +82,7 @@ select.Ranges <- function(.data, ..., .drop_ranges = FALSE) {
 #' @method select DelegatingGenomicRanges
 #' @export
 select.DelegatingGenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
-  dots <- quos(...)
+  dots <- rlang::enquos(...)
   # no selection? - return .data
   if (length(dots) == 0) {
     return(.data)

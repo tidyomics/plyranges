@@ -56,7 +56,7 @@ setMethod("show", "GroupedGenomicRanges", function(object) {
 # --- group-by backend ---
 # generates index for grouping variables
 make_group_inx <- function(rng, ...) {
-    capture_groups <- quos(...)
+    capture_groups <- rlang::enquos(...)
     group_names <- unlist(lapply(capture_groups, quo_name))
     groups <- rlang::syms(group_names)
     capture_groups <- lapply(groups, rlang::as_quosure)

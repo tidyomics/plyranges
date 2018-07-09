@@ -5,13 +5,6 @@ summarize_rng <- function(.data, dots) {
   results
 }
 
-rename_dots <- function(dots) {
-  unnamed_dots <- nchar(names(dots)) == 0
-  rename_dots <- unlist(lapply(dots[unnamed_dots], rlang::quo_name))
-  names(dots)[unnamed_dots] <- rename_dots
-  dots
-}
-
 #' Aggregate a Ranges object
 #'
 #' @param .data a Ranges object
@@ -32,16 +25,14 @@ rename_dots <- function(dots) {
 #' @rdname ranges-summarise
 #' @export
 summarise.Ranges <- function(.data, ...) {
-  dots <- quos(...)
-  dots <- rename_dots(dots)
+  dots <- set_dots_named(...)
   summarize_rng(.data, dots)
 }
 
 #' @method summarise DelegatingGenomicRanges
 #' @export
 summarise.DelegatingGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  dots <- rename_dots(dots)
+  dots <- set_dots_named(...)
   delegate <- .data@delegate
   summarize_rng(delegate, dots)
 }
@@ -49,19 +40,17 @@ summarise.DelegatingGenomicRanges <- function(.data, ...) {
 #' @method summarise DelegatingGenomicRanges
 #' @export
 summarise.DelegatingIntegerRanges <- function(.data, ...) {
-  dots <- quos(...)
-  dots <- rename_dots(dots)
+  dots <- set_dots_named(...)
   delegate <- .data@delegate
   summarize_rng(delegate, dots)
 }
 
-#' @importFrom rlang UQS quos
+#' @importFrom rlang UQS enquos
 #' @importFrom dplyr bind_cols bind_rows
 #' @method summarise GroupedGenomicRanges
 #' @export
 summarise.GroupedGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
-  dots <- rename_dots(dots)
+  dots <- set_dots_named(...)
   cbind(mcols(.data@inx, use.names = FALSE), summarize_rng(.data, dots))
 }
 

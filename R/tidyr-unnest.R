@@ -36,7 +36,7 @@ unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NU
   }
 
 
-  dots <- quos(...)
+  dots <- rlang::enquos(...)
 
   dot_names <- unlist(Map(function(.) quo_name(.), dots))
 

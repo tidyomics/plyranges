@@ -28,8 +28,6 @@
 \alias{reexports}
 \alias{enquo}
 \alias{reexports}
-\alias{quos}
-\alias{reexports}
 \alias{UQS}
 \alias{reexports}
 \alias{UQ}
@@ -46,7 +44,7 @@ below to see their documentation.
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
-  \item{rlang}{\code{\link[rlang]{enquo}}, \code{\link[rlang]{quos}}, \code{\link[rlang]{UQS}}, \code{\link[rlang]{UQ}}}
+  \item{rlang}{\code{\link[rlang]{enquo}}, \code{\link[rlang]{UQS}}, \code{\link[rlang]{UQ}}}
 
   \item{tidyr}{\code{\link[tidyr]{unnest}}}
 }}

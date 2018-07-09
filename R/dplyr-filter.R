@@ -14,7 +14,7 @@ filter_rng <- function(.data, dots) {
 }
 
 filter_grp <- function(.data, ...) {
-    dots <- quos(...)
+    dots <- set_dots_unnamed(...)
     ii <- filter_rng(.data, dots)
     inx_update <- .data@inx[ii]
     rng <- .data@delegate[sort(unlist(inx_update))]
@@ -73,14 +73,14 @@ filter_grp <- function(.data, ...) {
 #' @method filter Ranges
 #' @export
 filter.Ranges <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- set_dots_unnamed(...)
   .data[filter_rng(.data, dots)]
 }
 
 #' @method filter DelegatingGenomicRanges
 #' @export
 filter.DelegatingGenomicRanges <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- set_dots_unnamed(...)
   delegate <- .data@delegate
   .data@delegate <- delegate[filter_rng(delegate, dots)]
   return(.data)
