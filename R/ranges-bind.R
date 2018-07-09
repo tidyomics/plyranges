@@ -60,17 +60,30 @@ interweave <- function(left, right, .id = NULL) {
 #' @export
 #' @importFrom methods as
 bind_ranges <- function(..., .id = NULL) {
-  x <- unlist(rlang::dots_values(...))
+  x <- unlist(rlang::dots_values(...), recursive = TRUE)
+  .bind_rng(x, .id)
+}
 
-  if (all(vapply(x, function(x) is(x, "GenomicRanges"), logical(1)))) {
-    to_class <- "GRangesList"
-  } else if (all(vapply(x, function(x) is(x, "IntegerRanges"), logical(1)))) {
-    to_class <- "IRangesList"
-  } else {
+all_genomic_ranges <- function(x) {
+  all(vapply(x, function(x) is(x, "GenomicRanges"), logical(1)))
+}
+
+all_integer_ranges <- function(x) {
+  all(vapply(x, function(x) is(x, "IntegerRanges"), logical(1)))
+}
+
+.bind_rng <- function(x, .id = NULL) {
+  if (!(all_genomic_ranges(x) | all_integer_ranges(x))) {
     stop("Cannot bind objects of different classes together, ... must be
-         all Ranges or GenomicRanges object.", call. = FALSE)
+         all Ranges objects.", call. = FALSE)
   }
+  x <- as(x, "List")
+  x <- .check_id_var(x, .id)
+  x <- .set_id_var(x, .id)
+  x
+}
 
+.check_id_var <- function(x, .id = NULL) {
   if (!is.null(.id)) {
     stopifnot(is.character(.id) & length(.id) == 1L)
     any_empty <-  vapply(x, function(x) length(x) == 0, logical(1))
@@ -80,14 +93,14 @@ bind_ranges <- function(..., .id = NULL) {
       names(x) <- seq_along(x)
     }
   }
+  x
+}
 
-
+.set_id_var <- function(x, .id = NULL) {
+  x <- suppressWarnings(unlist(x, use.names = TRUE))
   if (!is.null(.id)) {
-    rng <- unlist(as(x, to_class), use.names = TRUE)
-    mcols(rng)[[.id]] <-  names(rng)
-    names(rng) <- NULL
-    return(rng)
-  } else {
-    return(unlist(as(x, to_class), use.names = FALSE))
+    mcols(x)[[.id]] <-  as(names(x), "Rle")
+    names(x) <- NULL
   }
+  x
 }
