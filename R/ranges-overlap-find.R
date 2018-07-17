@@ -1,4 +1,4 @@
-# workhorse funciton for copying metadata columns in y
+# workhorse function for copying metadata columns in y
 mcols_overlaps_update <- function(left, right, suffix, return_data_frame = FALSE) {
 
   left_names <- names(mcols(left))

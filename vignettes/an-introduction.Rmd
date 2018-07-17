@@ -12,13 +12,13 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-# `Ranges` revisted
+# `Ranges` revisited
 
 In Bioconductor there are two classes, `IRanges` and `GRanges`, 
 that are standard data structures for representing genomics data. 
 Throughout this document I refer to either of these classes as `Ranges` if an
-operation can be performed on either class, otherwise I explicilty mention if
-a function is approrpriate for an `IRanges` or `GRanges`.
+operation can be performed on either class, otherwise I explicitly mention if
+a function is appropriate for an `IRanges` or `GRanges`.
 
 `Ranges` objects can either represent sets of integers as `IRanges`
 (which have start, end and width attributes)
@@ -94,7 +94,7 @@ mutate(anchor_start(rng), width = 10)
 mutate(anchor_end(rng), width = 10)
 mutate(anchor_center(rng), width = 10)
 mutate(anchor_3p(grng), width = 10) # leave negative strand fixed
-mutate(anchor_5p(grng), width = 10) # leave positve strand fixed
+mutate(anchor_5p(grng), width = 10) # leave positive strand fixed
 ```
 
 Similarly, you can modify the width of an interval using the `stretch` verb.
@@ -124,7 +124,7 @@ shift_downstream(grng, 10)
 # Grouping `Ranges`
 
 `plyranges` introduces a new class of `Ranges` called `RangesGrouped`, 
-this is a similiar idea to the grouped `data.frame\tibble` in `dplyr`. 
+this is a similar idea to the grouped `data.frame\tibble` in `dplyr`. 
 
 Grouping can act on either the core components or the metadata columns of
 a `Ranges` object.
@@ -156,7 +156,7 @@ grng %>% filter(gc < 0.3)
 grng_by_strand %>% filter(gc == max(gc)) 
 ```
 
-We also provide the convience methods `filter_by_overlaps` and 
+We also provide the convenience methods `filter_by_overlaps` and 
 `filter_by_non_overlaps` for restricting by any overlapping `Ranges`.
 
 ```{r}
@@ -292,7 +292,7 @@ ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
         axis.title.y = element_blank())
 ```
 
-We also provide a convienence method called `find_overlaps` that computes the same result as `join_overlap_inner()`.
+We also provide a convenience method called `find_overlaps` that computes the same result as `join_overlap_inner()`.
 
 ```{r}
 find_overlaps(query, subject)
@@ -335,7 +335,7 @@ Compared with `filter_by_overlaps()` above, the overlap left join expands the
 overlap those on the subject `Ranges` as well as the intervals on the left that do not overlap any range on the right.
 
 ## Finding your neighbours
-We also provide methods for finding nearest, preceding or following `Ranges`. Conceputally this is identical to our approach for finding
+We also provide methods for finding nearest, preceding or following `Ranges`. Conceptually this is identical to our approach for finding
 overlaps, except the semantics of the join are different.
 
 ```{r echo = FALSE, out.width="600px"}
@@ -358,7 +358,7 @@ corresponding to an intensity measurement such as a ChiP-seq experiment,
 while the other contains coordinates for two genes of interest.
 
 
-We want to identify which positions in the `intensties` `Ranges` overlap the
+We want to identify which positions in the `intensities` `Ranges` overlap the
 genes, where each row corresponds to a position that overlaps a single gene.
 
 First we create the two `Ranges` objects
@@ -419,7 +419,7 @@ ir0 %>%
 
 # Data Import/Output
 
-We provide convienence functions via `rtracklayer` and `GenomicAlignments` 
+We provide convenience functions via `rtracklayer` and `GenomicAlignments` 
 for reading/writing the following data formats to/from `Ranges` objects.
 
 | `plyranges` functions | File Format |
@@ -489,7 +489,7 @@ The `compute_coverage(x)` method corresponds to `[I/G]Ranges(coverage(x))`.
 ## Overlaps
 
  For `GRanges` objects all functions ignore
-any strandedness, unless the suffix `directed` is added to the funciton call
+any strandedness, unless the suffix `directed` is added to the function call
 
 | `plyranges` function                     | Description                                                                                 | `GenomicRanges/IRanges` command  |
 |------------------------------------------|---------------------------------------------------------------------------------------------|---------------------------------|
@@ -501,7 +501,7 @@ any strandedness, unless the suffix `directed` is added to the funciton call
 | `*_within` | Adding suffix `within` will find overlaps   | Makes `type = "within"` |
 | `*_includes` | inverse of within functions | - |
 | `join_nearest[_left/right/up/downstream](x,y)` | Finds nearest neighbour `Ranges` between `x` and `y`. | `nearest` + reindexing to return a `Ranges` object. |
-|`join_precede[_left/right/up/downstream](x,y)`  | Finds `Ranges` in `x` that preced `y` | `precedes` + reindexing to return a `Ranges` object. |
+|`join_precede[_left/right/up/downstream](x,y)`  | Finds `Ranges` in `x` that precede `y` | `precedes` + reindexing to return a `Ranges` object. |
 |`join_follow[_left/right/up/downstream](x,y)`  | Finds `Ranges` in `x` that follow `y`  | `precedes` + reindexing to return a `Ranges` object. |
 
 
