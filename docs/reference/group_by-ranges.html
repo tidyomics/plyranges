@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -32,8 +34,9 @@
 
 <meta property="og:description" content="The function group_by takes a Ranges object and defines
 groups by one or more variables. Operations are then performed on the Ranges
-by their "group". ungroup() removes grouping." />
+by their &quot;group&quot;. ungroup() removes grouping." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -60,7 +63,7 @@ by their "group". ungroup() removes grouping." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
       </span>
     </div>
 
@@ -193,7 +196,7 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 #&gt;    [8]         8        12         5 |  0.370320537127554        a
 #&gt;    [9]         9        13         5 |  0.546558595029637        a
 #&gt;   [10]        10        14         5 |  0.170262051047757        b</div><div class='input'><span class='co'># a list of symbols</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; $cat
+<span class='fu'><a href='http://dplyr.tidyverse.org/reference/groups.html'>groups</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; [[1]]
 #&gt; cat
 #&gt; </div><div class='input'><span class='co'># ungroup removes any grouping</span>
 <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:

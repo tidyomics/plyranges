@@ -11,3 +11,5 @@ Makefile
 ^docs$
 ^_pkgdown\.yml$
 ^appveyor\.yml$
+^CONTRIBUTING\.md$
+^CODE_OF_CONDUCT\.md$
