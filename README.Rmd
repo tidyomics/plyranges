@@ -45,15 +45,14 @@ For more details on the features of plryanges, read the
 The package is currently available from Bioconductor. 
 
 ```{r, eval=FALSE}
-source("https://bioconductor.org/biocLite.R")
-biocLite("plyranges")
+# install.packages("BiocManager")
+BiocManager::install("plyranges")
 ```
 
 To install the development version from GitHub:
 
 ```{r, eval=FALSE}
-source("https://bioconductor.org/biocLite.R")
-biocLite("sa-lee/plyranges")
+BiocManger::install("sa-lee/plyranges")
 ```
 
 # Quick overview
@@ -163,22 +162,17 @@ all_ss <- interweave(left_ss, right_ss, .id = "side")
 all_ss
 ```
 
+# Contributing
+
+We welcome contributions from the R/Bioconductor community. We ask that 
+contributors follow the [code of conduct](CODE_OF_CONDUCT.md) and the guide
+outlined [here](CONTRIBUTING.md).
+
 # Learning more
 
-Read the [introduction vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html) for an overview of `plyranges` features. 
-
-# About the design of plyranges API
-
-The `plyranges` package aims to provide a 
-[fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for 
-performing common genomic data analysis tasks. One goal of this package is to 
-decrease the learning curve for Bioconductor and S4 classes 
-(especially for new users) by providing a consistent interface to 
-common classes _IRanges_ and _GRanges_ 
-(future work will extend this to the _SummarizedExperiment_  class)
-
-All of the methods defined in `plyranges` are type-consistent and 
-chainable. As a consequence, users familiar with 
-`dplyr` should be able to read and understand `plyranges` code without 
-difficulty.
+- The [introductory vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html) has an overview of `plyranges` features. 
+- The [BiocWorkshop book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html) has worked examples of using `plyranges` to analyse
+publicly available genomics data.
+- The [preprint](https://www.biorxiv.org/content/early/2018/05/23/327841) has
+details about the overall philosophy of `plyranges`
 

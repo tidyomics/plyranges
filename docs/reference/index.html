@@ -21,14 +21,17 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
 
 <meta property="og:title" content="Function reference" />
+
 
 
 <!-- mathjax -->
@@ -55,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
       </span>
     </div>
 
@@ -103,6 +106,7 @@
     <table class="ref-index">
 
     <colgroup>
+      
       <col class="alias" />
       <col class="title" />
     </colgroup>
@@ -115,7 +119,7 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="plyranges-package.html">plyranges-package</a></code> </p>
         </td>
@@ -129,25 +133,25 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-construct.html">as_iranges()</a></code> <code><a href="ranges-construct.html">as_granges()</a></code> </p>
         </td>
         <td><p>Construct a I/GRanges object from a tibble or data.frame</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-interweave.html">interweave()</a></code> </p>
         </td>
         <td><p>Interweave a pair of Ranges objects together</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-bind.html">bind_ranges()</a></code> </p>
         </td>
         <td><p>Combine Ranges by concatentating them together</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-tile.html">tile_ranges()</a></code> <code><a href="ranges-tile.html">slide_ranges()</a></code> </p>
         </td>
@@ -161,31 +165,31 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-anchor.html">anchor()</a></code> <code><a href="ranges-anchor.html">unanchor()</a></code> <code><a href="ranges-anchor.html">anchor_start()</a></code> <code><a href="ranges-anchor.html">anchor_end()</a></code> <code><a href="ranges-anchor.html">anchor_center()</a></code> <code><a href="ranges-anchor.html">anchor_centre()</a></code> <code><a href="ranges-anchor.html">anchor_3p()</a></code> <code><a href="ranges-anchor.html">anchor_5p()</a></code> </p>
         </td>
         <td><p>Anchored Ranges objects</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="stretch.html">stretch()</a></code> </p>
         </td>
         <td><p>Stretch a genomic interval</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="shift-ranges.html">shift_left()</a></code> <code><a href="shift-ranges.html">shift_right()</a></code> <code><a href="shift-ranges.html">shift_upstream()</a></code> <code><a href="shift-ranges.html">shift_downstream()</a></code> </p>
         </td>
         <td><p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="flank-ranges.html">flank_left()</a></code> <code><a href="flank-ranges.html">flank_right()</a></code> <code><a href="flank-ranges.html">flank_upstream()</a></code> <code><a href="flank-ranges.html">flank_downstream()</a></code> </p>
         </td>
         <td><p>Generate flanking regions</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-chop.html">chop_by_introns()</a></code> <code><a href="ranges-chop.html">chop_by_gaps()</a></code> </p>
         </td>
@@ -199,61 +203,61 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="mutate-ranges.html">mutate(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Modify a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-summarise.html">summarise(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Aggregate a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="filter-ranges.html">filter(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Subset a <code>Ranges</code> object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-arrange.html">arrange(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Sort a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-select.html">select(<i>&lt;Ranges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Select metadata columns of the Ranges object by name or position</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-unnest.html">unnest(<i>&lt;GenomicRanges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Expand list-columns in a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="group_by-ranges.html">group_by(<i>&lt;GenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">ungroup(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">groups(<i>&lt;GroupedGenomicRanges&gt;</i>)</a></code> <code><a href="group_by-ranges.html">groups(<i>&lt;GroupedIntegerRanges&gt;</i>)</a></code> </p>
         </td>
         <td><p>Group a Ranges by one or more variables</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-reduce.html">reduce_ranges()</a></code> <code><a href="ranges-reduce.html">reduce_ranges_directed()</a></code> </p>
         </td>
         <td><p>Reduce then aggregate a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-disjoin.html">disjoin_ranges()</a></code> <code><a href="ranges-disjoin.html">disjoin_ranges_directed()</a></code> </p>
         </td>
         <td><p>Disjoin then aggregate a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="compute_coverage.html">compute_coverage()</a></code> </p>
         </td>
@@ -267,31 +271,31 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="overlap-joins.html">join_overlap_intersect()</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_within()</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_directed()</a></code> <code><a href="overlap-joins.html">join_overlap_intersect_within_directed()</a></code> <code><a href="overlap-joins.html">join_overlap_inner()</a></code> <code><a href="overlap-joins.html">join_overlap_inner_within()</a></code> <code><a href="overlap-joins.html">join_overlap_inner_directed()</a></code> <code><a href="overlap-joins.html">join_overlap_inner_within_directed()</a></code> <code><a href="overlap-joins.html">join_overlap_left()</a></code> <code><a href="overlap-joins.html">join_overlap_left_within()</a></code> <code><a href="overlap-joins.html">join_overlap_left_directed()</a></code> <code><a href="overlap-joins.html">join_overlap_left_within_directed()</a></code> </p>
         </td>
         <td><p>Join by overlapping Ranges</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-overlaps-self.html">join_overlap_self()</a></code> <code><a href="ranges-overlaps-self.html">join_overlap_self_within()</a></code> <code><a href="ranges-overlaps-self.html">join_overlap_self_directed()</a></code> <code><a href="ranges-overlaps-self.html">join_overlap_self_within_directed()</a></code> </p>
         </td>
         <td><p>Find overlaps within a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-filter-overlaps.html">filter_by_overlaps()</a></code> <code><a href="ranges-filter-overlaps.html">filter_by_non_overlaps()</a></code> </p>
         </td>
         <td><p>Filter by overlapping/non-overlapping ranges</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-overlaps.html">find_overlaps()</a></code> <code><a href="ranges-overlaps.html">find_overlaps_within()</a></code> <code><a href="ranges-overlaps.html">find_overlaps_directed()</a></code> <code><a href="ranges-overlaps.html">find_overlaps_within_directed()</a></code> <code><a href="ranges-overlaps.html">group_by_overlaps()</a></code> </p>
         </td>
         <td><p>Find overlap between two Ranges</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-count-overlaps.html">count_overlaps()</a></code> <code><a href="ranges-count-overlaps.html">count_overlaps_within()</a></code> <code><a href="ranges-count-overlaps.html">count_overlaps_directed()</a></code> <code><a href="ranges-count-overlaps.html">count_overlaps_within_directed()</a></code> </p>
         </td>
@@ -305,19 +309,19 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-follow.html">join_follow()</a></code> <code><a href="ranges-follow.html">join_follow_left()</a></code> <code><a href="ranges-follow.html">join_follow_upstream()</a></code> </p>
         </td>
         <td><p>Find following Ranges</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-precede.html">join_precede()</a></code> <code><a href="ranges-precede.html">join_precede_right()</a></code> <code><a href="ranges-precede.html">join_precede_downstream()</a></code> </p>
         </td>
         <td><p>Find preceding Ranges</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-nearest.html">join_nearest()</a></code> <code><a href="ranges-nearest.html">join_nearest_left()</a></code> <code><a href="ranges-nearest.html">join_nearest_right()</a></code> <code><a href="ranges-nearest.html">join_nearest_upstream()</a></code> <code><a href="ranges-nearest.html">join_nearest_downstream()</a></code> </p>
         </td>
@@ -331,7 +335,7 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-pairs.html">pair_overlaps()</a></code> <code><a href="ranges-pairs.html">pair_nearest()</a></code> <code><a href="ranges-pairs.html">pair_precede()</a></code> <code><a href="ranges-pairs.html">pair_follow()</a></code> </p>
         </td>
@@ -345,15 +349,15 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-setops.html">intersect_ranges()</a></code> <code><a href="ranges-setops.html">intersect_ranges_directed()</a></code> <code><a href="ranges-setops.html">union_ranges()</a></code> <code><a href="ranges-setops.html">union_ranges_directed()</a></code> <code><a href="ranges-setops.html">setdiff_ranges()</a></code> <code><a href="ranges-setops.html">setdiff_ranges_directed()</a></code> <code><a href="ranges-setops.html">complement_ranges()</a></code> <code><a href="ranges-setops.html">complement_ranges_directed()</a></code> </p>
         </td>
         <td><p>Vector-wise Range set-operations</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
-          <p><code><a href="element-setops.html">`%union%`()</a></code> <code><a href="element-setops.html">`%intersect%`()</a></code> <code><a href="element-setops.html">`%setdiff%`()</a></code> <code><a href="element-setops.html">between()</a></code> <code><a href="element-setops.html">span()</a></code> </p>
+          <p><code><a href="element-setops.html">`%union%`</a></code> <code><a href="element-setops.html">`%intersect%`</a></code> <code><a href="element-setops.html">`%setdiff%`</a></code> <code><a href="element-setops.html">between()</a></code> <code><a href="element-setops.html">span()</a></code> </p>
         </td>
         <td><p>Row-wise set operations on Ranges objects</p></td>
       </tr>
@@ -365,7 +369,7 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-info.html">genome_info()</a></code> <code><a href="ranges-info.html">set_genome_info()</a></code> <code><a href="ranges-info.html">get_genome_info()</a></code> </p>
         </td>
@@ -379,67 +383,67 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-bam-read.html">read_bam()</a></code> </p>
         </td>
         <td><p>Read a BAM file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-bed-read.html">read_bed()</a></code> <code><a href="io-bed-read.html">read_bed_graph()</a></code> <code><a href="io-bed-read.html">read_narrowpeaks()</a></code> </p>
         </td>
         <td><p>Read a BED or BEDGraph file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-bed-write.html">write_bed()</a></code> <code><a href="io-bed-write.html">write_bed_graph()</a></code> <code><a href="io-bed-write.html">write_narrowpeaks()</a></code> </p>
         </td>
         <td><p>Write a BED or BEDGraph file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-bigwig-read.html">read_bigwig()</a></code> </p>
         </td>
         <td><p>Read a BigWig file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-bigwig-write.html">write_bigwig()</a></code> </p>
         </td>
-        <td><p>Write a BED file</p></td>
+        <td><p>Write a BigWig file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-wig-read.html">read_wig()</a></code> </p>
         </td>
         <td><p>Read a WIG file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-wig-write.html">write_wig()</a></code> </p>
         </td>
         <td><p>Write a WIG file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-gff-read.html">read_gff()</a></code> <code><a href="io-gff-read.html">read_gff1()</a></code> <code><a href="io-gff-read.html">read_gff2()</a></code> <code><a href="io-gff-read.html">read_gff3()</a></code> </p>
         </td>
         <td><p>Read a GFF/GTF/GVT file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="io-gff-write.html">write_gff()</a></code> <code><a href="io-gff-write.html">write_gff1()</a></code> <code><a href="io-gff-write.html">write_gff2()</a></code> <code><a href="io-gff-write.html">write_gff3()</a></code> </p>
         </td>
         <td><p>Write a GFF(123) file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-class.html">FileOperator-class</a></code> </p>
         </td>
         <td><p>An abstract class to represent operations performed over a file</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-deferred.html">DeferredGenomicRanges-class</a></code> </p>
         </td>
@@ -453,31 +457,31 @@
         </th>
       </tr>
       <tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="n.html">n()</a></code> </p>
         </td>
         <td><p>Compute the number of ranges in each group.</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="as_ranges.html">as_ranges()</a></code> </p>
         </td>
         <td><p>Coerce an Rle or RleList object to Ranges</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="ranges-setters.html">set_width()</a></code> <code><a href="ranges-setters.html">set_start()</a></code> <code><a href="ranges-setters.html">set_end()</a></code> <code><a href="ranges-setters.html">set_seqnames()</a></code> <code><a href="ranges-setters.html">set_strand()</a></code> </p>
         </td>
         <td><p>Functional setters for Ranges objects</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="overscope_ranges.html">overscope_ranges()</a></code> </p>
         </td>
         <td><p>Create an overscoped environment from a Ranges object</p></td>
       </tr><tr>
-        <!--  -->
+        
         <td>
           <p><code><a href="reexports.html">reexports</a></code> </p>
         </td>

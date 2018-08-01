@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -32,6 +34,7 @@
 
 <meta property="og:description" content="Combine Ranges by concatentating them together" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
       </span>
     </div>
 
@@ -158,18 +161,18 @@ supplied.</p></td>
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>bind_ranges</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>gr2</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"origin"</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |      origin
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-#&gt;    [1]     seq1     10-14      * |           a
-#&gt;    [2]     seq1     11-15      * |           a
-#&gt;    [3]     seq1     12-16      * |           a
-#&gt;    [4]     seq1     13-17      * |           a
-#&gt;    [5]     seq1     14-18      * |           a
-#&gt;    [6]     seq1     15-19      * |           a
-#&gt;    [7]     seq2        11      * |           b
-#&gt;    [8]     seq2     12-13      * |           b
-#&gt;    [9]     seq2     13-15      * |           b
-#&gt;   [10]     seq2     14-17      * |           b
+#&gt;        seqnames    ranges strand | origin
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;Rle&gt;
+#&gt;    [1]     seq1     10-14      * |      a
+#&gt;    [2]     seq1     11-15      * |      a
+#&gt;    [3]     seq1     12-16      * |      a
+#&gt;    [4]     seq1     13-17      * |      a
+#&gt;    [5]     seq1     14-18      * |      a
+#&gt;    [6]     seq1     15-19      * |      a
+#&gt;    [7]     seq2        11      * |      b
+#&gt;    [8]     seq2     12-13      * |      b
+#&gt;    [9]     seq2     13-15      * |      b
+#&gt;   [10]     seq2     14-17      * |      b
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>bind_ranges</span>(<span class='no'>gr</span>, <span class='fu'>list</span>(<span class='no'>gr</span>, <span class='no'>gr2</span>), <span class='no'>gr2</span>)</div><div class='output co'>#&gt; GRanges object with 20 ranges and 0 metadata columns:
@@ -189,19 +192,19 @@ supplied.</p></td>
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>bind_ranges</span>(<span class='fu'>list</span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='no'>gr2</span>), <span class='kw'>c</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"origin"</span>)</div><div class='output co'>#&gt; GRanges object with 16 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |      origin
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-#&gt;    [1]     seq1     10-14      * |           a
-#&gt;    [2]     seq1     11-15      * |           a
-#&gt;    [3]     seq1     12-16      * |           a
-#&gt;    [4]     seq1     13-17      * |           a
-#&gt;    [5]     seq1     14-18      * |           a
-#&gt;    ...      ...       ...    ... .         ...
-#&gt;   [12]     seq1     11-15      * |           c
-#&gt;   [13]     seq1     12-16      * |           c
-#&gt;   [14]     seq1     13-17      * |           c
-#&gt;   [15]     seq1     14-18      * |           c
-#&gt;   [16]     seq1     15-19      * |           c
+#&gt;        seqnames    ranges strand | origin
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |  &lt;Rle&gt;
+#&gt;    [1]     seq1     10-14      * |      a
+#&gt;    [2]     seq1     11-15      * |      a
+#&gt;    [3]     seq1     12-16      * |      a
+#&gt;    [4]     seq1     13-17      * |      a
+#&gt;    [5]     seq1     14-18      * |      a
+#&gt;    ...      ...       ...    ... .    ...
+#&gt;   [12]     seq1     11-15      * |      c
+#&gt;   [13]     seq1     12-16      * |      c
+#&gt;   [14]     seq1     13-17      * |      c
+#&gt;   [15]     seq1     14-18      * |      c
+#&gt;   [16]     seq1     15-19      * |      c
 #&gt;   -------
 #&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 </div></pre>

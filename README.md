@@ -44,15 +44,14 @@ vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
 The package is currently available from Bioconductor.
 
 ``` r
-source("https://bioconductor.org/biocLite.R")
-biocLite("plyranges")
+# install.packages("BiocManager")
+BiocManager::install("plyranges")
 ```
 
 To install the development version from GitHub:
 
 ``` r
-source("https://bioconductor.org/biocLite.R")
-biocLite("sa-lee/plyranges")
+BiocManger::install("sa-lee/plyranges")
 ```
 
 # Quick overview
@@ -76,6 +75,9 @@ or `width` using the `as_iranges()` method.
 
 ``` r
 library(plyranges)
+#> Warning: package 'IRanges' was built under R version 3.5.1
+#> Warning: package 'S4Vectors' was built under R version 3.5.1
+#> Warning: package 'GenomicRanges' was built under R version 3.5.1
 df <- data.frame(start = 1:5, width = 5)
 as_iranges(df)
 #> IRanges object with 5 ranges and 0 metadata columns:
@@ -318,22 +320,21 @@ all_ss
 #>   seqinfo: 93 sequences from an unspecified genome; no seqlengths
 ```
 
+# Contributing
+
+We welcome contributions from the R/Bioconductor community. We ask that
+contributors follow the [code of conduct](CODE_OF_CONDUCT.md) and the
+guide outlined [here](CONTRIBUTING.md).
+
 # Learning more
 
-Read the [introduction
-vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html)
-for an overview of `plyranges` features.
-
-# About the design of plyranges API
-
-The `plyranges` package aims to provide a
-[fluent](https://en.wikipedia.org/wiki/Fluent_interface) interface for
-performing common genomic data analysis tasks. One goal of this package
-is to decrease the learning curve for Bioconductor and S4 classes
-(especially for new users) by providing a consistent interface to common
-classes *IRanges* and *GRanges* (future work will extend this to the
-*SummarizedExperiment* class)
-
-All of the methods defined in `plyranges` are type-consistent and
-chainable. As a consequence, users familiar with `dplyr` should be able
-to read and understand `plyranges` code without difficulty.
+  - The [introductory
+    vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html)
+    has an overview of `plyranges` features.
+  - The [BiocWorkshop
+    book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html)
+    has worked examples of using `plyranges` to analyse publicly
+    available genomics data.
+  - The
+    [preprint](https://www.biorxiv.org/content/early/2018/05/23/327841)
+    has details about the overall philosophy of `plyranges`
