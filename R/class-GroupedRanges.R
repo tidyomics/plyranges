@@ -57,7 +57,14 @@ setMethod("show", "GroupedGenomicRanges", function(object) {
 # generates index for grouping variables
 make_group_inx <- function(rng, ...) {
     capture_groups <- rlang::enquos(...)
-    group_names <- unlist(lapply(capture_groups, quo_name))
+    group_names <- vapply(capture_groups, quo_name, character(1))
+    
+    # check group is actually found
+    not_found <- setdiff(group_names, ranges_vars(rng))
+    if (length(not_found) > 0) {
+      stop(paste0("Column `", not_found[1], "` is unknown"), call. = FALSE)
+    }
+    
     groups <- rlang::syms(group_names)
     capture_groups <- lapply(groups, rlang::as_quosure)
     names(capture_groups) <- group_names

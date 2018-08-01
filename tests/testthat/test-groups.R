@@ -69,3 +69,12 @@ test_that("group by matches HelloRanges", {
   expect_identical(exp, result)
   setwd(oldwd)
 })
+
+# issue #42
+test_that("group_by does not allow unknown columns", {
+  gr <- GRanges("chr1", IRanges(start = 1:6, width = 10))
+  foo <- 1:6
+  expect_error(group_by(gr, foo), "Column `foo` is unknown")
+  expect_error(group_by(gr, strand, foo), "Column `foo` is unknown")
+})
+
