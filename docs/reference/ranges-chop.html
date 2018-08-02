@@ -33,6 +33,8 @@
 <meta property="og:title" content="Group a GRanges object by introns or gaps — chop_by_introns" />
 
 <meta property="og:description" content="Group a GRanges object by introns or gaps" />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -81,6 +83,9 @@
       <a href="../articles/an-introduction.html">Introduction to plyranges</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       
@@ -145,7 +150,7 @@ the alignment has a deletion from the reference or has an intron.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>require</span>(<span class='no'>pasillaBamSubset</span>)) {
-   <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/pasillaBamSubset/topics/pasillaBamSubset-package'>untreated1_chr4</a></span>()
+   <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'>untreated1_chr4</span>()
    <span class='co'># define a region of interest</span>
    <span class='no'>roi</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr4"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>5e5</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>7e5</span>) <span class='kw'>%&gt;%</span>
             <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
@@ -156,14 +161,7 @@ the alignment has a deletion from the reference or has an intron.</p>
    <span class='co'># to find ranges that have gaps use filter with `n()`</span>
    <span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'><a href='n.html'>n</a></span>() <span class='kw'>&gt;</span> <span class='fl'>2</span>)
 
-}</div><div class='output co'>#&gt; GRanges object with 0 ranges and 5 metadata columns:
-#&gt; Groups: gaps [0]
-#&gt;    seqnames    ranges strand | which_label       cigar    qwidth     njunc
-#&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |       &lt;Rle&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;         gaps
-#&gt;    &lt;integer&gt;
-#&gt;   -------
-#&gt;   seqinfo: 8 sequences from an unspecified genome</div><div class='input'>
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; <span class='warning'>Warning: there is no package called ‘pasillaBamSubset’</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

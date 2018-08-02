@@ -19,11 +19,11 @@
 \usage{
 find_overlaps(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-\method{find_overlaps}{IntegerRanges}(x, y, maxgap = -1L, minoverlap = 0L,
-  suffix = c(".x", ".y"))
+\method{find_overlaps}{IntegerRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L, suffix = c(".x", ".y"))
 
-\method{find_overlaps}{GenomicRanges}(x, y, maxgap = -1L, minoverlap = 0L,
-  suffix = c(".x", ".y"))
+\method{find_overlaps}{GenomicRanges}(x, y, maxgap = -1L,
+  minoverlap = 0L, suffix = c(".x", ".y"))
 
 find_overlaps_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
@@ -41,8 +41,8 @@ find_overlaps_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 find_overlaps_within_directed(x, y, maxgap, minoverlap, suffix = c(".x",
   ".y"))
 
-\method{find_overlaps_within_directed}{GenomicRanges}(x, y, maxgap, minoverlap,
-  suffix = c(".x", ".y"))
+\method{find_overlaps_within_directed}{GenomicRanges}(x, y, maxgap,
+  minoverlap, suffix = c(".x", ".y"))
 
 group_by_overlaps(x, y, maxgap, minoverlap)
 

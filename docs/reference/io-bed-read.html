@@ -35,6 +35,8 @@
 <meta property="og:description" content="This is a lightweight wrapper to the import family
 of functions defined in rtracklayer.
 Read common interval based formats as GRanges." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -83,6 +85,9 @@ Read common interval based formats as GRanges." />
       <a href="../articles/an-introduction.html">Introduction to plyranges</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       
@@ -196,10 +201,8 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [4] 127474698-127475864                  1-1167
 #&gt;   [5] 127475865-127477031                  1-1167
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘Biostrings’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    strsplit</span></div><div class='input'><span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)
+<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
 #&gt;       seqnames              ranges strand |        name     score     itemRgb
 #&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt; &lt;character&gt;
 #&gt;   [1]     chr7 127471197-127472363      + |        Pos1         0     #FF0000
@@ -215,7 +218,7 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [4] 127474698-127475864                  1-1167
 #&gt;   [5] 127475865-127477031                  1-1167
 #&gt;   -------
-#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</div><div class='input'><span class='no'>olap</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr7"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>127473000</span>))
+#&gt;   seqinfo: 93 sequences from hg19 genome</div><div class='input'><span class='no'>olap</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr7"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>127473000</span>))
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>,
               <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='no'>olap</span>)
 <span class='co'># bedGraph</span>
@@ -255,7 +258,7 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [5]    60.506 2.605382e-57       341
 #&gt;   [6]    54.023   7.1304e-51       349
 #&gt;   -------
-#&gt;   seqinfo: 93 sequences (1 circular) from hg19 genome</div></pre>
+#&gt;   seqinfo: 93 sequences from hg19 genome</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

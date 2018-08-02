@@ -33,6 +33,8 @@
 <meta property="og:title" content="Find overlap between two Ranges — find_overlaps" />
 
 <meta property="og:description" content="Find overlap between two Ranges" />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -82,6 +84,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -117,12 +122,12 @@
     <pre class="usage"><span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
 <span class='co'># S3 method for IntegerRanges</span>
-<span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
+  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
 <span class='fu'>find_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
@@ -144,8 +149,8 @@
   <span class='st'>".y"</span>))
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>find_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>,
+  <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
 
 <span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
 

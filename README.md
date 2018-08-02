@@ -1,14 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# plyranges: fluent genomic data analysis <img id="plyranges_logo" src="man/figures/logo.png" align="right" width = "125" />
+
 [![Build
 Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/sa-lee/plyranges?branch=master&svg=true)](https://ci.appveyor.com/project/sa-lee/plyranges)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
-
-# plyranges
 
 `plryanges` provides a consistent interface for importing and wrangling
 genomics data from a variety of sources. The package defines a grammar
@@ -75,9 +75,6 @@ or `width` using the `as_iranges()` method.
 
 ``` r
 library(plyranges)
-#> Warning: package 'IRanges' was built under R version 3.5.1
-#> Warning: package 'S4Vectors' was built under R version 3.5.1
-#> Warning: package 'GenomicRanges' was built under R version 3.5.1
 df <- data.frame(start = 1:5, width = 5)
 as_iranges(df)
 #> IRanges object with 5 ranges and 0 metadata columns:

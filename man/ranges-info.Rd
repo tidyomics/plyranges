@@ -10,8 +10,8 @@
 genome_info(genome = NULL, seqnames = NULL, seqlengths = NULL,
   is_circular = NULL)
 
-set_genome_info(.data, genome = NULL, seqnames = NULL, seqlengths = NULL,
-  is_circular = NULL)
+set_genome_info(.data, genome = NULL, seqnames = NULL,
+  seqlengths = NULL, is_circular = NULL)
 
 get_genome_info(.data)
 }

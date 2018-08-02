@@ -102,6 +102,8 @@ navbar:
     menu:
     - text: Introduction to plyranges
       href: articles/an-introduction.html
+  - text: News
+    href: news/index.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/sa-lee/plyranges
