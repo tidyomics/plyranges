@@ -77,7 +77,6 @@ group_by.IntegerRanges <- function(.data, ...) {
   new_grouped_ir(.data, ...)
 }
 
-
 #' @rdname group_by-ranges
 #' @importFrom dplyr ungroup
 #' @method ungroup GroupedGenomicRanges
@@ -102,18 +101,18 @@ ungroup.GroupedIntegerRanges <- ungroup.GroupedGenomicRanges
 
 #' @method ungroup Ranges
 #' @export
-ungroup.Ranges <- function(x) x
+ungroup.Ranges <- function(x, ...) x
 
 #' @importFrom dplyr groups
 #' @method groups GroupedGenomicRanges
 #' @rdname group_by-ranges
 #' @export
-groups.GroupedGenomicRanges <- function(x) { x@groups }
+groups.GroupedGenomicRanges <- function(x)  x@groups 
 
 #' @importFrom dplyr group_vars
 #' @method group_vars GroupedGenomicRanges
 #' @export
-group_vars.GroupedGenomicRanges <- function(x) { as.character(unlist(x@groups)) }
+group_vars.GroupedGenomicRanges <- function(x) as.character(unlist(x@groups)) 
 
 #' @method groups GroupedIntegerRanges
 #' @rdname group_by-ranges
@@ -126,7 +125,7 @@ group_vars.GroupedIntegerRanges <- group_vars.GroupedGenomicRanges
 
 #' @method groups Ranges
 #' @export
-groups.Ranges <- function(x) { NULL }
+groups.Ranges <- function(x)  NULL 
 
 #' @method group_vars Ranges
 #' @export
