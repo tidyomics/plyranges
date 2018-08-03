@@ -96,10 +96,13 @@ ungroup.GroupedGenomicRanges <- function(x, ...) {
   }
 }
 
-
 #' @method ungroup GroupedIntegerRanges
 #' @export
 ungroup.GroupedIntegerRanges <- ungroup.GroupedGenomicRanges
+
+#' @method ungroup Ranges
+#' @export
+ungroup.Ranges <- function(x) x
 
 #' @importFrom dplyr groups
 #' @method groups GroupedGenomicRanges
@@ -120,3 +123,11 @@ groups.GroupedIntegerRanges <- groups.GroupedGenomicRanges
 #' @method group_vars GroupedIntegerRanges
 #' @export
 group_vars.GroupedIntegerRanges <- group_vars.GroupedGenomicRanges
+
+#' @method groups Ranges
+#' @export
+groups.Ranges <- function(x) { NULL }
+
+#' @method group_vars Ranges
+#' @export
+group_vars.Ranges <- function(x) character(0)

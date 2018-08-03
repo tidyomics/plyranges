@@ -70,6 +70,15 @@ test_that("group by matches HelloRanges", {
   setwd(oldwd)
 })
 
+test_that("ungroup/groups/group_vars on ordinary Ranges",{
+  expect_identical(ungroup(gr1), gr1)
+  expect_identical(ungroup(ranges(gr1)), ranges(gr1))
+  expect_null(groups(gr1))
+  expect_null(groups(ranges(gr1)))
+  expect_identical(group_vars(gr1), character(0))
+  expect_identical(group_vars(ranges(gr1)), character(0))
+})
+
 # issue #42
 test_that("group_by does not allow unknown columns", {
   gr <- GRanges("chr1", IRanges(start = 1:6, width = 10))
@@ -77,4 +86,6 @@ test_that("group_by does not allow unknown columns", {
   expect_error(group_by(gr, foo), "Column `foo` is unknown")
   expect_error(group_by(gr, strand, foo), "Column `foo` is unknown")
 })
+
+
 
