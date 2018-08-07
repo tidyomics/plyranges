@@ -19,8 +19,11 @@ integer vector of length 1 or an integer vector the same length as x.}
 a Ranges object with modified start or end (or both) coordinates
 }
 \description{
-Without anchoring, this function will extend the interval
-in either direction by the integer vector in extend.
+By default, \code{stretch(x)} will anchor by the center of a Ranges
+object. This means that half of the value of \code{extend} will be added to
+the end of the range and the remaining half subtracted from the start of
+the Range. The other anchors will leave the start/end fixed and stretch
+the end/start respectively.
 }
 \examples{
 rng <- as_iranges(data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0)))
@@ -33,4 +36,7 @@ grng <- as_granges(data.frame(seqnames = "chr1",
                          width=c(0:3, 2:0)))
 stretch(anchor_3p(grng), 10)
 stretch(anchor_5p(grng), 10)
+}
+\seealso{
+\code{anchor()}, \code{mutate()}
 }

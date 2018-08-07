@@ -6,10 +6,14 @@
 #' `anchor_5p(x)`.
 #' @param extend the amount to alter the width of a Ranges object by. Either an
 #' integer vector of length 1 or an integer vector the same length as x.
-#' @description Without anchoring, this function will extend the interval
-#' in either direction by the integer vector in extend.
+#' @description By default, `stretch(x)` will anchor by the center of a Ranges
+#' object. This means that half of the value of `extend` will be added to
+#' the end of the range and the remaining half subtracted from the start of 
+#' the Range. The other anchors will leave the start/end fixed and stretch
+#' the end/start respectively. 
 #' @export
 #' @return a Ranges object with modified start or end (or both) coordinates
+#' @seealso `anchor()`, `mutate()`
 #' @examples
 #' rng <- as_iranges(data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0)))
 #' rng2 <- stretch(anchor_center(rng), 10)
@@ -25,6 +29,7 @@ stretch <- function(x, extend) { UseMethod("stretch") }
 
 #' @export
 stretch.Ranges <- function(x, extend = 0L) {
+  stopifnot(length(extend) == 1L | length(extend) == length(x))
   stretch_center(x, extend)
 }
 
@@ -32,6 +37,7 @@ stretch.Ranges <- function(x, extend = 0L) {
 stretch.AnchoredIntegerRanges <- function(x, extend = 0L) {
   anchor <- anchor(x)
   rng <- x@delegate
+  stopifnot(length(extend) == 1L | length(extend) == length(rng))
   switch(
     anchor,
     start = mutate(rng, end = end + extend),
@@ -45,10 +51,12 @@ stretch.AnchoredIntegerRanges <- function(x, extend = 0L) {
 stretch.AnchoredGenomicRanges <- function(x, extend = 0L) {
   anchor <- anchor(x)
   rng <- x@delegate
+  stopifnot(length(extend) == 1L | length(extend) == length(rng))
+  
   switch(
     anchor,
     start = mutate(rng, end = end + extend),
-    end = mutate(rng, start = start + extend),
+    end = mutate(rng, start = start - extend),
     center = stretch_center(rng, extend),
     "3p" = stretch_by_strand(rng, extend, "3p"),
     "5p" = stretch_by_strand(rng, extend, "5p")
@@ -58,12 +66,7 @@ stretch.AnchoredGenomicRanges <- function(x, extend = 0L) {
 
 #' @importFrom IRanges mid
 stretch_center <- function(x, extend) {
-  m <- mid(x)
-  ns <-  m - as.integer(extend / 2)
-  ne <- m + as.integer(extend / 2)
-  start(x) <- ns
-  end(x) <- ne
-  x
+  x + extend / 2
 }
 
 stretch_by_strand <- function(x, extend, anchor) {
