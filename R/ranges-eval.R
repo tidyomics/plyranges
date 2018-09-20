@@ -104,6 +104,29 @@ n <- function() {
   stop("This function should not be called directly")
 }
 
+
+#' Compute the number of distinct unique values in a vector or List
+#' 
+#' @param var a vector of values
+#' @return an integer vector 
+#' 
+#' @description This is a wrapper to `length(unique(x))` or 
+#' `lengths(unique(x))` if `x` is a List object
+#' 
+#' @examples 
+#' x <- CharacterList(c("a", "b", "c", "a"),  "d")
+#' n_distinct(x)
+#' n_distinct(unlist(x))
+#' 
+#' @export
+n_distinct <- function(var) {
+  if (inherits(var, "List")) {
+    return(lengths(unique(var)))
+  } else {
+    return(length(unique(var)))
+  }
+}
+
 # dplyr's join syntax uses a function called tbl_vars to get
 # variable names, using this function will enable a Ranges to be copied through
 # as a data.frame in a join.
