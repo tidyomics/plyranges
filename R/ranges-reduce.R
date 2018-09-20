@@ -1,13 +1,15 @@
 # ranges-reduce
 reduce_rng <- function(.data, reduced, dots) {
 
-  revmap <- mcols(reduced)$revmap
+  os <- S4Vectors::as.env(.data, 
+                          parent.frame(), 
+                          tform = function(col) {
+                            unname(IRanges::extractList(col, mcols(reduced)$revmap))
+                          })
+  os <- new_data_mask(os, top = parent.env(os))
+  
 
-  ranges_list <- IRanges::relist(.data[unlist(revmap)], revmap)
-
-  reduced_summary <- as(lapply(ranges_list, summarize_rng, dots), "List")
-
-  mcols(reduced) <- unlist(reduced_summary)
+  mcols(reduced) <- DataFrame(overscope_eval_update(os, dots, FALSE))
   return(reduced)
 }
 

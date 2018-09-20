@@ -7,16 +7,16 @@ test_that("matches IRanges/GenomicRanges", {
   x <- IRanges(c(1:4, 10:11, 11), width=c(0,1,1,0,0,0,1))
   mcols(x) <- DataFrame(mapping = paste0("a", seq_along(x)))
   target <- IRanges(c(1:2, 10:11), width=c(0,2,0,1))
-  mcols(target) <- DataFrame(mapping=c("a1","a2,a3,a4", "a5", "a6,a7"))
-  expect_identical(reduce_ranges(x, mapping = paste0(mapping, collapse = ",")),
+  mcols(target) <- DataFrame(mapping=CharacterList("a1", c("a2","a3","a4"), "a5", c("a6","a7")))
+  expect_identical(reduce_ranges(x, mapping = mapping),
                    target)
 
   # drop.empty.ranges is just a filter
   current <- x %>%
     filter(width > 0) %>%
-    reduce_ranges(mapping = paste0(mapping, collapse = ","))
+    reduce_ranges(mapping = mapping)
   target <- reduce(x, drop.empty.ranges=TRUE)
-  mcols(target) <- DataFrame(mapping = c("a2,a3", "a7"))
+  mcols(target) <- DataFrame(mapping = CharacterList(c("a2","a3"), "a7"))
 
   expect_identical(current, target)
 
@@ -31,17 +31,21 @@ test_that("matches IRanges/GenomicRanges", {
                     c("+", "-", "*", "+", "*", "+", "-"))
   expect_identical(reduce_ranges_directed(gr), target)
 
-  mcols(target)$mapping <- c("a6", "a1", "a5", "a2,a3", "a4", "a7,a8", "a9,a10")
+  mcols(target)$mapping <- CharacterList("a6", "a1", "a5", c("a2","a3"), 
+                                         "a4", c("a7","a8"), c("a9","a10"))
 
-  expect_identical(reduce_ranges_directed(gr, mapping = paste0(name, collapse = ",")),
+  expect_identical(reduce_ranges_directed(gr, mapping = name),
                    target)
   target <- GRanges(Rle(c("chr1", "chr2", "chr3"), c(1,1,1)),
                     IRanges(start = c(1,2,7), end = c(10,10,10)))
   expect_identical(reduce_ranges(gr), target)
 
-  mcols(target)$mapping <- c("a1,a5,a6", "a2,a3,a4", "a7,a8,a9,a10")
+  mcols(target)$mapping <- CharacterList(
+    c("a1","a5","a6"), 
+    c("a2","a3","a4"), 
+    c("a7","a8","a9","a10"))
 
-  expect_identical(reduce_ranges(gr, mapping = paste0(name, collapse = ",")),
+  expect_identical(reduce_ranges(gr, mapping = name),
                    target)
 
 
@@ -62,25 +66,25 @@ test_that("non-standard evaluation works as expected",{
   mcols(exp)[["seqnames.count"]] <- lengths(exp$revmap)
   exp <- exp %>% select(-revmap)
 
-  expect_identical(exp, a %>% reduce_ranges(seqnames.count = length(seqnames)))
+  expect_identical(exp, a %>% reduce_ranges(seqnames.count = n()))
 
   mcols(a)$name <- paste0("a", 1:4)
   exp <- reduce(a, with.revmap=TRUE)
-  mcols(exp)[["name.collapse"]] <- c("a1", "a2,a3,a4")
+  mcols(exp)[["name.collapse"]] <- CharacterList("a1", c("a2","a3","a4"))
   exp <- exp %>% select(-revmap)
 
   expect_identical(exp, a %>%
-                     reduce_ranges(name.collapse = paste0(name, collapse = ","))
+                     reduce_ranges(name.collapse = name)
                    )
   a <- read_bed("a.full.bed")
   exp <- reduce(a, with.revmap=TRUE, ignore.strand=TRUE)
-  mcols(exp)[["name.collapse"]] <- c("a1", "a2,a3,a4", "a1", "a2", "a3,a4")
+  mcols(exp)[["name.collapse"]] <- CharacterList("a1", c("a2", "a3","a4"), "a1", "a2", c("a3","a4"))
   mcols(exp)[["score.sum"]] <- c(1,9,5,6,15)
 
   exp <- exp %>% select(-revmap)
 
   expect_identical(exp, reduce_ranges(a,
-                                      name.collapse = paste0(name, collapse = ","),
+                                      name.collapse = name,
                                       score.sum = sum(score)))
 
   exp <- reduce(a, with.revmap=TRUE, ignore.strand=TRUE)
@@ -88,7 +92,7 @@ test_that("non-standard evaluation works as expected",{
   mcols(exp)[["score.sum"]] <- c(1,9,5,6,15)
   exp <- exp %>% select(-revmap)
 
-  expect_identical(exp, reduce_ranges(a, score.count = length(score),
+  expect_identical(exp, reduce_ranges(a, score.count = n(),
                                       score.sum = sum(score)))
   setwd(oldwd)
 })
