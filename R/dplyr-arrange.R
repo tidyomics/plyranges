@@ -1,6 +1,6 @@
 rng_arrange <- function(.data, dots) {
   rng_os <- overscope_ranges(.data)
-  rng_list <- lapply(dots, overscope_eval_next, overscope = rng_os)
+  rng_list <- lapply(dots, rlang::eval_tidy, data = rng_os)
 
   if (length(rng_list) == 1L) {
     idx <- order(rng_list[[1]])

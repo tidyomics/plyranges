@@ -22,7 +22,7 @@ expand_rng_by_cigar <- function(x, type) {
   grp <- BiocGenerics::rep.int(seq_along(x), n)
   mcols(grng) <- mcols(x)[grp,]
   mcols(grng)[[type]] <- grp
-  group_by(grng, UQ(type))
+  group_by(grng, !!type)
 }
 
 #' Group a GRanges object by introns or gaps
