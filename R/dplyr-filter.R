@@ -2,7 +2,6 @@
 filter_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   r <- overscope_eval_update(overscope, dots, bind_envir = FALSE)
-  on.exit(overscope_clean(overscope))
   r <- Reduce(`&`, r)
   if (!(is.logical(r) || is(r, "LogicalList"))) {
     if (!(is(r, "Rle") || is(r, "RleList"))) {
@@ -18,7 +17,7 @@ filter_grp <- function(.data, ...) {
     ii <- filter_rng(.data, dots)
     inx_update <- .data@inx[ii]
     rng <- .data@delegate[sort(unlist(inx_update))]
-    group_by(rng, UQS(groups(.data)))
+    group_by(rng, !!!groups(.data))
 }
 
 #' Subset a `Ranges` object
@@ -40,7 +39,6 @@ filter_grp <- function(.data, ...) {
 #' @importFrom dplyr filter
 #' @importFrom IRanges as.env
 #' @importFrom S4Vectors runValue endoapply
-#' @importFrom rlang enquo UQ new_overscope overscope_eval_next overscope_clean eval_bare
 #' @seealso [dplyr::filter()]
 #' @name filter-ranges
 #' @rdname filter-ranges

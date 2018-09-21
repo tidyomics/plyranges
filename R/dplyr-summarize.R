@@ -45,7 +45,7 @@ summarise.DelegatingIntegerRanges <- function(.data, ...) {
   summarize_rng(delegate, dots)
 }
 
-#' @importFrom rlang UQS enquos
+#' @importFrom rlang !!! enquos
 #' @importFrom dplyr bind_cols bind_rows
 #' @method summarise GroupedGenomicRanges
 #' @export

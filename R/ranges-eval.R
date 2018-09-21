@@ -127,6 +127,11 @@ n_distinct <- function(var) {
   }
 }
 
+
+is_empty_quos <- function(quos) {
+  length(quos) == 0L
+}
+
 # dplyr's join syntax uses a function called tbl_vars to get
 # variable names, using this function will enable a Ranges to be copied through
 # as a data.frame in a join.

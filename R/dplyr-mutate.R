@@ -41,14 +41,12 @@ mutate_core <- function(.data, .mutated) {
 
 
 mutate_rng <- function(.data, dots) {
-  #dots <- UQS(dots)
   col_names <- names(dots)
   if (any(col_names %in% "")) {
     stop("mutate must have name-variable pairs as input", call. = FALSE)
   }
 
   overscope <- overscope_ranges(.data)
-  on.exit(overscope_clean(overscope))
   .mutated <- overscope_eval_update(overscope, dots)
   .data <- mutate_core(.data, .mutated)
   mutate_mcols(.data, .mutated)

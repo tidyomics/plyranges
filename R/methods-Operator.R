@@ -2,7 +2,7 @@
 #' @importFrom Rsamtools bamWhat<- bamTag<- scanBamWhat
 #' @export
 select.BamFileOperator <- function(.data, ..., .drop_ranges = FALSE) {
-  dots <- quos(...)
+  dots <- set_dots_unnamed(...)
   
   # populate bam params
   all_fields_tags <- unlist(lapply(dots, quo_name))
@@ -44,7 +44,7 @@ valid_flag_filters <- function() {
 
 #' @importFrom Rsamtools bamMapqFilter<-
 filter.BamFileOperator <- function(.data, ...) {
-  dots <- quos(...)
+  dots <- set_dots_unnamed(...)
   filters <- unlist(valid_flag_filters())
   
   flags <- unlist(lapply(dots, quo_name))

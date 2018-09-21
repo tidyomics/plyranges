@@ -2,7 +2,7 @@ select_rng <- function(.data, .drop_ranges, dots) {
 
   if (.drop_ranges) {
     var_names <- ranges_vars(.data)
-    selected_vars <- tidyselect::vars_select(var_names, UQS(dots))
+    selected_vars <- tidyselect::vars_select(var_names, !!!dots)
   } else {
     var_names <- names(mcols(.data))
     if (length(var_names) == 0L) {
@@ -14,14 +14,13 @@ select_rng <- function(.data, .drop_ranges, dots) {
     } else if (is(.data, "GenomicRanges")) {
       exclude <- c("start", "end", "width", "strand", "seqnames")
     }
-    selected_vars <- tidyselect::vars_select(var_names, UQS(dots),
+    selected_vars <- tidyselect::vars_select(var_names, !!!dots,
                                              .exclude = exclude)
   }
 
   selected_vars <- syms(selected_vars)
   rng_os <- overscope_ranges(.data)
-  on.exit(overscope_clean(rng_os))
-  rng_list <- lapply(selected_vars, overscope_eval_next, overscope = rng_os)
+  rng_list <- lapply(selected_vars, rlang::eval_tidy, data = rng_os)
 
   if (.drop_ranges) {
     return(do.call("DataFrame", rng_list))

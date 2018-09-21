@@ -90,7 +90,7 @@ ungroup.GroupedGenomicRanges <- function(x, ...) {
   } else {
     groups_update <- setdiff(groups, ungroups)
     groups_update <- syms(groups_update)
-    groupings <- make_group_inx(x@delegate, UQS(groups_update))
+    groupings <- make_group_inx(x@delegate, !!!groups_update)
     new(class(x), delegate = x@delegate, groups = groupings$groups, inx = groupings$inx)
   }
 }

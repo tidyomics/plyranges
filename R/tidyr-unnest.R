@@ -1,6 +1,3 @@
-#' @export
-tidyr::unnest
-
 #' Expand list-columns in a Ranges object
 #'
 #' @param data A Ranges object
@@ -36,7 +33,7 @@ unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NU
   }
 
 
-  dots <- rlang::enquos(...)
+  dots <- set_dots_unnamed(...)
 
   dot_names <- unlist(Map(function(.) quo_name(.), dots))
 

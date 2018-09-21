@@ -56,8 +56,8 @@ setMethod("show", "GroupedGenomicRanges", function(object) {
 # --- group-by backend ---
 # generates index for grouping variables
 make_group_inx <- function(rng, ...) {
-    capture_groups <- rlang::enquos(...)
-    group_names <- vapply(capture_groups, quo_name, character(1))
+    capture_groups <- set_dots_unnamed(...)
+    group_names <- vapply(capture_groups, rlang::quo_name, character(1))
     
     # check group is actually found
     not_found <- setdiff(group_names, ranges_vars(rng))
@@ -70,7 +70,7 @@ make_group_inx <- function(rng, ...) {
     names(capture_groups) <- group_names
     # eval groups
     os <- overscope_ranges(rng)
-    groups_values <- as(lapply(capture_groups, eval_tidy, data = os), 
+    groups_values <- as(lapply(capture_groups, rlang::eval_tidy, data = os), 
                         "DataFrame")
     inx <- IRanges::splitAsList(seq_along(rng), groups_values, drop = TRUE)
     mcols(inx) <- BiocGenerics::unlist(extractList(groups_values, 
