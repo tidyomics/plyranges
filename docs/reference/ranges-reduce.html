@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.10</span>
       </span>
     </div>
 
@@ -183,7 +183,7 @@
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt;
 #&gt;   [1]         2         4         3 |         2
 #&gt;   [2]         6         9         4 |         5
-#&gt;   [3]        11        15         5 |        14</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>id</span>) <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>(<span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>score</span>))</div><div class='output co'>#&gt; IRanges object with 5 ranges and 2 metadata columns:
+#&gt;   [3]        11        15         5 |        14</div><div class='input'><span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>id</span>) <span class='kw'>%&gt;%</span> <span class='fu'>reduce_ranges</span>(<span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>sum</span>(<span class='no'>score</span>))</div><div class='output co'>#&gt; IRanges object with 5 ranges and 2 metadata columns:
 #&gt;           start       end     width |       id     score
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt; &lt;integer&gt;
 #&gt;   [1]        12        15         4 |        a         9

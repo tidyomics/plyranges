@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.10</span>
       </span>
     </div>
 
@@ -88,11 +88,11 @@
 
 <p><code>plryanges</code> provides a consistent interface for importing and wrangling genomics data from a variety of sources. The package defines a grammar of genomic data manipulation based on <code>dplyr</code> and the Bioconductor packages <code>IRanges</code>, <code>GenomicRanges</code>, and <code>rtracklayer</code>. It does this by providing a set of verbs for developing analysis pipelines based on <em>Ranges</em> objects that represent genomic regions:</p>
 <ul>
-<li>Modify genomic regions with the <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="reference/stretch.html">stretch()</a></code> functions.</li>
+<li>Modify genomic regions with the <code><a href="reference/tidyverse-reexports.html">mutate()</a></code> and <code><a href="reference/stretch.html">stretch()</a></code> functions.</li>
 <li>Modify genomic regions while fixing the start/end/center coordinates with the <code>anchor_</code> family of functions.</li>
-<li>Sort genomic ranges with <code><a href="http://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>.</li>
-<li>Modify, subset, and aggregate genomic data with the <code><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="http://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, and <code><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>functions.</li>
-<li>Any of the above operations can be performed on partitions of the data with <code><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>.</li>
+<li>Sort genomic ranges with <code><a href="reference/tidyverse-reexports.html">arrange()</a></code>.</li>
+<li>Modify, subset, and aggregate genomic data with the <code><a href="reference/tidyverse-reexports.html">mutate()</a></code>, <code><a href="reference/tidyverse-reexports.html">filter()</a></code>, and <code><a href="reference/tidyverse-reexports.html">summarise()</a></code>functions.</li>
+<li>Any of the above operations can be performed on partitions of the data with <code><a href="reference/tidyverse-reexports.html">group_by()</a></code>.</li>
 <li>Find nearest neighbour genomic regions with the <code>join_nearest_</code> family of functions.</li>
 <li>Find overlaps between ranges with the <code>join_overlaps_</code> family of functions.</li>
 <li>Merge all overlapping and adjacent genomic regions with <code><a href="reference/ranges-reduce.html">reduce_ranges()</a></code>.</li>
@@ -105,10 +105,10 @@
 <h1 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h1>
 <p>The package is currently available from Bioconductor.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("BiocManager")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"plyranges"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("BiocManager")</span>
+BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"plyranges"</span>)</code></pre></div>
 <p>To install the development version from GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">BiocManger<span class="op">::</span><span class="kw">install</span>(<span class="st">"sa-lee/plyranges"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BiocManger<span class="op">::</span><span class="kw">install</span>(<span class="st">"sa-lee/plyranges"</span>)</code></pre></div>
 </div>
 <div id="quick-overview" class="section level1">
 <h1 class="hasAnchor">
@@ -120,56 +120,59 @@
 <p><code>Ranges</code> objects can either represent sets of integers as <code>IRanges</code> (which have start, end and width attributes) or represent genomic intervals (which have additional attributes, sequence name, and strand) as <code>GRanges</code>. In addition, both types of <code>Ranges</code> can store information about their intervals as metadata columns (for example GC content over a genomic interval).</p>
 <p><code>Ranges</code> objects follow the tidy data principle: each row of a <code>Ranges</code> object corresponds to an interval, while each column will represent a variable about that interval, and generally each object will represent a single unit of observation (like gene annotations).</p>
 <p>We can construct a <code>IRanges</code> object from a <code>data.frame</code> with a <code>start</code> or <code>width</code> using the <code><a href="reference/ranges-construct.html">as_iranges()</a></code> method.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(plyranges)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">width =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="reference/ranges-construct.html">as_iranges</a></span>(df)</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; IRanges object with 5 ranges and 0 metadata columns:</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;           start       end     width</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt;   [1]         1         5         5</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt;   [2]         2         6         5</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt;   [3]         3         7         5</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt;   [4]         4         8         5</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt;   [5]         5         9         5</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># alternatively with end</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">end =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw"><a href="reference/ranges-construct.html">as_iranges</a></span>(df)</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co">#&gt; IRanges object with 5 ranges and 0 metadata columns:</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt;           start       end     width</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="co">#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="co">#&gt;   [1]         1         5         5</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co">#&gt;   [2]         2         6         5</span></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co">#&gt;   [3]         3         7         5</span></a>
-<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co">#&gt;   [4]         4         8         5</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22"><span class="co">#&gt;   [5]         5         9         5</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(plyranges)
+<span class="co">#&gt; Warning: package 'IRanges' was built under R version 3.5.1</span>
+<span class="co">#&gt; Warning: package 'S4Vectors' was built under R version 3.5.1</span>
+<span class="co">#&gt; Warning: package 'GenomicRanges' was built under R version 3.5.1</span>
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">width =</span> <span class="dv">5</span>)
+<span class="kw"><a href="reference/ranges-construct.html">as_iranges</a></span>(df)
+<span class="co">#&gt; IRanges object with 5 ranges and 0 metadata columns:</span>
+<span class="co">#&gt;           start       end     width</span>
+<span class="co">#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span>
+<span class="co">#&gt;   [1]         1         5         5</span>
+<span class="co">#&gt;   [2]         2         6         5</span>
+<span class="co">#&gt;   [3]         3         7         5</span>
+<span class="co">#&gt;   [4]         4         8         5</span>
+<span class="co">#&gt;   [5]         5         9         5</span>
+<span class="co"># alternatively with end</span>
+df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dt">end =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">9</span>)
+<span class="kw"><a href="reference/ranges-construct.html">as_iranges</a></span>(df)
+<span class="co">#&gt; IRanges object with 5 ranges and 0 metadata columns:</span>
+<span class="co">#&gt;           start       end     width</span>
+<span class="co">#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span>
+<span class="co">#&gt;   [1]         1         5         5</span>
+<span class="co">#&gt;   [2]         2         6         5</span>
+<span class="co">#&gt;   [3]         3         7         5</span>
+<span class="co">#&gt;   [4]         4         8         5</span>
+<span class="co">#&gt;   [5]         5         9         5</span></code></pre></div>
 <p>We can also construct a <code>GRanges</code> object in a similar manner. Note that a <code>GRanges</code> object requires at least a seqnames column to be present in the data.frame (but not necessarily a strand column).</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>, <span class="st">"chr2"</span>, <span class="st">"chr1"</span>, <span class="st">"chr2"</span>),</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">                 <span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">                 <span class="dt">width =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="reference/ranges-construct.html">as_granges</a></span>(df)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; GRanges object with 5 ranges and 0 metadata columns:</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;       seqnames    ranges strand</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt;   [1]     chr1       1-5      *</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt;   [2]     chr2       2-6      *</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt;   [3]     chr2       3-7      *</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt;   [4]     chr1       4-8      *</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;   [5]     chr2       5-9      *</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;   -------</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># strand can be specified with `+`, `*` (mising) and `-`</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">df<span class="op">$</span>strand &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"+"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"*"</span>)</a>
-<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="kw"><a href="reference/ranges-construct.html">as_granges</a></span>(df)</a>
-<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; GRanges object with 5 ranges and 0 metadata columns:</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt;       seqnames    ranges strand</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt;   [1]     chr1       1-5      +</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt;   [2]     chr2       2-6      +</span></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt;   [3]     chr2       3-7      -</span></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt;   [4]     chr1       4-8      -</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt;   [5]     chr2       5-9      *</span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt;   -------</span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">seqnames =</span> <span class="kw">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>, <span class="st">"chr2"</span>, <span class="st">"chr1"</span>, <span class="st">"chr2"</span>),
+                 <span class="dt">start =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,
+                 <span class="dt">width =</span> <span class="dv">5</span>)
+<span class="kw"><a href="reference/ranges-construct.html">as_granges</a></span>(df)
+<span class="co">#&gt; GRanges object with 5 ranges and 0 metadata columns:</span>
+<span class="co">#&gt;       seqnames    ranges strand</span>
+<span class="co">#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">#&gt;   [1]     chr1       1-5      *</span>
+<span class="co">#&gt;   [2]     chr2       2-6      *</span>
+<span class="co">#&gt;   [3]     chr2       3-7      *</span>
+<span class="co">#&gt;   [4]     chr1       4-8      *</span>
+<span class="co">#&gt;   [5]     chr2       5-9      *</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span>
+<span class="co"># strand can be specified with `+`, `*` (mising) and `-`</span>
+df<span class="op">$</span>strand &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"+"</span>, <span class="st">"+"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"*"</span>)
+<span class="kw"><a href="reference/ranges-construct.html">as_granges</a></span>(df)
+<span class="co">#&gt; GRanges object with 5 ranges and 0 metadata columns:</span>
+<span class="co">#&gt;       seqnames    ranges strand</span>
+<span class="co">#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>
+<span class="co">#&gt;   [1]     chr1       1-5      +</span>
+<span class="co">#&gt;   [2]     chr2       2-6      +</span>
+<span class="co">#&gt;   [3]     chr2       3-7      -</span>
+<span class="co">#&gt;   [4]     chr1       4-8      -</span>
+<span class="co">#&gt;   [5]     chr2       5-9      *</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 </div>
 </div>
 <div id="example-finding-gwas-hits-that-overlap-known-exons" class="section level1">
@@ -179,153 +182,153 @@
 <p>Suppose we have two <em>GRanges</em> objects: one containing coordinates of known exons and another containing SNPs from a GWAS.</p>
 <p>The first and last 5 exons are printed below, there are two additional columns corresponding to the exon name, and a score.</p>
 <p>We could check the number of exons per chromosome using <code>group_by</code> and <code>summarise</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">exons </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; GRanges object with 459752 ranges and 2 metadata columns:</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;            seqnames            ranges strand |</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt;        [1]     chr1       11874-12227      + |</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt;        [2]     chr1       12613-12721      + |</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt;        [3]     chr1       13221-14409      + |</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt;        [4]     chr1       14362-14829      - |</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;        [5]     chr1       14970-15038      - |</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;        ...      ...               ...    ... .</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#&gt;   [459748]     chrY 59338754-59338859      + |</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt;   [459749]     chrY 59338754-59338859      + |</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;   [459750]     chrY 59340194-59340278      + |</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;   [459751]     chrY 59342487-59343488      + |</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt;   [459752]     chrY 59342487-59343488      + |</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt;                                          name     score</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt;</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19"><span class="co">#&gt;        [2]    NR_046018_exon_1_0_chr1_12613_f         0</span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co">#&gt;        [3]    NR_046018_exon_2_0_chr1_13221_f         0</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co">#&gt;        [4]    NR_024540_exon_0_0_chr1_14362_r         0</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt;        [5]    NR_024540_exon_1_0_chr1_14970_r         0</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt;        ...                                ...       ...</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt;   [459748] NM_002186_exon_6_0_chrY_59338754_f         0</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt;   [459749] NM_176786_exon_7_0_chrY_59338754_f         0</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#&gt;   [459750] NM_002186_exon_7_0_chrY_59340194_f         0</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#&gt;   [459751] NM_002186_exon_8_0_chrY_59342487_f         0</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">#&gt;   [459752] NM_176786_exon_8_0_chrY_59342487_f         0</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">#&gt;   -------</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31">exons <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(seqnames) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw"><a href="reference/n.html">n</a></span>())</a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt; DataFrame with 49 rows and 2 columns</span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt;                 seqnames         n</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt;                    &lt;Rle&gt; &lt;integer&gt;</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt; 1                   chr1     43366</span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt; 2   chr1_gl000191_random        42</span></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt; 3   chr1_gl000192_random        46</span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt; 4                  chr10     19420</span></a>
-<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt; 5                  chr11     24476</span></a>
-<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt; ...                  ...       ...</span></a>
-<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt; 45        chrUn_gl000222        20</span></a>
-<a class="sourceLine" id="cb5-44" data-line-number="44"><span class="co">#&gt; 46        chrUn_gl000223        22</span></a>
-<a class="sourceLine" id="cb5-45" data-line-number="45"><span class="co">#&gt; 47        chrUn_gl000228        85</span></a>
-<a class="sourceLine" id="cb5-46" data-line-number="46"><span class="co">#&gt; 48                  chrX     18173</span></a>
-<a class="sourceLine" id="cb5-47" data-line-number="47"><span class="co">#&gt; 49                  chrY      4128</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons 
+<span class="co">#&gt; GRanges object with 459752 ranges and 2 metadata columns:</span>
+<span class="co">#&gt;            seqnames            ranges strand |</span>
+<span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |</span>
+<span class="co">#&gt;        [1]     chr1       11874-12227      + |</span>
+<span class="co">#&gt;        [2]     chr1       12613-12721      + |</span>
+<span class="co">#&gt;        [3]     chr1       13221-14409      + |</span>
+<span class="co">#&gt;        [4]     chr1       14362-14829      - |</span>
+<span class="co">#&gt;        [5]     chr1       14970-15038      - |</span>
+<span class="co">#&gt;        ...      ...               ...    ... .</span>
+<span class="co">#&gt;   [459748]     chrY 59338754-59338859      + |</span>
+<span class="co">#&gt;   [459749]     chrY 59338754-59338859      + |</span>
+<span class="co">#&gt;   [459750]     chrY 59340194-59340278      + |</span>
+<span class="co">#&gt;   [459751]     chrY 59342487-59343488      + |</span>
+<span class="co">#&gt;   [459752]     chrY 59342487-59343488      + |</span>
+<span class="co">#&gt;                                          name     score</span>
+<span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt;</span>
+<span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0</span>
+<span class="co">#&gt;        [2]    NR_046018_exon_1_0_chr1_12613_f         0</span>
+<span class="co">#&gt;        [3]    NR_046018_exon_2_0_chr1_13221_f         0</span>
+<span class="co">#&gt;        [4]    NR_024540_exon_0_0_chr1_14362_r         0</span>
+<span class="co">#&gt;        [5]    NR_024540_exon_1_0_chr1_14970_r         0</span>
+<span class="co">#&gt;        ...                                ...       ...</span>
+<span class="co">#&gt;   [459748] NM_002186_exon_6_0_chrY_59338754_f         0</span>
+<span class="co">#&gt;   [459749] NM_176786_exon_7_0_chrY_59338754_f         0</span>
+<span class="co">#&gt;   [459750] NM_002186_exon_7_0_chrY_59340194_f         0</span>
+<span class="co">#&gt;   [459751] NM_002186_exon_8_0_chrY_59342487_f         0</span>
+<span class="co">#&gt;   [459752] NM_176786_exon_8_0_chrY_59342487_f         0</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span>
+exons <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/tidyverse-reexports.html">group_by</a></span>(seqnames) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/tidyverse-reexports.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw"><a href="reference/n.html">n</a></span>())
+<span class="co">#&gt; DataFrame with 49 rows and 2 columns</span>
+<span class="co">#&gt;                 seqnames         n</span>
+<span class="co">#&gt;                    &lt;Rle&gt; &lt;integer&gt;</span>
+<span class="co">#&gt; 1                   chr1     43366</span>
+<span class="co">#&gt; 2   chr1_gl000191_random        42</span>
+<span class="co">#&gt; 3   chr1_gl000192_random        46</span>
+<span class="co">#&gt; 4                  chr10     19420</span>
+<span class="co">#&gt; 5                  chr11     24476</span>
+<span class="co">#&gt; ...                  ...       ...</span>
+<span class="co">#&gt; 45        chrUn_gl000222        20</span>
+<span class="co">#&gt; 46        chrUn_gl000223        22</span>
+<span class="co">#&gt; 47        chrUn_gl000228        85</span>
+<span class="co">#&gt; 48                  chrX     18173</span>
+<span class="co">#&gt; 49                  chrY      4128</span></code></pre></div>
 <p>Next we create a column representing the transcript_id with <code>mutate</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">exons &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">tx_id =</span> <span class="kw">sub</span>(<span class="st">"_exon.*"</span>, <span class="st">""</span>, name))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">tx_id =</span> <span class="kw">sub</span>(<span class="st">"_exon.*"</span>, <span class="st">""</span>, name))</code></pre></div>
 <p>To find all GWAS SNPs that overlap exons, we use <code>join_overlap_inner</code>. This will create a new <em>GRanges</em> with the coordinates of SNPs that overlap exons, as well as metadata from both objects.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">olap &lt;-<span class="st"> </span><span class="kw"><a href="reference/overlap-joins.html">join_overlap_inner</a></span>(gwas, exons)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">olap</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; GRanges object with 3439 ranges and 4 metadata columns:</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;          seqnames    ranges strand |      name.x</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt;      [1]     chr1   1079198      * |  rs11260603</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;      [2]     chr1   1247494      * |     rs12103</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;      [3]     chr1   1247494      * |     rs12103</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt;      [4]     chr1   1247494      * |     rs12103</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;      [5]     chr1   1247494      * |     rs12103</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;      ...      ...       ...    ... .         ...</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt;   [3435]     chrX 153764217      * |   rs1050828</span></a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="co">#&gt;   [3436]     chrX 153764217      * |   rs1050828</span></a>
-<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt;   [3437]     chrX 153764217      * |   rs1050828</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt;   [3438]     chrX 153764217      * |   rs1050828</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#&gt;   [3439]     chrX 153764217      * |   rs1050828</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt;                                          name.y     score        tx_id</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt;                                     &lt;character&gt; &lt;numeric&gt;  &lt;character&gt;</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">#&gt;      [1]      NR_038869_exon_2_0_chr1_1078119_f         0    NR_038869</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#&gt;      [2]   NM_001256456_exon_1_0_chr1_1247398_r         0 NM_001256456</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="co">#&gt;      [3]   NM_001256460_exon_1_0_chr1_1247398_r         0 NM_001256460</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="co">#&gt;      [4]   NM_001256462_exon_1_0_chr1_1247398_r         0 NM_001256462</span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="co">#&gt;      [5]   NM_001256463_exon_1_0_chr1_1247398_r         0 NM_001256463</span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="co">#&gt;      ...                                    ...       ...          ...</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co">#&gt;   [3435] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt;   [3436]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402</span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt;   [3437] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt;   [3438]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402</span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt;   [3439] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt;   -------</span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap &lt;-<span class="st"> </span><span class="kw"><a href="reference/overlap-joins.html">join_overlap_inner</a></span>(gwas, exons)
+olap
+<span class="co">#&gt; GRanges object with 3439 ranges and 4 metadata columns:</span>
+<span class="co">#&gt;          seqnames    ranges strand |      name.x</span>
+<span class="co">#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;</span>
+<span class="co">#&gt;      [1]     chr1   1079198      * |  rs11260603</span>
+<span class="co">#&gt;      [2]     chr1   1247494      * |     rs12103</span>
+<span class="co">#&gt;      [3]     chr1   1247494      * |     rs12103</span>
+<span class="co">#&gt;      [4]     chr1   1247494      * |     rs12103</span>
+<span class="co">#&gt;      [5]     chr1   1247494      * |     rs12103</span>
+<span class="co">#&gt;      ...      ...       ...    ... .         ...</span>
+<span class="co">#&gt;   [3435]     chrX 153764217      * |   rs1050828</span>
+<span class="co">#&gt;   [3436]     chrX 153764217      * |   rs1050828</span>
+<span class="co">#&gt;   [3437]     chrX 153764217      * |   rs1050828</span>
+<span class="co">#&gt;   [3438]     chrX 153764217      * |   rs1050828</span>
+<span class="co">#&gt;   [3439]     chrX 153764217      * |   rs1050828</span>
+<span class="co">#&gt;                                          name.y     score        tx_id</span>
+<span class="co">#&gt;                                     &lt;character&gt; &lt;numeric&gt;  &lt;character&gt;</span>
+<span class="co">#&gt;      [1]      NR_038869_exon_2_0_chr1_1078119_f         0    NR_038869</span>
+<span class="co">#&gt;      [2]   NM_001256456_exon_1_0_chr1_1247398_r         0 NM_001256456</span>
+<span class="co">#&gt;      [3]   NM_001256460_exon_1_0_chr1_1247398_r         0 NM_001256460</span>
+<span class="co">#&gt;      [4]   NM_001256462_exon_1_0_chr1_1247398_r         0 NM_001256462</span>
+<span class="co">#&gt;      [5]   NM_001256463_exon_1_0_chr1_1247398_r         0 NM_001256463</span>
+<span class="co">#&gt;      ...                                    ...       ...          ...</span>
+<span class="co">#&gt;   [3435] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span>
+<span class="co">#&gt;   [3436]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402</span>
+<span class="co">#&gt;   [3437] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span>
+<span class="co">#&gt;   [3438]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402</span>
+<span class="co">#&gt;   [3439] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 <p>For each SNP we can count the number of times it overlaps a transcript.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">olap <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span>(name.x, tx_id) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw"><a href="reference/n.html">n</a></span>())</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt; DataFrame with 1619 rows and 3 columns</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt;           name.x       tx_id         n</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt;      &lt;character&gt; &lt;character&gt; &lt;integer&gt;</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; 1     rs17121403   NM_000028         1</span></a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; 2       rs429358   NM_000041         3</span></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; 3         rs7412   NM_000041         3</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co">#&gt; 4      rs2234978   NM_000043         1</span></a>
-<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co">#&gt; 5      rs1801516   NM_000051         1</span></a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co">#&gt; ...          ...         ...       ...</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="co">#&gt; 1615   rs1420101   NR_104167         1</span></a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"><span class="co">#&gt; 1616   rs1065656   NR_104318         1</span></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">#&gt; 1617   rs2224391   NR_104417         1</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="co">#&gt; 1618   rs2224391   NR_104418         1</span></a>
-<a class="sourceLine" id="cb8-17" data-line-number="17"><span class="co">#&gt; 1619  rs41281112   NR_104592         1</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">olap <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/tidyverse-reexports.html">group_by</a></span>(name.x, tx_id) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="reference/tidyverse-reexports.html">summarise</a></span>(<span class="dt">n =</span> <span class="kw"><a href="reference/n.html">n</a></span>())
+<span class="co">#&gt; DataFrame with 1619 rows and 3 columns</span>
+<span class="co">#&gt;           name.x       tx_id         n</span>
+<span class="co">#&gt;      &lt;character&gt; &lt;character&gt; &lt;integer&gt;</span>
+<span class="co">#&gt; 1     rs17121403   NM_000028         1</span>
+<span class="co">#&gt; 2       rs429358   NM_000041         3</span>
+<span class="co">#&gt; 3         rs7412   NM_000041         3</span>
+<span class="co">#&gt; 4      rs2234978   NM_000043         1</span>
+<span class="co">#&gt; 5      rs1801516   NM_000051         1</span>
+<span class="co">#&gt; ...          ...         ...       ...</span>
+<span class="co">#&gt; 1615   rs1420101   NR_104167         1</span>
+<span class="co">#&gt; 1616   rs1065656   NR_104318         1</span>
+<span class="co">#&gt; 1617   rs2224391   NR_104417         1</span>
+<span class="co">#&gt; 1618   rs2224391   NR_104418         1</span>
+<span class="co">#&gt; 1619  rs41281112   NR_104592         1</span></code></pre></div>
 <p>We can also generate 2bp splice sites on either side of the exon using <code>flank_left</code> and <code>flank_right</code>. We add a column indicating the side of flanking for illustrative purposes. The <code>interweave</code> function pairs the left and right ranges objects.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">left_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_left</a></span>(exons, 2L) </a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">right_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_right</a></span>(exons, 2L)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">all_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/ranges-interweave.html">interweave</a></span>(left_ss, right_ss, <span class="dt">.id =</span> <span class="st">"side"</span>)</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">all_ss</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt;            seqnames            ranges strand |</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co">#&gt;        [1]     chr1       11872-11873      + |</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co">#&gt;        [2]     chr1       12228-12229      + |</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="co">#&gt;        [3]     chr1       12611-12612      + |</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt;        [4]     chr1       12722-12723      + |</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt;        [5]     chr1       13219-13220      + |</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt;        ...      ...               ...    ... .</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt;   [919500]     chrY 59340279-59340280      + |</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="co">#&gt;   [919501]     chrY 59342485-59342486      + |</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">#&gt;   [919502]     chrY 59343489-59343490      + |</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co">#&gt;   [919503]     chrY 59342485-59342486      + |</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co">#&gt;   [919504]     chrY 59343489-59343490      + |</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">#&gt;                                          name     score       tx_id</span></a>
-<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt; &lt;character&gt;</span></a>
-<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="co">#&gt;        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb9-23" data-line-number="23"><span class="co">#&gt;        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb9-24" data-line-number="24"><span class="co">#&gt;        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb9-25" data-line-number="25"><span class="co">#&gt;        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018</span></a>
-<a class="sourceLine" id="cb9-26" data-line-number="26"><span class="co">#&gt;        ...                                ...       ...         ...</span></a>
-<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="co">#&gt;   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186</span></a>
-<a class="sourceLine" id="cb9-28" data-line-number="28"><span class="co">#&gt;   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span></a>
-<a class="sourceLine" id="cb9-29" data-line-number="29"><span class="co">#&gt;   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span></a>
-<a class="sourceLine" id="cb9-30" data-line-number="30"><span class="co">#&gt;   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span></a>
-<a class="sourceLine" id="cb9-31" data-line-number="31"><span class="co">#&gt;   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span></a>
-<a class="sourceLine" id="cb9-32" data-line-number="32"><span class="co">#&gt;                   side</span></a>
-<a class="sourceLine" id="cb9-33" data-line-number="33"><span class="co">#&gt;            &lt;character&gt;</span></a>
-<a class="sourceLine" id="cb9-34" data-line-number="34"><span class="co">#&gt;        [1]        left</span></a>
-<a class="sourceLine" id="cb9-35" data-line-number="35"><span class="co">#&gt;        [2]       right</span></a>
-<a class="sourceLine" id="cb9-36" data-line-number="36"><span class="co">#&gt;        [3]        left</span></a>
-<a class="sourceLine" id="cb9-37" data-line-number="37"><span class="co">#&gt;        [4]       right</span></a>
-<a class="sourceLine" id="cb9-38" data-line-number="38"><span class="co">#&gt;        [5]        left</span></a>
-<a class="sourceLine" id="cb9-39" data-line-number="39"><span class="co">#&gt;        ...         ...</span></a>
-<a class="sourceLine" id="cb9-40" data-line-number="40"><span class="co">#&gt;   [919500]       right</span></a>
-<a class="sourceLine" id="cb9-41" data-line-number="41"><span class="co">#&gt;   [919501]        left</span></a>
-<a class="sourceLine" id="cb9-42" data-line-number="42"><span class="co">#&gt;   [919502]       right</span></a>
-<a class="sourceLine" id="cb9-43" data-line-number="43"><span class="co">#&gt;   [919503]        left</span></a>
-<a class="sourceLine" id="cb9-44" data-line-number="44"><span class="co">#&gt;   [919504]       right</span></a>
-<a class="sourceLine" id="cb9-45" data-line-number="45"><span class="co">#&gt;   -------</span></a>
-<a class="sourceLine" id="cb9-46" data-line-number="46"><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">left_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_left</a></span>(exons, 2L) 
+right_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/flank-ranges.html">flank_right</a></span>(exons, 2L)
+all_ss &lt;-<span class="st"> </span><span class="kw"><a href="reference/ranges-interweave.html">interweave</a></span>(left_ss, right_ss, <span class="dt">.id =</span> <span class="st">"side"</span>)
+all_ss
+<span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span>
+<span class="co">#&gt;            seqnames            ranges strand |</span>
+<span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |</span>
+<span class="co">#&gt;        [1]     chr1       11872-11873      + |</span>
+<span class="co">#&gt;        [2]     chr1       12228-12229      + |</span>
+<span class="co">#&gt;        [3]     chr1       12611-12612      + |</span>
+<span class="co">#&gt;        [4]     chr1       12722-12723      + |</span>
+<span class="co">#&gt;        [5]     chr1       13219-13220      + |</span>
+<span class="co">#&gt;        ...      ...               ...    ... .</span>
+<span class="co">#&gt;   [919500]     chrY 59340279-59340280      + |</span>
+<span class="co">#&gt;   [919501]     chrY 59342485-59342486      + |</span>
+<span class="co">#&gt;   [919502]     chrY 59343489-59343490      + |</span>
+<span class="co">#&gt;   [919503]     chrY 59342485-59342486      + |</span>
+<span class="co">#&gt;   [919504]     chrY 59343489-59343490      + |</span>
+<span class="co">#&gt;                                          name     score       tx_id</span>
+<span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt; &lt;character&gt;</span>
+<span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span>
+<span class="co">#&gt;        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018</span>
+<span class="co">#&gt;        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span>
+<span class="co">#&gt;        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018</span>
+<span class="co">#&gt;        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018</span>
+<span class="co">#&gt;        ...                                ...       ...         ...</span>
+<span class="co">#&gt;   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186</span>
+<span class="co">#&gt;   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span>
+<span class="co">#&gt;   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186</span>
+<span class="co">#&gt;   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span>
+<span class="co">#&gt;   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786</span>
+<span class="co">#&gt;                   side</span>
+<span class="co">#&gt;            &lt;character&gt;</span>
+<span class="co">#&gt;        [1]        left</span>
+<span class="co">#&gt;        [2]       right</span>
+<span class="co">#&gt;        [3]        left</span>
+<span class="co">#&gt;        [4]       right</span>
+<span class="co">#&gt;        [5]        left</span>
+<span class="co">#&gt;        ...         ...</span>
+<span class="co">#&gt;   [919500]       right</span>
+<span class="co">#&gt;   [919501]        left</span>
+<span class="co">#&gt;   [919502]       right</span>
+<span class="co">#&gt;   [919503]        left</span>
+<span class="co">#&gt;   [919504]       right</span>
+<span class="co">#&gt;   -------</span>
+<span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></code></pre></div>
 </div>
 <div id="contributing" class="section level1">
 <h1 class="hasAnchor">

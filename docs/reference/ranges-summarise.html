@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.10</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Ranges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='tidyverse-reexports.html'>summarise</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,10 +148,10 @@
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,  <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,
 <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"*"</span>), <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>))
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>)
-<span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 1 row and 1 column
+<span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 1 row and 1 column
 #&gt;                  gc
 #&gt;           &lt;numeric&gt;
-#&gt; 1 0.367872588802129</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>strand</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 3 rows and 2 columns
+#&gt; 1 0.367872588802129</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>strand</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'>mean</span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 3 rows and 2 columns
 #&gt;   strand                gc
 #&gt;    &lt;Rle&gt;         &lt;numeric&gt;
 #&gt; 1      + 0.180136174273988

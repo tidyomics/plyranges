@@ -32,8 +32,11 @@
 
 <meta property="og:title" content="Stretch a genomic interval — stretch" />
 
-<meta property="og:description" content="Without anchoring, this function will extend the interval
-in either direction by the integer vector in extend." />
+<meta property="og:description" content="By default, stretch(x) will anchor by the center of a Ranges
+object. This means that half of the value of extend will be added to
+the end of the range and the remaining half subtracted from the start of
+the Range. The other anchors will leave the start/end fixed and stretch
+the end/start respectively." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -64,7 +67,7 @@ in either direction by the integer vector in extend." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.10</span>
       </span>
     </div>
 
@@ -116,8 +119,11 @@ in either direction by the integer vector in extend." />
 
     <div class="ref-description">
     
-    <p>Without anchoring, this function will extend the interval
-in either direction by the integer vector in extend.</p>
+    <p>By default, <code>stretch(x)</code> will anchor by the center of a Ranges
+object. This means that half of the value of <code>extend</code> will be added to
+the end of the range and the remaining half subtracted from the start of
+the Range. The other anchors will leave the start/end fixed and stretch
+the end/start respectively.</p>
     
     </div>
 
@@ -144,6 +150,10 @@ integer vector of length 1 or an integer vector the same length as x.</p></td>
 
     <p>a Ranges object with modified start or end (or both) coordinates</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='ranges-anchor.html'>anchor()</a></code>, <code><a href='tidyverse-reexports.html'>mutate()</a></code></p></div>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>:-<span class='fl'>1</span>, <span class='fl'>13</span>:<span class='fl'>15</span>), <span class='kw'>width</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>3</span>, <span class='fl'>2</span>:<span class='fl'>0</span>)))
@@ -151,22 +161,22 @@ integer vector of length 1 or an integer vector the same length as x.</p></td>
 <span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_start</a></span>(<span class='no'>rng2</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;   [1]        -3        17        21
+#&gt;   [1]        -3        16        20
 #&gt;   [2]        -4        16        21
-#&gt;   [3]        -5        15        21
-#&gt;   [4]        -5        15        21
-#&gt;   [5]         8        28        21
+#&gt;   [3]        -5        16        22
+#&gt;   [4]        -6        16        23
+#&gt;   [5]         8        29        22
 #&gt;   [6]         9        29        21
-#&gt;   [7]        10        30        21</div><div class='input'><span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_end</a></span>(<span class='no'>rng2</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
+#&gt;   [7]        10        29        20</div><div class='input'><span class='fu'>stretch</span>(<span class='fu'><a href='ranges-anchor.html'>anchor_end</a></span>(<span class='no'>rng2</span>), <span class='fl'>10</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
-#&gt;   [1]       -13         7        21
+#&gt;   [1]       -13         6        20
 #&gt;   [2]       -14         6        21
-#&gt;   [3]       -15         5        21
-#&gt;   [4]       -15         5        21
-#&gt;   [5]        -2        18        21
+#&gt;   [3]       -15         6        22
+#&gt;   [4]       -16         6        23
+#&gt;   [5]        -2        19        22
 #&gt;   [6]        -1        19        21
-#&gt;   [7]         0        20        21</div><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
+#&gt;   [7]         0        19        20</div><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                          <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>),
                          <span class='kw'>start</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>2</span>:-<span class='fl'>1</span>, <span class='fl'>13</span>:<span class='fl'>15</span>),
                          <span class='kw'>width</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>0</span>:<span class='fl'>3</span>, <span class='fl'>2</span>:<span class='fl'>0</span>)))
@@ -200,6 +210,8 @@ integer vector of length 1 or an integer vector the same length as x.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

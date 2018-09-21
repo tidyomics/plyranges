@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.9</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.1.10</span>
       </span>
     </div>
 
@@ -120,7 +120,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Ranges</span>
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='tidyverse-reexports.html'>arrange</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,8 +142,8 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'>data.frame</span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>1</span>))
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='no'>rng</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>))
-<span class='fu'><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>rng</span>, <span class='no'>score</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 1 metadata column:
+<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='no'>rng</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'>runif</span>(<span class='fl'>10</span>))
+<span class='fu'><a href='tidyverse-reexports.html'>arrange</a></span>(<span class='no'>rng</span>, <span class='no'>score</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 1 metadata column:
 #&gt;            start       end     width |             score
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
 #&gt;    [1]         7        10         4 |  0.12348723039031
