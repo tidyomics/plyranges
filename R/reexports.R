@@ -2,66 +2,66 @@
 
 #' Rexported functions from the tidyverse
 #' 
-#' @rdname tidyverse
-#' @name tidyverse
+#' @rdname tidyverse-reexports
+#' @name tidyverse-reexports
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @importFrom rlang !!
 #' @export
 rlang::`!!!`
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @importFrom rlang !!!
 #' @export
 rlang::`!!`
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @importFrom magrittr %>%
 #' @export
 magrittr::`%>%`
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::filter
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::group_by
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #'@export
 dplyr::groups
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #'@export
 dplyr::ungroup
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #'@export
 dplyr::group_vars
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::mutate
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::select
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::summarise
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::summarize
 
-#' @rdname tidyverse
+#' @rdname tidyverse-reexports
 #' @export
 dplyr::arrange
 
-#' @rdname tidyverse 
+#' @rdname tidyverse-reexports 
 #' @export
 tidyr::unnest
