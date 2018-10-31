@@ -12,7 +12,7 @@ warnings_are_errors: false
 branches:
   only:
     - master
-    - RELEASE_3_7
+    - RELEASE_3_8
 
 r_packages:
   - rlang
