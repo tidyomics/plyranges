@@ -96,7 +96,7 @@ n <- function() {
   if (rlang::env_has(parent_env, "start")) {
     .data <- rlang::env_get(parent_env, "start")
     if (is(.data, "IntegerList")) {
-      return(BiocGenerics::lengths(.data))
+      return(lengths(.data))
     } else {
       return(length(.data))
     }
