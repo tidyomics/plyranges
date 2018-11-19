@@ -1,31 +1,67 @@
 ---
 title: "Using plyranges to perform common genomic data wrangling tasks"
-author: "Stuart Lee"
-package: plyranges
+author: "Stuart Lee and Michael Lawrence"
 date: "`r Sys.Date()`"
 output:
-  BiocStyle::html_document:
+  html_document::
+    toc: true
     toc_float: true
-  BiocStyle::md_document:
-    variant: markdown_github
-abstract: A fluent interface to `Ranges` classes.
-vignette: >
-  %\VignetteIndexEntry{data-wrangling}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+knitr::opts_chunk$set(
+  echo = TRUE, 
+  warning = FALSE
+  message = FALSE
+)
+
+# -- pacakges
+library(dplyr)
+library(ggplot2)
+library(GenomicRanges)
+library(plyranges)
+library(HelloRangesData)
 ```
 
 # Introduction
 
-Here we introduce the `plyranges` API for manipulating genomic data. 
-The examples follow the [HelloRanges tutorial](http://bioconductor.org/packages/release/bioc/vignettes/HelloRanges/inst/doc/tutorial.pdf). The aim is to show how common analysis 
-tasks that are usually undertaken using `bedtools` can be performed interactively
-using the `plyranges` API. Throughout this tutorial we will highlight how
-the `bedtools`, `HelloRanges` and `plyranges` API differ. 
+This tutorial will show you how to think about and perform common genomic data 
+wrangling tasks using the using the [plyranges]() and [GenomicRanges]() 
+Bioconductor packages. These packages represent genomic data using the 
+_GRanges_ data structure, which provides a powerful abstraction for working
+with measurements or annotations along genomic regions. In this tutorial
+you will use _GRanges_ object to construct workflows to
+
+- read data from common formats like BED 
+- find overlaps between different sets of genomic regions
+- filter regions by percentage overlap
+- compute coverage and related summaries
+
+The examples and and exercises follow the [HelloRanges package tutorial](http://bioconductor.org/packages/release/bioc/vignettes/HelloRanges/inst/doc/tutorial.pdf).
+If you are familiar with bedtools, this is an excellent resource for learning
+how similar operations are performed with Bioconductor packages.
+
+## Who is this tutorial is for?
+
+This tutorial is aimed at the beginner/intermediate R user. 
+
+
+## Prequistes 
+
+To complete this tutorial you will need: 
+
+- R (version 3.5 or greater)
+- the following packages
+
+```{r packages}
+# CRAN
+library(dplyr)
+library(ggplot2)
+# Bioconductor
+library(GenomicRanges)
+library(plyranges)
+library(HelloRangesData)
+```
 
 The `plyranges` API attempts to be type-consistent, that is if you apply
 a `plyranges` function to a _Ranges_ object it should return a _Ranges_ object.
@@ -39,7 +75,9 @@ containing information about the rows (i.e an exon name or a measurement).
 # Data
 
 The data we use for these examples are exported by the `HelloRangesData` 
-package. For more details see that [package's vignette](http://bioconductor.org/packages/release/data/experiment/vignettes/HelloRangesData/inst/doc/intro.pdf). For most examples in this tutorial we will use 
+package. For more details see that [package's vignette](http://bioconductor.org/packages/release/data/experiment/vignettes/HelloRangesData/inst/doc/intro.pdf). 
+
+For most examples in this tutorial we will use 
 the RefSeq exons and CpG island annotations from the hg19 genome build.
 ```{r}
 exons_bed <- system.file("extdata", "exons.bed", package="HelloRangesData")
@@ -53,7 +91,6 @@ To load the exons file as a _GRanges_ object we use the `read_bed` function.
 We supply the genome build as an additional argument to this function, allowing
 us to obtain annotation information about each chromosome.
 ```{r}
-suppressPackageStartupMessages(library(plyranges))
 cpg <- read_bed(cpg_bed, genome_info = "hg19")
 cpg
 
