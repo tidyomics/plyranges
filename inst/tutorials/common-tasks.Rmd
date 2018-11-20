@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # -- pacakges
 library(dplyr)
-library(ggplot2)
+library(ggbio)
 library(GenomicRanges)
 library(plyranges)
 library(HelloRangesData)
@@ -36,8 +36,6 @@ you will use _GRanges_ object to construct workflows to
 - read data from common formats like BED 
 - find overlaps between different sets of genomic regions
 - compute coverage and related summaries
-- visualise summary results
-
 
 ## Who is this tutorial is for?
 
@@ -50,6 +48,9 @@ If you are familiar with the tidyverse suite of packages, then the operations
 and workflows we will develop will look somewhat familiar to you. However, due 
 to the complexity of genomics data, plyranges develops a new grammar based
 on the tidyverse to meet the needs of the computational biologist. 
+
+We assume you know what a data.frame is and have some knowledge
+of vector types in R.
 
 The examples and and exercises are based on the [HelloRanges package tutorial](http://bioconductor.org/packages/release/bioc/vignettes/HelloRanges/inst/doc/tutorial.pdf).
 If you are familiar with bedtools, this is an excellent resource for learning
@@ -83,8 +84,77 @@ BiocManager::install(c("GenomicRanges", "plyranges", "HelloRangesData"))
 
 # Introducing GRanges
 
+The GRanges is a fundamental data structure used in the Bioconductor ecosystem. 
+It is very similar to the base R data.frame but with appropriate
+semantics for a genomics experiment: it has fixed columns
+for the chromosome, start and end coordinates, and the strand, along
+with an arbitrary set of additional columns, consisting of
+measurements or metadata specific to the data type or experiment.
 
-## Ceci n'est pas une pipe
+```{r GRanges, echo = FALSE, fig.cap="An illustration of a GRanges data object for a single sample from an RNA-seq experiment. The core components of the object include a seqnames column (representing the chromosome), a ranges column which consists of start and end coordinates for a genomic region, and a strand identifier (either positive, negative, or unstranded). Metadata are included as columns to the right of the dotted line as annotations (gene-id) or range level covariates (score).", out.width="\\textwidth"}
+knitr::include_graphics("./Lee_Plyranges/GRanges.png")
+```
+
+
+GRanges balances flexibility with formal
+constraints, so that it is applicable to virtually any genomic
+workflow, while also being semantically rich enough to support
+high-level operations on genomic ranges.
+
+We can create a GRanges from an ordinary data.frame with plyranges using
+the `as_granges` function:
+
+```{r}
+library(plyranges, quietly = TRUE)
+genes <- data.frame(seqnames = "VI", 
+                    start = c(3322, 3030, 1437,  5066, 6426, 836),
+                    end = c(3846, 3338, 2615, 5521, 7565, 1363),
+                    strand = c("-", "-", "-", "+", "+", "+"),
+                    gene_id=c("YFL064C", "YFL065C", "YFL066C", 
+                              "YFL063W", "YFL062W", "YFL067W"),
+                    gc = runif(6),
+                    score = rbinom(6, size = 3, p = 0.1),
+                    stringsAsFactors = FALSE)
+genes <- as_granges(genes)
+
+genes
+```
+
+You might notice a few  differences between how the `genes` GRanges
+object is printed compared to an ordinary data.frame or tibble.  
+
+The measurements/annotation columns like gene_id, gc and score are placed
+on the right hand side of the "|". These are referred to as metadata columns;
+they are not strictly required to construct a GRanges object but are useful
+for providing biological context.
+
+The required part of a GRanges object are left of the "|" 
+character. These are the seqnames column, the ranges (start, end, width) column,
+and the strand column. 
+
+You may have also noticed that underneath each column name is the type of
+that column. The metadata columnns are of some usual base R types like 
+`character`, `numeric`, and `integer` but the core columns may be
+unfamilar. The seqnames and strand column are (factor) `Rle` columns.
+`Rle` stands for run length encoding, and refers to how a column is stored.
+For now, there is no harm in thinking about these as ordinary factors.
+
+The ranges column is an `IRanges` which really consists 
+of three columns: the start, end and width coordinates of the range. 
+This becomes apparent if you look back to our original data.frame - the start
+and end columns from there are just the start and end intervals of the ranges 
+column. 
+
+Do not be concerned if this a bit confusing for now, once we start
+playing with our GRanges object, everything will become clearer.
+
+### Excercises
+
+
+
+## Transformation
+
+
 
 ## Data 
 The data we use for these examples are exported by the `HelloRangesData` 
