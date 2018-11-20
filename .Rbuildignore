@@ -14,3 +14,5 @@ Makefile
 ^appveyor\.yml$
 ^CONTRIBUTING\.md$
 ^CODE_OF_CONDUCT\.md$
+plyranges.png
+benchmarks/

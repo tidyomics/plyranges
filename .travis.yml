@@ -31,6 +31,7 @@ bioc_packages:
   - HelloRanges
   - HelloRangesData
   - BSgenome.Hsapiens.UCSC.hg19
+  - rtracklayer
 
 
 after_success:
