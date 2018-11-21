@@ -18,7 +18,6 @@ knitr::opts_chunk$set(
 
 # -- pacakges
 library(dplyr)
-library(ggbio)
 library(GenomicRanges)
 library(plyranges)
 library(HelloRangesData)
@@ -225,7 +224,7 @@ filter(exons, seqnames == "chrX" & strand == "+")
 But not the same as filtering exons to those on the X chromosome or 
 positively stranded
 
-```{r}
+```{r filter-04}
 filter(exons, seqnames == "chrX" | strand == "+")
 ```
 
@@ -249,28 +248,74 @@ cpg
 ```
 
 To find exons that do not overlap any cpg islands we 
-```{r}
+```{r filter-06}
 filter_by_non_overlaps(exons, cpg)
 ```
 
 Or we could find the cpg islands that are overlapped by exons 
 
-```{r}
+```{r filter-07}
 filter_by_overlaps(cpg, exons)
 ```
 
-## Add metadata with `mutate()`
+## Modify metadata with `mutate()`
 
-To add the count of the number of times each cpg island overlaps an exon we can
-use `mutate` with the `count_overlaps` function.
+New metadata columns can be created using the `mutate()` function. The first
+argument is the GRanges object we are mutating and the remaining arguments
+are name-value pairs, where name refers to name of the new column being 
+created and value refers to the value the new column will take.
 
-```{r}
-cpg %>% 
-  mutate(overlaps = count_overlaps(., exons))
+As an example, we make a new column called total_length which contains the number
+of bases of in each CpG island. This is just a copy of the width column in 
+Ranges object.
+```{r mutate-01}
+mutate(cpg, total_length =  width)
+```
+
+Multiple columns can be computed inside of a call to `mutate()` by seperating
+each pair of name-value expressions with a comma, we could add an additional
+column called mid, which is the midpoint of the CpG island. 
+
+```{r mutate-02}
+mutate(cpg,
+       total_length = width,
+       mid = start + (width - 1) %/% 2
+       )
+```
+
+Moreover, `mutate()` keeps track of which columnns have been created, so
+you can create new columns using pre-existing ones. 
+
+```{r mutate-03}
+mutate(cpg,
+       total_length = width,
+       mid = start + (width - 1) %/% 2,
+       mid2 = sqrt(mid)
+       )
 ```
 
 
-## Modify genomic regions with `mutate()` and `anchor()`
+In plyranges and GenomicRanges there are additional helpers that are useful
+for column creation during data analysis. As an example, we can 
+add the count of the number of times each cpg island overlaps an exon and
+add a logical column asking if a cpg island is contained entirely within an 
+exon.
+
+```{r}
+cpg2 <- mutate(cpg, 
+               n_olap = count_overlaps(cpg, exons),
+               is_contained = cpg %within% exons
+               )
+
+cpg2
+```
+
+
+## Composing workflows with the pipe `%>%`
+
+
+
+## Modifying genomic regions with `mutate()`, anchors, 
 
 
 ## Summarise over metadata with `summarise()`
@@ -279,155 +324,69 @@ cpg %>%
 ## Summarise over the genome with `reduce_ranges()` and `disjoin_ranges()`
 
 
-## Composing workflows with the pipe `%>%`
 
+## Finding overlaps with the join operator
 
-## Grouped operations with `group_by()`
-
-
-
-# Intersections and Overlaps
-
-A useful operation on two _Ranges_ is to identify where they intersect. By 
-default `bedtools` will return the region of intersection between two genomic
-tracks. In `plyranges` the intersect operation is a type of overlap join, that is
-we are finding the common genomic intervals that overlap between the two tracks.
-
-In `plyranges` this is termed an intersect overlap join:
 ```{r}
 intersect_rng <- join_overlap_intersect(cpg, exons)
 intersect_rng
 ```
 
-In the `HelloRanges` API (we also see the `bedtools` code here) the equivalent 
-operation is:
-```{r}
-suppressPackageStartupMessages(library(HelloRanges))
-code <- bedtools_intersect("-a cpg.bed -b exons.bed -g hg19")
-code
-```
-
-## Keeping the original features
-By default an overlap join will keep the information in both the query and
-subject ranges.
-
-## Computing the amount of overlap
-To compute the amount of overlap we store the width of the intersecting ranges
-as an additional column using the `mutate` operator.
-
-```{r}
-intersect_rng <- intersect_rng %>% 
-  mutate(overlap_width = width)
-```
-
-The equivalent bedtools/HelloRanges command is:
-```{r}
-bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -wo")
-```
-
-## Counting the number of overlaps
-
-
-The equivalent bedtools operation is
-
-```{r}
-bedtools_intersect("-a cpg.bed -b exons.bed -g hg19 -c")
-```
-
-
-
-# Computing Genomic Coverage
+## Summarising coverage with `compute_coverage()`
 
 Often we are interested in counting the number of features over
-an entire genome that overlap each other. In `plyranges` this is
-done with the `compute_coverage` function in combination with other functions
-to manipulate the results. This function will always return a new _Ranges_ 
-object with a column called score. Any other variables associated with the
-input _Ranges_ will be dropped.
+the genome that overlap each other. In `plyranges` this is
+done with the `compute_coverage()` function in combination with other functions
+to manipulate the results. This function will always return a new GRanges 
+with a column called score which contains the coverage value over a range. 
 
-## Coverage Vector
+### Coverage values
 
-By default, `compute_coverage` is equivalent to `bedtools genomecov -bga` and
-hence will return scores equal to zero. Filtering all scores above zero
-is equivalent to `bedtools genomecov -bg`:
-```{r cv}
+By default, `compute_coverage()` returns all coverage scores even if there is
+no coverage over a genomic region.
+```{r cv-1}
 cvg <- exons %>% 
-  compute_coverage() %>% 
-  filter(score > 0)
+  compute_coverage()
+
 cvg
 
-bedtools_genomecov("-i exons.bed -g hg19.genome -bg")
+cvg %>% filter(score > 0)
 ```
 
-## Coverage histogram
+Also note that computing coverage will result in a GRanges that is disjoint,
+which you can check with `isDisjoint()` from GenomicRanges. 
 
-We can construct a histogram over all seqeunces in a genome 
-using the `group_by` and `summarise` operations along with
-`left_join`. 
+### Coverage histogram
 
-First, we compute the 
-coverage over the exons and construct a `DataFrame` from the genome build 
-information using `select` with `.drop_ranges = FALSE`.
+We can `summarise()` the coverage scores as a histogram over all chromosomes 
+in a genome using `group_by()`.
+
+We count the total number of bases (that is, the width of the range) over
+each chromosome over each coverage score. 
 
 ```{r cv-hist0}
-suppressPackageStartupMessages(library(dplyr))
-cvg <- exons %>% compute_coverage()
-# convert the sequence annotation to a data.frame 
-hg19 <- get_genome_info(cvg) %>%  
- select(seqnames, width, .drop_ranges = TRUE) %>%
-  as.data.frame()
+cvg_hist <- cvg %>%
+  group_by(seqnames, score) %>% 
+  summarise(count = sum(width))
 ```
 
-Then to count the number of bases corresponding to a score we sum over
-the width of each range in each chromosome. Then we join the resulting `tibble`
-to the annotation `tibble` called `hg19`. Note that in the sums we have coerced integer variables to doubles to avoid overflow.
-
-```{r cv-hist1}
-
-cvg_hist_by_seq <- cvg %>%
-  group_by(seqnames, score) %>%
-  summarise(count = sum(as.numeric(width))) %>% 
-  as.data.frame() %>%
-  left_join(., hg19) %>% 
-  mutate(fraction = count / width)
-
-cvg_hist_by_seq
-
-```
-
-Similarly for the genome-wide 
-coverage histogram, we perform the same operation but do not group over
-`seqnames`. Finally we bind the resulting `tibbles` together.
-
-```{r cvhist2}
-cvg_hist_total <- cvg %>%
-  group_by(score) %>% 
-  summarise(count = sum(as.numeric(width))) %>%
-  as.data.frame() %>%
-  mutate(seqnames = "genome") %>%
-  left_join(.,
-            hg19 %>% 
-              summarise(width = sum(as.numeric(width))) %>% 
-              mutate(seqnames = "genome") %>%
-              as.data.frame()) %>%
-  mutate(fraction = count / width)
-
-cvg_hist_total
-
-cvg_hist <- bind_rows(cvg_hist_by_seq, cvg_hist_total)
-cvg_hist
-```
-
-Although this is slightly more verbose than the `bedtools` or `HelloRanges` approach the `plyranges` code makes the actions being performed on the input
-`Ranges` explicit:
+We can also compute the coverage histogram over the entire genome by grouping
+over the scores. Note that we coerce the width to a numeric
+to avoid integer overflow, when summing.
 
 ```{r}
-bedtools_genomecov("-i exons.bed -g hg19.genome")
+cvg_hist_all <- cvg %>% 
+  mutate(total_length = as.numeric(width)) %>% 
+  group_by(score) %>% 
+  summarise(
+    seqnames = "genome", 
+    count = sum(total_length)
+  )
 ```
 
-# Composing pipelines 
+Then the results can be put togeher using `rbind`. 
 
-## Yet another overlaps example
+### A more complicated example
 
 Here we perform another example where we find exons with no coverage that
 overlap cpg islands. To compose a chain first we compute the coverage
@@ -451,19 +410,31 @@ and then plot results as an ecdf.
 cvg_over_exons <- exons %>% 
   compute_coverage() %>%
   join_overlap_inner(., cpg) %>%
-  mutate(total = sum(as.numeric(width))) %>% 
-  group_by(score) %>%
-  summarise(count = sum(as.numeric(width)),
-            fraction = count / unique(total)) 
+  mutate(
+    total_length = as.numeric(width),
+    genome_length = sum(total_length)
+  ) %>% 
+  group_by(score, genome_length) %>%
+  summarise(
+    count = sum(total_length),
+    fraction = sum(total_length) / unique(genome_length)
+  ) 
 
 cvg_over_exons
 
-plot(1 - cumsum(fraction) ~ score, data = cvg_over_exons, 
-     xlim = c(0,25), 
+plot(1 - cumsum(fraction) ~ score, 
+     data = cvg_over_exons, 
+     xlim = c(0,30), 
      type= "s", 
      xlab = "coverage", 
      ylab = "fraction of bp > coverage")
-
 ```
+
+
+
+
+
+
+
 
 
