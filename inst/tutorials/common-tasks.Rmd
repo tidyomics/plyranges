@@ -313,7 +313,48 @@ cpg2
 
 ## Composing workflows with the pipe `%>%`
 
+Now that you can use `filter()` and `mutate()`, you might like to start 
+thinking about how you can combine them to form workflows. One way we can do
+this is with the pipe operator, `%>%`. 
 
+The pipe operator is read as the word _then_:
+
+```{r pipe-01}
+# take cpg then filter
+cpg %>% 
+  filter(seqnames == "chrX")
+```
+
+The argument on the left hand side of the pipe is forwarded to the first
+argument of the function on the right hand side. This can be made explicit
+with a `.` 
+
+```{r pipe-02}
+cpg %>% 
+  filter(., seqnames == "chrX")
+```
+
+As long as the the result of applying the pipe returns a GRanges object,
+multiple functions can be strung together:
+
+```{r pipe-03}
+cpg %>% 
+  filter(seqnames == "chrX") %>% 
+  filter(strand == "+") %>% 
+  mutate(new_col = runif(n()))
+```
+
+
+The use of the `.` can also make pipelines more succinct, as the argument
+on the left hand side can be forwarded to multiple parts of the function
+on the right hand side. We can rewrite, the creation of cpg2 above more
+compactly as
+
+```{r}
+cpg %>%  
+  mutate(n_olap = count_overlaps(., exons),
+         is_contained = . %within% exons)
+```
 
 ## Modifying genomic regions with `mutate()`, anchors, 
 
@@ -398,7 +439,7 @@ regions with zero coverage.
 overlaps <- exons %>% 
   compute_coverage() %>% 
   filter(score == 0L) %>% 
-  join_overlap_intersect(.,  cpg) 
+  join_overlap_inner(.,  cpg) 
 
 overlaps
 ```
@@ -432,7 +473,15 @@ plot(1 - cumsum(fraction) ~ score,
 
 
 
+# Learning more
 
+We have touched the surface of what's possible with plyranges and
+GenomicRanges. A good starting point to learn more about GenomicRanges
+is [here](https://bioconductor.github.io/BiocWorkshops/solving-common-bioinformatic-challenges-using-genomicranges.html) and plyranges is [here](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html). 
+
+If you have any questions about the use of these packages, please ask
+a question on [support.bioconductor.org](https://support.bioconductor.org/) 
+or post an issue on [github](https://github.com/sa-lee/plyranges).
 
 
 
