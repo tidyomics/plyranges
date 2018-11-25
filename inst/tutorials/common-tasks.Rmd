@@ -394,12 +394,67 @@ There are additional anchors that account for the strandedness of features,
 we can fix the 3' or 5' parts of a GRanges object using `anchor_3p()` 
 or `anchor_5p()`, respectively.
 
-## Summarise over metadata with `summarise()`
+## Summarise annoations and measurements with `summarise()`
 
+We can compute summarise columns GRanges object using `summarise()`. Using
+`summarise()` is very similiar to `mutate()`, we construct new columns
+that are summaries of the columns in the input the GRanges. 
 
+```{r}
+exons %>% 
+  summarise(
+    count = n(),
+    median_width = median(width)
+  )
+```
 
+The main difference is that by summarising our data, we lose the necessary
+information required to form a valid GRanges. Instead, `summarise()` returns
+a `DataFrame` (see `S4Vectors::DataFrame()` for more information). The 
+`DataFrame` is the Bioconductor version of the base R data.frame. It works
+mostly the same way as the base R `data.frame` but can also hold data structures
+that are common in Bioconductor (like `Rle` mentioned above).
 
 ## Summarise over the genome with `reduce_ranges()` and `disjoin_ranges()`
+
+To preserve the GRanges data structure while performing summaries, it
+is often useful to either merge overlapping ranges (called reducing) or expand
+ranges by finding the union of the end points or ranges (called disjoining).
+
+To make this more concrete let's `reduce_ranges()` and `disjoin_ranges()` 
+on the `genes` object we defined above. 
+
+```{r reduce-01}
+# to make things easier to compare 
+# sort by the start and end coordinates
+genes %>% 
+  arrange(start, end)
+
+# reduce_ranges will merge the 3rd and 4th ranges above
+genes %>% 
+  reduce_ranges()
+
+# disjoin ranges will split the 3rd and 4th ranges into
+# 3 disjoint ranges. 
+genes %>% 
+  disjoin_ranges()
+```
+
+Note that by default, `reduce_ranges()` and `disjoin_ranges()` will discard
+any strand information. To preserve them use `reduce_ranges_directed()` and
+`disjoin_ranges_directed()`.
+
+The `reduce_ranges()` and `disjoin_ranges()` can perform summarisation too.
+For example, we can reduce exons and count the number of exons
+that were merged together, and retain the name of the exons that were merged.
+
+```{r reduce-03}
+exons %>% 
+  reduce_ranges(
+    count = n(),
+    name = paste(name, collapse = ",")
+  )
+```
 
 
 ## Analyses over groups with `group_by()`
