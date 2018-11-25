@@ -478,7 +478,7 @@ There are three types of overlap join: inner (A), intersect (B), and left (C)
 that are shown on the figure below.
 
 ```{r olap-fig, out.width="\\textwidth"}
-knitr::include_graphics("olap.png")
+knitr::include_graphics("olaps.png")
 ```
 
 The first type of overlap join is called `join_overlap_inner()`, we could 

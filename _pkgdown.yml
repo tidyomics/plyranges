@@ -102,6 +102,8 @@ navbar:
     menu:
     - text: Introduction to plyranges
       href: articles/an-introduction.html
+    - text: Common genomic data wrangling tasks
+      href: articles/common-tasks.html
   - text: News
     href: news/index.html
   right:
