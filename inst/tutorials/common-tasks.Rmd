@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 )
 
 # -- pacakges
-library(dplyr)
 library(GenomicRanges)
 library(plyranges)
 library(HelloRangesData)
@@ -60,9 +59,6 @@ how similar operations are performed with Bioconductor packages.
 You will need R (version 3.5 or greater) with the following packages installed:
 
 ```{r packages, eval = FALSE}
-# CRAN
-library(dplyr)
-library(ggplot2)
 # Bioconductor
 library(GenomicRanges)
 library(plyranges)
@@ -72,8 +68,6 @@ library(HelloRangesData)
 If you do not have these packages you can install them as follows:
 
 ```{r packages-install, eval = FALSE}
-install.packages("dplyr")
-install.packages("ggplot2")
  # -> Bioconductor packages are installed with this package
 install.packages("BiocManager")
 # then use the install function from BiocManager 
@@ -91,7 +85,7 @@ with an arbitrary set of additional columns, consisting of
 measurements or metadata specific to the data type or experiment.
 
 ```{r GRanges, echo = FALSE, fig.cap="An illustration of a GRanges data object for a single sample from an RNA-seq experiment. The core components of the object include a seqnames column (representing the chromosome), a ranges column which consists of start and end coordinates for a genomic region, and a strand identifier (either positive, negative, or unstranded). Metadata are included as columns to the right of the dotted line as annotations (gene-id) or range level covariates (score).", out.width="\\textwidth"}
-knitr::include_graphics("./Lee_Plyranges/GRanges.png")
+knitr::include_graphics("GRanges.png")
 ```
 
 
@@ -446,7 +440,8 @@ any strand information. To preserve them use `reduce_ranges_directed()` and
 
 The `reduce_ranges()` and `disjoin_ranges()` can perform summarisation too.
 For example, we can reduce exons and count the number of exons
-that were merged together, and retain the name of the exons that were merged.
+that were merged together, and concatante the names of the exons that were 
+merged.
 
 ```{r reduce-03}
 exons %>% 
@@ -459,12 +454,55 @@ exons %>%
 
 ## Analyses over groups with `group_by()`
 
+Any of the above operations can be perfomed over subsets of the
+`GRanges` object with `group_by()`, this often useful if you want to
+`filter()`/`mutate()`/`summarise()`/`reduce_ranges()`/`disjoin_ranges()` 
+over annotation identifiers or chromosomes.
+
+```{r}
+exons %>% 
+  group_by(seqnames) %>% 
+  summarise(
+    count = n(),
+    median_width = median(width)
+  )
+```
 
 ## Finding overlaps with the join operator
 
-```{r}
-intersect_rng <- join_overlap_intersect(cpg, exons)
-intersect_rng
+A common operation on two GRanges is to find overlaps and to keep
+metadata associated with both GRanges objects when an overlap has 
+occurred. We refer to this operation as an *overlap join*.
+There are three types of overlap join: inner (A), intersect (B), and left (C)
+that are shown on the figure below.
+
+```{r olap-fig, out.width="\\textwidth"}
+knitr::include_graphics("olap.png")
+```
+
+The first type of overlap join is called `join_overlap_inner()`, we could 
+use this to find which CpG islands overlap exons
+```{r olap-01}
+cpg2  <- join_overlap_inner(cpg, exons)
+cpg2
+```
+
+Often we would are also interested in the amount of overlap, we can use
+the second type of overlap join `join_overlap_intersect()` to do this.
+We can modify the above example, to find which CpG islands overlap exons
+and how much the CpG island ranges overlap the exon ranges.
+
+```{r olap-03}
+cpg3 <- join_overlap_intersect(cpg, exons)
+cpg3
+```
+
+Finally, we sometimes would like to know where overlap occurs but also return
+any other ranges that are not overlapping. This is this the final type
+of overlap join `join_overlap_left()`.
+
+```{r olap-04}
+cpg4 <- join_overlap_left(cpg, exons)
 ```
 
 ## Summarising coverage with `compute_coverage()`
@@ -519,7 +557,8 @@ cvg_hist_all <- cvg %>%
   )
 ```
 
-Then the results can be put togeher using `rbind`. 
+Then the results can be put togeher using `rbind()` or plotted using
+your favourite plotting pacakge. 
 
 ### A more complicated example
 
