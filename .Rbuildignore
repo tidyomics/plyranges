@@ -15,4 +15,6 @@ Makefile
 ^CONTRIBUTING\.md$
 ^CODE_OF_CONDUCT\.md$
 plyranges.png
-benchmarks/
+^benchmarks/
+vignettes/common-tasks.Rmd
+vignettes/figures/

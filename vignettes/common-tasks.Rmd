@@ -3,10 +3,12 @@ title: "Using plyranges and GenomicRanges to perform common genomic data wrangli
 author: "Stuart Lee and Michael Lawrence"
 date: "`r Sys.Date()`"
 output:
-  html_document:
-    toc: true
+  BiocStyle::html_document:
     toc_float: true
-    number_secitons: true
+vignette: >
+  %\VignetteIndexEntry{Common Tasks}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r setup, include=FALSE}

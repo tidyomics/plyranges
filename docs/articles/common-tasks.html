@@ -149,12 +149,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3846      - |     YFL064C 0.882223950698972         0
-##   [2]       VI 3030-3338      - |     YFL065C 0.356832863762975         0
-##   [3]       VI 1437-2615      - |     YFL066C 0.722669491311535         0
-##   [4]       VI 5066-5521      + |     YFL063W 0.710585998836905         0
-##   [5]       VI 6426-7565      + |     YFL062W 0.679119835374877         0
-##   [6]       VI  836-1363      + |     YFL067W 0.898654479999095         0
+##   [1]       VI 3322-3846      - |     YFL064C 0.230603452306241         0
+##   [2]       VI 3030-3338      - |     YFL065C 0.134895096998662         0
+##   [3]       VI 1437-2615      - |     YFL066C 0.809861569665372         1
+##   [4]       VI 5066-5521      + |     YFL063W 0.999540814198554         0
+##   [5]       VI 6426-7565      + |     YFL062W 0.284530846169218         0
+##   [6]       VI  836-1363      + |     YFL067W 0.868536507943645         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>You might notice a few differences between how the <code>genes</code> GRanges object is printed compared to an ordinary data.frame or tibble.</p>
@@ -671,12 +671,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3846      - |     YFL064C 0.882223950698972         0
-##   [2]       VI 3030-3338      - |     YFL065C 0.356832863762975         0
-##   [3]       VI 1437-2615      - |     YFL066C 0.722669491311535         0
-##   [4]       VI 5066-5521      + |     YFL063W 0.710585998836905         0
-##   [5]       VI 6426-7565      + |     YFL062W 0.679119835374877         0
-##   [6]       VI  836-1363      + |     YFL067W 0.898654479999095         0
+##   [1]       VI 3322-3846      - |     YFL064C 0.230603452306241         0
+##   [2]       VI 3030-3338      - |     YFL065C 0.134895096998662         0
+##   [3]       VI 1437-2615      - |     YFL066C 0.809861569665372         1
+##   [4]       VI 5066-5521      + |     YFL063W 0.999540814198554         0
+##   [5]       VI 6426-7565      + |     YFL062W 0.284530846169218         0
+##   [6]       VI  836-1363      + |     YFL067W 0.868536507943645         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
@@ -684,12 +684,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3856      - |     YFL064C 0.882223950698972         0
-##   [2]       VI 3030-3348      - |     YFL065C 0.356832863762975         0
-##   [3]       VI 1437-2625      - |     YFL066C 0.722669491311535         0
-##   [4]       VI 5066-5531      + |     YFL063W 0.710585998836905         0
-##   [5]       VI 6426-7575      + |     YFL062W 0.679119835374877         0
-##   [6]       VI  836-1373      + |     YFL067W 0.898654479999095         0
+##   [1]       VI 3322-3856      - |     YFL064C 0.230603452306241         0
+##   [2]       VI 3030-3348      - |     YFL065C 0.134895096998662         0
+##   [3]       VI 1437-2625      - |     YFL066C 0.809861569665372         1
+##   [4]       VI 5066-5531      + |     YFL063W 0.999540814198554         0
+##   [5]       VI 6426-7575      + |     YFL062W 0.284530846169218         0
+##   [6]       VI  836-1373      + |     YFL067W 0.868536507943645         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>All three components are mutally dependent, so in order to preserve the integrity of the GRanges structure, either the start or the end positions must change. In the case of adding to the width position by default the start is fixed and the end is increased. But what if we would like to modify the width but leave the end of fixed? Or the midpoint fixed?</p>
@@ -701,12 +701,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3312-3846      - |     YFL064C 0.882223950698972         0
-##   [2]       VI 3020-3338      - |     YFL065C 0.356832863762975         0
-##   [3]       VI 1427-2615      - |     YFL066C 0.722669491311535         0
-##   [4]       VI 5056-5521      + |     YFL063W 0.710585998836905         0
-##   [5]       VI 6416-7565      + |     YFL062W 0.679119835374877         0
-##   [6]       VI  826-1363      + |     YFL067W 0.898654479999095         0
+##   [1]       VI 3312-3846      - |     YFL064C 0.230603452306241         0
+##   [2]       VI 3020-3338      - |     YFL065C 0.134895096998662         0
+##   [3]       VI 1427-2615      - |     YFL066C 0.809861569665372         1
+##   [4]       VI 5056-5521      + |     YFL063W 0.999540814198554         0
+##   [5]       VI 6416-7565      + |     YFL062W 0.284530846169218         0
+##   [6]       VI  826-1363      + |     YFL067W 0.868536507943645         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># fix the centre</span></a>
@@ -716,12 +716,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3317-3851      - |     YFL064C 0.882223950698972         0
-##   [2]       VI 3025-3343      - |     YFL065C 0.356832863762975         0
-##   [3]       VI 1432-2620      - |     YFL066C 0.722669491311535         0
-##   [4]       VI 5061-5526      + |     YFL063W 0.710585998836905         0
-##   [5]       VI 6421-7570      + |     YFL062W 0.679119835374877         0
-##   [6]       VI  831-1368      + |     YFL067W 0.898654479999095         0
+##   [1]       VI 3317-3851      - |     YFL064C 0.230603452306241         0
+##   [2]       VI 3025-3343      - |     YFL065C 0.134895096998662         0
+##   [3]       VI 1432-2620      - |     YFL066C 0.809861569665372         1
+##   [4]       VI 5061-5526      + |     YFL063W 0.999540814198554         0
+##   [5]       VI 6421-7570      + |     YFL062W 0.284530846169218         0
+##   [6]       VI  831-1368      + |     YFL067W 0.868536507943645         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>There are additional anchors that account for the strandedness of features, we can fix the 3’ or 5’ parts of a GRanges object using <code><a href="../reference/ranges-anchor.html">anchor_3p()</a></code> or <code><a href="../reference/ranges-anchor.html">anchor_5p()</a></code>, respectively.</p>
@@ -755,12 +755,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI  836-1363      + |     YFL067W 0.898654479999095         0
-##   [2]       VI 1437-2615      - |     YFL066C 0.722669491311535         0
-##   [3]       VI 3030-3338      - |     YFL065C 0.356832863762975         0
-##   [4]       VI 3322-3846      - |     YFL064C 0.882223950698972         0
-##   [5]       VI 5066-5521      + |     YFL063W 0.710585998836905         0
-##   [6]       VI 6426-7565      + |     YFL062W 0.679119835374877         0
+##   [1]       VI  836-1363      + |     YFL067W 0.868536507943645         0
+##   [2]       VI 1437-2615      - |     YFL066C 0.809861569665372         1
+##   [3]       VI 3030-3338      - |     YFL065C 0.134895096998662         0
+##   [4]       VI 3322-3846      - |     YFL064C 0.230603452306241         0
+##   [5]       VI 5066-5521      + |     YFL063W 0.999540814198554         0
+##   [6]       VI 6426-7565      + |     YFL062W 0.284530846169218         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># reduce_ranges will merge the 3rd and 4th ranges above</span></a>

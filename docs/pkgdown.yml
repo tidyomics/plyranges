@@ -3,4 +3,5 @@ pkgdown: 1.2.0
 pkgdown_sha: ~
 articles:
   an-introduction: an-introduction.html
+  common-tasks: common-tasks.html
 
