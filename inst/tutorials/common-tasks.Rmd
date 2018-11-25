@@ -186,9 +186,6 @@ build
 exons <- read_bed(exons_bed, 
                   genome_info = build)
 exons
-
-cpg <- read_bed(cpg_bed,
-                genome_info = build)
 ```
 
 The `genome_info()` function automatically propagates the reference
@@ -356,8 +353,7 @@ cpg %>%
          is_contained = . %within% exons)
 ```
 
-## Modifying genomic regions with `mutate()`, anchors, 
-
+## Modifying genomic regions with `mutate()` and `stretch()`
 
 ## Summarise over metadata with `summarise()`
 
