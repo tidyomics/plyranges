@@ -19,7 +19,7 @@ join_follow_upstream(x, y, suffix = c(".x", ".y"))
 metadata columns coming from x and y.}
 }
 \value{
-A Ranges object corresponding to the ranges in \code{x`` that are followed by the ranges in}y\code{, all metadata is copied over from the right-hand side ranges}y`.
+A Ranges object corresponding to the ranges in \code{x`` that are followed by the ranges in }y\code{, all metadata is copied over from the right-hand side ranges }y`.
 }
 \description{
 Find following Ranges
