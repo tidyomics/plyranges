@@ -338,7 +338,7 @@ multiple functions can be strung together:
 cpg %>% 
   filter(seqnames == "chrX") %>% 
   filter(strand == "+") %>% 
-  mutate(new_col = runif(n()))
+  mutate(new_col = runif(n())) 
 ```
 
 
@@ -353,13 +353,56 @@ cpg %>%
          is_contained = . %within% exons)
 ```
 
-## Modifying genomic regions with `mutate()` and `stretch()`
+## Modifying genomic regions with `mutate()` 
+
+We have learnt in the above sections how to add new metadata columns with
+`mutate()` but we can also use `mutate() to modify the genomic regions.
+Recall that there are three components that make up a genomic region; the
+start, end, and the width. 
+
+Let's go back to our original GRanges of yeast genes. What happens
+if we add 10 bases to the width? 
+
+```{r anchor-01}
+genes
+
+genes %>% 
+  mutate(width = width + 10L)
+```
+
+All three components are mutally dependent, so in order to preserve the 
+integrity of the GRanges structure, either the start or the end positions 
+must change. In the case of adding to the width position by default 
+the start is fixed and the end is increased. But what if we would like
+to modify the width but leave the end of fixed? Or the midpoint fixed? 
+
+The solution is to anchor those positions (i.e. leave them fixed), 
+using the `anchor_*()` family of functions:
+```{r anchor-02}
+# fix the end
+genes %>% 
+  anchor_end() %>% 
+  mutate(width = width + 10L)
+
+# fix the centre
+genes %>% 
+  anchor_centre() %>% 
+  mutate(width = width + 10L)
+```
+
+There are additional anchors that account for the strandedness of features,
+we can fix the 3' or 5' parts of a GRanges object using `anchor_3p()` 
+or `anchor_5p()`, respectively.
 
 ## Summarise over metadata with `summarise()`
 
 
+
+
 ## Summarise over the genome with `reduce_ranges()` and `disjoin_ranges()`
 
+
+## Analyses over groups with `group_by()`
 
 
 ## Finding overlaps with the join operator
@@ -466,7 +509,6 @@ plot(1 - cumsum(fraction) ~ score,
      xlab = "coverage", 
      ylab = "fraction of bp > coverage")
 ```
-
 
 
 # Learning more
