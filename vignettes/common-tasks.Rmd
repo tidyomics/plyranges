@@ -495,7 +495,7 @@ Any of the above operations can be perfomed over subsets of the
 `filter()`/`mutate()`/`summarise()`/`reduce_ranges()`/`disjoin_ranges()` 
 over annotation identifiers or chromosomes.
 
-```{r}
+```{r group-by-01}
 exons %>% 
   group_by(seqnames) %>% 
   summarise(
