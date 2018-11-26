@@ -175,7 +175,7 @@ plyranges.
 ```{r load-bed}
 exons_bed <- system.file("extdata", "exons.bed", package="HelloRangesData")
 
-# our genome build
+# our genome build, requires internet connection
 build <- genome_info("hg19")
 
 build
@@ -680,14 +680,6 @@ plot(1 - cumsum(fraction) ~ score,
      xlab = "coverage", 
      ylab = "fraction of bp > coverage")
 ```
-
-
-# More Excercises
-
-(These are adapted from the HelloRanges tutorial.) 
-We will work through the following exercises together 
-
-First, let's load the data required, which is are enhancer elements  
 
 
 
