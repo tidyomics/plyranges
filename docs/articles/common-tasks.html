@@ -81,7 +81,7 @@
       <h1>Using plyranges and GenomicRanges to perform common genomic data wrangling tasks</h1>
                         <h4 class="author">Stuart Lee and Michael Lawrence</h4>
             
-            <h4 class="date">2018-11-26</h4>
+            <h4 class="date">2018-11-27</h4>
       
       
       <div class="hidden name"><code>common-tasks.Rmd</code></div>
@@ -111,15 +111,15 @@
 <h2 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h2>
 <p>You will need R (version 3.5 or greater) with the following packages installed:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Bioconductor</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(GenomicRanges)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(plyranges)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(HelloRangesData)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Bioconductor</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(GenomicRanges)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(plyranges)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(HelloRangesData)</code></pre></div>
 <p>If you do not have these packages you can install them as follows:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"> <span class="co"># -&gt; Bioconductor packages are installed with this package</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># then use the install function from BiocManager </span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"GenomicRanges"</span>, <span class="st">"plyranges"</span>, <span class="st">"HelloRangesData"</span>))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co"># -&gt; Bioconductor packages are installed with this package</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"BiocManager"</span>)
+<span class="co"># then use the install function from BiocManager </span>
+BiocManager<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"GenomicRanges"</span>, <span class="st">"plyranges"</span>, <span class="st">"HelloRangesData"</span>))</code></pre></div>
 </div>
 </div>
 <div id="introducing-granges" class="section level1">
@@ -133,28 +133,28 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 </div>
 <p>GRanges balances flexibility with formal constraints, so that it is applicable to virtually any genomic workflow, while also being semantically rich enough to support high-level operations on genomic ranges.</p>
 <p>We can create a GRanges from an ordinary data.frame with plyranges using the <code><a href="../reference/ranges-construct.html">as_granges()</a></code> function:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(plyranges, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>, </a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">                    <span class="dt">start =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3322</span>, <span class="dv">3030</span>, <span class="dv">1437</span>,  <span class="dv">5066</span>, <span class="dv">6426</span>, <span class="dv">836</span>),</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">                    <span class="dt">end =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3846</span>, <span class="dv">3338</span>, <span class="dv">2615</span>, <span class="dv">5521</span>, <span class="dv">7565</span>, <span class="dv">1363</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">                    <span class="dt">strand =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"+"</span>, <span class="st">"+"</span>, <span class="st">"+"</span>),</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">                    <span class="dt">gene_id=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span>, <span class="st">"YFL066C"</span>, </a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">                              <span class="st">"YFL063W"</span>, <span class="st">"YFL062W"</span>, <span class="st">"YFL067W"</span>),</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">                    <span class="dt">gc =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">6</span>),</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">                    <span class="dt">score =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(<span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">p =</span> <span class="fl">0.1</span>),</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(genes)</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">genes</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(plyranges, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)
+genes &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">seqnames =</span> <span class="st">"VI"</span>, 
+                    <span class="dt">start =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3322</span>, <span class="dv">3030</span>, <span class="dv">1437</span>,  <span class="dv">5066</span>, <span class="dv">6426</span>, <span class="dv">836</span>),
+                    <span class="dt">end =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">3846</span>, <span class="dv">3338</span>, <span class="dv">2615</span>, <span class="dv">5521</span>, <span class="dv">7565</span>, <span class="dv">1363</span>),
+                    <span class="dt">strand =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"+"</span>, <span class="st">"+"</span>, <span class="st">"+"</span>),
+                    <span class="dt">gene_id=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span>, <span class="st">"YFL066C"</span>, 
+                              <span class="st">"YFL063W"</span>, <span class="st">"YFL062W"</span>, <span class="st">"YFL067W"</span>),
+                    <span class="dt">gc =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="dv">6</span>),
+                    <span class="dt">score =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Binomial">rbinom</a></span>(<span class="dv">6</span>, <span class="dt">size =</span> <span class="dv">3</span>, <span class="dt">p =</span> <span class="fl">0.1</span>),
+                    <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-construct.html">as_granges</a></span>(genes)
+
+genes</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3846      - |     YFL064C 0.933002188103274         1
-##   [2]       VI 3030-3338      - |     YFL065C 0.805657548597082         0
-##   [3]       VI 1437-2615      - |     YFL066C 0.662211059127003         1
-##   [4]       VI 5066-5521      + |     YFL063W 0.815931799588725         0
-##   [5]       VI 6426-7565      + |     YFL062W 0.723459553672001         1
-##   [6]       VI  836-1363      + |     YFL067W  0.44278919743374         0
+##   [1]       VI 3322-3846      - |     YFL064C 0.406736710341647         0
+##   [2]       VI 3030-3338      - |     YFL065C 0.449663328705356         1
+##   [3]       VI 1437-2615      - |     YFL066C 0.868391741998494         0
+##   [4]       VI 5066-5521      + |     YFL063W 0.935484018875286         0
+##   [5]       VI 6426-7565      + |     YFL062W 0.896344820735976         0
+##   [6]       VI  836-1363      + |     YFL067W 0.765752661740407         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>You might notice a few differences between how the <code>genes</code> GRanges object is printed compared to an ordinary data.frame or tibble.</p>
@@ -181,12 +181,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>To begin we will test out some of these operations using a GRanges object obtained from a BED file containing annotated exons from RefSeq from the hg19 genome build. To load the file as GRanges we can simply use the <code>read_bed</code> function from plyranges.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">exons_bed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"exons.bed"</span>, <span class="dt">package=</span><span class="st">"HelloRangesData"</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co"># our genome build</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">build &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-info.html">genome_info</a></span>(<span class="st">"hg19"</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">build</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons_bed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"exons.bed"</span>, <span class="dt">package=</span><span class="st">"HelloRangesData"</span>)
+
+<span class="co"># our genome build, requires internet connection</span>
+build &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ranges-info.html">genome_info</a></span>(<span class="st">"hg19"</span>)
+
+build</code></pre></div>
 <pre><code>## GRanges object with 93 ranges and 0 metadata columns:
 ##                        seqnames      ranges strand
 ##                           &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt;
@@ -203,9 +203,9 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   chrUn_gl000249 chrUn_gl000249     1-38502      *
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">exons &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(exons_bed, </a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">                  <span class="dt">genome_info =</span> build)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">exons</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(exons_bed, 
+                  <span class="dt">genome_info =</span> build)
+exons</code></pre></div>
 <pre><code>## GRanges object with 459752 ranges and 2 metadata columns:
 ##            seqnames            ranges strand |
 ##               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -243,7 +243,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 </h2>
 <p>We can <code><a href="../reference/tidyverse-reexports.html">filter()</a></code> ranges based on column values being <code>TRUE</code>. This requries passing the ranges, along with one or more logical expressions.</p>
 <p>For example, we can restrict exons to those that are on the the X chromosome:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span>)</code></pre></div>
 <pre><code>## GRanges object with 18173 ranges and 2 metadata columns:
 ##           seqnames              ranges strand |
 ##              &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -274,7 +274,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>Multiple conditions can be composed together within a call to filter by seperating the expressions with a comma. To restrict exons to those that are on the X chromosome <em>AND</em> on the positive strand:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span>, strand <span class="op">==</span><span class="st"> "+"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span>, strand <span class="op">==</span><span class="st"> "+"</span>)</code></pre></div>
 <pre><code>## GRanges object with 9176 ranges and 2 metadata columns:
 ##          seqnames              ranges strand |
 ##             &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -305,7 +305,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>This is equivalent to</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span> <span class="op">&amp;</span><span class="st"> </span>strand <span class="op">==</span><span class="st"> "+"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span> <span class="op">&amp;</span><span class="st"> </span>strand <span class="op">==</span><span class="st"> "+"</span>)</code></pre></div>
 <pre><code>## GRanges object with 9176 ranges and 2 metadata columns:
 ##          seqnames              ranges strand |
 ##             &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -336,7 +336,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>But not the same as filtering exons to those on the X chromosome or positively stranded.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span> <span class="op">|</span><span class="st"> </span>strand <span class="op">==</span><span class="st"> "+"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(exons, seqnames <span class="op">==</span><span class="st"> "chrX"</span> <span class="op">|</span><span class="st"> </span>strand <span class="op">==</span><span class="st"> "+"</span>)</code></pre></div>
 <pre><code>## GRanges object with 241162 ranges and 2 metadata columns:
 ##            seqnames            ranges strand |
 ##               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -372,11 +372,11 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <a href="#overlap-based-filtering" class="anchor"></a>Overlap based filtering</h3>
 <p>We can also restrict ranges by overlaps using <code><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps()</a></code>, or exclude non overlapping features using <code><a href="../reference/ranges-filter-overlaps.html">filter_by_non_overlaps()</a></code>.</p>
 <p>To see how these work it’ll be useful to load another GRanges object, this time from a BED file containing CpG islands.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">cpg_bed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"cpg.bed"</span>, <span class="dt">package =</span> <span class="st">"HelloRangesData"</span>)</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">cpg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(cpg_bed, </a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">                <span class="dt">genome_info =</span> build)</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">cpg</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg_bed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"cpg.bed"</span>, <span class="dt">package =</span> <span class="st">"HelloRangesData"</span>)
+
+cpg &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(cpg_bed, 
+                <span class="dt">genome_info =</span> build)
+cpg</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 1 metadata column:
 ##           seqnames            ranges strand |        name
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -394,7 +394,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>To find exons that do not overlap any cpg islands we</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-filter-overlaps.html">filter_by_non_overlaps</a></span>(exons, cpg)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ranges-filter-overlaps.html">filter_by_non_overlaps</a></span>(exons, cpg)</code></pre></div>
 <pre><code>## GRanges object with 414647 ranges and 2 metadata columns:
 ##            seqnames            ranges strand |
 ##               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |
@@ -425,7 +425,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>Or we could find the cpg islands that are overlapped by exons</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps</a></span>(cpg, exons)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps</a></span>(cpg, exons)</code></pre></div>
 <pre><code>## GRanges object with 18845 ranges and 1 metadata column:
 ##           seqnames            ranges strand |        name
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -450,7 +450,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 </h2>
 <p>New metadata columns can be created using the <code><a href="../reference/tidyverse-reexports.html">mutate()</a></code> function. The first argument is the GRanges object we are mutating and the remaining arguments are name-value pairs, where name refers to name of the new column being created and value refers to the value the new column will take.</p>
 <p>As an example, we make a new column called total_length which contains the number of bases of in each CpG island. This is just a copy of the width column in Ranges object.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg, <span class="dt">total_length =</span>  width)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg, <span class="dt">total_length =</span>  width)</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 2 metadata columns:
 ##           seqnames            ranges strand |        name total_length
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;    &lt;integer&gt;
@@ -468,10 +468,10 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>Multiple columns can be computed inside of a call to <code><a href="../reference/tidyverse-reexports.html">mutate()</a></code> by seperating each pair of name-value expressions with a comma, we could add an additional column called mid, which is the midpoint of the CpG island.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg,</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2">       <span class="dt">total_length =</span> width,</a>
-<a class="sourceLine" id="cb25-3" data-line-number="3">       <span class="dt">mid =</span> start <span class="op">+</span><span class="st"> </span>(width <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%/%</span><span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">       )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg,
+       <span class="dt">total_length =</span> width,
+       <span class="dt">mid =</span> start <span class="op">+</span><span class="st"> </span>(width <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%/%</span><span class="st"> </span><span class="dv">2</span>
+       )</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 3 metadata columns:
 ##           seqnames            ranges strand |        name total_length
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;    &lt;integer&gt;
@@ -502,11 +502,11 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>Moreover, <code><a href="../reference/tidyverse-reexports.html">mutate()</a></code> keeps track of which columnns have been created, so you can create new columns using pre-existing ones.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg,</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">       <span class="dt">total_length =</span> width,</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">       <span class="dt">mid =</span> start <span class="op">+</span><span class="st"> </span>(width <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%/%</span><span class="st"> </span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4">       <span class="dt">mid2 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">sqrt</a></span>(mid)</a>
-<a class="sourceLine" id="cb27-5" data-line-number="5">       )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg,
+       <span class="dt">total_length =</span> width,
+       <span class="dt">mid =</span> start <span class="op">+</span><span class="st"> </span>(width <span class="op">-</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%/%</span><span class="st"> </span><span class="dv">2</span>,
+       <span class="dt">mid2 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">sqrt</a></span>(mid)
+       )</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 4 metadata columns:
 ##           seqnames            ranges strand |        name total_length
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;    &lt;integer&gt;
@@ -537,12 +537,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>In plyranges and GenomicRanges there are additional helpers that are useful for column creation during data analysis. As an example, we can add the count of the number of times each cpg island overlaps an exon and add a logical column asking if a cpg island is contained entirely within an exon.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">cpg2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg, </a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">               <span class="dt">n_olap =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(cpg, exons),</a>
-<a class="sourceLine" id="cb29-3" data-line-number="3">               <span class="dt">is_contained =</span> cpg <span class="op">%within%</span><span class="st"> </span>exons</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4">               )</a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6">cpg2</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(cpg, 
+               <span class="dt">n_olap =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(cpg, exons),
+               <span class="dt">is_contained =</span> cpg <span class="op">%within%</span><span class="st"> </span>exons
+               )
+
+cpg2</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 3 metadata columns:
 ##           seqnames            ranges strand |        name    n_olap
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
@@ -579,9 +579,9 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 </h2>
 <p>Now that you can use <code><a href="../reference/tidyverse-reexports.html">filter()</a></code> and <code><a href="../reference/tidyverse-reexports.html">mutate()</a></code>, you might like to start thinking about how you can combine them to form workflows. One way we can do this is with the pipe operator, <code>%&gt;%</code>.</p>
 <p>The pipe operator is read as the word <em>then</em>:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co"># take cpg then filter</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">cpg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(seqnames <span class="op">==</span><span class="st"> "chrX"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># take cpg then filter</span>
+cpg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(seqnames <span class="op">==</span><span class="st"> "chrX"</span>)</code></pre></div>
 <pre><code>## GRanges object with 896 ranges and 1 metadata column:
 ##         seqnames              ranges strand |        name
 ##            &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -599,8 +599,8 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>The argument on the left hand side of the pipe is forwarded to the first argument of the function on the right hand side. This can be made explicit with a <code>.</code></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">cpg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(., seqnames <span class="op">==</span><span class="st"> "chrX"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(., seqnames <span class="op">==</span><span class="st"> "chrX"</span>)</code></pre></div>
 <pre><code>## GRanges object with 896 ranges and 1 metadata column:
 ##         seqnames              ranges strand |        name
 ##            &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -618,19 +618,19 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>As long as the the result of applying the pipe returns a GRanges object, multiple functions can be strung together:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">cpg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(seqnames <span class="op">==</span><span class="st"> "chrX"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">new_col =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="kw"><a href="../reference/n.html">n</a></span>())) </a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(seqnames <span class="op">==</span><span class="st"> "chrX"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(strand <span class="op">==</span><span class="st"> "+"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">new_col =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/Uniform">runif</a></span>(<span class="kw"><a href="../reference/n.html">n</a></span>())) </code></pre></div>
 <pre><code>## GRanges object with 0 ranges and 2 metadata columns:
 ##    seqnames    ranges strand |        name   new_col
 ##       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>The use of the <code>.</code> can also make pipelines more succinct, as the argument on the left hand side can be forwarded to multiple parts of the function on the right hand side. We can rewrite, the creation of cpg2 above more compactly as</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">cpg <span class="op">%&gt;%</span><span class="st">  </span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">n_olap =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(., exons),</a>
-<a class="sourceLine" id="cb37-3" data-line-number="3">         <span class="dt">is_contained =</span> . <span class="op">%within%</span><span class="st"> </span>exons)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg <span class="op">%&gt;%</span><span class="st">  </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">n_olap =</span> <span class="kw"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(., exons),
+         <span class="dt">is_contained =</span> . <span class="op">%within%</span><span class="st"> </span>exons)</code></pre></div>
 <pre><code>## GRanges object with 28691 ranges and 3 metadata columns:
 ##           seqnames            ranges strand |        name    n_olap
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;integer&gt;
@@ -675,61 +675,61 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 </h2>
 <p>We have learnt in the above sections how to add new metadata columns with <code><a href="../reference/tidyverse-reexports.html">mutate()</a></code> but we can also use `mutate() to modify the genomic regions. Recall that there are three components that make up a genomic region; the start, end, and the width.</p>
 <p>Let’s go back to our original GRanges of yeast genes. What happens if we add 10 bases to the width?</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">genes</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3846      - |     YFL064C 0.933002188103274         1
-##   [2]       VI 3030-3338      - |     YFL065C 0.805657548597082         0
-##   [3]       VI 1437-2615      - |     YFL066C 0.662211059127003         1
-##   [4]       VI 5066-5521      + |     YFL063W 0.815931799588725         0
-##   [5]       VI 6426-7565      + |     YFL062W 0.723459553672001         1
-##   [6]       VI  836-1363      + |     YFL067W  0.44278919743374         0
+##   [1]       VI 3322-3846      - |     YFL064C 0.406736710341647         0
+##   [2]       VI 3030-3338      - |     YFL065C 0.449663328705356         1
+##   [3]       VI 1437-2615      - |     YFL066C 0.868391741998494         0
+##   [4]       VI 5066-5521      + |     YFL063W 0.935484018875286         0
+##   [5]       VI 6426-7565      + |     YFL062W 0.896344820735976         0
+##   [6]       VI  836-1363      + |     YFL067W 0.765752661740407         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">width =</span> width <span class="op">+</span><span class="st"> </span>10L)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">width =</span> width <span class="op">+</span><span class="st"> </span>10L)</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3856      - |     YFL064C 0.933002188103274         1
-##   [2]       VI 3030-3348      - |     YFL065C 0.805657548597082         0
-##   [3]       VI 1437-2625      - |     YFL066C 0.662211059127003         1
-##   [4]       VI 5066-5531      + |     YFL063W 0.815931799588725         0
-##   [5]       VI 6426-7575      + |     YFL062W 0.723459553672001         1
-##   [6]       VI  836-1373      + |     YFL067W  0.44278919743374         0
+##   [1]       VI 3322-3856      - |     YFL064C 0.406736710341647         0
+##   [2]       VI 3030-3348      - |     YFL065C 0.449663328705356         1
+##   [3]       VI 1437-2625      - |     YFL066C 0.868391741998494         0
+##   [4]       VI 5066-5531      + |     YFL063W 0.935484018875286         0
+##   [5]       VI 6426-7575      + |     YFL062W 0.896344820735976         0
+##   [6]       VI  836-1373      + |     YFL067W 0.765752661740407         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>All three components are mutally dependent, so in order to preserve the integrity of the GRanges structure, either the start or the end positions must change. In the case of adding to the width position by default the start is fixed and the end is increased. But what if we would like to modify the width but leave the end of fixed? Or the midpoint fixed?</p>
 <p>The solution is to anchor those positions (i.e. leave them fixed), using the <code>anchor_*()</code> family of functions:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co"># fix the end</span></a>
-<a class="sourceLine" id="cb43-2" data-line-number="2">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/ranges-anchor.html">anchor_end</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">width =</span> width <span class="op">+</span><span class="st"> </span>10L)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fix the end</span>
+genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-anchor.html">anchor_end</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">width =</span> width <span class="op">+</span><span class="st"> </span>10L)</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3312-3846      - |     YFL064C 0.933002188103274         1
-##   [2]       VI 3020-3338      - |     YFL065C 0.805657548597082         0
-##   [3]       VI 1427-2615      - |     YFL066C 0.662211059127003         1
-##   [4]       VI 5056-5521      + |     YFL063W 0.815931799588725         0
-##   [5]       VI 6416-7565      + |     YFL062W 0.723459553672001         1
-##   [6]       VI  826-1363      + |     YFL067W  0.44278919743374         0
+##   [1]       VI 3312-3846      - |     YFL064C 0.406736710341647         0
+##   [2]       VI 3020-3338      - |     YFL065C 0.449663328705356         1
+##   [3]       VI 1427-2615      - |     YFL066C 0.868391741998494         0
+##   [4]       VI 5056-5521      + |     YFL063W 0.935484018875286         0
+##   [5]       VI 6416-7565      + |     YFL062W 0.896344820735976         0
+##   [6]       VI  826-1363      + |     YFL067W 0.765752661740407         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># fix the centre</span></a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/ranges-anchor.html">anchor_centre</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">width =</span> width <span class="op">+</span><span class="st"> </span>10L)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fix the centre</span>
+genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-anchor.html">anchor_centre</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">width =</span> width <span class="op">+</span><span class="st"> </span>10L)</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3317-3851      - |     YFL064C 0.933002188103274         1
-##   [2]       VI 3025-3343      - |     YFL065C 0.805657548597082         0
-##   [3]       VI 1432-2620      - |     YFL066C 0.662211059127003         1
-##   [4]       VI 5061-5526      + |     YFL063W 0.815931799588725         0
-##   [5]       VI 6421-7570      + |     YFL062W 0.723459553672001         1
-##   [6]       VI  831-1368      + |     YFL067W  0.44278919743374         0
+##   [1]       VI 3317-3851      - |     YFL064C 0.406736710341647         0
+##   [2]       VI 3025-3343      - |     YFL065C 0.449663328705356         1
+##   [3]       VI 1432-2620      - |     YFL066C 0.868391741998494         0
+##   [4]       VI 5061-5526      + |     YFL063W 0.935484018875286         0
+##   [5]       VI 6421-7570      + |     YFL062W 0.896344820735976         0
+##   [6]       VI  831-1368      + |     YFL067W 0.765752661740407         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>There are additional anchors that account for the strandedness of features, we can fix the 3’ or 5’ parts of a GRanges object using <code><a href="../reference/ranges-anchor.html">anchor_3p()</a></code> or <code><a href="../reference/ranges-anchor.html">anchor_5p()</a></code>, respectively.</p>
@@ -749,11 +749,11 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <a href="#summarise-annoations-and-measurements-with-summarise" class="anchor"></a>Summarise annoations and measurements with <code><a href="../reference/tidyverse-reexports.html">summarise()</a></code>
 </h2>
 <p>We can compute summarise columns GRanges object using <code><a href="../reference/tidyverse-reexports.html">summarise()</a></code>. Using <code><a href="../reference/tidyverse-reexports.html">summarise()</a></code> is very similiar to <code><a href="../reference/tidyverse-reexports.html">mutate()</a></code>, we construct new columns that are summaries of the columns in the input the GRanges.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(</a>
-<a class="sourceLine" id="cb47-3" data-line-number="3">    <span class="dt">count =</span> <span class="kw"><a href="../reference/n.html">n</a></span>(),</a>
-<a class="sourceLine" id="cb47-4" data-line-number="4">    <span class="dt">median_width =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(width)</a>
-<a class="sourceLine" id="cb47-5" data-line-number="5">  )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(
+    <span class="dt">count =</span> <span class="kw"><a href="../reference/n.html">n</a></span>(),
+    <span class="dt">median_width =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(width)
+  )</code></pre></div>
 <pre><code>## DataFrame with 1 row and 2 columns
 ##       count median_width
 ##   &lt;integer&gt;    &lt;numeric&gt;
@@ -774,24 +774,24 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 </h2>
 <p>To preserve the GRanges data structure while performing summaries, it is often useful to either merge overlapping ranges (called reducing) or expand ranges by finding the union of the end points or ranges (called disjoining).</p>
 <p>To make this more concrete let’s <code><a href="../reference/ranges-reduce.html">reduce_ranges()</a></code> and <code><a href="../reference/ranges-disjoin.html">disjoin_ranges()</a></code> on the <code>genes</code> object we defined above.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co"># to make things easier to compare </span></a>
-<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="co"># sort by the start and end coordinates</span></a>
-<a class="sourceLine" id="cb49-3" data-line-number="3">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb49-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">arrange</a></span>(start, end)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># to make things easier to compare </span>
+<span class="co"># sort by the start and end coordinates</span>
+genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">arrange</a></span>(start, end)</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI  836-1363      + |     YFL067W  0.44278919743374         0
-##   [2]       VI 1437-2615      - |     YFL066C 0.662211059127003         1
-##   [3]       VI 3030-3338      - |     YFL065C 0.805657548597082         0
-##   [4]       VI 3322-3846      - |     YFL064C 0.933002188103274         1
-##   [5]       VI 5066-5521      + |     YFL063W 0.815931799588725         0
-##   [6]       VI 6426-7565      + |     YFL062W 0.723459553672001         1
+##   [1]       VI  836-1363      + |     YFL067W 0.765752661740407         0
+##   [2]       VI 1437-2615      - |     YFL066C 0.868391741998494         0
+##   [3]       VI 3030-3338      - |     YFL065C 0.449663328705356         1
+##   [4]       VI 3322-3846      - |     YFL064C 0.406736710341647         0
+##   [5]       VI 5066-5521      + |     YFL063W 0.935484018875286         0
+##   [6]       VI 6426-7565      + |     YFL062W 0.896344820735976         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co"># reduce_ranges will merge the 3rd and 4th ranges above</span></a>
-<a class="sourceLine" id="cb51-2" data-line-number="2">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/ranges-reduce.html">reduce_ranges</a></span>()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reduce_ranges will merge the 3rd and 4th ranges above</span>
+genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-reduce.html">reduce_ranges</a></span>()</code></pre></div>
 <pre><code>## GRanges object with 5 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -802,10 +802,10 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   [5]       VI 6426-7565      *
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co"># disjoin ranges will split the 3rd and 4th ranges into</span></a>
-<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="co"># 3 disjoint ranges. </span></a>
-<a class="sourceLine" id="cb53-3" data-line-number="3">genes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/ranges-disjoin.html">disjoin_ranges</a></span>()</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># disjoin ranges will split the 3rd and 4th ranges into</span>
+<span class="co"># 3 disjoint ranges. </span>
+genes <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-disjoin.html">disjoin_ranges</a></span>()</code></pre></div>
 <pre><code>## GRanges object with 7 ranges and 0 metadata columns:
 ##       seqnames    ranges strand
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -820,11 +820,11 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Note that by default, <code><a href="../reference/ranges-reduce.html">reduce_ranges()</a></code> and <code><a href="../reference/ranges-disjoin.html">disjoin_ranges()</a></code> will discard any strand information. To preserve them use <code><a href="../reference/ranges-reduce.html">reduce_ranges_directed()</a></code> and <code><a href="../reference/ranges-disjoin.html">disjoin_ranges_directed()</a></code>.</p>
 <p>The <code><a href="../reference/ranges-reduce.html">reduce_ranges()</a></code> and <code><a href="../reference/ranges-disjoin.html">disjoin_ranges()</a></code> can perform summarisation too. For example, we can reduce exons and count the number of exons that were merged together, and concatante the names of the exons that were merged.</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ranges-reduce.html">reduce_ranges</a></span>(</a>
-<a class="sourceLine" id="cb55-3" data-line-number="3">    <span class="dt">count =</span> <span class="kw"><a href="../reference/n.html">n</a></span>(),</a>
-<a class="sourceLine" id="cb55-4" data-line-number="4">    <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(name, <span class="dt">collapse =</span> <span class="st">","</span>)</a>
-<a class="sourceLine" id="cb55-5" data-line-number="5">  )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/ranges-reduce.html">reduce_ranges</a></span>(
+    <span class="dt">count =</span> <span class="kw"><a href="../reference/n.html">n</a></span>(),
+    <span class="dt">name =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(name, <span class="dt">collapse =</span> <span class="st">","</span>)
+  )</code></pre></div>
 <pre><code>## GRanges object with 229241 ranges and 2 metadata columns:
 ##                  seqnames        ranges strand |     count
 ##                     &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -868,12 +868,12 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <a href="#analyses-over-groups-with-group_by" class="anchor"></a>Analyses over groups with <code><a href="../reference/tidyverse-reexports.html">group_by()</a></code>
 </h2>
 <p>Any of the above operations can be perfomed over subsets of the <code>GRanges</code> object with <code><a href="../reference/tidyverse-reexports.html">group_by()</a></code>, this often useful if you want to <code><a href="../reference/tidyverse-reexports.html">filter()</a></code>/<code><a href="../reference/tidyverse-reexports.html">mutate()</a></code>/<code><a href="../reference/tidyverse-reexports.html">summarise()</a></code>/<code><a href="../reference/ranges-reduce.html">reduce_ranges()</a></code>/<code><a href="../reference/ranges-disjoin.html">disjoin_ranges()</a></code> over annotation identifiers or chromosomes.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1">exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(seqnames) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(</a>
-<a class="sourceLine" id="cb57-4" data-line-number="4">    <span class="dt">count =</span> <span class="kw"><a href="../reference/n.html">n</a></span>(),</a>
-<a class="sourceLine" id="cb57-5" data-line-number="5">    <span class="dt">median_width =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(width)</a>
-<a class="sourceLine" id="cb57-6" data-line-number="6">  )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(seqnames) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(
+    <span class="dt">count =</span> <span class="kw"><a href="../reference/n.html">n</a></span>(),
+    <span class="dt">median_width =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/median">median</a></span>(width)
+  )</code></pre></div>
 <pre><code>## DataFrame with 49 rows and 3 columns
 ##           seqnames     count median_width
 ##              &lt;Rle&gt; &lt;integer&gt;    &lt;numeric&gt;
@@ -892,11 +892,11 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <h3 class="hasAnchor">
 <a href="#excercises-1" class="anchor"></a>Excercises</h3>
 <p>Let’s read in another BED file that has functional annotations output by chromHMM from ENCODE human embrionic stem cell ChIP-seq data.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1">hesc_bed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"hesc.chromHmm.bed"</span>, </a>
-<a class="sourceLine" id="cb59-2" data-line-number="2">                        <span class="dt">package=</span><span class="st">"HelloRangesData"</span>)</a>
-<a class="sourceLine" id="cb59-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb59-4" data-line-number="4">hesc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(hesc_bed, <span class="dt">genome_info =</span> build)</a>
-<a class="sourceLine" id="cb59-5" data-line-number="5">hesc</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hesc_bed &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="st">"hesc.chromHmm.bed"</span>, 
+                        <span class="dt">package=</span><span class="st">"HelloRangesData"</span>)
+
+hesc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/io-bed-read.html">read_bed</a></span>(hesc_bed, <span class="dt">genome_info =</span> build)
+hesc</code></pre></div>
 <pre><code>## GRanges object with 619061 ranges and 1 metadata column:
 ##            seqnames              ranges strand |              name
 ##               &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |       &lt;character&gt;
@@ -926,11 +926,11 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <h2 class="hasAnchor">
 <a href="#finding-overlaps-with-the-join-operator" class="anchor"></a>Finding overlaps with the join operator</h2>
 <p>A common operation on two GRanges is to find overlaps and to keep metadata associated with both GRanges objects when an overlap has occurred. We refer to this operation as an <em>overlap join</em>. There are three types of overlap join: inner (A), intersect (B), and left (C) that are shown on the figure below.</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/include_graphics">include_graphics</a></span>(<span class="st">"olaps.png"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/include_graphics">include_graphics</a></span>(<span class="st">"olaps.png"</span>)</code></pre></div>
 <p><img src="olaps.png" width="\textwidth"></p>
 <p>The first type of overlap join is called <code><a href="../reference/overlap-joins.html">join_overlap_inner()</a></code>, we could use this to find which CpG islands overlap exons</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">cpg2  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(cpg, exons)</a>
-<a class="sourceLine" id="cb62-2" data-line-number="2">cpg2</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg2  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(cpg, exons)
+cpg2</code></pre></div>
 <pre><code>## GRanges object with 45500 ranges and 3 metadata columns:
 ##           seqnames            ranges strand |      name.x
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -961,8 +961,8 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>Often we would are also interested in the amount of overlap, we can use the second type of overlap join <code><a href="../reference/overlap-joins.html">join_overlap_intersect()</a></code> to do this. We can modify the above example, to find which CpG islands overlap exons and how much the CpG island ranges overlap the exon ranges.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1">cpg3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(cpg, exons)</a>
-<a class="sourceLine" id="cb64-2" data-line-number="2">cpg3</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(cpg, exons)
+cpg3</code></pre></div>
 <pre><code>## GRanges object with 45500 ranges and 3 metadata columns:
 ##           seqnames            ranges strand |      name.x
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -993,8 +993,8 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences (1 circular) from hg19 genome</code></pre>
 <p>Finally, we sometimes would like to know where overlap occurs but also return any other ranges that are not overlapping. This is this the final type of overlap join <code><a href="../reference/overlap-joins.html">join_overlap_left()</a></code>.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">cpg4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(cpg, exons)</a>
-<a class="sourceLine" id="cb66-2" data-line-number="2">cpg4</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cpg4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(cpg, exons)
+cpg4</code></pre></div>
 <pre><code>## GRanges object with 55346 ranges and 3 metadata columns:
 ##           seqnames            ranges strand |      name.x
 ##              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
@@ -1044,10 +1044,10 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <h3 class="hasAnchor">
 <a href="#coverage-values" class="anchor"></a>Coverage values</h3>
 <p>By default, <code><a href="../reference/compute_coverage.html">compute_coverage()</a></code> returns all coverage scores even if there is no coverage over a genomic region.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>()</a>
-<a class="sourceLine" id="cb68-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb68-4" data-line-number="4">cvg</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>()
+
+cvg</code></pre></div>
 <pre><code>## GRanges object with 475194 ranges and 1 metadata column:
 ##                  seqnames      ranges strand |     score
 ##                     &lt;Rle&gt;   &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -1064,7 +1064,7 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   [475194] chrUn_gl000249     1-38502      * |         0
 ##   -------
 ##   seqinfo: 93 sequences from an unspecified genome</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">cvg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(score <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(score <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</code></pre></div>
 <pre><code>## GRanges object with 245860 ranges and 1 metadata column:
 ##                  seqnames        ranges strand |     score
 ##                     &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
@@ -1088,29 +1088,29 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 <a href="#coverage-histogram" class="anchor"></a>Coverage histogram</h3>
 <p>We can <code><a href="../reference/tidyverse-reexports.html">summarise()</a></code> the coverage scores as a histogram over all chromosomes in a genome using <code><a href="../reference/tidyverse-reexports.html">group_by()</a></code>.</p>
 <p>We count the total number of bases (that is, the width of the range) over each chromosome over each coverage score.</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">cvg_hist &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(seqnames, score) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb72-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(width))</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(seqnames, score) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(<span class="dt">count =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(width))</code></pre></div>
 <p>We can also compute the coverage histogram over the entire genome by grouping over the scores. Note that we coerce the width to a numeric to avoid integer overflow, when summing.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">cvg_hist_all &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">total_length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(width)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb73-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(score) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb73-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(</a>
-<a class="sourceLine" id="cb73-5" data-line-number="5">    <span class="dt">seqnames =</span> <span class="st">"genome"</span>, </a>
-<a class="sourceLine" id="cb73-6" data-line-number="6">    <span class="dt">count =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length)</a>
-<a class="sourceLine" id="cb73-7" data-line-number="7">  )</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_hist_all &lt;-<span class="st"> </span>cvg <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="dt">total_length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(width)) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(score) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(
+    <span class="dt">seqnames =</span> <span class="st">"genome"</span>, 
+    <span class="dt">count =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length)
+  )</code></pre></div>
 <p>Then the results can be put togeher using <code><a href="https://www.rdocumentation.org/packages/base/topics/cbind">rbind()</a></code> or plotted using your favourite plotting pacakge.</p>
 </div>
 <div id="a-more-complicated-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#a-more-complicated-example" class="anchor"></a>A more complicated example</h3>
 <p>Here we perform another example where we find exons with no coverage that overlap cpg islands. To compose a chain first we compute the coverage then use a filter to restrict to zero coverage ranges. Then we perfrom an inner overlap join to find which cpg islands overlap the exonic regions with zero coverage.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">overlaps &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(score <span class="op">==</span><span class="st"> </span>0L) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb74-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(.,  cpg) </a>
-<a class="sourceLine" id="cb74-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb74-6" data-line-number="6">overlaps</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">overlaps &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">filter</a></span>(score <span class="op">==</span><span class="st"> </span>0L) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(.,  cpg) 
+
+overlaps</code></pre></div>
 <pre><code>## GRanges object with 40913 ranges and 2 metadata columns:
 ##                 seqnames        ranges strand |     score        name
 ##                    &lt;Rle&gt;     &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;character&gt;
@@ -1128,20 +1128,20 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ##   -------
 ##   seqinfo: 93 sequences from an unspecified genome</code></pre>
 <p>We can also compute the coverage histogram of exons over cpg islands and then plot results as an ecdf.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">cvg_over_exons &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb76-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(., cpg) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb76-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(</a>
-<a class="sourceLine" id="cb76-5" data-line-number="5">    <span class="dt">total_length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(width),</a>
-<a class="sourceLine" id="cb76-6" data-line-number="6">    <span class="dt">genome_length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length)</a>
-<a class="sourceLine" id="cb76-7" data-line-number="7">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb76-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(score, genome_length) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb76-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(</a>
-<a class="sourceLine" id="cb76-10" data-line-number="10">    <span class="dt">count =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length),</a>
-<a class="sourceLine" id="cb76-11" data-line-number="11">    <span class="dt">fraction =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(genome_length)</a>
-<a class="sourceLine" id="cb76-12" data-line-number="12">  ) </a>
-<a class="sourceLine" id="cb76-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb76-14" data-line-number="14">cvg_over_exons</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">cvg_over_exons &lt;-<span class="st"> </span>exons <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/compute_coverage.html">compute_coverage</a></span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(., cpg) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(
+    <span class="dt">total_length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/numeric">as.numeric</a></span>(width),
+    <span class="dt">genome_length =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length)
+  ) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">group_by</a></span>(score, genome_length) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(
+    <span class="dt">count =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length),
+    <span class="dt">fraction =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sum">sum</a></span>(total_length) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/unique">unique</a></span>(genome_length)
+  ) 
+
+cvg_over_exons</code></pre></div>
 <pre><code>## DataFrame with 28 rows and 4 columns
 ##         score genome_length      count             fraction
 ##     &lt;integer&gt;     &lt;numeric&gt;  &lt;numeric&gt;        &lt;NumericList&gt;
@@ -1156,21 +1156,15 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
 ## 26         31    3288637798        160 4.86523630231656e-08
 ## 27         33    3288637798        979 2.97691646247995e-07
 ## 28         77    3288637798       1157 3.51817400111266e-07</code></pre>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cumsum">cumsum</a></span>(fraction) <span class="op">~</span><span class="st"> </span>score, </a>
-<a class="sourceLine" id="cb78-2" data-line-number="2">     <span class="dt">data =</span> cvg_over_exons, </a>
-<a class="sourceLine" id="cb78-3" data-line-number="3">     <span class="dt">xlim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">30</span>), </a>
-<a class="sourceLine" id="cb78-4" data-line-number="4">     <span class="dt">type=</span> <span class="st">"s"</span>, </a>
-<a class="sourceLine" id="cb78-5" data-line-number="5">     <span class="dt">xlab =</span> <span class="st">"coverage"</span>, </a>
-<a class="sourceLine" id="cb78-6" data-line-number="6">     <span class="dt">ylab =</span> <span class="st">"fraction of bp &gt; coverage"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cumsum">cumsum</a></span>(fraction) <span class="op">~</span><span class="st"> </span>score, 
+     <span class="dt">data =</span> cvg_over_exons, 
+     <span class="dt">xlim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">0</span>,<span class="dv">30</span>), 
+     <span class="dt">type=</span> <span class="st">"s"</span>, 
+     <span class="dt">xlab =</span> <span class="st">"coverage"</span>, 
+     <span class="dt">ylab =</span> <span class="st">"fraction of bp &gt; coverage"</span>)</code></pre></div>
 <p><img src="common-tasks_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 </div>
 </div>
-</div>
-<div id="more-excercises" class="section level1">
-<h1 class="hasAnchor">
-<a href="#more-excercises" class="anchor"></a>More Excercises</h1>
-<p>(These are adapted from the HelloRanges tutorial.) We will work through the following exercises together</p>
-<p>First, let’s load the data required, which is are enhancer elements</p>
 </div>
 <div id="learning-more" class="section level1">
 <h1 class="hasAnchor">
@@ -1206,7 +1200,6 @@ An illustration of a GRanges data object for a single sample from an RNA-seq exp
       <li><a href="#summarising-coverage-with-compute_coverage">Summarising coverage with <code><a href="--/reference/compute_coverage-html">compute_coverage()</a></code></a></li>
       </ul>
 </li>
-      <li><a href="#more-excercises">More Excercises</a></li>
       <li><a href="#learning-more">Learning more</a></li>
       </ul>
 </div>
