@@ -15,8 +15,7 @@ vignette: >
 knitr::opts_chunk$set(
   echo = TRUE, 
   warning = FALSE,
-  message = FALSE,
-  fig.path = "./figures/"
+  message = FALSE
 )
 
 # -- pacakges
@@ -437,6 +436,7 @@ that are common in Bioconductor (like `Rle` mentioned above).
 ### Exercises
 
 1. What is the average length of CpG islands accross the genome?
+2. How many distinct transcript identifers are there in exons?
 
 
 ## Summarise over the genome with `reduce_ranges()` and `disjoin_ranges()`
@@ -504,6 +504,27 @@ exons %>%
   )
 ```
 
+### Excercises
+
+Let's read in another BED file that has functional annotations output by
+chromHMM from ENCODE human embrionic stem cell ChIP-seq data. 
+
+```{r hesc}
+hesc_bed <- system.file("extdata", "hesc.chromHmm.bed", 
+                        package="HelloRangesData")
+
+hesc <- read_bed(hesc_bed, genome_info = build)
+hesc
+```
+
+The name column is the predicted state of a range from chromHMM. 
+
+Use the hesc GRanges object to answer the following:
+
+1. How many ranges are there for each predicted state?
+2. How many base pairs are represented in the genome for each predicted state? 
+Which state has the maximum number of bases?
+3. How many base pairs are represented in the genome by all predicted states?
 
 ## Finding overlaps with the join operator
 
@@ -542,6 +563,24 @@ of overlap join `join_overlap_left()`.
 cpg4 <- join_overlap_left(cpg, exons)
 cpg4
 ```
+
+The type of overlap can be modified, by adding suffixes to the function call
+for example, to find overlaps that are within we could use 
+`join_overlap_inner_within()`.
+
+### Exercies
+
+1. Create a new GRanges object, that has exons that are completely
+within Enhancers elements of hesc. How many exons are there?
+
+2. Use `join_overlap_intersect()` to filter exons if at least 50 per cent
+of their bases are overlapped by enhancer elements.
+
+3. Count the number of each enchancer element type that is exonic.
+There are several ways of doing this, but see if you can come up with a 
+solution using `join_overlap_left()` + `disjoin_ranges()`. 
+
+ 
 
 ## Summarising coverage with `compute_coverage()`
 
