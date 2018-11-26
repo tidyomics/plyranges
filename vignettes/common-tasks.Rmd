@@ -98,7 +98,7 @@ workflow, while also being semantically rich enough to support
 high-level operations on genomic ranges.
 
 We can create a GRanges from an ordinary data.frame with plyranges using
-the `as_granges` function:
+the `as_granges()` function:
 
 ```{r}
 library(plyranges, quietly = TRUE)
@@ -157,9 +157,10 @@ to achieve these tasks using the plyranges:
 * Modify genomic regions with the `mutate()`...
 * And  while fixing the start/end/center coordinates with the `anchor_*` family
 of functions.
-* Sort genomic ranges with `arrange()`.
 * Merge all overlapping and adjacent genomic regions with `reduce_ranges()`.
 * Merge the end points of all genomic regions with `disjoin_ranges()`.
+* Sort genomic ranges with `arrange()`.
+
 
 Any of the above operations can be performed on subsets of the
 data with `group_by()`.
@@ -216,7 +217,7 @@ filter(exons, seqnames == "chrX" & strand == "+")
 ```
 
 But not the same as filtering exons to those on the X chromosome or 
-positively stranded
+positively stranded.
 
 ```{r filter-04}
 filter(exons, seqnames == "chrX" | strand == "+")
@@ -350,7 +351,15 @@ cpg %>%
          is_contained = . %within% exons)
 ```
 
-## Modifying genomic regions with `mutate()` 
+### Excercises
+
+1. Modify the above example so only CpG islands that are completely
+within exons are included in the result.
+2. Create a new column in exons called tx_id (the transcript
+id is everything before _exon in name).   
+
+
+## Modifying genomic regions with `mutate()`
 
 We have learnt in the above sections how to add new metadata columns with
 `mutate()` but we can also use `mutate() to modify the genomic regions.
@@ -391,6 +400,19 @@ There are additional anchors that account for the strandedness of features,
 we can fix the 3' or 5' parts of a GRanges object using `anchor_3p()` 
 or `anchor_5p()`, respectively.
 
+The plyranges and GenomicRanges API also have utilities to modify 
+genomic regions via standard set operations like taking the complement 
+(`complement_ranges()`) which will find gaps, or finding flanking ranges
+(see `flank_left()` and friends) or promoters (`GenomicRanges::promoters()`).
+
+### Exercises
+
+1. Create a new GRanges object from CpG islands that stretches their ranges by 
+their width while leaving their mid point fixed. 
+2. Create a new GRanges object from exons that has only non-exonic regions.
+3. Create a new GRanges object that represent 2bp canonical splice sites
+on either side of exon.
+
 ## Summarise annoations and measurements with `summarise()`
 
 We can compute summarise columns GRanges object using `summarise()`. Using
@@ -411,6 +433,11 @@ a `DataFrame` (see `S4Vectors::DataFrame()` for more information). The
 `DataFrame` is the Bioconductor version of the base R data.frame. It works
 mostly the same way as the base R `data.frame` but can also hold data structures
 that are common in Bioconductor (like `Rle` mentioned above).
+
+### Exercises
+
+1. What is the average length of CpG islands accross the genome?
+
 
 ## Summarise over the genome with `reduce_ranges()` and `disjoin_ranges()`
 
@@ -454,6 +481,12 @@ exons %>%
   )
 ```
 
+### Excerises
+
+1. Reduce CpG islands, what is the range that has the maximum number of nearby
+features?
+2. Confirm your results in 1. using `filter_by_overlaps()`.
+
 
 ## Analyses over groups with `group_by()`
 
@@ -470,6 +503,7 @@ exons %>%
     median_width = median(width)
   )
 ```
+
 
 ## Finding overlaps with the join operator
 
@@ -506,6 +540,7 @@ of overlap join `join_overlap_left()`.
 
 ```{r olap-04}
 cpg4 <- join_overlap_left(cpg, exons)
+cpg4
 ```
 
 ## Summarising coverage with `compute_coverage()`
@@ -606,6 +641,16 @@ plot(1 - cumsum(fraction) ~ score,
      xlab = "coverage", 
      ylab = "fraction of bp > coverage")
 ```
+
+
+# More Excercises
+
+(These are adapted from the HelloRanges tutorial.) 
+We will work through the following exercises together 
+
+First, let's load the data required, which is are enhancer elements  
+
+
 
 
 # Learning more
