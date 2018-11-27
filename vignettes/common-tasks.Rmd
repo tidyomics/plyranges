@@ -406,11 +406,13 @@ genomic regions via standard set operations like taking the complement
 
 ### Exercises
 
-1. Create a new GRanges object from CpG islands that stretches their ranges by 
-their width while leaving their mid point fixed. 
+1. Create a new GRanges object from CpG islands that stretches the intervals
+on either side by their width while leaving the centre of the interval fixed. 
 2. Create a new GRanges object from exons that has only non-exonic regions.
 3. Create a new GRanges object that represent 2bp canonical splice sites
-on either side of exon.
+on either side of exon (hint: you can do this with anchoring and mutate 
+or with flank).
+
 
 ## Summarise annoations and measurements with `summarise()`
 
@@ -524,7 +526,7 @@ Use the hesc GRanges object to answer the following:
 1. How many ranges are there for each predicted state?
 2. How many base pairs are represented in the genome for each predicted state? 
 Which state has the maximum number of bases?
-3. How many base pairs are represented in the genome by all predicted states?
+
 
 ## Finding overlaps with the join operator
 
@@ -572,16 +574,13 @@ for example, to find overlaps that are within we could use
 
 1. Create a new GRanges object, that has exons that are completely
 within Enhancers elements of hesc. How many exons are there?
-
 2. Use `join_overlap_intersect()` to filter exons if at least 50 per cent
 of their bases are overlapped by enhancer elements.
-
-3. Count the number of each enchancer element type that is exonic.
+3. Count the number of each enchancer element type that are exonic.
 There are several ways of doing this, but see if you can come up with a 
 solution using `join_overlap_left()` + `disjoin_ranges()`. 
 
  
-
 ## Summarising coverage with `compute_coverage()`
 
 Often we are interested in counting the number of features over
@@ -682,8 +681,6 @@ plot(1 - cumsum(fraction) ~ score,
 ```
 
 
-
-
 # Learning more
 
 We have touched the surface of what's possible with plyranges and
@@ -694,7 +691,4 @@ If you have any questions about the use of these packages, please ask
 a question on [support.bioconductor.org](https://support.bioconductor.org/) 
 or post an issue on [github](https://github.com/sa-lee/plyranges).
 
-
-
-
-
+The solutions to the excercises can be found [here](solutions.html).
