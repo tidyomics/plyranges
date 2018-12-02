@@ -55,7 +55,7 @@ BiocManager::install("plyranges")
 To install the development version from GitHub:
 
 ```{r, eval=FALSE}
-BiocManger::install("sa-lee/plyranges")
+BiocManager::install("sa-lee/plyranges")
 ```
 
 # Quick overview
