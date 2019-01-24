@@ -51,7 +51,7 @@ BiocManager::install("plyranges")
 To install the development version from GitHub:
 
 ``` r
-BiocManger::install("sa-lee/plyranges")
+BiocManager::install("sa-lee/plyranges")
 ```
 
 # Quick overview
@@ -328,10 +328,15 @@ guide outlined [here](CONTRIBUTING.md).
   - The [introductory
     vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html)
     has an overview of `plyranges` features.
+  - The [extended
+    vignette](https://sa-lee.github.io/plyranges/articles/common-tasks.html)
+    has more realistic use cases.
   - The [BiocWorkshop
     book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html)
     has worked examples of using `plyranges` to analyse publicly
     available genomics data.
-  - The
-    [preprint](https://www.biorxiv.org/content/early/2018/05/23/327841)
-    has details about the overall philosophy of `plyranges`
+  - The [journal
+    article](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1597-8)
+    ([preprint
+    here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
+    details about the overall philosophy and design of `plyranges`.
