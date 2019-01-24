@@ -19,6 +19,7 @@ overscope_ranges <- function(x, envir = parent.frame()) {
 
 overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
   env <- as.env(x, envir)
+  
   new_data_mask(env, top = parent.env(env))
 }
 
@@ -57,13 +58,6 @@ overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
   return(update)
 }
 
-ranges_vars <- function(x) {
-  x_env <- as.env(x, parent.frame())
-  vars_rng <-ls(x_env)
-  vars_rng <- vars_rng[!(vars_rng %in% "names")]
-  vars_mcols <- ls(parent.env(x_env))
-  c(vars_rng, vars_mcols)
-}
 
 # Port of dplyrs `n` function
 # It works by searching for a vector in the overscope environment
@@ -132,9 +126,12 @@ is_empty_quos <- function(quos) {
   length(quos) == 0L
 }
 
-# dplyr's join syntax uses a function called tbl_vars to get
-# variable names, using this function will enable a Ranges to be copied through
-# as a data.frame in a join.
+
+#' @importFrom dplyr tbl_vars
+tbl_vars.Ranges <- function(x) {
+  c("start", "end", "width", names(mcols(x)))
+}
+
 tbl_vars.GenomicRanges <- function(x) {
-  ranges_vars(x)
+  c("start", "end", "width", "strand", "seqnames", names(mcols(x)))
 }

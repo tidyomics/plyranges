@@ -6,7 +6,7 @@ select.DeferredGenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
  
   # check to see if we need to update cache, by selecting columns
   # that are not present in the delegate
-  vars <- try(vars_select(ranges_vars(.data@delegate), ...,
+  vars <- try(vars_select(tbl_vars(.data@delegate), ...,
                       .exclude =  c("start", "end", "width", "strand", "seqnames")),
               silent = TRUE)
   

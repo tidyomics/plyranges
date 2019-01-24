@@ -6,7 +6,7 @@ validGroupedRanges <- function(object) {
   }
 
   group_names <- unlist(lapply(object@groups, as.character))
-  check_valid_groups <- !(group_names %in% ranges_vars(object))
+  check_valid_groups <- !(group_names %in% tbl_vars(object))
 
   if (any(check_valid_groups)) {
     paste("Invalid groups slot:",
@@ -60,7 +60,7 @@ make_group_inx <- function(rng, ...) {
     group_names <- vapply(capture_groups, rlang::quo_name, character(1))
     
     # check group is actually found
-    not_found <- setdiff(group_names, ranges_vars(rng))
+    not_found <- setdiff(group_names, tbl_vars(rng))
     if (length(not_found) > 0) {
       stop(paste0("Column `", not_found[1], "` is unknown"), call. = FALSE)
     }
