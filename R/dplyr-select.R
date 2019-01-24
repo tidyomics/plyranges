@@ -1,21 +1,29 @@
 select_rng <- function(.data, .drop_ranges, dots) {
-
+  
+  var_names <- tbl_vars(.data)
   if (.drop_ranges) {
-    var_names <- ranges_vars(.data)
     selected_vars <- tidyselect::vars_select(var_names, !!!dots)
   } else {
-    var_names <- names(mcols(.data))
-    if (length(var_names) == 0L) {
-      stop("No metadata columns to select", call. = FALSE)
+    
+    exclude <- c("start", "end", "width")
+    
+    if (is(.data, "GenomicRanges")) {
+      exclude <- c(exclude, "strand", "seqnames")
     }
-
-    if (is(.data, "Ranges")) {
-      exclude <- c("start", "end", "width")
-    } else if (is(.data, "GenomicRanges")) {
-      exclude <- c("start", "end", "width", "strand", "seqnames")
-    }
-    selected_vars <- tidyselect::vars_select(var_names, !!!dots,
+    
+    var_names <- setdiff(var_names, exclude)
+    
+    selected_vars <- tidyselect::vars_select(var_names, 
+                                             !!!dots,
                                              .exclude = exclude)
+    if (any(names(selected_vars) %in% exclude)) {
+      stop(
+        paste0("Cannot rename metadata columns to any of the following:",
+               paste(exclude, collapse = ", "),
+               "."),
+        call. = FALSE
+      )
+    }
   }
 
   selected_vars <- syms(selected_vars)
@@ -30,7 +38,6 @@ select_rng <- function(.data, .drop_ranges, dots) {
     } else {
       mcols(.data) <- NULL
     }
-
     return(.data)
   }
 }
@@ -87,10 +94,6 @@ select.DelegatingGenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
     return(.data)
   }
 
-  # if the quo is named return an error
-  if (length(names(dots)) == 0) {
-    stop("select does not support renaming variables", call. = FALSE)
-  }
   delegate <- .data@delegate
   delegate <- select_rng(delegate, .drop_ranges,  dots)
   if (.drop_ranges) {
