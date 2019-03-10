@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.4</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
       <h1>Using plyranges and GenomicRanges to perform common genomic data wrangling tasks</h1>
                         <h4 class="author">Stuart Lee and Michael Lawrence</h4>
             
-            <h4 class="date">2018-11-27</h4>
+            <h4 class="date">2019-03-10</h4>
       
       
       <div class="hidden name"><code>common-tasks.Rmd</code></div>
@@ -149,12 +149,12 @@ genes</code></pre></div>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3846      - |     YFL064C 0.332831974606961         0
-##   [2]       VI 3030-3338      - |     YFL065C 0.684666199609637         1
-##   [3]       VI 1437-2615      - |     YFL066C 0.834407788235694         0
-##   [4]       VI 5066-5521      + |     YFL063W 0.350839200196788         0
-##   [5]       VI 6426-7565      + |     YFL062W 0.541555522708222         1
-##   [6]       VI  836-1363      + |     YFL067W 0.794553288258612         1
+##   [1]       VI 3322-3846      - |     YFL064C 0.760657986393198         0
+##   [2]       VI 3030-3338      - |     YFL065C  0.59726853785105         0
+##   [3]       VI 1437-2615      - |     YFL066C 0.228471707785502         0
+##   [4]       VI 5066-5521      + |     YFL063W 0.424436455825344         0
+##   [5]       VI 6426-7565      + |     YFL062W 0.658903268398717         0
+##   [6]       VI  836-1363      + |     YFL067W 0.396218570647761         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>You might notice a few differences between how the <code>genes</code> GRanges object is printed compared to an ordinary data.frame or tibble.</p>
@@ -679,12 +679,12 @@ cpg <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3846      - |     YFL064C 0.332831974606961         0
-##   [2]       VI 3030-3338      - |     YFL065C 0.684666199609637         1
-##   [3]       VI 1437-2615      - |     YFL066C 0.834407788235694         0
-##   [4]       VI 5066-5521      + |     YFL063W 0.350839200196788         0
-##   [5]       VI 6426-7565      + |     YFL062W 0.541555522708222         1
-##   [6]       VI  836-1363      + |     YFL067W 0.794553288258612         1
+##   [1]       VI 3322-3846      - |     YFL064C 0.760657986393198         0
+##   [2]       VI 3030-3338      - |     YFL065C  0.59726853785105         0
+##   [3]       VI 1437-2615      - |     YFL066C 0.228471707785502         0
+##   [4]       VI 5066-5521      + |     YFL063W 0.424436455825344         0
+##   [5]       VI 6426-7565      + |     YFL062W 0.658903268398717         0
+##   [6]       VI  836-1363      + |     YFL067W 0.396218570647761         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">genes <span class="op">%&gt;%</span><span class="st"> </span>
@@ -692,12 +692,12 @@ cpg <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3322-3856      - |     YFL064C 0.332831974606961         0
-##   [2]       VI 3030-3348      - |     YFL065C 0.684666199609637         1
-##   [3]       VI 1437-2625      - |     YFL066C 0.834407788235694         0
-##   [4]       VI 5066-5531      + |     YFL063W 0.350839200196788         0
-##   [5]       VI 6426-7575      + |     YFL062W 0.541555522708222         1
-##   [6]       VI  836-1373      + |     YFL067W 0.794553288258612         1
+##   [1]       VI 3322-3856      - |     YFL064C 0.760657986393198         0
+##   [2]       VI 3030-3348      - |     YFL065C  0.59726853785105         0
+##   [3]       VI 1437-2625      - |     YFL066C 0.228471707785502         0
+##   [4]       VI 5066-5531      + |     YFL063W 0.424436455825344         0
+##   [5]       VI 6426-7575      + |     YFL062W 0.658903268398717         0
+##   [6]       VI  836-1373      + |     YFL067W 0.396218570647761         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>All three components are mutally dependent, so in order to preserve the integrity of the GRanges structure, either the start or the end positions must change. In the case of adding to the width position by default the start is fixed and the end is increased. But what if we would like to modify the width but leave the end of fixed? Or the midpoint fixed?</p>
@@ -709,12 +709,12 @@ genes <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3312-3846      - |     YFL064C 0.332831974606961         0
-##   [2]       VI 3020-3338      - |     YFL065C 0.684666199609637         1
-##   [3]       VI 1427-2615      - |     YFL066C 0.834407788235694         0
-##   [4]       VI 5056-5521      + |     YFL063W 0.350839200196788         0
-##   [5]       VI 6416-7565      + |     YFL062W 0.541555522708222         1
-##   [6]       VI  826-1363      + |     YFL067W 0.794553288258612         1
+##   [1]       VI 3312-3846      - |     YFL064C 0.760657986393198         0
+##   [2]       VI 3020-3338      - |     YFL065C  0.59726853785105         0
+##   [3]       VI 1427-2615      - |     YFL066C 0.228471707785502         0
+##   [4]       VI 5056-5521      + |     YFL063W 0.424436455825344         0
+##   [5]       VI 6416-7565      + |     YFL062W 0.658903268398717         0
+##   [6]       VI  826-1363      + |     YFL067W 0.396218570647761         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fix the centre</span>
@@ -724,12 +724,12 @@ genes <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI 3317-3851      - |     YFL064C 0.332831974606961         0
-##   [2]       VI 3025-3343      - |     YFL065C 0.684666199609637         1
-##   [3]       VI 1432-2620      - |     YFL066C 0.834407788235694         0
-##   [4]       VI 5061-5526      + |     YFL063W 0.350839200196788         0
-##   [5]       VI 6421-7570      + |     YFL062W 0.541555522708222         1
-##   [6]       VI  831-1368      + |     YFL067W 0.794553288258612         1
+##   [1]       VI 3317-3851      - |     YFL064C 0.760657986393198         0
+##   [2]       VI 3025-3343      - |     YFL065C  0.59726853785105         0
+##   [3]       VI 1432-2620      - |     YFL066C 0.228471707785502         0
+##   [4]       VI 5061-5526      + |     YFL063W 0.424436455825344         0
+##   [5]       VI 6421-7570      + |     YFL062W 0.658903268398717         0
+##   [6]       VI  831-1368      + |     YFL067W 0.396218570647761         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>There are additional anchors that account for the strandedness of features, we can fix the 3’ or 5’ parts of a GRanges object using <code><a href="../reference/ranges-anchor.html">anchor_3p()</a></code> or <code><a href="../reference/ranges-anchor.html">anchor_5p()</a></code>, respectively.</p>
@@ -781,12 +781,12 @@ genes <span class="op">%&gt;%</span><span class="st"> </span>
 <pre><code>## GRanges object with 6 ranges and 3 metadata columns:
 ##       seqnames    ranges strand |     gene_id                gc     score
 ##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;         &lt;numeric&gt; &lt;integer&gt;
-##   [1]       VI  836-1363      + |     YFL067W 0.794553288258612         1
-##   [2]       VI 1437-2615      - |     YFL066C 0.834407788235694         0
-##   [3]       VI 3030-3338      - |     YFL065C 0.684666199609637         1
-##   [4]       VI 3322-3846      - |     YFL064C 0.332831974606961         0
-##   [5]       VI 5066-5521      + |     YFL063W 0.350839200196788         0
-##   [6]       VI 6426-7565      + |     YFL062W 0.541555522708222         1
+##   [1]       VI  836-1363      + |     YFL067W 0.396218570647761         0
+##   [2]       VI 1437-2615      - |     YFL066C 0.228471707785502         0
+##   [3]       VI 3030-3338      - |     YFL065C  0.59726853785105         0
+##   [4]       VI 3322-3846      - |     YFL064C 0.760657986393198         0
+##   [5]       VI 5066-5521      + |     YFL063W 0.424436455825344         0
+##   [6]       VI 6426-7565      + |     YFL062W 0.658903268398717         0
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># reduce_ranges will merge the 3rd and 4th ranges above</span>
@@ -1213,7 +1213,7 @@ cvg_over_exons</code></pre></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
 </div>
