@@ -21,6 +21,9 @@ a concatenated Ranges object
 \description{
 Combine Ranges by concatentating them together
 }
+\note{
+Currently GRangesList or IRangesList objects are not supported.
+}
 \examples{
 gr <- as_granges(data.frame(start = 10:15,
                             width = 5,

@@ -39,6 +39,7 @@ interweave <- function(left, right, .id = NULL) {
 #' of the column correspond to the named arguments or the names of the list
 #' supplied.
 #'
+#' @note Currently GRangesList or IRangesList objects are not supported.
 #' @return a concatenated Ranges object
 #' @importFrom rlang dots_values have_name
 #' @rdname ranges-bind
@@ -75,13 +76,19 @@ all_integer_ranges <- function(x) {
 .bind_rng <- function(x, .id = NULL) {
   if (!(all_genomic_ranges(x) | all_integer_ranges(x))) {
     stop("Cannot bind objects of different classes together, ... must be
-         all Ranges objects.", call. = FALSE)
+         all Ranges objects.", 
+         call. = FALSE)
   }
   x <- as(x, "List")
   x <- .check_id_var(x, .id)
   x <- .set_id_var(x, .id)
   x
 }
+
+# .check_ranges_list <- function(x, .id = NULL) {
+#   if (is(x, "RangesList")) return(unlist(x, recursive = TRUE), .id))
+#   x
+# }
 
 .check_id_var <- function(x, .id = NULL) {
   if (!is.null(.id)) {
@@ -97,10 +104,9 @@ all_integer_ranges <- function(x) {
 }
 
 .set_id_var <- function(x, .id = NULL) {
-  x <- suppressWarnings(unlist(x, use.names = TRUE))
+  res <- suppressWarnings(unlist(x, use.names = FALSE))
   if (!is.null(.id)) {
-    mcols(x)[[.id]] <-  as(names(x), "Rle")
-    names(x) <- NULL
+    mcols(res)[[.id]] <-  Rle(names(x), lengths(x))
   }
-  x
+  res
 }
