@@ -1,0 +1,70 @@
+# DO NOT CHANGE the "init" and "install" sections below
+
+# Download script file from GitHub
+init:
+  ps: |
+        $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
+
+install:
+  ps: |
+        Bootstrap
+
+branches:
+  only:
+    - master
+    
+cache:
+  - C:\RLibrary
+
+# Adapt as necessary starting from here
+build_script:
+  - echo Current directory=%CD%
+  - travis-tool.sh install_r rlang dplyr covr magrittr devtools BiocManager ggplot2 tidyr tidyselect
+  - travis-tool.sh install_deps
+  - travis-tool.sh install_bioc XVector DelayedArray SummarizedExperiment rtracklayer BiocStyle HelloRanges HelloRangesData GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
+  - travis-tool.sh install_bioc_deps
+
+
+test_script:
+  - travis-tool.sh run_tests
+
+after_test:
+  - 7z a all-Rout.zip *.Rcheck\**\*.Rout *.Rcheck\**\*.fail
+
+on_failure:
+  - 7z a failure.zip *.Rcheck\*
+  - appveyor PushArtifact failure.zip
+
+on_success:
+  - Rscript -e 'covr::codecov()'
+
+environment:
+  global:
+    WARNINGS_ARE_ERRORS: 0
+    _R_CHECK_FORCE_SUGGESTS_: false
+  
+  matrix:
+    - R_VERSION: release
+      R_ARCH: x64
+      GCC_PATH: mingw_64
+
+artifacts:
+  - path: '*.Rcheck\**\*.log'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.out'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.fail'
+    name: Logs
+
+  - path: '*.Rcheck\**\*.Rout'
+    name: Logs
+
+  - path: '\*_*.tar.gz'
+    name: Bits
+
+  - path: '\*_*.zip'
+    name: Bits
