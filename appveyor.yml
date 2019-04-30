@@ -8,15 +8,25 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 
 install:
-  ps: |
-        Bootstrap
+  - ps: Bootstrap
+  - cmd: R -q -e "writeLines('options(repos = \'https://cloud.r-project.org\')', '~/.Rprofile')"
+  - cmd: R -q -e "getOption('repos')"
+  - cmd: R -q -e "install.packages('remotes'); remotes::install_github('ropenscilabs/tic'); tic::prepare_all_stages()"
 
-branches:
-  only:
-    - master
-    
 cache:
-  - C:\RLibrary
+- C:\RLibrary
+
+before_build: R -q -e "tic::before_install()"
+build_script: R -q -e "tic::install()"
+after_build: R -q -e "tic::after_install()"
+before_test: R -q -e "tic::before_script()"
+test_script: R -q -e "tic::script()"
+on_success: R -q -e "try(tic::after_success(), silent = TRUE)"
+on_failure: R -q -e "tic::after_failure()"
+before_deploy: R -q -e "tic::before_deploy()"
+deploy_script: R -q -e "tic::deploy()"
+after_deploy: R -q -e "tic::after_deploy()"
+on_finish: R -q -e "tic::after_script()"
 
 # Adapt as necessary starting from here
 build_script:
@@ -25,7 +35,6 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh install_bioc XVector DelayedArray SummarizedExperiment rtracklayer BiocStyle HelloRanges HelloRangesData GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
   - travis-tool.sh install_bioc_deps
-
 
 test_script:
   - travis-tool.sh run_tests
@@ -37,9 +46,6 @@ on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
 
-on_success:
-  - Rscript -e 'covr::codecov()'
-
 environment:
   global:
     WARNINGS_ARE_ERRORS: 0
@@ -49,6 +55,14 @@ environment:
     - R_VERSION: release
       R_ARCH: x64
       GCC_PATH: mingw_64
+
+#on_failure:
+#  - 7z a failure.zip *.Rcheck\*
+#  - appveyor PushArtifact failure.zip
+
+#environment:
+#  GITHUB_PAT:
+#    secure: VXO22OHLkl4YhVIomSMwCZyOTx03Xf2WICaVng9xH7gISlAg8a+qrt1DtFtk8sK5
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
