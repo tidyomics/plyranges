@@ -28,7 +28,10 @@ We need to read in three files from HelloRangesData
 ```{r read-bed}
 suppressPackageStartupMessages(library(plyranges))
 # our genome build
-build <- genome_info("hg19")
+build <- system.file("extdata", "hg19.genome", package="HelloRangesData") %>% 
+  read.delim(header = FALSE, col.names = c("seqnames", "width")) %>% 
+  as_granges(start = 1) %>% 
+  set_genome_info(genome = "hg19")
 
 exons <- system.file("extdata", "exons.bed", package="HelloRangesData") %>% 
   read_bed(genome_info = build)
