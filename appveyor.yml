@@ -29,23 +29,6 @@ after_deploy: R -q -e "tic::after_deploy()"
 on_finish: R -q -e "tic::after_script()"
 
 # Adapt as necessary starting from here
-build_script:
-  - echo Current directory=%CD%
-  - travis-tool.sh install_r rlang dplyr covr magrittr devtools BiocManager ggplot2 tidyr tidyselect
-  - travis-tool.sh install_deps
-  - travis-tool.sh install_bioc XVector DelayedArray SummarizedExperiment rtracklayer BiocStyle HelloRanges HelloRangesData GenomeInfoDb GenomicAlignments GenomicRanges BiocGenerics S4Vectors IRanges BSgenome.Hsapiens.UCSC.hg19 pasillaBamSubset Rsamtools
-  - travis-tool.sh install_bioc_deps
-
-test_script:
-  - travis-tool.sh run_tests
-
-after_test:
-  - 7z a all-Rout.zip *.Rcheck\**\*.Rout *.Rcheck\**\*.fail
-
-on_failure:
-  - 7z a failure.zip *.Rcheck\*
-  - appveyor PushArtifact failure.zip
-
 environment:
   global:
     WARNINGS_ARE_ERRORS: 0
