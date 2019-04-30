@@ -42,6 +42,6 @@ grng <- mutate(grng,
                )
 unnest(grng)
 unnest(grng, .keep_empty = TRUE)
-unenst(grng, .id = "name", .keep_empty = TRUE)
+unnest(grng, .id = "name", .keep_empty = TRUE)
 
 }
