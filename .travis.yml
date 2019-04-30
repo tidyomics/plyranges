@@ -44,25 +44,6 @@ branches:
   only:
     - master
 
-r_packages:
-  - rlang
-  - dplyr
-  - magrittr
-  - ggplot2
-  - covr
-
-bioc_packages:
-  - BiocGenerics
-  - BiocCheck
-  - S4Vectors
-  - GenomicRanges
-  - IRanges
-  - BiocStyle
-  - HelloRanges
-  - HelloRangesData
-  - BSgenome.Hsapiens.UCSC.hg19
-  - rtracklayer
-
 after_success:
   - Rscript -e 'library(covr);codecov()'
 
