@@ -90,5 +90,12 @@ test_that("unnesting makes sense", {
   correct_gr$id1 <- c("a", "b", "b", "c", "c")
   expect_equal(unnest(gr, .id = "id1"), correct_gr)
   
+  # drop emptys
+  gr <- as_granges(data.frame(seqnames = "chr1", start = 20:22, width = 1000))
+  gr <- mutate(gr, col1 = IntegerList(a = integer(), b = c(4,5), c = c(2,3)))
+  correct_gr <- S4Vectors::expand(gr, keepEmptyRows = TRUE)
+  expect_equal(unnest(gr, .keep_empty = TRUE), correct_gr)
+  correct_gr$id1 <- c("a", "b", "b", "c", "c")
+  expect_equal(unnest(gr, .id = "id1", .keep_empty = TRUE), correct_gr)
 
 })

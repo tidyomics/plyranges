@@ -5,24 +5,22 @@
 \title{Expand list-columns in a Ranges object}
 \usage{
 \method{unnest}{GenomicRanges}(data, ..., .drop = FALSE, .id = NULL,
-  .sep = NULL)
+  .keep_empty = FALSE)
 }
 \arguments{
 \item{data}{A Ranges object}
 
 \item{...}{list-column names to unnest}
 
-\item{.drop}{Determines whether other list columns will be dropped.
+\item{.drop}{Should additional list columsn be dropped (default = FALSE)?
 By default \code{unnest} will keep other list columns even if they are nested.}
 
 \item{.id}{A character vector of length equal to number of list columns.
 If supplied will create new column(s) with name \code{.id}
 identifying the index of the list column (default = NULL).}
 
-\item{.sep}{Combine name of nested Ranges with name of list column seperated
-by \code{.sep}, currently not implemented.}
-
-\item{.preserve}{Keep unnested list columns in output? Currently not implemented.}
+\item{.keep_empty}{If a list-like column contains empty elements, should
+those elements be kept? (default = FALSE)}
 }
 \value{
 a GRanges object with expanded list columns
@@ -37,4 +35,13 @@ grng <- mutate(grng,
                )
 unnest(grng)
 unnest(grng, .id = "name")
+
+# empty list elements are not preserved by default
+grng <- mutate(grng, 
+               exon_id = IntegerList(a = NULL, b = c(4,5), c= 3, d = c(2,5))
+               )
+unnest(grng)
+unnest(grng, .keep_empty = TRUE)
+unenst(grng, .id = "name", .keep_empty = TRUE)
+
 }

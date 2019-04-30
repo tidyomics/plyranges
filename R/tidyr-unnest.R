@@ -2,14 +2,13 @@
 #'
 #' @param data A Ranges object
 #' @param ... list-column names to unnest
-#' @param .drop Determines whether other list columns will be dropped.
+#' @param .drop Should additional list columsn be dropped (default = FALSE)?
 #' By default `unnest` will keep other list columns even if they are nested.
 #' @param .id A character vector of length equal to number of list columns.
 #' If supplied will create new column(s) with name `.id`
 #' identifying the index of the list column (default = NULL).
-#' @param .sep Combine name of nested Ranges with name of list column seperated
-#' by `.sep`, currently not implemented.
-#' @param .preserve Keep unnested list columns in output? Currently not implemented.
+#' @param .keep_empty If a list-like column contains empty elements, should
+#' those elements be kept? (default = FALSE)
 #'
 #' @importFrom tidyr unnest
 #' @importFrom S4Vectors expand
@@ -23,13 +22,22 @@
 #'                )
 #' unnest(grng)
 #' unnest(grng, .id = "name")
+#' 
+#' # empty list elements are not preserved by default
+#' grng <- mutate(grng, 
+#'                exon_id = IntegerList(a = NULL, b = c(4,5), c= 3, d = c(2,5))
+#'                )
+#' unnest(grng)
+#' unnest(grng, .keep_empty = TRUE)
+#' unenst(grng, .id = "name", .keep_empty = TRUE)
+#' 
 #' @rdname ranges-unnest
 #' @export
-unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NULL) {
-
+unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FALSE) {
+  
   list_cols <- get_list_cols(data)
   which_unnest <- unnest_cols(data, list_cols, ...)
-
+  
   if (.drop) {
     list_cols_to_drop <- setdiff(names(list_cols), which_unnest)
     if (length(list_cols_to_drop) > 0) {
@@ -38,45 +46,40 @@ unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .sep = NU
   }
   
   if (ncol(mcols(data)) == length(which_unnest)) {
-    expand_rng <- S4Vectors::expand(data)
+    expand_rng <- S4Vectors::expand(data, keepEmptyRows = .keep_empty)
   } else {
-    expand_rng <- S4Vectors::expand(data, which_unnest)
+    expand_rng <- S4Vectors::expand(data, which_unnest, 
+                                    keepEmptyRows = .keep_empty)
   }
-
+  
   
   
   if (!is.null(.id)) {
     if (length(.id) != length(which_unnest)) {
       stop("`.id` does not have same length as number of list columns.",
-          call. = FALSE)
+           call. = FALSE)
     }
-
-    values <- Map(function(col) {
-      current <- mcols(data)[[col]]
-      v <- names(current)
-      if (length(v) == 0) v <- seq_along(current)
-      l <- lengths(current)
-      inx <- IRanges::IntegerList(Map(function(i) rep(i, l[i]), seq_along(l)))
-      IRanges::extractList(v, inx)
-      }, which_unnest)
-
-
+    
+    values <- lapply(mcols(data)[, which_unnest, drop = FALSE],
+                     extract_index,
+                     .keep_empty = .keep_empty)
+    
     names(values) <- .id
     values <- do.call("DataFrame", values)
     # for some reason if values is single column DF, expand
     # returns a List, with expanded values in last element
     if (length(.id) == 1) {
-      expand_values <- expand(values, .id)
+      expand_values <- expand(values, .id, keepEmptyRows = .keep_empty)
       expand_values <- expand_values[[.id]]
       expand_values <- DataFrame(expand_values)
       names(expand_values) <- .id
     } else {
-      expand_values <- S4Vectors::expand(values)
+      expand_values <- S4Vectors::expand(values, keepEmptyRows = .keep_empty)
     }
-
+    
     mcols(expand_rng) <- cbind(mcols(expand_rng), expand_values)
   }
-
+  
   return(expand_rng)
   
 }
@@ -95,7 +98,7 @@ get_list_cols <- function(data) {
 }
 
 unnest_cols <- function(data, list_cols, ...) {
-
+  
   dots <- set_dots_unnamed(...)
   
   dot_names <- unlist(Map(function(.) quo_name(.), dots))
@@ -119,4 +122,15 @@ unnest_cols <- function(data, list_cols, ...) {
   }
   
   return(which_unnest)
+}
+
+extract_index <- function(col, .keep_empty) {
+
+  v <- names(col)
+  if (length(v) == 0) v <- seq_along(col)
+  l <- lengths(col)
+  if (.keep_empty) l[l == 0] <- 1
+  inx <- IRanges::IntegerList(Map(function(i) rep(i, l[i]), seq_along(l)))
+  IRanges::extractList(v, inx)
+  
 }
