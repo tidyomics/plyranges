@@ -80,5 +80,15 @@ test_that("unnesting makes sense", {
                         id1 = c("a", "b", "b", "c", "c"))
   test_gr <- unnest(gr, col1, .id = "id1")
   expect_identical(correct_gr, test_gr)
+  
+  # one column test
+  gr <- as_granges(data.frame(seqnames = "chr1", start = 20:22, width = 1000))
+  gr <- mutate(gr, col1 = IntegerList(a = 1, b = c(4,5), c = c(2,3)))
+  correct_gr <- S4Vectors::expand(gr)
+  expect_equal(unnest(gr), correct_gr)
+  
+  correct_gr$id1 <- c("a", "b", "b", "c", "c")
+  expect_equal(unnest(gr, .id = "id1"), correct_gr)
+  
 
 })

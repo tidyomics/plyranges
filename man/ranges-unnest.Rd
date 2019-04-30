@@ -21,6 +21,8 @@ identifying the index of the list column (default = NULL).}
 
 \item{.sep}{Combine name of nested Ranges with name of list column seperated
 by \code{.sep}, currently not implemented.}
+
+\item{.preserve}{Keep unnested list columns in output? Currently not implemented.}
 }
 \value{
 a GRanges object with expanded list columns
@@ -30,7 +32,9 @@ Expand list-columns in a Ranges object
 }
 \examples{
 grng <- as_granges(data.frame(seqnames = "chr1", start = 20:23, width = 1000))
-grng <- mutate(grng, exon_id = IntegerList(a = 1, b = c(4,5), c = 3, d = c(2,5)))
+grng <- mutate(grng, 
+               exon_id = IntegerList(a = 1, b = c(4,5), c = 3, d = c(2,5))
+               )
 unnest(grng)
 unnest(grng, .id = "name")
 }
