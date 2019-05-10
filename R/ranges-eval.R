@@ -111,13 +111,13 @@ n <- function() {
 #' x <- CharacterList(c("a", "b", "c", "a"),  "d")
 #' n_distinct(x)
 #' n_distinct(unlist(x))
-#' 
+#' @importFrom BiocGenerics unique
 #' @export
 n_distinct <- function(var) {
   if (inherits(var, "List")) {
-    return(lengths(unique(var)))
+    return(lengths(BiocGenerics::unique(var)))
   } else {
-    return(length(unique(var)))
+    return(length(BiocGenerics::unique(var)))
   }
 }
 

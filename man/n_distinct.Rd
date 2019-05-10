@@ -20,5 +20,4 @@ This is a wrapper to \code{length(unique(x))} or
 x <- CharacterList(c("a", "b", "c", "a"),  "d")
 n_distinct(x)
 n_distinct(unlist(x))
-
 }
