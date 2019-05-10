@@ -113,11 +113,12 @@ n <- function() {
 #' n_distinct(unlist(x))
 #' 
 #' @export
+#' @importFrom BiocGenerics unique
 n_distinct <- function(var) {
   if (inherits(var, "List")) {
-    return(lengths(unique(var)))
+    return(lengths(BiocGenerics::unique(var)))
   } else {
-    return(length(unique(var)))
+    return(length(BiocGenerics::unique(var)))
   }
 }
 
