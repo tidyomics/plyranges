@@ -1,4 +1,4 @@
-do_package_checks(repos = repo_bioc())
+do_package_checks(repos = repo_bioc(), error_on = "error")
 
 if (Sys.getenv("id_rsa") != "" && !ci()$is_tag()) {
   # pkgdown documentation can be built optionally. Other example criteria:
