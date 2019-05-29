@@ -1,4 +1,4 @@
-do_package_checks()
+do_package_checks(repos = repo_bioc())
 
 if (Sys.getenv("id_rsa") != "" && !ci()$is_tag()) {
   # pkgdown documentation can be built optionally. Other example criteria:
@@ -7,6 +7,10 @@ if (Sys.getenv("id_rsa") != "" && !ci()$is_tag()) {
   # - `Sys.getenv("TRAVIS_EVENT_TYPE") == "cron"`: Only for Travis cron jobs
   get_stage("before_deploy") %>%
     add_step(step_setup_ssh())
+  
+  get_stage("script") %>%
+    add_step(step_rcmdcheck(error_on = "error", repos = repo_bioc()))
+  
 
   get_stage("deploy") %>%
     add_step(step_build_pkgdown()) %>%
