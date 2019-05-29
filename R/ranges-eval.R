@@ -111,7 +111,7 @@ n <- function() {
 #' x <- CharacterList(c("a", "b", "c", "a"),  "d")
 #' n_distinct(x)
 #' n_distinct(unlist(x))
-#' 
+#' @importFrom BiocGenerics unique
 #' @export
 #' @importFrom BiocGenerics unique
 n_distinct <- function(var) {

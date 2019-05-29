@@ -1,0 +1,16 @@
+citHeader("To cite plyranges in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "plyranges: a grammar of genomic data transformation",
+  author   = "Lee, Stuart and Cook, Dianne and Lawrence, Michael",
+  journal  = "Genome Biol.",
+  year     = "2019",
+  volume   =  "20",
+  number   =  "1",
+  pages    =  "4",
+  url      = "http://dx.doi.org/10.1186/s13059-018-1597-8",
+  textVersion = paste(
+    "Lee, Stuart, Dianne Cook, and Michael Lawrence. 2019. “Plyranges: A Grammar of Genomic Data Transformation.” Genome Biology 20 (1): 4. https://doi.org/10.1186/s13059-018-1597-8."
+  )
+)

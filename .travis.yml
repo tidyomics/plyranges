@@ -1,9 +1,40 @@
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+# Default configuration for use with tic package
+# tic documentation to get started: https://ropenscilabs.github.io/tic/
+# Usually you shouldn't need to change the first part of the file
+
+# DO NOT CHANGE THE CODE BELOW
+before_install:
+- R -q -e 'if (!requireNamespace("remotes")) install.packages("remotes")'
+- R -q -e 'if (getRversion() < "3.2" && !requireNamespace("curl")) install.packages("curl")'
+- R -q -e 'remotes::install_github("ropenscilabs/tic"); tic::prepare_all_stages()'
+- R -q -e 'tic::before_install()'
+install: R -q -e 'tic::install()'
+after_install: R -q -e 'tic::after_install()'
+before_script: R -q -e 'tic::before_script()'
+script: R -q -e 'tic::script()'
+after_success: R -q -e 'tic::after_success()'
+after_failure: R -q -e 'tic::after_failure()'
+before_deploy: R -q -e 'tic::before_deploy()'
+deploy:
+  provider: script
+  script: R -q -e 'tic::deploy()'
+  on:
+    all_branches: true
+after_deploy: R -q -e 'tic::after_deploy()'
+after_script: R -q -e 'tic::after_script()'
+# DO NOT CHANGE THE CODE ABOVE
+
+# Custom parts:
+
+# Header
 language: r
-
 sudo: false
-
+dist: trusty
 cache: packages
+latex: false
 
+# bioc check
 r: bioc-devel
 bioc_check: true
 
@@ -12,32 +43,14 @@ warnings_are_errors: false
 branches:
   only:
     - master
-    - RELEASE_3_8
-
-r_packages:
-  - rlang
-  - dplyr
-  - magrittr
-  - ggplot2
-  - covr
-
-bioc_packages:
-  - BiocGenerics
-  - BiocCheck
-  - S4Vectors
-  - GenomicRanges
-  - IRanges
-  - BiocStyle
-  - HelloRanges
-  - HelloRangesData
-  - BSgenome.Hsapiens.UCSC.hg19
-  - rtracklayer
-
-before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
-deploy:
-  provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
-  skip_cleanup: true
 
 after_success:
   - Rscript -e 'library(covr);codecov()'
+
+#env
+env:
+  global:
+  - _R_CHECK_FORCE_SUGGESTS_=false
+  - MAKEFLAGS="-j 2"
+
+services:

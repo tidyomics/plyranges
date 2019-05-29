@@ -19,3 +19,5 @@ plyranges.png
 vignettes/common-tasks.Rmd
 vignettes/figures/
 vignettes/solutions.Rmd
+^\.travis\.yml$
+^tic\.R$

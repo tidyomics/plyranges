@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 
 [![Build Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/sa-lee/plyranges?branch=master&svg=true)](https://ci.appveyor.com/project/sa-lee/plyranges)
-[![Coverage Status](https://img.shields.io/codecov/c/github/sa-lee/plyranges/master.svg)](https://codecov.io/github/sa-lee/plyranges?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/sa-lee/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/sa-lee/plyranges?branch=master)
 
 
 `plryanges` provides a consistent interface for importing and
@@ -165,6 +165,26 @@ all_ss <- interweave(left_ss, right_ss, .id = "side")
 all_ss
 ```
 
+# Citation
+
+If you found `plyranges` useful for your work please cite our [paper](http://dx.doi.org/10.1186/s13059-018-1597-8):
+
+```
+@ARTICLE{Lee2019,
+  title    = "plyranges: a grammar of genomic data transformation",
+  author   = "Lee, Stuart and Cook, Dianne and Lawrence, Michael",
+  journal  = "Genome Biol.",
+  volume   =  20,
+  number   =  1,
+  pages    = "4",
+  month    =  jan,
+  year     =  2019,
+  url      = "http://dx.doi.org/10.1186/s13059-018-1597-8",
+  doi      = "10.1186/s13059-018-1597-8",
+  pmc      = "PMC6320618"
+}
+```
+
 # Contributing
 
 We welcome contributions from the R/Bioconductor community. We ask that 
@@ -173,11 +193,13 @@ outlined [here](CONTRIBUTING.md).
 
 # Learning more
 
-- The [introductory vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html) has an overview of `plyranges` features. 
-- The [extended vignette](https://sa-lee.github.io/plyranges/articles/common-tasks.html)
-has more realistic use cases.
-- The [BiocWorkshop book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html) has worked examples of using `plyranges` to analyse
+- The [introductory vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html) has an overview of plyranges features.
+- The [Bioc 2018 Workshop book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html) has worked examples of using `plyranges` to analyse
 publicly available genomics data.
+- The [extended vignette in the plyrangesWorkshops package](https://github.com/sa-lee/plyrangesWorkshops) has a detailed
+walk through of using plyranges for coverage analysis.
+- The [case study](https://github.com/mikelove/plyrangesTximetaCaseStudy) by Michael Love using plyranges with [tximeta](https://bioconductor.org/packages/release/bioc/html/tximeta.html) to follow
+up on interesting hits from a combined RNA-seq and ATAC-seq analysis. 
 - The [journal article](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1597-8) ([preprint here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
-details about the overall philosophy and design of `plyranges`.
+details about the overall philosophy and design of plyranges.
 
