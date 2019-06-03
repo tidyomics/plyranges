@@ -38,7 +38,7 @@ groups by one or more variables. Operations are then performed on the Ranges
 by their "group". \code{ungroup()} removes grouping.
 }
 \details{
-\code{group_by()} creates a new object of class \code{GRangesGrouped} if
+\code{group_by()} creates a new object of class \code{GroupedGenomicRanges} if
 the input is a \code{GRanges} object or an object of class \code{GroupedIntegerRanges}
 if the input is a \code{IRanges} object. Both of these classes contain a slot
 called \code{groups} corresponding to the names of grouping variables. They

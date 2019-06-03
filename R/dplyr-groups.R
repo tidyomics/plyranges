@@ -10,7 +10,7 @@
 #' by their "group". `ungroup()` removes grouping.
 #'
 #' @details
-#' `group_by()` creates a new object of class `GRangesGrouped` if
+#' `group_by()` creates a new object of class `GroupedGenomicRanges` if
 #' the input is a `GRanges` object or an object of class `GroupedIntegerRanges`
 #' if the input is a `IRanges` object. Both of these classes contain a slot
 #' called `groups` corresponding to the names of grouping variables. They
