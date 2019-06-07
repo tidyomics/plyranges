@@ -5,7 +5,7 @@
 \alias{filter.Ranges}
 \title{Subset a \code{Ranges} object}
 \usage{
-\method{filter}{Ranges}(.data, ...)
+\method{filter}{Ranges}(.data, ..., .preserve = FALSE)
 }
 \arguments{
 \item{.data}{A \code{Ranges} object}
@@ -14,6 +14,8 @@
 are determined by variables in \code{.data}. If more than
 one condition is supplied, the conditions are combined with \code{&}. Only
 rows where the condition evaluates to \code{TRUE} are kept.}
+
+\item{.preserve}{when FALSE (the default) grouping structure is recalculated, TRUE is currently not implemented.}
 }
 \value{
 a Ranges object

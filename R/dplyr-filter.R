@@ -27,7 +27,9 @@ filter_grp <- function(.data, ...) {
 #' are determined by variables in `.data`. If more than
 #' one condition is supplied, the conditions are combined with `&`. Only
 #' rows where the condition evaluates to `TRUE` are kept.
-#
+#' @param .preserve when FALSE (the default) grouping structure is recalculated, TRUE is currently not implemented.
+#'
+#'
 #' @details  For any Ranges objects
 #' `filter` can act on all core components of the class including start, end,
 #' width (for IRanges) or seqnames and strand (for GRanges) in addition to
@@ -70,14 +72,14 @@ filter_grp <- function(.data, ...) {
 #'
 #' @method filter Ranges
 #' @export
-filter.Ranges <- function(.data, ...) {
+filter.Ranges <- function(.data, ..., .preserve = FALSE) {
   dots <- set_dots_unnamed(...)
   .data[filter_rng(.data, dots)]
 }
 
 #' @method filter DelegatingGenomicRanges
 #' @export
-filter.DelegatingGenomicRanges <- function(.data, ...) {
+filter.DelegatingGenomicRanges <- function(.data, ..., .preserve = FALSE) {
   dots <- set_dots_unnamed(...)
   delegate <- .data@delegate
   .data@delegate <- delegate[filter_rng(delegate, dots)]
@@ -90,7 +92,7 @@ filter.DelegatingIntegerRanges <- filter.DelegatingGenomicRanges
 
 #' @method filter GroupedGenomicRanges
 #' @export
-filter.GroupedGenomicRanges <- function(.data, ...) {
+filter.GroupedGenomicRanges <- function(.data, ..., .preserve = FALSE) {
   filter_grp(.data, ...)
 }
 
