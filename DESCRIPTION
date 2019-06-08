@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.5.5
+Version: 1.5.6
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
@@ -28,7 +28,7 @@ Imports:
   GenomicAlignments,
   GenomeInfoDb,
   Rsamtools,
-  S4Vectors (>= 0.17.41), 
+  S4Vectors (>= 0.23.10),
   utils
 biocViews: Infrastructure, DataRepresentation, WorkflowStep, Coverage
 BugReports: https://github.com/sa-lee/plyranges

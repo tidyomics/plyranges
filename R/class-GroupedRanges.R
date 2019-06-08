@@ -17,7 +17,8 @@ validGroupedRanges <- function(object) {
 }
 
 #' @rdname group_by-ranges
-#' @importFrom IRanges extractList splitAsList
+#' @importFrom IRanges extractList
+#' @importFrom S4Vectors splitAsList
 #' @importFrom BiocGenerics unlist
 #' @export
 setClass("GroupedGenomicRanges",
@@ -72,7 +73,7 @@ make_group_inx <- function(rng, ...) {
     os <- overscope_ranges(rng)
     groups_values <- as(lapply(capture_groups, rlang::eval_tidy, data = os), 
                         "DataFrame")
-    inx <- IRanges::splitAsList(seq_along(rng), groups_values, drop = TRUE)
+    inx <- S4Vectors::splitAsList(seq_along(rng), groups_values, drop = TRUE)
     mcols(inx) <- BiocGenerics::unlist(extractList(groups_values, 
                               endoapply(inx, function(.) .[1])))
     return(list(groups = groups, inx = inx))
