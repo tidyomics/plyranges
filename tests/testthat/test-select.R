@@ -52,6 +52,6 @@ test_that("dropping everything sets mcols slot to empty", {
   mcols(gr1) <- NULL
   expect_identical(gr5, gr1)
   ir4 <- select(ir1, -score:-counts)
-  expect_identical(ir4, IRanges(ir1))
+  expect_equivalent(ir4, IRanges(ir1))
 })
 
