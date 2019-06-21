@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.5.10
+Version: 1.5.11
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
@@ -44,7 +44,8 @@ Suggests:
     HelloRangesData,
     BSgenome.Hsapiens.UCSC.hg19,
     pasillaBamSubset,
-    covr
+    covr,
+    ggplot2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
