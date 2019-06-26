@@ -39,7 +39,7 @@ Suggests:
     knitr,
     BiocStyle,
     rmarkdown,
-    testthat,
+    testthat (>= 2.1.0),
     HelloRanges,
     HelloRangesData,
     BSgenome.Hsapiens.UCSC.hg19,
@@ -59,6 +59,7 @@ Collate:
     'dplyr-groups.R'
     'dplyr-mutate.R'
     'dplyr-select.R'
+    'dplyr-slice.R'
     'dplyr-summarize.R'
     'endo-coverage.R'
     'endo-tile.R'

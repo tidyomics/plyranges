@@ -19,6 +19,7 @@
 \alias{summarise}
 \alias{summarize}
 \alias{arrange}
+\alias{slice}
 \alias{unnest}
 \title{Re-exports
 Rexported functions from the tidyverse}
@@ -33,7 +34,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr]{filter}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{groups}}, \code{\link[dplyr]{ungroup}}, \code{\link[dplyr]{group_vars}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{summarize}}, \code{\link[dplyr]{arrange}}}
+  \item{dplyr}{\code{\link[dplyr]{filter}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{groups}}, \code{\link[dplyr]{ungroup}}, \code{\link[dplyr]{group_vars}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{summarize}}, \code{\link[dplyr]{arrange}}, \code{\link[dplyr]{slice}}}
 
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 

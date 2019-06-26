@@ -62,6 +62,11 @@ dplyr::summarize
 #' @export
 dplyr::arrange
 
+#' @rdname tidyverse-reexports
+#' @export
+dplyr::slice
+
+
 #' @rdname tidyverse-reexports 
 #' @export
 tidyr::unnest
