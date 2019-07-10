@@ -24,8 +24,9 @@ This function is behind \code{\link[=compute_coverage]{compute_coverage()}}.
 x <- Rle(10:1, 1:10)
 as_ranges(x)
 
-y <- RleList(x)
-as_ranges(x)
+# must have names set
+y <- RleList(chr1 = x)
+as_ranges(y)
 
 }
 \seealso{

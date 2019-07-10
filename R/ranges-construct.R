@@ -200,9 +200,10 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 #' @examples
 #' x <- Rle(10:1, 1:10)
 #' as_ranges(x)
-#'
-#' y <- RleList(x)
-#' as_ranges(x)
+#' 
+#' # must have names set
+#' y <- RleList(chr1 = x)
+#' as_ranges(y)
 #'
 #' @export
 as_ranges <- function(.data) UseMethod("as_ranges")
@@ -216,6 +217,6 @@ as_ranges.Rle <- function(.data) {
   rng
 }
 
-#' @importFrom GenomicRanges GRanges
+#' @importFrom methods as
 #' @export
-as_ranges.RleList <- function(.data) GRanges(.data)
+as_ranges.RleList <- function(.data) as(.data, "GRanges")
