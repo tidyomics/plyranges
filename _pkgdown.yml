@@ -38,11 +38,11 @@ reference:
     - filter.Ranges
     - arrange.Ranges
     - select.Ranges
-    - unnest.GenomicRanges
     - group_by.GenomicRanges
     - starts_with("reduce")
     - starts_with("disjoin")
     - compute_coverage
+    - expand_ranges
 
 
 - title: Overlaps

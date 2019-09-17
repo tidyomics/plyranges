@@ -19,7 +19,6 @@
 \alias{summarise}
 \alias{summarize}
 \alias{arrange}
-\alias{unnest}
 \title{Re-exports
 Rexported functions from the tidyverse}
 \usage{
@@ -38,7 +37,5 @@ below to see their documentation.
   \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
 
   \item{rlang}{\code{\link[rlang]{!!!}}, \code{\link[rlang]{!!}}}
-
-  \item{tidyr}{\code{\link[tidyr]{unnest}}}
 }}
 

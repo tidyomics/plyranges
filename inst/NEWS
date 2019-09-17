@@ -1,3 +1,9 @@
+# plyranges 1.5.13  (17/09/2019)
+
+* plyranges release and devel have removed `unnest()` and replaced it
+with `expand_ranges()` due to changes in the tidyr API. Please replace
+all uses of this function with `expand_ranges()`
+
 # plyranges 1.3.4 (10/03/2019)
 
 * fixed bind_ranges so it preserves rownames
