@@ -21,3 +21,5 @@ vignettes/figures/
 vignettes/solutions.Rmd
 ^\.travis\.yml$
 ^tic\.R$
+^doc$
+^Meta$

@@ -129,7 +129,7 @@ make_mcols <- function(.data, ir, col_names, dots, core) {
   old_cols <- unlist(lapply(dots, quo_name))
   remain_cols <- !(col_names %in% c(old_cols, names(core)))
   if (any(remain_cols)) {
-    mcols(ir) <- .data[, remain_cols]
+    mcols(ir) <- .data[, remain_cols, drop = FALSE]
     names(mcols(ir)) <- col_names[remain_cols]
   }
   ir
