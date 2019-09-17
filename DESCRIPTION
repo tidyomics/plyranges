@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.4.3
+Version: 1.4.4
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
@@ -22,7 +22,6 @@ Imports:
   dplyr, 
   rlang (>= 0.2.0), 
   magrittr,
-  tidyr,
   tidyselect,
   rtracklayer,
   GenomicAlignments,
@@ -81,6 +80,7 @@ Collate:
     'ranges-disjoin.R'
     'ranges-eval-quo.R'
     'ranges-eval.R'
+    'ranges-expand.R'
     'ranges-genomeinfo.R'
     'ranges-join-follow.R'
     'ranges-join-nearest.R'
@@ -97,4 +97,3 @@ Collate:
     'ranges-reduce.R'
     'ranges-setops.R'
     'reexports.R'
-    'tidyr-unnest.R'

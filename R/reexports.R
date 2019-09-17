@@ -61,7 +61,3 @@ dplyr::summarize
 #' @rdname tidyverse-reexports
 #' @export
 dplyr::arrange
-
-#' @rdname tidyverse-reexports 
-#' @export
-tidyr::unnest

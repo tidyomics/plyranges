@@ -1,8 +1,11 @@
+
+
 #' Expand list-columns in a Ranges object
 #'
 #' @param data A Ranges object
+#' 
 #' @param ... list-column names to unnest
-#' @param .drop Should additional list columsn be dropped (default = FALSE)?
+#' @param .drop Should additional list columns be dropped (default = FALSE)?
 #' By default `unnest` will keep other list columns even if they are nested.
 #' @param .id A character vector of length equal to number of list columns.
 #' If supplied will create new column(s) with name `.id`
@@ -10,9 +13,7 @@
 #' @param .keep_empty If a list-like column contains empty elements, should
 #' those elements be kept? (default = FALSE)
 #'
-#' @importFrom tidyr unnest
 #' @importFrom S4Vectors expand
-#' @method unnest GenomicRanges
 #'
 #' @return a GRanges object with expanded list columns
 #' @examples
@@ -20,20 +21,20 @@
 #' grng <- mutate(grng, 
 #'                exon_id = IntegerList(a = 1, b = c(4,5), c = 3, d = c(2,5))
 #'                )
-#' unnest(grng)
-#' unnest(grng, .id = "name")
+#' expand_ranges(grng)
+#' expand_ranges(grng, .id = "name")
 #' 
 #' # empty list elements are not preserved by default
 #' grng <- mutate(grng, 
 #'                exon_id = IntegerList(a = NULL, b = c(4,5), c= 3, d = c(2,5))
 #'                )
-#' unnest(grng)
-#' unnest(grng, .keep_empty = TRUE)
-#' unnest(grng, .id = "name", .keep_empty = TRUE)
+#' expand_ranges(grng)
+#' expand_ranges(grng, .keep_empty = TRUE)
+#' expand_ranges(grng, .id = "name", .keep_empty = TRUE)
 #' 
-#' @rdname ranges-unnest
+#' @rdname ranges-expand
 #' @export
-unnest.GenomicRanges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FALSE) {
+expand_ranges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FALSE) {
   
   list_cols <- get_list_cols(data)
   which_unnest <- unnest_cols(data, list_cols, ...)
