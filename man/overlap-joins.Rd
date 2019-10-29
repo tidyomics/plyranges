@@ -67,24 +67,24 @@ a GRanges object
 Join by overlapping Ranges
 }
 \details{
-The function \code{join_intersect_overlaps} finds
+The function \code{\link[=join_overlap_intersect]{join_overlap_intersect()}} finds
 the genomic intervals that are the overlapping ranges between x and y and
 returns a new ranges object with metadata columns from x and y.
 
-The function \code{join_inner_overlaps} is equivalent to \code{find_overlaps}.
+The function \code{\link[=join_overlap_inner]{join_overlap_inner()}} is equivalent to \code{\link[=find_overlaps]{find_overlaps()}}.
 
-The function \code{join_left_overlaps} performs a left outer join between x
+The function \code{\link[=join_overlap_left]{join_overlap_left()}} performs a left outer join between x
 and y. It returns all ranges in x that overlap or do not overlap ranges in y
 plus metadata columns common to both. If there is no overlapping range
 the metadata column will contain a missing value.
 
-The function \code{join_self_overlaps} find all overlaps between a ranges
+The function \code{\link[=join_overlap_self]{join_overlap_self()}} find all overlaps between a ranges
 object x and itself.
 
 All of these functions have two suffixes that modify their behavior.
 The \code{within} suffix, returns only ranges in x that are completely
-contained in y. The \code{directed} suffix takes into account the strandedness
-of a GRanges object.
+overlapped within in y. The \code{directed} suffix accounts for the strandedness
+of the ranges when performing overlaps.
 }
 \examples{
 x <- as_iranges(data.frame(start = c(11, 101), end = c(21, 201)))
@@ -97,4 +97,7 @@ join_overlap_intersect(x,y)
 # within
 join_overlap_intersect_within(x,y)
 
+}
+\seealso{
+\code{\link[=join_overlap_self]{join_overlap_self()}}, \code{\link[=join_overlap_left]{join_overlap_left()}}, \code{\link[=find_overlap]{find_overlap()}}
 }

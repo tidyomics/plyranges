@@ -34,7 +34,7 @@
 #'
 #'
 #' @rdname ranges-overlaps-self
-#' @seealso [find_overlaps()][join_overlap_inner()]
+#' @seealso [find_overlaps()], [join_overlap_inner()]
 #' @export
 join_overlap_self <- function(x, maxgap, minoverlap) {
   UseMethod("join_overlap_self")

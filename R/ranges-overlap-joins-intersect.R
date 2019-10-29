@@ -23,24 +23,24 @@
 #' @param suffix Character to vectors to append to common columns in x and y
 #' (default = `c(".x", ".y")`).
 #'
-#' @details The function `join_intersect_overlaps` finds
+#' @details The function [join_overlap_intersect()] finds
 #' the genomic intervals that are the overlapping ranges between x and y and
 #' returns a new ranges object with metadata columns from x and y.
 #'
-#' The function `join_inner_overlaps` is equivalent to `find_overlaps`.
+#' The function [join_overlap_inner()] is equivalent to [find_overlaps()].
 #'
-#' The function `join_left_overlaps` performs a left outer join between x
+#' The function [join_overlap_left()] performs a left outer join between x
 #' and y. It returns all ranges in x that overlap or do not overlap ranges in y
 #' plus metadata columns common to both. If there is no overlapping range
 #' the metadata column will contain a missing value.
 #'
-#' The function `join_self_overlaps` find all overlaps between a ranges
+#' The function [join_overlap_self()] find all overlaps between a ranges
 #' object x and itself.
 #'
 #' All of these functions have two suffixes that modify their behavior.
 #' The `within` suffix, returns only ranges in x that are completely
-#' contained in y. The `directed` suffix takes into account the strandedness
-#' of a GRanges object.
+#' overlapped within in y. The `directed` suffix accounts for the strandedness
+#' of the ranges when performing overlaps.
 #'
 #' @return a GRanges object
 #'
@@ -59,8 +59,7 @@
 #'
 #' @rdname overlap-joins
 #' @export
-#'
-#'
+#' @seealso [join_overlap_self()], [join_overlap_left()], [find_overlap()]
 join_overlap_intersect <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("join_overlap_intersect")
 }
