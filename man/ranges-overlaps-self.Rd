@@ -56,5 +56,5 @@ join_overlap_self_directed(query)
 
 }
 \seealso{
-\link[=join_overlap_inner]{find_overlaps()}
+\code{\link[=find_overlaps]{find_overlaps()}}, \code{\link[=join_overlap_inner]{join_overlap_inner()}}
 }
