@@ -5,6 +5,7 @@ no metadata columns see [#70](https://github.com/sa-lee/plyranges/issues/70)
 * Left outer join overlap operations will also correctly
 behave in situations when there are no non-overlapping ranges.
 * Left outer join overlaps no longer modify seqinfo (see here)[https://support.bioconductor.org/p/125623/]
+* Changes have also propgated to release version 
 
 # plyranges 1.7.1
 
