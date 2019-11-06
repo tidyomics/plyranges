@@ -95,16 +95,19 @@ group_by.GroupedGenomicRanges <- function(.data, ..., add = FALSE) {
 #' @method ungroup GroupedGenomicRanges
 #' @export
 ungroup.GroupedGenomicRanges <- function(x, ...) {
-  groups <- as.character(unlist(groups(x)))
-  capture_groups <- quos(...)
-  ungroups <- lapply(capture_groups, function(x) quo_name(x))
+  ungroups <- enquos(...)
+  ungroups <- rlang::quos_auto_name(ungroups)
   if (length(ungroups) == 0L) {
     return(x@delegate)
   } else {
-    groups_update <- setdiff(groups, ungroups)
+    ungroups <- lapply(ungroups, function(.) quo(-!!.))
+    groups_update <- tidyselect::vars_select(group_vars(x), !!!ungroups)
+    if (length(groups_update) == 0) {
+      return(x@delegate)
+    }
+    
     groups_update <- syms(groups_update)
-    groupings <- make_group_inx(x@delegate, !!!groups_update)
-    new(class(x), delegate = x@delegate, groups = groupings$groups, inx = groupings$inx)
+    new_grouping(x@delegate, !!!groups_update)
   }
 }
 
