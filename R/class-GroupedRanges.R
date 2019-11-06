@@ -35,6 +35,8 @@ initialize_GroupedRanges <- function(.Object, delegate, groups, inx) {
   .Object
 }
 
+
+
 #' @importFrom methods setMethod initialize
 setMethod("initialize", "GroupedGenomicRanges",
           function(.Object, delegate, groups, inx, ...) {
