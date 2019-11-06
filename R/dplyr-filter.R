@@ -15,8 +15,10 @@ filter_rng <- function(.data, dots) {
 filter_grp <- function(.data, ...) {
     dots <- set_dots_unnamed(...)
     ii <- filter_rng(.data, dots)
-    inx_update <- .data@inx[ii]
-    rng <- .data@delegate[sort(unlist(inx_update))]
+    # inx_update <- .data@inx[ii]
+    inx <- BiocGenerics::`%in%`(.data@group_indices, which(ii))
+    
+    rng <- .data@delegate[inx]
     group_by(rng, !!!groups(.data))
 }
 
