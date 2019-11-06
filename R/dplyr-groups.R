@@ -3,6 +3,9 @@
 #' @param .data a Ranges object.
 #' @param ... Variable names to group by. These can be either metadata columns
 #' or the core variables of a Ranges.
+#' @param add if `.data` is already a GroupedRanges object, when add = FALSE 
+#' the (default), `group_by()` will override existing groups. If add = TRUE, 
+#' additional groups will be added.
 #' @param x a GroupedRanges object.
 #'
 #' @description The function `group_by` takes a Ranges object and defines
@@ -67,14 +70,24 @@
 #'   summarise(gc = mean(gc))
 #'
 #'
-group_by.GenomicRanges <- function(.data, ...) {
-  new_grouped_gr(.data, ...)
+group_by.GenomicRanges <- function(.data, ..., add = FALSE) {
+  new_grouping(.data, ...)
 }
 
 #' @method group_by IntegerRanges
 #' @export
-group_by.IntegerRanges <- function(.data, ...) {
-  new_grouped_ir(.data, ...)
+group_by.IntegerRanges <- function(.data, ..., add = FALSE) {
+  new_grouping(.data, ..., target = "GroupedIntegerRanges")
+}
+
+#' @method group_by GroupedGenomicRanges
+#' @export
+group_by.GroupedGenomicRanges <- function(.data, ..., add = FALSE) {
+  if (add) {
+    
+  }
+  
+  new_grouping(.data@delegate, ..., target = "GroupedIntegerRanges")
 }
 
 #' @rdname group_by-ranges
@@ -107,12 +120,12 @@ ungroup.Ranges <- function(x, ...) x
 #' @method groups GroupedGenomicRanges
 #' @rdname group_by-ranges
 #' @export
-groups.GroupedGenomicRanges <- function(x)  x@groups 
+groups.GroupedGenomicRanges <- function(x)  syms(colnames(x@group_keys))
 
 #' @importFrom dplyr group_vars
 #' @method group_vars GroupedGenomicRanges
 #' @export
-group_vars.GroupedGenomicRanges <- function(x) as.character(unlist(x@groups)) 
+group_vars.GroupedGenomicRanges <- function(x) colnames(x@group_keys) 
 
 #' @method groups GroupedIntegerRanges
 #' @rdname group_by-ranges
