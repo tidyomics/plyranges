@@ -193,6 +193,7 @@ test_that("inner join/find overlaps returns correct results", {
   target <- find_overlaps(a,b, suffix = c(".a", ".b"))
   expect_identical(target, exp)
 
+  expect_identical(exp, join_overlap_left(a,b,suffix = c(".a", ".b")))
 
   # directed
   exp <- GRanges(seqnames = "chr1",
@@ -205,8 +206,14 @@ test_that("inner join/find overlaps returns correct results", {
 
   target <- find_overlaps_directed(a,b, suffix = c(".a", ".b"))
   expect_identical(target, exp)
+  
+  expect_identical(exp, 
+                   join_overlap_left_directed(a,b,suffix = c(".a", ".b")))
 
-  # left overlap join
+})
+
+test_that("outer join returns correct results", {
+  # left overlap join, returns expected result
   a <- GRanges(seqnames = "chr1",
                strand = c("+", "-"),
                ranges = IRanges(c(1, 9), c(7, 10)),
@@ -215,8 +222,41 @@ test_that("inner join/find overlaps returns correct results", {
                strand = c("-", "+"),
                ranges = IRanges(c(2, 6), c(4, 8)),
                key = LETTERS[1:2])
-  exp <- a
-  mcols(exp)$key.b <- c("B", NA)
+  exp <- a[c(1,1,2)]
+  exp <- select(exp, key.a = key)
+  mcols(exp)$key.b <- c("A", "B", NA)
   target <- join_overlap_left(a,b, suffix = c(".a", ".b"))
-
+  
+  expect_identical(exp, target)
+  
+  # no overlaps
+  expect_identical(join_overlap_left(a, GRanges()), a)
+  
+  b <- GRanges(seqnames = "chr1",
+               strand = c("-", "+"),
+               ranges = IRanges(c(20, 11), width = 5),
+               key = LETTERS[1:2])
+  exp <- select(a, key.a = key)
+  mcols(exp)$key.b <- NA_character_
+  
+  target <- join_overlap_left(a,b, suffix = c(".a", ".b"))
+  expect_identical(rep(NA_character_, 2), mcols(target)$key.b)
+  expect_identical(exp, target)
+  
+  # issue 70, no mcols returns result
+  # https://github.com/sa-lee/plyranges/issues/70
+  gr0 <- GRanges(Rle(c("chr2", "chr5", "chr1", "chr3"), c(1, 3, 2, 4)),
+                 IRanges(1:10, width=10:1))
+  
+  gr1 <- GRanges(Rle(c("chr2", "chr3", "chr1", "chr3"), c(1, 3, 2, 4)),
+                 IRanges(1:10, width=10:1))
+  
+  gr2 <- gr1
+  gr2$AAA <- 1L
+  
+  exp <- join_overlap_left(gr0, gr1)
+  target <- granges(join_overlap_left(gr0, gr1))
+  
+  expect_identical(exp, target)
+  
 })
