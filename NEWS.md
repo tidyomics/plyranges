@@ -1,3 +1,11 @@
+# plyranges 1.7.2
+
+* Left outer join overlap operations now work if either `x` or `y` have
+no metadata columns see [#70](https://github.com/sa-lee/plyranges/issues/70) 
+* Left outer join overlap operations will also correctly
+behave in situations when there are no non-overlapping ranges.
+* Left outer join overlaps no longer modify seqinfo (see here)[https://support.bioconductor.org/p/125623/]
+
 # plyranges 1.7.1
 
 * Reformatting `NEWS.md` so no longer softlinks to inst/NEWS
