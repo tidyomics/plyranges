@@ -48,18 +48,27 @@
 #' @importFrom IRanges findOverlapPairs
 #' @examples
 #' x <- as_iranges(data.frame(start = c(11, 101), end = c(21, 201)))
-#' y <- as_iranges(data.frame(start = c(10, 20, 50, 100),
-#'                            end = c(19, 21, 105, 202)))
-#'
+#' y <- as_iranges(data.frame(start = c(10, 20, 50, 100, 1),
+#'                            end = c(19, 21, 105, 202, 5)))
+#' 
+#' # self
+#' join_overlap_self(y)
+#' 
 #' # intersect takes common interval
 #' join_overlap_intersect(x,y)
 #'
 #' # within
 #' join_overlap_intersect_within(x,y)
-#'
+#' 
+#' # left, and inner join, it's often useful having an id column here
+#' y <- y %>% mutate(id = 1:n()) 
+#' x <- x %>% mutate(id = 1:n()) 
+#' join_overlap_inner(x,y)
+#' join_overlap_left(y,x, suffix = c(".left", ".right"))
+#' 
 #' @rdname overlap-joins
 #' @export
-#' @seealso [join_overlap_self()], [join_overlap_left()], [find_overlap()]
+#' @seealso [join_overlap_self()], [join_overlap_left()], [find_overlaps()]
 join_overlap_intersect <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("join_overlap_intersect")
 }

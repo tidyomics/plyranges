@@ -1,3 +1,7 @@
+# plyranges 1.7.3
+
+* patch left outer join when `x` or `y` are IRanges, flesh out overlaps documentation.
+
 # plyranges 1.7.2
 
 * Left outer join overlap operations now work if either `x` or `y` have

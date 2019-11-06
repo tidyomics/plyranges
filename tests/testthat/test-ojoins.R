@@ -229,8 +229,25 @@ test_that("outer join returns correct results", {
   
   expect_identical(exp, target)
   
+  # if IRanges
+  ir0 <- ranges(a)
+  
+  ir1 <- ranges(b)
+  mcols(ir1) <- DataFrame(key = c("A", "B"))
+  
+  exp <- ir0[c(1,1,2)]
+  mcols(exp) <- DataFrame(key = c("A", "B", NA))
+  target <- join_overlap_left(ir0, ir1)
+  expect_identical(exp, target)
+  
+  mcols(exp) <- NULL
+  mcols(ir1) <- NULL
+  expect_identical(join_overlap_left(ir0, ir1), exp)
+  
+  
   # no overlaps
   expect_identical(join_overlap_left(a, GRanges()), a)
+  expect_identical(join_overlap_left(ir0, IRanges()), ir0)
   
   b <- GRanges(seqnames = "chr1",
                strand = c("-", "+"),
@@ -258,5 +275,8 @@ test_that("outer join returns correct results", {
   target <- granges(join_overlap_left(gr0, gr1))
   
   expect_identical(exp, target)
+  
+
+  
   
 })

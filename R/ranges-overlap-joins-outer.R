@@ -30,7 +30,8 @@ na_dframe <- function(dframe, nrows) {
   
   empty <- new("DFrame", nrows = as.integer(nrows))
   
-
+  # IRanges special case for mcols is null
+  if (is.null(ncol(dframe))) return(NULL)
   if (ncol(dframe) == 0) return(empty)
   
   tform <- na_cols
@@ -121,7 +122,7 @@ join_overlap_left_within <- function(x, y, maxgap, minoverlap, suffix = c(".x", 
 }
 
 #' @export
-join_overlap_left_within.IntegerRanges <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+join_overlap_left_within.IntegerRanges <- function(x, y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
   .join_overlap_left(x,y, suffix, findOverlaps, 
                      maxgap = maxgap, 
                      minoverlap = minoverlap, 
