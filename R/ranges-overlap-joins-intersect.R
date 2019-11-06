@@ -59,7 +59,7 @@
 #'
 #' @rdname overlap-joins
 #' @export
-#' @seealso [join_overlap_self()], [join_overlap_left()], [find_overlap()]
+#' @seealso [join_overlap_self()], [join_overlap_left()], [find_overlaps()]
 join_overlap_intersect <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
   UseMethod("join_overlap_intersect")
 }
