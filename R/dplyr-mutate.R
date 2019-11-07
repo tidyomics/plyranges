@@ -52,10 +52,13 @@ mutate_rng <- function(.data, dots) {
   mutate_mcols(.data, .mutated)
 }
 
+#' idea could simply dispatch to summarise here, and store 
+#' list columns, if the length is smaller then we can repeat,
+#' otherwise we try to expand 
 mutate_grp <- function(.data, ...) {
   dots <- set_dots_named(...)
   delegate <- .data@delegate
-  inx <- .data@inx
+  inx <- .data@group_indices
   rng <- lapply(inx, function(i) {
     x <- delegate[i]
     mutate_rng(x, dots)    
