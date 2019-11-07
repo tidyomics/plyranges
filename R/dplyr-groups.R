@@ -100,7 +100,7 @@ ungroup.GroupedGenomicRanges <- function(x, ...) {
   if (length(ungroups) == 0L) {
     return(x@delegate)
   } else {
-    ungroups <- lapply(ungroups, function(.) quo(-!!.))
+    ungroups <- lapply(ungroups, function(.) rlang::quo(-!!.))
     groups_update <- tidyselect::vars_select(group_vars(x), !!!ungroups)
     if (length(groups_update) == 0) {
       return(x@delegate)
