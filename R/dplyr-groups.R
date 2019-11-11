@@ -146,3 +146,69 @@ groups.Ranges <- function(x)  NULL
 #' @method group_vars Ranges
 #' @export
 group_vars.Ranges <- function(x) character(0)
+
+#' @method group_keys GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_keys
+group_keys.GroupedGenomicRanges <- function(.data, ...) {
+  .data@group_keys
+}
+
+#' @method group_keys GroupedIntegerRanges
+#' @export
+group_keys.GroupedIntegerRanges <- group_keys.GroupedGenomicRanges
+
+#' @method group_keys Ranges
+#' @export
+group_keys.Ranges <- function(.data, ...) {
+  if (length(enquos(...)) == 0) {
+    return(new("DFrame", nrows = 1L))
+  }
+  callNextMethod(group_by(.data, ...))
+}
+
+#' @method group_indices GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_indices
+group_indices.GroupedGenomicRanges <- function(.data, ...) {
+  .data@group_indices
+} 
+
+#' @method group_indices GroupedIntegerRanges
+#' @export
+group_indices.GroupedIntegerRanges <- group_indices.GroupedGenomicRanges
+
+
+#' @method group_indices Ranges
+#' @export
+group_indices.Ranges <- function(.data, ...) {
+  if (length(enquos(...)) == 0) {
+    return(rep.int(1, length(.data)))
+  }
+  callNextMethod(group_by(.data, ...))
+}
+
+
+.group_rows <- function(.data) {
+  S4Vectors::split(
+    seq_len(nrow(.data@delegate)),
+    .data@group_indices
+  )
+}
+
+#' @method group_data GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_data  
+group_data.GroupedGenomicRanges <- function(.data) {
+  cbind(.data@group_keys, .rows = .group_rows(.data))
+}
+
+#' @method group_data GroupedIntegerRanges
+#' @export
+group_data.GroupedIntegerRanges <- group_data.GroupedGenomicRanges
+
+#' @method group_data Ranges
+group_data.Ranges <- function(.data) {
+  .rows <- as(seq_len(nrow(.data)), "IntegerList")
+  DataFrame(.rows = .rows)
+}

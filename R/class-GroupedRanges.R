@@ -57,6 +57,8 @@ setMethod("show", "GroupedGenomicRanges", function(object) {
 # generates index for grouping variables
 new_grouping <- function(rng,  ..., target = "GroupedGenomicRanges") {
   new_groups <- rlang::enquos(...)
+  if (length(new_groups) == 0) return(rng)
+  
   new_groups <- rlang::quos_auto_name(new_groups)
   # check if we need to mutate, i.e. if quosure is a call
   update_groups <- Filter(rlang::quo_is_call, new_groups)
