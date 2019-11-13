@@ -164,7 +164,7 @@ group_keys.Ranges <- function(.data, ...) {
   if (length(enquos(...)) == 0) {
     return(new("DFrame", nrows = 1L))
   }
-  callNextMethod(group_by(.data, ...))
+  NextMethod(group_by(.data, ...))
 }
 
 #' @method group_indices GroupedGenomicRanges
@@ -185,14 +185,16 @@ group_indices.Ranges <- function(.data, ...) {
   if (length(enquos(...)) == 0) {
     return(rep.int(1, length(.data)))
   }
-  callNextMethod(group_by(.data, ...))
+  NextMethod(group_by(.data, ...))
 }
 
 
 .group_rows <- function(.data) {
-  S4Vectors::split(
-    seq_len(nrow(.data@delegate)),
+  as(unname(S4Vectors::split(
+    seq_len(length(.data@delegate)),
     .data@group_indices
+  )),
+  "IntegerList"
   )
 }
 
@@ -200,7 +202,9 @@ group_indices.Ranges <- function(.data, ...) {
 #' @export
 #' @importFrom dplyr group_data  
 group_data.GroupedGenomicRanges <- function(.data) {
-  cbind(.data@group_keys, .rows = .group_rows(.data))
+  S4Vectors::DataFrame(
+    .data@group_keys,
+    .rows = .group_rows(.data))
 }
 
 #' @method group_data GroupedIntegerRanges
@@ -209,6 +213,38 @@ group_data.GroupedIntegerRanges <- group_data.GroupedGenomicRanges
 
 #' @method group_data Ranges
 group_data.Ranges <- function(.data) {
-  .rows <- as(seq_len(nrow(.data)), "IntegerList")
-  DataFrame(.rows = .rows)
+  .rows <- as(seq_len(length(.data)), "IntegerList")
+  S4Vectors::DataFrame(.rows = .rows)
+}
+
+#' @method group_split GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_split
+group_split.GroupedGenomicRanges <- function(.data, ..., keep = TRUE) {
+  if (length(enquos(...)) > 0) {
+    warning("Ignoring arguments to `...` 
+            and using existing group structure")
+  }
+  
+  rng <- .data@delegate 
+  
+  if (!keep) {
+    vars_drop <- lapply(group_vars(.data), function(.) rlang::quo(-!!.))
+    rng <- select(rng, !!!vars_drop)
+  } 
+  
+  unname(S4Vectors::split(rng, .data@group_indices))
+}
+
+#' @method group_split GroupedIntegerRanges
+#' @export
+group_split.GroupedIntegerRanges <- group_split.GroupedGenomicRanges
+
+#' @method group_split Ranges
+#' @export
+group_split.Ranges <- function(.data, ..., keep = TRUE) {
+  if (length(enquos(...)) == 0) {
+    return(as(.data, "List"))
+  }
+  NextMethod(group_by(.data, ...))
 }
