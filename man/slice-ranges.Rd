@@ -48,5 +48,4 @@ slice(by_strand, which.max(gc))
 slice(by_strand, 1:3)
 
 
-
 }

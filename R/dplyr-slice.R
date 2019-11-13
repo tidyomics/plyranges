@@ -42,7 +42,7 @@ generate_slice <- function(.data, dots) {
 #' slice(by_strand, 1:3)
 #' 
 #' 
-#' 
+#' @export
 slice.Ranges <- function(.data, ..., .preserve = FALSE) {
   dots <- set_dots_unnamed(...)
   inx <- generate_slice(.data, dots)
