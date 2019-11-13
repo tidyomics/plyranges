@@ -1,6 +1,7 @@
 # plyranges 1.7.3
 
-* patch left outer join when `x` or `y` are IRanges, flesh out overlaps documentation.
+* `shift_downstream()` and `shift_upstream()` now properly
+handle vector amounts of `shift`. Fixes issue [#73](https://github.com/sa-lee/plyranges/issues/73)
 
 # plyranges 1.7.2
 
@@ -9,6 +10,7 @@ no metadata columns see [#70](https://github.com/sa-lee/plyranges/issues/70)
 * Left outer join overlap operations will also correctly
 behave in situations when there are no non-overlapping ranges.
 * Left outer join overlaps no longer modify seqinfo (see here)[https://support.bioconductor.org/p/125623/]
+* patch left outer join when `x` or `y` are IRanges, flesh out overlaps documentation.
 
 # plyranges 1.7.1
 
