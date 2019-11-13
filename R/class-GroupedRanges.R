@@ -22,7 +22,6 @@ setClass("GroupedGenomicRanges",
          validity = 
 )
 
-
 initialize_GroupedRanges <- function(.Object, delegate, group_keys, group_indices, n ) {
   .Object@delegate <- delegate
   .Object@group_keys <- group_keys
@@ -37,9 +36,6 @@ setMethod("initialize", "GroupedGenomicRanges",
             initialize_GroupedRanges(.Object, delegate, group_keys, group_indices, n)
           }
 )
-
-
-
 
 show_GroupedRanges <- function(object) {
   groups <- colnames(object@group_keys)
@@ -84,19 +80,7 @@ new_grouping <- function(rng,  ..., target = "GroupedGenomicRanges") {
   new(target, rng, unique, inx, n)
 }
 
-# constructor (passed to `group_by`)
-new_grouped_gr <- function(rng, ...) {
-  groupings <- make_group_inx(rng, ...)
-  # instantiate class
-  new("GroupedGenomicRanges",
-      delegate = rng, 
-      groups = groupings$groups,
-      inx = groupings$inx)
-}
-
-
 # --- GroupedIntegerRanges ---
-
 #' @rdname group_by-ranges
 #' @export
 setClass("GroupedIntegerRanges",
@@ -106,14 +90,6 @@ setClass("GroupedIntegerRanges",
          contains = "DelegatingIntegerRanges",
          validity = validGroupedRanges)
 
-new_grouped_ir <- function(rng, ...) {
-  groupings <- make_group_inx(rng, ...)
-  # instantiate class
-  new("GroupedIntegerRanges",
-      delegate = rng, 
-      groups = groupings$groups,
-      inx = groupings$inx)
-}
 
 setMethod("initialize", "GroupedIntegerRanges", 
           function(.Object, delegate = IRanges(), group_keys = DataFrame(), group_indices = Rle(), n = integer()) {
