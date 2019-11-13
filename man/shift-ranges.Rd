@@ -32,7 +32,9 @@ Shift all coordinates in a genomic interval left or right, upstream or downstrea
 Shifting left or right will ignore any strand information
 in the Ranges object, while shifting upstream/downstream will shift coordinates
 on the positive strand left/right and the negative strand right/left. By
-default, unstranded features are treated as positive.
+default, unstranded features are treated as positive. When
+using \code{\link[=shift_upstream]{shift_upstream()}} or \code{\link[=shift_downstream]{shift_downstream()}} when the \code{shift} argument is
+indexed by the strandedness of the input ranges.
 }
 \examples{
 ir <- as_iranges(data.frame(start = 10:15, width = 5))
