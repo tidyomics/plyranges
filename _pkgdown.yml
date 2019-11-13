@@ -38,6 +38,7 @@ reference:
     - filter.Ranges
     - arrange.Ranges
     - select.Ranges
+    - slice.Ranges
     - group_by.GenomicRanges
     - starts_with("reduce")
     - starts_with("disjoin")
