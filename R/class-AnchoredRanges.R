@@ -62,6 +62,15 @@ setMethod("width", "DelegatingIntegerRanges", function(x) width(x@delegate))
 setMethod("mcols", "DelegatingIntegerRanges", function(x, ...) {
     mcols(x@delegate, ...)
 })
+setMethod("mcols<-", "DelegatingGenomicRanges", function(x, ..., value) {
+  x@delegate <- callNextMethod(x = x@delegate, ..., value = value)
+  x
+})
+
+setMethod("mcols<-", "DelegatingIntegerRanges", function(x, ..., value) {
+  x@delegate <- callNextMethod(x = x@delegate, ..., value = value)
+  x
+})
 
 # --- ready for our AnchoredIntegerRanges ---
 setClass("AnchoredIntegerRanges",

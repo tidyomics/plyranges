@@ -65,8 +65,7 @@ test_that("matches IRanges/GRanges tests", {
 
   target <- stack(disjoin(grl, ignore.strand = TRUE), "name")
   current <- disjoin_ranges(gr_by_group)
-
-  # expect_identical(target, current)
+  expect_identical(target, current)
 })
 
 
