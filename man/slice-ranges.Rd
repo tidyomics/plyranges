@@ -15,8 +15,8 @@
 \arguments{
 \item{.data}{a \code{Ranges} object}
 
-\item{...}{Integer row values indicating rows to keep. If \code{.data} is
-a \code{\link{GroupedGenomicRanges}} or \code{\link{GroupedIntegerRanges}} object.}
+\item{...}{Integer row values indicating rows to keep. If \code{.data} has
+been grouped via \code{\link[=group_by]{group_by()}}, then the positions are selected within each group.}
 
 \item{.preserve}{when FALSE (the default) the grouping structure is
 recomputed, otherwise it is kept as is. Currently ignored.}
@@ -41,11 +41,11 @@ dplyr::slice(rng, -5:-n())
 by_strand <- group_by(rng, strand)
 
 # slice with group by finds positions within each group
-slice(by_strand, n())
-slice(by_strand, which.max(gc))
+dplyr::slice(by_strand, n())
+dplyr::slice(by_strand, which.max(gc))
 
 # if the index is beyond the number of groups slice are ignored
-slice(by_strand, 1:3)
+dplyr::slice(by_strand, 1:3)
 
 
 }
