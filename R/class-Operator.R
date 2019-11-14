@@ -76,7 +76,7 @@ paired_alignments <- function(ops) {
   mcols(r2_grng)[["read_pair_group"]] <- 2L
   grng <- c(r1_grng, r2_grng)
   grng <- grng[order(grng$read_pair_id)]
-  return(group_by(grng, "read_pair_id"))
+  return(group_by(grng, !!rlang::sym("read_pair_id")))
 }
 
 unpaired_alignments <- function(ops) {

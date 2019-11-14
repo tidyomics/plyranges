@@ -14,11 +14,11 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     Bioconductor users is hopefully increased.
 Depends:
   R (>= 3.5),
-  methods,
   BiocGenerics,
   IRanges (>= 2.12.0),
   GenomicRanges (>= 1.28.4)
 Imports:
+  methods,
   dplyr, 
   rlang (>= 0.2.0), 
   magrittr,
@@ -38,7 +38,7 @@ Suggests:
     knitr,
     BiocStyle,
     rmarkdown,
-    testthat,
+    testthat (>= 2.1.0),
     HelloRanges,
     HelloRangesData,
     BSgenome.Hsapiens.UCSC.hg19,
@@ -58,6 +58,7 @@ Collate:
     'dplyr-groups.R'
     'dplyr-mutate.R'
     'dplyr-select.R'
+    'dplyr-slice.R'
     'dplyr-summarize.R'
     'endo-coverage.R'
     'endo-tile.R'

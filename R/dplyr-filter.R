@@ -15,7 +15,11 @@ filter_rng <- function(.data, dots) {
 filter_grp <- function(.data, ...) {
     dots <- set_dots_unnamed(...)
     ii <- filter_rng(.data, dots)
-    inx_update <- .data@inx[ii]
+    inx <- S4Vectors::split(
+      seq_along(.data@delegate),
+      .data@group_indices
+    )
+    inx_update <- inx[ii]
     rng <- .data@delegate[sort(unlist(inx_update))]
     group_by(rng, !!!groups(.data))
 }

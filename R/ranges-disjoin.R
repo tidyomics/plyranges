@@ -1,3 +1,22 @@
+disjoin_single <- function(.data, ..., rfun = disjoin) {
+  dots <- set_dots_named(...)
+  if (length(dots) == 0L) {
+    return(rfun(.data))
+  }
+  reduced <- rfun(.data, with.revmap = TRUE)
+  rv <- mcols(reduced)[["revmap"]]
+  groups <- Rle(seq_along(rv), elementNROWS(rv))
+  
+  .data <- .data[unlist(rv)]
+  mcols(.data)[["revmap"]] <- groups
+  .data <- group_by(.data, !!!syms("revmap"))
+  sd <- summarise(.data, !!!dots)
+  sd <- sd[order(sd[["revmap"]]), -which(names(sd) == "revmap")[1], drop = FALSE]
+  mcols(reduced) <- sd
+  reduced
+  
+}
+
 # ranges-disjoin.R
 #' Disjoin then aggregate a Ranges object
 #'
@@ -20,7 +39,7 @@ disjoin_ranges <- function(.data, ...) { UseMethod("disjoin_ranges") }
 #' @method disjoin_ranges IntegerRanges
 #' @export
 disjoin_ranges.IntegerRanges <- function(.data, ...) {
-  reduce_single(.data, ..., rfun = disjoin)
+  disjoin_single(.data, ..., rfun = disjoin)
 }
 
 #' @method disjoin_ranges GroupedIntegerRanges
@@ -32,7 +51,7 @@ disjoin_ranges.GroupedIntegerRanges <- function(.data, ...) {
 #' @method disjoin_ranges GenomicRanges
 #' @export
 disjoin_ranges.GenomicRanges <- function(.data, ...) {
-  reduce_single(.data, ...,
+  disjoin_single(.data, ...,
                 rfun = function(x, ...) {
                   disjoin(x, ..., ignore.strand = TRUE)
                 })
@@ -57,7 +76,7 @@ disjoin_ranges_directed <- function(.data, ...) {
 #' @method disjoin_ranges_directed GenomicRanges
 #' @export
 disjoin_ranges_directed.GenomicRanges <- function(.data, ...) {
-  reduce_single(.data, ...,
+  disjoin_single(.data, ...,
                 rfun = function(x, ...) {
                   disjoin(x, ..., ignore.strand = FALSE)
                 })

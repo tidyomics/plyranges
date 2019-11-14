@@ -20,7 +20,7 @@ test_that("simple bind is same as `c`", {
 test_that("setting .id column", {
   gr4  <- bind_ranges(list(a = gr, b = gr2), .id = "origin")
   expect_s4_class(gr4$origin, "Rle")
-  expect_equal(runLength(gr4$origin), c(length(gr), length(gr2)))
+  expect_equal(S4Vectors::runLength(gr4$origin), c(length(gr), length(gr2)))
   expect_identical(gr4, bind_ranges(a = gr, b = gr2, .id = "origin"))
   expect_identical(gr4, bind_ranges(a = gr, list(b = gr2), .id = "origin"))
 })

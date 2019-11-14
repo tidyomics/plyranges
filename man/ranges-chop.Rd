@@ -39,7 +39,7 @@ if (require(pasillaBamSubset)) {
             filter_by_overlaps(roi) \%>\%
             chop_by_gaps()
    # to find ranges that have gaps use filter with `n()`
-   rng \%>\% filter(n() > 2)
+   rng \%>\% filter(n() >= 2)
   
 }
 

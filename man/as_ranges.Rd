@@ -21,11 +21,11 @@ Coerce an Rle or RleList object to Ranges
 This function is behind \code{\link[=compute_coverage]{compute_coverage()}}.
 }
 \examples{
-x <- Rle(10:1, 1:10)
+x <- S4Vectors::Rle(10:1, 1:10)
 as_ranges(x)
 
 # must have names set
-y <- RleList(chr1 = x)
+y <- IRanges::RleList(chr1 = x)
 as_ranges(y)
 
 }

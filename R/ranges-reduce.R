@@ -1,16 +1,20 @@
 # ranges-reduce
-reduce_rng <- function(.data, reduced, dots) {
+group_by_revmap <- function(.data, revmap) {
+  groups <- Rle(seq_along(revmap), elementNROWS(revmap))
+  groups <- groups[order(unlist(revmap))]
+  mcols(.data)[["revmap"]] <- groups
+  group_by(.data, !!!syms("revmap"), add = TRUE)
+} 
 
-  os <- S4Vectors::as.env(.data, 
-                          parent.frame(), 
-                          tform = function(col) {
-                            unname(IRanges::extractList(col, mcols(reduced)$revmap))
-                          })
-  os <- new_data_mask(os, top = parent.env(os))
-  
+make_key_rle <- function(x) {
+  Rle(as.integer(S4Vectors::runValue(x)), S4Vectors::runLength(x))
+}
 
-  mcols(reduced) <- DataFrame(overscope_eval_update(os, dots, FALSE))
-  return(reduced)
+add_revmap_grouping <- function(.data, key, lookup) {
+  key <- make_key_rle(key)
+  inx <- .group_rows(.data)
+  grouping <- inx[key][lookup]
+  group_by_revmap(.data, grouping)
 }
 
 reduce_single <- function(.data, ..., rfun = reduce) {
@@ -19,38 +23,40 @@ reduce_single <- function(.data, ..., rfun = reduce) {
     return(rfun(.data))
   }
   reduced <- rfun(.data, with.revmap = TRUE)
-  reduce_rng(.data, reduced, dots)
+  
+  .data <- group_by_revmap(.data, mcols(reduced)[["revmap"]])
+  
+  sd <- summarise(.data, !!!dots)
+  
+  sd <- sd[order(sd[["revmap"]]), -which(names(sd) == "revmap")[1], drop = FALSE]
+  
+  mcols(reduced) <- sd
+  reduced
 }
 
 reduce_by_grp <- function(.data, ..., rfun = IRanges::reduce) {
   dots <- set_dots_named(...)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  groups <- group_vars(.data)
-  split_ranges <- extractList(delegate, inx)
-  mcols(split_ranges) <- mcols(inx)
+
+  by_groups <- dplyr::group_split(.data)
   
   if (length(dots) == 0L) {
-    rng <- IRanges::stack(rfun(split_ranges))
-    if (is(rng, "IntegerRanges")) {
-      mcols(rng) <- mcols(inx[mcols(rng)[["name"]]])[, groups, drop = FALSE]
-    } else {
-      mcols(rng) <- mcols(rng)[, groups, drop = FALSE]
-    }
+    rng <- IRanges::stack(rfun(by_groups))
+    sd <- dplyr::group_keys(.data)
+    key <- make_key_rle(mcols(rng)[["name"]])
+    mcols(rng) <- sd[key, , drop = FALSE]
     return(rng)
   }
   
-  reduced <- rfun(split_ranges, with.revmap = TRUE)
-  rng <- Map(function(x, y) {reduce_rng(x, y, dots)}, 
-             split_ranges, 
-             reduced)
-  rng <- as(rng, "List")
-  mcols(rng) <- mcols(split_ranges)
-  rng <- IRanges::stack(rng)
-  # drop 'name' col from stack
-  mcols(rng) <- mcols(rng)[, -1, drop = FALSE]
-  # reorder columns
-  mcols(rng) <- mcols(rng)[, rev(seq_along(mcols(rng)))]
+  rng <- IRanges::stack(rfun(by_groups, with.revmap = TRUE))
+
+  .data <- add_revmap_grouping(.data, 
+                               mcols(rng)[["name"]], 
+                               mcols(rng)[["revmap"]])
+  
+  sd <- summarise(.data, !!!dots)
+  sd <- sd[order(sd[["revmap"]]), -which(names(sd) == "revmap"), drop = FALSE]
+  
+  mcols(rng) <- sd
   rng
 }
 

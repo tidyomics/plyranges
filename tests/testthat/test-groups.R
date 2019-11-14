@@ -18,11 +18,9 @@ test_that("throws invalid object if group not found", {
   expect_error(ir0 %>% group_by(st))
 })
 
-test_that("grouping allows character names", {
-  expect_s4_class(gr0 %>% group_by("seqnames"), "GroupedGenomicRanges")
-  expect_s4_class(ir0 %>% group_by("start"), "GroupedIntegerRanges")
-  expect_s4_class(gr1 %>% group_by("score"), "GroupedGenomicRanges")
-  expect_identical(gr1 %>% group_by(score), gr1 %>% group_by("score"))
+test_that("grouping doesn't allow character names", {
+  expect_error(gr0 %>% group_by("seqnames"))
+  expect_error(ir0 %>% group_by("start"))
 })
 
 test_that("group_vars works as expected", {
