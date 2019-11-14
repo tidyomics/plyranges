@@ -12,8 +12,8 @@ generate_slice <- function(.data, dots) {
 #' Choose rows by their position
 #' 
 #' @param .data a `Ranges` object
-#' @param ... Integer row values indicating rows to keep. If `.data` is
-#' a [`GroupedGenomicRanges`] or [`GroupedIntegerRanges`] object.
+#' @param ... Integer row values indicating rows to keep. If `.data` has
+#' been grouped via [group_by()], then the positions are selected within each group.
 #' @param .preserve when FALSE (the default) the grouping structure is 
 #' recomputed, otherwise it is kept as is. Currently ignored. 
 #' @return a GRanges object
@@ -35,11 +35,11 @@ generate_slice <- function(.data, dots) {
 #' by_strand <- group_by(rng, strand)
 #' 
 #' # slice with group by finds positions within each group
-#' slice(by_strand, n())
-#' slice(by_strand, which.max(gc))
+#' dplyr::slice(by_strand, n())
+#' dplyr::slice(by_strand, which.max(gc))
 #' 
 #' # if the index is beyond the number of groups slice are ignored
-#' slice(by_strand, 1:3)
+#' dplyr::slice(by_strand, 1:3)
 #' 
 #' 
 #' @export
