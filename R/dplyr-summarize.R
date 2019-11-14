@@ -52,7 +52,8 @@ summarise.DelegatingIntegerRanges <- function(.data, ...) {
 summarise.GroupedGenomicRanges <- function(.data, ...) {
   dots <- set_dots_named(...)
   md <- .data@group_keys
-  cbind(md, summarize_rng(.data, dots))
+  res <- cbind(md, summarize_rng(.data, dots))
+  res[order(res[, group_vars(.data)]), ]
 }
 
 #' @method summarise GroupedIntegerRanges

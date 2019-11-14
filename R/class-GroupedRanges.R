@@ -72,7 +72,7 @@ new_grouping <- function(rng,  ..., target = "GroupedGenomicRanges") {
                "` is unknown"))
   }
   
-  group_df <- select(rng, !!!new_groups, .drop_ranges = TRUE)
+  group_df <- select(rng, !!!rlang::syms(names(new_groups)), .drop_ranges = TRUE)
   
   unique <- BiocGenerics::unique(group_df)
   inx <- Rle(BiocGenerics::match(group_df, unique))
