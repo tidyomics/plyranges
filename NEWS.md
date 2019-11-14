@@ -1,3 +1,13 @@
+# plyranges 1.7.4
+
+* added `slice()` for Ranges, and GroupedRanges
+* internals of grouping have been overhauled, but there
+shouldn't be any user facing changes. It is now much faster
+to generate groupings. 
+* group information can be interrogated with `dplyr::group_keys()`
+* a GRangesList can be obtained automatically from a GroupedGenomicRanges with `dplyr::group_split()`
+* group indices can be generated with `dplyr::group_indices()`
+
 # plyranges 1.7.3
 
 * `shift_downstream()` and `shift_upstream()` now properly
