@@ -45,6 +45,12 @@ df <- data.frame(start=c(2:-1, 13:15), width=c(0:3, 2:0),
 strand = "+", chr = "chr1")
 as_granges(df, seqnames = chr)
 
+# can also handle DFrame input
+df <- methods::as(df, "DFrame")
+df$y <- IRanges::IntegerList(c(1,2,3), NA, 5, 6, 8, 9, 10:12)
+as_iranges(df)
+as_granges(df, seqnames = chr)
+
 }
 \seealso{
 \link[GenomicRanges:GRanges]{IRanges::IRanges()}

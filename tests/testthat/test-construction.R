@@ -42,3 +42,17 @@ test_that("out of bounds Ranges throws error", {
   df2$strand <- "negative"
   expect_error(as_granges(df2))
 })
+
+test_that("DataFrame input", {
+  # tests issue 62 https://github.com/sa-lee/plyranges/issues/62
+  df <- DataFrame(st = 1:3, width = 2:4,
+                  grps = IRanges::FactorList("a", c("b", "c"), "d"))
+  
+  ir <- as_iranges(df, start = st)
+  expect_identical(mcols(ir)$grps, df$grps)
+  
+  df$strand <- "+"
+  df$chr <- "chr1"
+  gr <- as_granges(df, start = st, seqnames = chr)
+  expect_identical(mcols(gr)$grps, df$grps)
+})
