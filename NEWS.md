@@ -1,3 +1,10 @@
+# plyranges 1.7.5
+
+* fixed issue #62 for Ranges construction, the `as_granges()` and `as_iranges()`
+functions now handle List columns  correctly
+* added in helper functions for dealing with names in Ranges. 
+See `?ranges-names` for details.
+
 # plyranges 1.7.4
 
 * added `slice()` for Ranges, and GroupedRanges
