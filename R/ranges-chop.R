@@ -19,10 +19,10 @@ expand_rng_by_cigar <- function(x, type) {
                   ranges = rng@unlistData)
   
   seqinfo(grng) <- seqinfo(x)
-  grp <- BiocGenerics::rep.int(seq_along(x), n)
+  grp <- Rle(BiocGenerics::rep.int(seq_along(x), n))
   mcols(grng) <- mcols(x)[grp,]
   mcols(grng)[[type]] <- grp
-  group_by(grng, !!type)
+  group_by(grng, !!rlang::sym(type))
 }
 
 #' Group a GRanges object by introns or gaps
@@ -50,7 +50,7 @@ expand_rng_by_cigar <- function(x, type) {
 #'             filter_by_overlaps(roi) %>%
 #'             chop_by_gaps()
 #'    # to find ranges that have gaps use filter with `n()`
-#'    rng %>% filter(n() > 2)
+#'    rng %>% filter(n() >= 2)
 #'   
 #' }
 #' 

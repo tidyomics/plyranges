@@ -11,7 +11,7 @@
 \alias{groups.GroupedIntegerRanges}
 \title{Group a Ranges by one or more variables}
 \usage{
-\method{group_by}{GenomicRanges}(.data, ...)
+\method{group_by}{GenomicRanges}(.data, ..., add = FALSE)
 
 \method{ungroup}{GroupedGenomicRanges}(x, ...)
 
@@ -24,6 +24,10 @@
 
 \item{...}{Variable names to group by. These can be either metadata columns
 or the core variables of a Ranges.}
+
+\item{add}{if \code{.data} is already a GroupedRanges object, when add = FALSE
+the (default), \code{group_by()} will override existing groups. If add = TRUE,
+additional groups will be added.}
 
 \item{x}{a GroupedRanges object.}
 }

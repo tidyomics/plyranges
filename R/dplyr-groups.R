@@ -3,6 +3,9 @@
 #' @param .data a Ranges object.
 #' @param ... Variable names to group by. These can be either metadata columns
 #' or the core variables of a Ranges.
+#' @param add if `.data` is already a GroupedRanges object, when add = FALSE 
+#' the (default), `group_by()` will override existing groups. If add = TRUE, 
+#' additional groups will be added.
 #' @param x a GroupedRanges object.
 #'
 #' @description The function `group_by` takes a Ranges object and defines
@@ -67,31 +70,51 @@
 #'   summarise(gc = mean(gc))
 #'
 #'
-group_by.GenomicRanges <- function(.data, ...) {
-  new_grouped_gr(.data, ...)
+group_by.GenomicRanges <- function(.data, ..., add = FALSE) {
+  new_grouping(.data, ...)
 }
 
 #' @method group_by IntegerRanges
 #' @export
-group_by.IntegerRanges <- function(.data, ...) {
-  new_grouped_ir(.data, ...)
+group_by.IntegerRanges <- function(.data, ..., add = FALSE) {
+  new_grouping(.data, ..., target = "GroupedIntegerRanges")
 }
+
+#' @method group_by GroupedGenomicRanges
+#' @export
+group_by.GroupedGenomicRanges <- function(.data, ..., add = FALSE) {
+  dots <- enquos(...)
+  
+  if (add) {
+    gvars <- groups(.data)
+    dots <- c(gvars, dots)
+  }
+  
+  new_grouping(.data@delegate, !!!dots, target = class(.data))
+}
+
+#' @method group_by GroupedIntegerRanges
+#' @export
+group_by.GroupedIntegerRanges <- group_by.GroupedGenomicRanges
 
 #' @rdname group_by-ranges
 #' @importFrom dplyr ungroup
 #' @method ungroup GroupedGenomicRanges
 #' @export
 ungroup.GroupedGenomicRanges <- function(x, ...) {
-  groups <- as.character(unlist(groups(x)))
-  capture_groups <- quos(...)
-  ungroups <- lapply(capture_groups, function(x) quo_name(x))
+  ungroups <- enquos(...)
+  ungroups <- rlang::quos_auto_name(ungroups)
   if (length(ungroups) == 0L) {
     return(x@delegate)
   } else {
-    groups_update <- setdiff(groups, ungroups)
+    ungroups <- lapply(ungroups, function(.) rlang::quo(-!!.))
+    groups_update <- tidyselect::vars_select(group_vars(x), !!!ungroups)
+    if (length(groups_update) == 0) {
+      return(x@delegate)
+    }
+    
     groups_update <- syms(groups_update)
-    groupings <- make_group_inx(x@delegate, !!!groups_update)
-    new(class(x), delegate = x@delegate, groups = groupings$groups, inx = groupings$inx)
+    new_grouping(x@delegate, !!!groups_update, target = class(x))
   }
 }
 
@@ -107,12 +130,12 @@ ungroup.Ranges <- function(x, ...) x
 #' @method groups GroupedGenomicRanges
 #' @rdname group_by-ranges
 #' @export
-groups.GroupedGenomicRanges <- function(x)  x@groups 
+groups.GroupedGenomicRanges <- function(x)  syms(colnames(x@group_keys))
 
 #' @importFrom dplyr group_vars
 #' @method group_vars GroupedGenomicRanges
 #' @export
-group_vars.GroupedGenomicRanges <- function(x) as.character(unlist(x@groups)) 
+group_vars.GroupedGenomicRanges <- function(x) colnames(x@group_keys) 
 
 #' @method groups GroupedIntegerRanges
 #' @rdname group_by-ranges
@@ -130,3 +153,105 @@ groups.Ranges <- function(x)  NULL
 #' @method group_vars Ranges
 #' @export
 group_vars.Ranges <- function(x) character(0)
+
+#' @method group_keys GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_keys
+group_keys.GroupedGenomicRanges <- function(.data, ...) {
+  .data@group_keys
+}
+
+#' @method group_keys GroupedIntegerRanges
+#' @export
+group_keys.GroupedIntegerRanges <- group_keys.GroupedGenomicRanges
+
+#' @method group_keys Ranges
+#' @export
+group_keys.Ranges <- function(.data, ...) {
+  if (length(enquos(...)) == 0) {
+    return(new("DFrame", nrows = 1L))
+  }
+  NextMethod(group_by(.data, ...))
+}
+
+#' @method group_indices GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_indices
+group_indices.GroupedGenomicRanges <- function(.data, ...) {
+  .data@group_indices
+} 
+
+#' @method group_indices GroupedIntegerRanges
+#' @export
+group_indices.GroupedIntegerRanges <- group_indices.GroupedGenomicRanges
+
+
+#' @method group_indices Ranges
+#' @export
+group_indices.Ranges <- function(.data, ...) {
+  if (length(enquos(...)) == 0) {
+    return(rep.int(1, length(.data)))
+  }
+  NextMethod(group_by(.data, ...))
+}
+
+
+.group_rows <- function(.data) {
+  as(unname(S4Vectors::split(
+    seq_len(length(.data@delegate)),
+    .data@group_indices
+  )),
+  "IntegerList"
+  )
+}
+
+#' @method group_data GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_data  
+group_data.GroupedGenomicRanges <- function(.data) {
+  S4Vectors::DataFrame(
+    .data@group_keys,
+    .rows = .group_rows(.data))
+}
+
+#' @method group_data GroupedIntegerRanges
+#' @export
+group_data.GroupedIntegerRanges <- group_data.GroupedGenomicRanges
+
+#' @method group_data Ranges
+group_data.Ranges <- function(.data) {
+  .rows <- as(seq_len(length(.data)), "IntegerList")
+  S4Vectors::DataFrame(.rows = .rows)
+}
+
+#' @method group_split GroupedGenomicRanges
+#' @export
+#' @importFrom dplyr group_split
+group_split.GroupedGenomicRanges <- function(.data, ..., keep = TRUE) {
+  if (length(enquos(...)) > 0) {
+    warning("Ignoring arguments to `...` 
+            and using existing group structure")
+  }
+  
+  rng <- .data@delegate 
+  
+  if (!keep) {
+    vars_drop <- lapply(group_vars(.data), function(.) rlang::quo(-!!.))
+    rng <- select(rng, !!!vars_drop)
+  } 
+  
+  unname(S4Vectors::split(rng, .data@group_indices))
+}
+
+#' @method group_split GroupedIntegerRanges
+#' @export
+group_split.GroupedIntegerRanges <- group_split.GroupedGenomicRanges
+
+#' @method group_split Ranges
+#' @export
+group_split.Ranges <- function(.data, ..., keep = TRUE) {
+  if (length(enquos(...)) == 0) {
+    return(as(.data, "List"))
+  }
+  NextMethod(group_by(.data, ...))
+}

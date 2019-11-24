@@ -12,9 +12,9 @@ test_that("matches IRanges/GRanges tests", {
   # check revmap
   test_ir <- ir %>%
     mutate(i = 1:n()) %>%
-    disjoin_ranges(revmap = IntegerList(i))
+    disjoin_ranges(revmap = IRanges::IntegerList(i))
 
-  mcols(correct_ir)$revmap <- IntegerList(c(1, 4), 1, c(1, 6), 6, 6, 7)
+  mcols(correct_ir)$revmap <- IRanges::IntegerList(c(1, 4), 1, c(1, 6), 6, 6, 7)
   expect_identical(test_ir, correct_ir)
 
   # -- granges
@@ -42,10 +42,10 @@ test_that("matches IRanges/GRanges tests", {
   correct_gr <- GRanges(Rle(c("chr1", "chr3"), c(3, 2)),
                         IRanges(c(6, 8, 12, 8, 6), c(7, 11, 15, 11, 15)),
                         Rle(c("-", "+", "*"), c(3, 1, 1)))
-  mcols(correct_gr)$revmap <- IntegerList(2, 1:2, 2, 3, 4)
+  mcols(correct_gr)$revmap <- IRanges::IntegerList(2, 1:2, 2, 3, 4)
   expect_identical(gr %>%
                      mutate(i = 1:n()) %>%
-                     disjoin_ranges_directed(revmap = IntegerList(i)),
+                     disjoin_ranges_directed(revmap = IRanges::IntegerList(i)),
                    correct_gr)
 
   # grouping works as expected
@@ -65,8 +65,7 @@ test_that("matches IRanges/GRanges tests", {
 
   target <- stack(disjoin(grl, ignore.strand = TRUE), "name")
   current <- disjoin_ranges(gr_by_group)
-
-  # expect_identical(target, current)
+  expect_identical(target, current)
 })
 
 
@@ -79,7 +78,7 @@ test_that("matches HelloRanges multinter", {
   correct_gr <- GRanges("chr1",
                         IRanges(c(7, 9, 13, 16, 21, 23, 31, 33),
                                 c(8, 12, 15, 20, 22, 30, 32, 34)),
-                        i=FactorList(1, c(1,3), 1:3, 1:2, 2, 1:2, 2, 3))
+                        i=IRanges::FactorList(1, c(1,3), 1:3, 1:2, 2, 1:2, 2, 3))
 
   gr_l <- S4Vectors::List(lapply(bed_files, function(x) {
     mutate(read_bed(x), grp = sub(".bed$", "", basename(x)))
@@ -91,15 +90,15 @@ test_that("matches HelloRanges multinter", {
     reduce_ranges()
   test_gr <- gr_by_group_r %>%
     mutate(i = factor(as.integer(grp))) %>%
-    disjoin_ranges(i = FactorList(i))
+    disjoin_ranges(i = IRanges::FactorList(i))
 
   expect_identical(correct_gr, test_gr)
 
   # with names in place of integer
   mcols(correct_gr)$i <- extractList(factor(c("a", "b", "c")),
-                              IntegerList(mcols(correct_gr)$i))
+                              IRanges::IntegerList(mcols(correct_gr)$i))
   test_gr <- gr_by_group_r %>%
-    disjoin_ranges(i = FactorList(grp))
+    disjoin_ranges(i = IRanges::FactorList(grp))
   expect_identical(correct_gr, test_gr)
 
   setwd(oldwd)

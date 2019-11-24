@@ -31,7 +31,7 @@ test_that("produces same results as GRanges", {
   gr <- GRanges(seqnames = Rle(factor(c("chr1", "chr2", "chr1", "chr3")),
                                c(1, 3, 2, 4)),
                 ranges = IRanges(1:10, width = 10:1))
-  target <- RleList(chr1=Rle(1:3, c(4, 1, 5)),
+  target <- IRanges::RleList(chr1=Rle(1:3, c(4, 1, 5)),
                     chr2=Rle(0:3, c(1, 1, 1, 7)),
                     chr3=Rle(0:4, c(6, 1, 1, 1, 1)),
                     compress=FALSE)

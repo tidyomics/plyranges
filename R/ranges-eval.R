@@ -31,10 +31,11 @@ overscope_ranges.DelegatingIntegerRanges <- overscope_ranges.DelegatingGenomicRa
 
 overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
   env <- as.env(x@delegate, 
-                  envir, 
-                  tform = function(col) unname(IRanges::extractList(col, x@inx)))
+                envir, 
+                tform = function(col) unname(S4Vectors::splitAsList(col, x@group_indices)))
   new_data_mask(env, top = parent.env(env))
 }
+
 
 overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
 

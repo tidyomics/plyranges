@@ -42,3 +42,39 @@ test_that("out of bounds Ranges throws error", {
   df2$strand <- "negative"
   expect_error(as_granges(df2))
 })
+
+test_that("DataFrame input", {
+  # tests issue 62 https://github.com/sa-lee/plyranges/issues/62
+  df <- DataFrame(st = 1:3, width = 2:4,
+                  grps = IRanges::FactorList("a", c("b", "c"), "d"))
+  
+  ir <- as_iranges(df, start = st)
+  expect_identical(mcols(ir)$grps, df$grps)
+  
+  df$strand <- "+"
+  df$chr <- "chr1"
+  gr <- as_granges(df, start = st, seqnames = chr)
+  expect_identical(mcols(gr)$grps, df$grps)
+})
+
+test_that("Working with names", {
+  ir <- IRanges::IRanges(start = 1:3, width = 4, names = c("a", "b", "c"))
+  expect_identical(unname(ir), remove_names(ir))
+  ir_noname <- names_to_column(ir)
+  expect_null(names(ir_noname))
+  expect_identical(names(ir), mcols(ir_noname)[["name"]])
+  ir_id <- id_to_column(ir_noname)
+  expect_identical(seq_len(length(ir)), mcols(ir_id)[["id"]])
+  
+  
+  gr <- GenomicRanges::GRanges(seqnames = "chr1", ranges = ir)
+  expect_identical(unname(gr), remove_names(gr))
+  gr_noname <- names_to_column(gr)
+  expect_null(names(gr_noname))
+  expect_identical(names(gr), mcols(gr_noname)[["name"]])
+  gr_id <- id_to_column(gr_noname)
+  expect_identical(seq_len(length(gr)), mcols(gr_id)[["id"]])
+  expect_identical(mcols(gr_id), 
+                   S4Vectors::DataFrame(id = seq_len(length(gr)),
+                                        name = names(gr)))
+})

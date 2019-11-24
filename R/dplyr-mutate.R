@@ -52,20 +52,23 @@ mutate_rng <- function(.data, dots) {
   mutate_mcols(.data, .mutated)
 }
 
+# idea could simply dispatch to summarise here, and store 
+# list columns, if the length is smaller then we can repeat,
+# otherwise we try to expand 
 mutate_grp <- function(.data, ...) {
   dots <- set_dots_named(...)
-  delegate <- .data@delegate
-  inx <- .data@inx
-  rng <- lapply(inx, function(i) {
-    x <- delegate[i]
+  inx <- .group_rows(.data)
+  rng <- unname(S4Vectors::split(.data@delegate, .data@group_indices))
+  rng <- S4Vectors::endoapply(rng, function(x) {
     mutate_rng(x, dots)    
   })
-  rng <- bind_ranges(rng)[order(unlist(inx))]
-  names(rng) <- NULL
+  
+  rng <- unlist(rng)[BiocGenerics::order(unlist(inx))]
   new(class(.data),
       delegate = rng, 
-      groups =  groups(.data), 
-      inx = inx)
+      group_keys =  .data@group_keys, 
+      group_indices = .data@group_indices,
+      n = .data@n )
 }
 #' Modify a Ranges object
 #'

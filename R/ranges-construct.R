@@ -39,6 +39,12 @@
 #' strand = "+", chr = "chr1")
 #' as_granges(df, seqnames = chr)
 #'
+#' # can also handle DFrame input
+#' df <- methods::as(df, "DFrame")
+#' df$y <- IRanges::IntegerList(c(1,2,3), NA, 5, 6, 8, 9, 10:12)
+#' as_iranges(df)
+#' as_granges(df, seqnames = chr)
+#' 
 #' @export
 as_iranges <- function(.data, ..., keep_mcols = TRUE) UseMethod("as_iranges")
 
@@ -69,6 +75,14 @@ as_iranges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
     return(make_mcols(.data, ir, col_names, dots, core_ir))
   }
   ir
+}
+
+#' @export
+as_iranges.DataFrame <- function(.data, ..., keep_mcols = TRUE) {
+  tbl <- as.data.frame(.data)
+  rng <- as_iranges(tbl, ..., keep_mcols = keep_mcols)
+  rng <- modify_asis(.data, rng)
+  rng
 }
 
 #' @rdname ranges-construct
@@ -113,6 +127,16 @@ as_granges.data.frame <- function(.data, ..., keep_mcols = TRUE) {
   ir
 }
 
+#' @export
+as_granges.DataFrame <- function(.data, ..., keep_mcols = TRUE) {
+  dots <- rlang::enquos(...)
+  if (length(dots) == 0) return(as(.data, "GRanges"))
+  tbl <- as.data.frame(.data)
+  rng <- as_granges(tbl, !!!dots, keep_mcols = keep_mcols)
+  rng <- modify_asis(.data, rng)
+  rng
+}
+
 check_names <- function(dots, valid_names) {
   if (length(dots) > 0) {
     valid_args <- names(dots) %in% valid_names
@@ -122,6 +146,18 @@ check_names <- function(dots, valid_names) {
            .call = FALSE)
     }
   }
+}
+
+modify_asis <- function(.data, rng) {
+  col_asis <- vapply(mcols(rng), class, character(1)) == "AsIs"
+  if (any(col_asis)) {
+    col_classes <- vapply(.data, class, character(1))
+    cols_to_modify <- intersect(names(col_classes), names(col_asis))
+    for (col in cols_to_modify) {
+      mcols(rng)[[col]] <- as(unclass(mcols(rng)[[col]]), col_classes[[col]])
+    }
+  }
+  rng
 }
 
 make_mcols <- function(.data, ir, col_names, dots, core) {
@@ -198,11 +234,11 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 #'
 #' @seealso [S4Vectors::Rle()],[IRanges::RleList()]
 #' @examples
-#' x <- Rle(10:1, 1:10)
+#' x <- S4Vectors::Rle(10:1, 1:10)
 #' as_ranges(x)
 #' 
 #' # must have names set
-#' y <- RleList(chr1 = x)
+#' y <- IRanges::RleList(chr1 = x)
 #' as_ranges(y)
 #'
 #' @export
