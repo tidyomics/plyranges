@@ -76,3 +76,26 @@ slice.GroupedGenomicRanges <- function(.data, ..., .preserve = FALSE) {
 #' @method slice GroupedIntegerRanges
 #' @export
 slice.GroupedIntegerRanges <- slice.GroupedGenomicRanges
+
+#' @importFrom dplyr sample_n
+sample_n.Ranges <- function(tbl, size, replace = FALSE, weight = NULL, ...) 
+{
+  size <- rlang::enquo(size)
+  weight <- rlang::enquo(weight)
+  slice(tbl, sample.int(n(), check_length(!!size, n(), replace = replace), 
+                        replace = replace, prob = !!weight))
+}
+
+check_length <- function(length, n, replace = FALSE) {
+  if (length <= n || replace) {
+    return(invisible(length))
+  }
+  
+  stop(
+  paste("`size`` must be less than or equal to", n, 
+        "the length of the data. Set `replace` = TRUE to use sampling with replacement")
+  )
+}
+
+
+
