@@ -1,3 +1,7 @@
+# plyranges 1.7.6 
+
+* adds method for `dplyr::sample_n()`
+
 # plyranges 1.7.5
 
 * fixed issue #62 for Ranges construction, the `as_granges()` and `as_iranges()`
