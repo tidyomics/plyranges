@@ -14,32 +14,47 @@ bc_data_mask <- function(data) {
   # extract the namespace of the class
   pkg_scope <- rlang::pkg_env(packageSlot(class(data)))
   
-  # place the generics at the top of the mask
-  top <- bioc_generics()
-  top <- rlang::new_environment(top)
-  # enclose the mcols as middle
-  mcols_names <- names(mcols(data))
-  mcols_fn <- lapply(mcols_names,
-                   function(nm) {
-                     function() mcols(data)[[nm]]
-                   })
-  names(mcols_fn) <- mcols_names
-  
-  mid <- rlang::env(top)
-  rlang::env_bind_active(mid, !!!mcols_fn)
-  # bottom is the vector
-  vec_names <- parallelVectorNames(data)
-  vec_fn <- lapply(vec_names,
-                   function(nm) {
-                     getter <- rlang::env_get(pkg_scope, nm)
-                     function() getter(data)
-                   })
-  names(vec_fn) <- vec_names
-  bottom <- rlang::env(mid)
-  rlang::env_bind_active(bottom, !!!vec_fn)
+  top <- bc_fn_env()
+  mid <- bc_mcols_active(data, top)
+  bottom <- bc_vec_active(data, top, pkg_scope)
   
   mask <- rlang::new_data_mask(bottom, top = top)
   mask$.data <- rlang::as_data_pronoun(mask)
   mask
 }
+
+# extract generics and place them into an environment
+bc_fn_env <- function() {
+  top <- bioc_generics()
+  rlang::new_environment(top)
+}
+
+# 
+bc_mcols_active <- function(data, env) {
+  # enclose the mcols as middle
+  mcols_names <- names(mcols(data))
+  mcols_fn <- lapply(mcols_names,
+                     function(nm) {
+                       function() mcols(data)[[nm]]
+                     })
+  names(mcols_fn) <- mcols_names
+  mid <- rlang::env(env)
+  rlang::env_bind_active(mid, !!!mcols_fn)
+  mid
+}
+
+bc_vec_active <- function(data, env, scope) {
+  # bottom is the vector
+  vec_names <- S4Vectors::parallelVectorNames(data)
+  vec_fn <- lapply(vec_names,
+                   function(nm) {
+                     getter <- rlang::env_get(scope, nm)
+                     function() getter(data)
+                   })
+  names(vec_fn) <- vec_names
+  bottom <- rlang::env(env)
+  rlang::env_bind_active(bottom, !!!vec_fn)
+  bottom
+}
+
 
