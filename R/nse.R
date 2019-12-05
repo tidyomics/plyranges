@@ -9,8 +9,10 @@
 #' but it can be useful if you're planning on extending
 #' `plyranges` functionality. 
 #' 
-#' @seealso [rlang::new_data_mask()], [rlang::eval_tidy()] 
-bc_data_mask <- function(data) {
+#' @seealso [rlang::new_data_mask()], [rlang::eval_tidy()]
+bc_data_mask <- function(data) UseMethod("bc_data_mask")
+
+bc_data_mask.Vector <- function(data) {
   # extract the namespace of the class
   pkg_scope <- rlang::pkg_env(packageSlot(class(data)))
   
@@ -44,12 +46,28 @@ bc_mcols_active <- function(data, env) {
 }
 
 bc_vec_active <- function(data, env, scope) {
-  # bottom is the vector
+  UseMethod("bc_vec_active")
+}
+
+bc_vec_active.Vector <- function(data, env, scope) {
   vec_names <- S4Vectors::parallelVectorNames(data)
   vec_fn <- lapply(vec_names,
                    function(nm) {
                      getter <- rlang::env_get(scope, nm)
                      function() getter(data)
+                   })
+  names(vec_fn) <- vec_names
+  bottom <- rlang::env(env)
+  rlang::env_bind_active(bottom, !!!vec_fn)
+  bottom
+}
+
+bc_vec_active.List <- function(data, env, scope) {
+  # bottom is the vector
+  vec_names <- names(data)
+  vec_fn <- lapply(vec_names,
+                   function(nm) {
+                     function() data[[nm]]
                    })
   names(vec_fn) <- vec_names
   bottom <- rlang::env(env)
