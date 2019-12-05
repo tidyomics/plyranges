@@ -10,6 +10,9 @@
 #' `plyranges` functionality. 
 #' 
 #' @seealso [rlang::new_data_mask()], [rlang::eval_tidy()]
+#' @keywords internal
+#' @rdname nse
+#' @export
 bc_data_mask <- function(data) UseMethod("bc_data_mask")
 
 bc_data_mask.Vector <- function(data) {
@@ -17,7 +20,8 @@ bc_data_mask.Vector <- function(data) {
   pkg_scope <- rlang::pkg_env(packageSlot(class(data)))
   
   top <- bc_fn_env()
-  mid <- bc_mcols_active(data, top)
+  spec <- bc_fn_specials(data, top)
+  mid <- bc_mcols_active(data, spec)
   bottom <- bc_vec_active(data, top, pkg_scope)
   
   mask <- rlang::new_data_mask(bottom, top = top)
@@ -26,10 +30,45 @@ bc_data_mask.Vector <- function(data) {
 }
 
 # extract generics and place them into an environment
-bc_fn_env <- function() {
+bc_fn_env <- function(data) {
   top <- bioc_generics()
   rlang::new_environment(top)
 }
+
+# plyranges and dplyr special functions
+bc_fn_specials <- function(data, env) {
+  UseMethod("bc_fn_specials")
+}
+
+bc_fn_specials.Vector <- function(data, env) {
+  rlang::env_bind_active(env, 
+                         n = function() length(data))
+  env
+}
+
+bc_fn_specials.List <- function(data, env) {
+  special <- rlang::env(env)
+  rlang::env_bind_active(special, 
+                         n = function() lengths(data))
+  special
+}
+
+bc_fn_specials.DFrame <- function(data, env) {
+  special <- rlang::env(env)
+  rlang::env_bind_active(special, 
+                         n = function() nrow(data))
+  special
+}
+
+bc_fn_specials.GroupedGenomicRanges <- function(data, env) {
+  special <- rlang::env(env)
+  rlang::env_bind_active(special, 
+                         n = function() {
+                           IRanges::runLength(dplyr::group_indices(data))
+                           })
+special
+}
+
 
 # 
 bc_mcols_active <- function(data, env) {
@@ -74,5 +113,6 @@ bc_vec_active.List <- function(data, env, scope) {
   rlang::env_bind_active(bottom, !!!vec_fn)
   bottom
 }
+
 
 
