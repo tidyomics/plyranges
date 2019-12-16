@@ -3,19 +3,23 @@
 
 # plyranges: fluent genomic data analysis <img id="plyranges_logo" src="man/figures/logo.png" align="right" width = "125" />
 
+<!-- badges: start -->
+
 [![Build
 Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/sa-lee/plyranges?branch=master&svg=true)](https://ci.appveyor.com/project/sa-lee/plyranges)
 [![Codecov test
 coverage](https://codecov.io/gh/sa-lee/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/sa-lee/plyranges?branch=master)
+<!-- badges: end -->
 
-`plryanges` provides a consistent interface for importing and wrangling
-genomics data from a variety of sources. The package defines a grammar
-of genomic data manipulation based on `dplyr` and the Bioconductor
-packages `IRanges`, `GenomicRanges`, and `rtracklayer`. It does this by
-providing a set of verbs for developing analysis pipelines based on
-*Ranges* objects that represent genomic regions:
+[plyranges](https://www.bioconductor.org/packages/release/bioc/html/plyranges.html)
+provides a consistent interface for importing and wrangling genomics
+data from a variety of sources. The package defines a grammar of genomic
+data transformation based on `dplyr` and the Bioconductor packages
+`IRanges`, `GenomicRanges`, and `rtracklayer`. It does this by providing
+a set of verbs for developing analysis pipelines based on *Ranges*
+objects that represent genomic regions:
 
   - Modify genomic regions with the `mutate()` and `stretch()`
     functions.
@@ -36,12 +40,16 @@ providing a set of verbs for developing analysis pipelines based on
   - Import and write common genomic data formats with the `read_/write_`
     family of functions.
 
-For more details on the features of plryanges, read the [introduction
-vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
+For more details on the features of plyranges, read the
+[vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
+For a complete case-study on using plyranges to combine ATAC-seq and
+RNA-seq results read the [*fluentGenomics*
+workflow](https://sa-lee.github.io/fluentGenomics).
 
 # Installation
 
-The package is currently available from Bioconductor.
+[plyranges](https://www.bioconductor.org/packages/release/bioc/html/plyranges.html)
+can be installed from the latest Bioconductor release:
 
 ``` r
 # install.packages("BiocManager")
@@ -147,7 +155,7 @@ We could check the number of exons per chromosome using `group_by` and
 `summarise`.
 
 ``` r
-exons 
+exons
 #> GRanges object with 459752 ranges and 2 metadata columns:
 #>            seqnames            ranges strand |
 #>               <Rle>         <IRanges>  <Rle> |
@@ -248,19 +256,19 @@ olap %>%
   group_by(name.x, tx_id) %>%
   summarise(n = n())
 #> DataFrame with 1619 rows and 3 columns
-#>           name.x       tx_id         n
-#>      <character> <character> <integer>
-#> 1     rs17121403   NM_000028         1
-#> 2       rs429358   NM_000041         3
-#> 3         rs7412   NM_000041         3
-#> 4      rs2234978   NM_000043         1
-#> 5      rs1801516   NM_000051         1
-#> ...          ...         ...       ...
-#> 1615   rs1420101   NR_104167         1
-#> 1616   rs1065656   NR_104318         1
-#> 1617   rs2224391   NR_104417         1
-#> 1618   rs2224391   NR_104418         1
-#> 1619  rs41281112   NR_104592         1
+#>           name.x        tx_id         n
+#>      <character>  <character> <integer>
+#> 1     rs10043775 NM_001271723         1
+#> 2     rs10043775    NM_030793         1
+#> 3        rs10078 NM_001242412         1
+#> 4        rs10078    NM_020731         1
+#> 5        rs10089    NM_001046         1
+#> ...          ...          ...       ...
+#> 1615   rs9906595 NM_001008777         1
+#> 1616      rs9948    NM_017623         1
+#> 1617      rs9948    NM_199078         1
+#> 1618    rs995030    NM_000899         4
+#> 1619    rs995030    NM_003994         4
 ```
 
 We can also generate 2bp splice sites on either side of the exon using
@@ -269,7 +277,7 @@ flanking for illustrative purposes. The `interweave` function pairs the
 left and right ranges objects.
 
 ``` r
-left_ss <- flank_left(exons, 2L) 
+left_ss <- flank_left(exons, 2L)
 right_ss <- flank_right(exons, 2L)
 all_ss <- interweave(left_ss, right_ss, .id = "side")
 all_ss
@@ -287,35 +295,41 @@ all_ss
 #>   [919502]     chrY 59343489-59343490      + |
 #>   [919503]     chrY 59342485-59342486      + |
 #>   [919504]     chrY 59343489-59343490      + |
-#>                                          name     score       tx_id
-#>                                   <character> <numeric> <character>
-#>        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018
-#>        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018
-#>        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018
-#>        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018
-#>        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018
-#>        ...                                ...       ...         ...
-#>   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186
-#>   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186
-#>   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186
-#>   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786
-#>   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786
-#>                   side
-#>            <character>
-#>        [1]        left
-#>        [2]       right
-#>        [3]        left
-#>        [4]       right
-#>        [5]        left
-#>        ...         ...
-#>   [919500]       right
-#>   [919501]        left
-#>   [919502]       right
-#>   [919503]        left
-#>   [919504]       right
+#>                                          name     score       tx_id        side
+#>                                   <character> <numeric> <character> <character>
+#>        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018        left
+#>        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018       right
+#>        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018        left
+#>        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018       right
+#>        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018        left
+#>        ...                                ...       ...         ...         ...
+#>   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186       right
+#>   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186        left
+#>   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186       right
+#>   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786        left
+#>   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786       right
 #>   -------
 #>   seqinfo: 93 sequences from an unspecified genome; no seqlengths
 ```
+
+# Learning more
+
+  - The [*fluentGenomics*
+    workflow](https://sa-lee.github.io/fluentGenomics) package shows you
+    how to combine differential expression genes and differential
+    chromatin accessibility peaks using plyranges. It extends the [case
+    study](https://github.com/mikelove/plyrangesTximetaCaseStudy) by
+    Michael Love for using plyranges with
+    [tximeta](https://bioconductor.org/packages/release/bioc/html/tximeta.html).
+
+  - The [extended vignette in the plyrangesWorkshops
+    package](https://github.com/sa-lee/plyrangesWorkshops) has a
+    detailed walk through of using plyranges for coverage analysis.
+
+  - The [Bioc 2018 Workshop
+    book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html)
+    has worked examples of using `plyranges` to analyse publicly
+    available genomics data.
 
 # Citation
 
@@ -341,27 +355,3 @@ If you found `plyranges` useful for your work please cite our
 We welcome contributions from the R/Bioconductor community. We ask that
 contributors follow the [code of conduct](CODE_OF_CONDUCT.md) and the
 guide outlined [here](CONTRIBUTING.md).
-
-# Learning more
-
-  - The [introductory
-    vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html)
-    has an overview of plyranges features.
-  - The [Bioc 2018 Workshop
-    book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html)
-    has worked examples of using `plyranges` to analyse publicly
-    available genomics data.
-  - The [extended vignette in the plyrangesWorkshops
-    package](https://github.com/sa-lee/plyrangesWorkshops) has a
-    detailed walk through of using plyranges for coverage analysis.
-  - The [case
-    study](https://github.com/mikelove/plyrangesTximetaCaseStudy) by
-    Michael Love using plyranges with
-    [tximeta](https://bioconductor.org/packages/release/bioc/html/tximeta.html)
-    to follow up on interesting hits from a combined RNA-seq and
-    ATAC-seq analysis.
-  - The [journal
-    article](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1597-8)
-    ([preprint
-    here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
-    details about the overall philosophy and design of plyranges.
