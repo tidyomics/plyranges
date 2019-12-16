@@ -13,16 +13,13 @@
 #' @keywords internal
 #' @rdname nse
 #' @export
-bc_data_mask <- function(data) UseMethod("bc_data_mask")
-
-bc_data_mask.Vector <- function(data) {
+bc_data_mask <- function(data) {
   # extract the namespace of the class
   pkg_scope <- rlang::pkg_env(packageSlot(class(data)))
   
-  top <- bc_fn_env()
-  spec <- bc_fn_specials(data, top)
-  mid <- bc_mcols_active(data, spec)
-  bottom <- bc_vec_active(data, top, pkg_scope)
+  top <- bc_fn_env(data)
+  mid <- bc_vec_active(mcols(data), top)
+  bottom <- bc_vec_active(data, mid, pkg_scope)
   
   mask <- rlang::new_data_mask(bottom, top = top)
   mask$.data <- rlang::as_data_pronoun(mask)
@@ -32,7 +29,8 @@ bc_data_mask.Vector <- function(data) {
 # extract generics and place them into an environment
 bc_fn_env <- function(data) {
   top <- bioc_generics()
-  rlang::new_environment(top)
+  top <- rlang::new_environment(top)
+  bc_fn_specials(data, top)
 }
 
 # plyranges and dplyr special functions
@@ -40,53 +38,46 @@ bc_fn_specials <- function(data, env) {
   UseMethod("bc_fn_specials")
 }
 
-bc_fn_specials.Vector <- function(data, env) {
-  rlang::env_bind_active(env, 
-                         n = function() length(data))
+bc_fn_specials.default <- function(data, env) {
+  stopifnot(is(data, "Vector"))
+  rlang::env_bind_active(env,
+                         n = ~ function() length(data))
   env
 }
 
-bc_fn_specials.List <- function(data, env) {
-  special <- rlang::env(env)
-  rlang::env_bind_active(special, 
-                         n = function() lengths(data))
-  special
-}
-
 bc_fn_specials.DFrame <- function(data, env) {
-  special <- rlang::env(env)
-  rlang::env_bind_active(special, 
-                         n = function() nrow(data))
-  special
+  rlang::env_bind_active(env, 
+                         n = ~ function() nrow(data))
+  env
 }
 
 bc_fn_specials.GroupedGenomicRanges <- function(data, env) {
-  special <- rlang::env(env)
-  rlang::env_bind_active(special, 
-                         n = function() {
+  rlang::env_bind_active(env, 
+                         n = ~ function() {
                            IRanges::runLength(dplyr::group_indices(data))
-                           })
-special
+                         })
+  env
 }
 
+bc_fn_specials.GroupedIntegerRanges <- bc_fn_specials.GroupedGenomicRanges
 
-# 
-bc_mcols_active <- function(data, env) {
-  # enclose the mcols as middle
-  mcols_names <- names(mcols(data))
-  mcols_fn <- lapply(mcols_names,
-                     function(nm) {
-                       function() mcols(data)[[nm]]
-                     })
-  names(mcols_fn) <- mcols_names
-  mid <- rlang::env(env)
-  rlang::env_bind_active(mid, !!!mcols_fn)
-  mid
-}
-
-bc_vec_active <- function(data, env, scope) {
+bc_vec_active <- function(data, env, ...) {
   UseMethod("bc_vec_active")
 }
+
+bc_vec_active.DFrame <- function(data, env) {
+  # bottom is the vector
+  vec_names <- names(data)
+  vec_fn <- lapply(vec_names,
+                   function(nm) {
+                     function() data[[nm]]
+                   })
+  names(vec_fn) <- vec_names
+  bottom <- rlang::env(env)
+  rlang::env_bind_active(bottom, !!!vec_fn)
+  bottom
+}
+
 
 bc_vec_active.Vector <- function(data, env, scope) {
   vec_names <- S4Vectors::parallelVectorNames(data)
@@ -101,18 +92,31 @@ bc_vec_active.Vector <- function(data, env, scope) {
   bottom
 }
 
-bc_vec_active.List <- function(data, env, scope) {
-  # bottom is the vector
-  vec_names <- names(data)
-  vec_fn <- lapply(vec_names,
-                   function(nm) {
-                     function() data[[nm]]
-                   })
-  names(vec_fn) <- vec_names
-  bottom <- rlang::env(env)
-  rlang::env_bind_active(bottom, !!!vec_fn)
-  bottom
+
+# eval_mask dispatch? 
+bc_eval_tidy <- function(dots, data, mask = bc_data_mask(data)) {
+  container <- DataFrame()
 }
+
+
+overscope_eval_update <- function(overscope, dots, bind_envir = TRUE) {
+  update <- vector("list", length(dots))
+  names(update) <- names(dots)
+  for (i in seq_along(update)) {
+    quo <- dots[[i]]
+    update[[i]] <- eval_tidy(quo, data = overscope)
+    # sometimes we want to compute on previously constructed columns
+    # we can do this by binding the evaluated expression to
+    # the overscope environment
+    if (bind_envir) {
+      new_col <- names(dots)[[i]]
+      rlang::env_bind(overscope, !!new_col := update[[i]])
+    }
+  }
+  return(update)
+}
+
+
 
 
 

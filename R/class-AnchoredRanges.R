@@ -69,9 +69,20 @@ setMethod("mcols<-", "DelegatingGenomicRanges", function(x, ..., value) {
   x
 })
 
+
 setMethod("mcols<-", "DelegatingIntegerRanges", function(x, ..., value) {
   x@delegate <- callNextMethod(x = x@delegate, ..., value = value)
   x
+})
+
+#' @importFrom S4Vectors parallelVectorNames
+setMethod("parallelVectorNames", "DelegatingGenomicRanges", function(x) {
+  callNextMethod(x = x@delegate)
+})
+
+#' @importFrom S4Vectors parallelVectorNames
+setMethod("parallelVectorNames", "DelegatingIntegerRanges", function(x) {
+  callNextMethod(x = x@delegate)
 })
 
 # --- ready for our AnchoredIntegerRanges ---
