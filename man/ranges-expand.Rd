@@ -4,16 +4,22 @@
 \alias{expand_ranges}
 \title{Expand list-columns in a Ranges object}
 \usage{
-expand_ranges(data, ..., .drop = FALSE, .id = NULL,
-  .keep_empty = FALSE)
+expand_ranges(
+  data,
+  ...,
+  .drop = FALSE,
+  .id = NULL,
+  .keep_empty = FALSE,
+  .recursive = FALSE
+)
 }
 \arguments{
 \item{data}{A Ranges object}
 
-\item{...}{list-column names to unnest}
+\item{...}{list-column names to expand then unlist}
 
 \item{.drop}{Should additional list columns be dropped (default = FALSE)?
-By default \code{unnest} will keep other list columns even if they are nested.}
+By default \code{expand_ranges()} will keep other list columns even if they are nested.}
 
 \item{.id}{A character vector of length equal to number of list columns.
 If supplied will create new column(s) with name \code{.id}
@@ -21,6 +27,11 @@ identifying the index of the list column (default = NULL).}
 
 \item{.keep_empty}{If a list-like column contains empty elements, should
 those elements be kept? (default = FALSE)}
+
+\item{.recursive}{If there are multiple list-columns, should the columns be
+treated as parallel? If FALSE each column will be unnested recursively,
+otherwise they are treated as parallel, that is each list column has
+identical lengths. (deafualt = FALSE)}
 }
 \value{
 a GRanges object with expanded list columns

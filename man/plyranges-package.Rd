@@ -17,7 +17,6 @@ can be used to construct human readable analysis pipelines based on Ranges
 objects.
 \itemize{
 \item Modify genomic regions with the \code{set_width()} and \code{stretch()} functions.
-\itemize{
 \item Modify genomic regions while fixing the start/end/center coordinates
 with the \code{anchors()} family of functions.
 \item Sort genomic ranges with \code{arrange()}.
@@ -32,7 +31,6 @@ of functions.
 \item Merge the end points of all genomic regions with \code{disjoin_ranges()}.
 \item Import and write common genomic data formats with the \code{read_/write_} family
 of functions.
-}
 }
 
 For more details on the features of plryanges, read the vignette:

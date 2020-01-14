@@ -6,14 +6,21 @@
 \alias{read_narrowpeaks}
 \title{Read a BED or BEDGraph file}
 \usage{
-read_bed(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_bed(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL)
 
-read_bed_graph(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_bed_graph(
+  file,
+  col_names = NULL,
+  genome_info = NULL,
+  overlap_ranges = NULL
+)
 
-read_narrowpeaks(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_narrowpeaks(
+  file,
+  col_names = NULL,
+  genome_info = NULL,
+  overlap_ranges = NULL
+)
 }
 \arguments{
 \item{file}{A path to a file or a connection.}

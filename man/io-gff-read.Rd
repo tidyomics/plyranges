@@ -7,17 +7,13 @@
 \alias{read_gff3}
 \title{Read a GFF/GTF/GVT file}
 \usage{
-read_gff(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_gff(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL)
 
-read_gff1(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_gff1(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL)
 
-read_gff2(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_gff2(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL)
 
-read_gff3(file, col_names = NULL, genome_info = NULL,
-  overlap_ranges = NULL)
+read_gff3(file, col_names = NULL, genome_info = NULL, overlap_ranges = NULL)
 }
 \arguments{
 \item{file}{A path to a file or a connection.}

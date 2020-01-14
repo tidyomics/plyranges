@@ -15,29 +15,23 @@
 \usage{
 count_overlaps(x, y, maxgap, minoverlap)
 
-\method{count_overlaps}{IntegerRanges}(x, y, maxgap = -1L,
-  minoverlap = 0L)
+\method{count_overlaps}{IntegerRanges}(x, y, maxgap = -1L, minoverlap = 0L)
 
-\method{count_overlaps}{GenomicRanges}(x, y, maxgap = -1L,
-  minoverlap = 0L)
+\method{count_overlaps}{GenomicRanges}(x, y, maxgap = -1L, minoverlap = 0L)
 
 count_overlaps_within(x, y, maxgap, minoverlap)
 
-\method{count_overlaps_within}{IntegerRanges}(x, y, maxgap = 0L,
-  minoverlap = 1L)
+\method{count_overlaps_within}{IntegerRanges}(x, y, maxgap = 0L, minoverlap = 1L)
 
-\method{count_overlaps_within}{GenomicRanges}(x, y, maxgap = 0L,
-  minoverlap = 1L)
+\method{count_overlaps_within}{GenomicRanges}(x, y, maxgap = 0L, minoverlap = 1L)
 
 count_overlaps_directed(x, y, maxgap, minoverlap)
 
-\method{count_overlaps_directed}{GenomicRanges}(x, y, maxgap = -1L,
-  minoverlap = 0L)
+\method{count_overlaps_directed}{GenomicRanges}(x, y, maxgap = -1L, minoverlap = 0L)
 
 count_overlaps_within_directed(x, y, maxgap, minoverlap)
 
-\method{count_overlaps_within_directed}{GenomicRanges}(x, y,
-  maxgap = -1L, minoverlap = 0L)
+\method{count_overlaps_within_directed}{GenomicRanges}(x, y, maxgap = -1L, minoverlap = 0L)
 }
 \arguments{
 \item{x, y}{Objects representing ranges}
