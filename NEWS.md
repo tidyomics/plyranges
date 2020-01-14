@@ -1,3 +1,9 @@
+# plyranges 1.7.7
+
+* update handling of list columns, `expand_ranges()` no longer takes
+cartesian produce if lists are parallel. `summarize()` properly handles list
+column output without blowing out number of columns. 
+
 # plyranges 1.7.6 
 
 * adds method for `dplyr::sample_n()`
