@@ -4,14 +4,18 @@
 #'
 #' @param data A Ranges object
 #' 
-#' @param ... list-column names to unnest
+#' @param ... list-column names to expand then unlist
 #' @param .drop Should additional list columns be dropped (default = FALSE)?
-#' By default `unnest` will keep other list columns even if they are nested.
+#' By default `expand_ranges()` will keep other list columns even if they are nested.
 #' @param .id A character vector of length equal to number of list columns.
 #' If supplied will create new column(s) with name `.id`
 #' identifying the index of the list column (default = NULL).
 #' @param .keep_empty If a list-like column contains empty elements, should
 #' those elements be kept? (default = FALSE)
+#' @param .recursive If there are multiple list-columns, should the columns be 
+#' treated as parallel? If FALSE each column will be unnested recursively,
+#' otherwise they are treated as parallel, that is each list column has
+#' identical lengths. (deafualt = FALSE)
 #'
 #' @importFrom S4Vectors expand
 #'
@@ -34,7 +38,7 @@
 #' 
 #' @rdname ranges-expand
 #' @export
-expand_ranges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FALSE) {
+expand_ranges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FALSE, .recursive = FALSE) {
   
   list_cols <- get_list_cols(data)
   which_unnest <- unnest_cols(data, list_cols, ...)
@@ -47,10 +51,14 @@ expand_ranges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FA
   }
   
   if (ncol(mcols(data)) == length(which_unnest)) {
-    expand_rng <- S4Vectors::expand(data, keepEmptyRows = .keep_empty)
+    expand_rng <- S4Vectors::expand(data, 
+                                    keepEmptyRows = .keep_empty,
+                                    recursive = .recursive)
   } else {
-    expand_rng <- S4Vectors::expand(data, which_unnest, 
-                                    keepEmptyRows = .keep_empty)
+    expand_rng <- S4Vectors::expand(data, 
+                                    which_unnest, 
+                                    keepEmptyRows = .keep_empty,
+                                    recursive = .recursive)
   }
   
   
@@ -70,12 +78,17 @@ expand_ranges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FA
     # for some reason if values is single column DF, expand
     # returns a List, with expanded values in last element
     if (length(.id) == 1) {
-      expand_values <- expand(values, .id, keepEmptyRows = .keep_empty)
+      expand_values <- expand(values, 
+                              .id, 
+                              keepEmptyRows = .keep_empty,
+                              recursive = .recursive)
       expand_values <- expand_values[[.id]]
       expand_values <- DataFrame(expand_values)
       names(expand_values) <- .id
     } else {
-      expand_values <- S4Vectors::expand(values, keepEmptyRows = .keep_empty)
+      expand_values <- S4Vectors::expand(values, 
+                                         keepEmptyRows = .keep_empty,
+                                         recursive = .recursive )
     }
     
     mcols(expand_rng) <- cbind(mcols(expand_rng), expand_values)

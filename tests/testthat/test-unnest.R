@@ -23,9 +23,9 @@ test_that("expanding makes sense", {
                         col1 = c(1L,1L,4L,4L,5L,5L,2L,3L),
                         col2 = c(1L,2L,3L,4L,3L,4L,5L,5L),
                         score = c(1L,1L,2L,2L,2L,2L,3L,3L))
-  test_gr <- expand_ranges(gr)
+  test_gr <- expand_ranges(gr, .recursive = TRUE)
   expect_identical(correct_gr, test_gr)
-  test_gr <- expand_ranges(gr, col1, col2)
+  test_gr <- expand_ranges(gr, col1, col2, .recursive = TRUE)
   expect_identical(correct_gr, test_gr)
 
   # unnesting on non-existent column errors
@@ -52,7 +52,7 @@ test_that("expanding makes sense", {
   expect_identical(correct_gr, test_gr)
 
   # .id works as expected
-  expect_error(expand_ranges(gr, .id = "name"),
+  expect_error(expand_ranges(gr, .id = "name", .recursive = TRUE),
                "`.id` does not have same length as number of list columns.",
                fixed = TRUE)
   expect_error(expand_ranges(gr, col2, .id = c("name", "x0")),
@@ -68,7 +68,7 @@ test_that("expanding makes sense", {
                         id1 = c(rep("a", 2), rep("b", 4), rep("c", 2)),
                         id2 = as.integer(c(1,1, 2,2,2,2,3,3)))
 
-  test_gr <- expand_ranges(gr, .id = c("id1", "id2"))
+  test_gr <- expand_ranges(gr, .id = c("id1", "id2"), .recursive = TRUE)
   expect_identical(correct_gr, test_gr)
 
   correct_gr <- GRanges(seqnames = "chr1",
@@ -78,7 +78,7 @@ test_that("expanding makes sense", {
                         col2 = IntegerList(c(1,2), c(3,4), c(3,4), 5,5),
                         score = as.integer(c(1,2,2,3,3)),
                         id1 = c("a", "b", "b", "c", "c"))
-  test_gr <- expand_ranges(gr, col1, .id = "id1")
+  test_gr <- expand_ranges(gr, col1, .id = "id1", .recursive = TRUE)
   expect_identical(correct_gr, test_gr)
   
   # one column test

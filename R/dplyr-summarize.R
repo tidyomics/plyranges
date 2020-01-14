@@ -1,8 +1,40 @@
 summarize_rng <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
-  results <- DataFrame(overscope_eval_update(overscope, dots, FALSE))
+  ans <- overscope_eval_update(overscope, dots, FALSE)
+  
+  # maintain list columns instead of collapsing them
+  is_list <- vapply(ans, function(.) is(., "List") || is(., "list"), logical(1))
+  
+  # compress list columns
+  if (any(is_list)) {
+    nr <- check_n(.data)
+    for (i in which(is_list)) {
+      if (length(ans[[i]]) == 1) {
+        ans[[i]] <- as(rep(ans[[i]], nr), "CompressedList")
+      } else {
+        
+        if (all(lengths(ans[[i]]) == length(ans[[i]][[1]]))) {
+          ans[[i]] <- as(BiocGenerics::Reduce(S4Vectors::pc, ans[[i]]), 
+                         "CompressedList")
+          # check length is equal to number of rows or records
+          stopifnot(length(ans[[i]]) == nr)
+        }
+        
+
+      }
+    } 
+  }
+  
+  results <- DataFrame(ans)
   rownames(results) <- NULL
   results
+}
+
+check_n <- function(.data) {
+  if (is(.data, "GroupedGenomicRanges") || is(.data, "GroupedIntegerRanges")) {
+    return(.data@n)
+  }
+  1L
 }
 
 #' Aggregate a Ranges object
