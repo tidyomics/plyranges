@@ -12,6 +12,11 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
+```{r, echo = FALSE}
+fig_path <- system.file("vignettes", package = "plyranges")
+```
+
+
 # `Ranges` revisited
 
 In Bioconductor there are two classes, `IRanges` and `GRanges`, 
@@ -80,8 +85,8 @@ The act of anchoring fixes either the start, end, center coordinates of the
 `Range` object, as shown in the figure and code below and anchors are used in
 combination with either `mutate` or `stretch`.
 
-```{r, echo = FALSE, out.width="400px", fig.align="center"}
-knitr::include_graphics("anchors.png", dpi = 150)
+```{r anchor_fig, echo = FALSE, out.width="400px", fig.align="center"}
+knitr::include_graphics(file.path(fig_path, "anchors.png"), dpi = 150)
 ```
 
 ```{r}
@@ -205,7 +210,7 @@ subject <- data.frame(seqnames = "chr1",
   as_granges()
 ```
 
-```{r, echo = FALSE, fig.cap = "Query and Subject Ranges", message = FALSE}
+```{r olap, echo = FALSE, fig.cap = "Query and Subject Ranges", message = FALSE}
 library(ggplot2)
 query_df <- as.data.frame(query)[, -6]
 query_df$key <- "Query"
@@ -232,8 +237,8 @@ adding the _directed_ suffix ensures that matching ranges have the
 same direction (strand).
 
 
-```{r echo = FALSE, out.width="600px"}
-knitr::include_graphics("olaps.png")
+```{r olaps-diagram, echo = FALSE, out.width="600px"}
+knitr::include_graphics(file.path(fig_path, "olaps.png"))
 ```
 
 The first function, `join_overlap_intersect()` will return a `Ranges` object where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input `Ranges`. It also returns any metadatain the subject range if the subject overlaps the query.
@@ -243,7 +248,7 @@ intersect_rng <- join_overlap_intersect(query, subject)
 intersect_rng
 ```
 
-```{r echo = FALSE, fig.cap="Intersect Join"}
+```{r intersect-join, echo = FALSE, fig.cap="Intersect Join"}
 intersect_df <- as.data.frame(intersect_rng)[, -c(6,7)]
 intersect_df$key <- "Intersect Join"
 melted_ranges <- rbind(query_df, subject_df, intersect_df)
@@ -270,7 +275,7 @@ inner_rng
 ```
 
 
-```{r, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
+```{r inner-join, echo = FALSE, fig.cap = "Inner Join", message = FALSE}
 inner_df <- as.data.frame(inner_rng)[, -c(6,7)]
 inner_df$ymin <- c(1,4)
 inner_df$ymax <- c(3,6)
@@ -308,7 +313,7 @@ left_rng <- join_overlap_left(query, subject)
 left_rng
 ```
 
-```{r, echo = FALSE, fig.cap = "Left Join", message = FALSE}
+```{r olap-left, echo = FALSE, fig.cap = "Left Join", message = FALSE}
 left_df <- as.data.frame(left_rng)[, -c(6,7)]
 left_df$ymin <- c(1,4, 1)
 left_df$ymax <- c(3,6, 3)
@@ -320,7 +325,8 @@ melted_ranges <- rbind(melted_ranges, left_df)
 melted_ranges$key <- factor(melted_ranges$key, 
                               levels = c("Query", "Subject", "Left Join"))
 
-ggplot(melted_ranges, aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
+ggplot(melted_ranges, 
+       aes(xmin = start, xmax = end, ymin = ymin, ymax = ymax)) +
   geom_rect() + 
   facet_grid(key ~ ., scales = "free_y") +
   scale_x_continuous(breaks = seq(1, 10, by = 1)) +
@@ -338,8 +344,8 @@ overlap those on the subject `Ranges` as well as the intervals on the left that 
 We also provide methods for finding nearest, preceding or following `Ranges`. Conceptually this is identical to our approach for finding
 overlaps, except the semantics of the join are different.
 
-```{r echo = FALSE, out.width="600px"}
-knitr::include_graphics("neighbours.png")
+```{r neigbours, echo = FALSE, out.width="600px"}
+knitr::include_graphics(file.path(fig_path, "neighbours.png"))
 ```
 
 ```{r}
