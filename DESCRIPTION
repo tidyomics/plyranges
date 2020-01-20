@@ -44,8 +44,7 @@ Suggests:
     BSgenome.Hsapiens.UCSC.hg19,
     pasillaBamSubset,
     covr,
-    ggplot2,
-    magick
+    ggplot2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
