@@ -12,11 +12,6 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 ---
 
-```{r, echo = FALSE}
-fig_path <- system.file("vignettes", package = "plyranges")
-```
-
-
 # `Ranges` revisited
 
 In Bioconductor there are two classes, `IRanges` and `GRanges`, 
@@ -86,7 +81,7 @@ The act of anchoring fixes either the start, end, center coordinates of the
 combination with either `mutate` or `stretch`.
 
 ```{r anchor_fig, echo = FALSE, out.width="400px", fig.align="center"}
-knitr::include_graphics(file.path(fig_path, "anchors.png"), dpi = 150)
+knitr::include_graphics("anchors.png", dpi = 150)
 ```
 
 ```{r}
@@ -238,7 +233,7 @@ same direction (strand).
 
 
 ```{r olaps-diagram, echo = FALSE, out.width="600px"}
-knitr::include_graphics(file.path(fig_path, "olaps.png"))
+knitr::include_graphics("olaps.png")
 ```
 
 The first function, `join_overlap_intersect()` will return a `Ranges` object where the start, end, and width coordinates correspond to the amount of any overlap between the left and right input `Ranges`. It also returns any metadatain the subject range if the subject overlaps the query.
@@ -345,7 +340,7 @@ We also provide methods for finding nearest, preceding or following `Ranges`. Co
 overlaps, except the semantics of the join are different.
 
 ```{r neigbours, echo = FALSE, out.width="600px"}
-knitr::include_graphics(file.path(fig_path, "neighbours.png"))
+knitr::include_graphics("neighbours.png")
 ```
 
 ```{r}
