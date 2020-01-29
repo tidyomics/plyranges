@@ -26,10 +26,16 @@ after_script: R -q -e 'tic::after_script()'
 # DO NOT CHANGE THE CODE ABOVE
 
 # Custom parts:
+addons:
+  apt:
+    update: true
+    sources:
+      - sourceline: 'ppa:opencpu/imagemagick'
+    packages:
+      - libmagick++-dev
 
 # Header
 language: r
-sudo: false
 dist: trusty
 cache: packages
 latex: false
