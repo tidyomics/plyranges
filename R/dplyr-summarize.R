@@ -14,7 +14,6 @@ summarize_rng <- function(.data, dots) {
 #' @seealso [dplyr::summarise()]
 #' @importFrom S4Vectors rbind cbind
 #' @importFrom dplyr summarise summarize
-#' @rdname ranges-summarise
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
 #' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))

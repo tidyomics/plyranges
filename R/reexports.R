@@ -2,11 +2,7 @@
 
 #' Rexported functions from the tidyverse
 #' 
-#' @rdname tidyverse-reexports
 #' @name tidyverse-reexports
-
-#' @rdname tidyverse-reexports
-
 #' @rdname tidyverse-reexports
 #' @importFrom rlang !!
 #' @export
