@@ -1,17 +1,19 @@
 #' @method select DeferredGenomicRanges
 #' @importFrom Rsamtools bamWhat<- bamTag<-
-#' @importFrom tidyselect vars_select
 #' @export
 select.DeferredGenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
  
   # check to see if we need to update cache, by selecting columns
   # that are not present in the delegate
-  vars <- try(vars_select(tbl_vars(.data@delegate), ...,
-                      .exclude =  c("start", "end", "width", "strand", "seqnames")),
+  vars <- tbl_vars(.data@delegate)
+  names(vars) <- vars 
+  pos <- try(tidyselect::eval_select(rlang::expr(c(...)),
+                                      vars,
+                                      exclude = parallelVectorNames(.data@delegate)),
               silent = TRUE)
   
   
-  if (is_empty_delegate(.data) | is(vars, "try-error")) {
+  if (is_empty_delegate(.data) || is(pos, "try-error")) {
     .data@ops <- select(.data@ops, ..., .drop_ranges = .drop_ranges)
     .data@delegate <- load_genomic_file(.data@ops)
   } else {

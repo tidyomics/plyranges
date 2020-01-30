@@ -107,13 +107,14 @@ ungroup.GroupedGenomicRanges <- function(x, ...) {
   if (length(ungroups) == 0L) {
     return(x@delegate)
   } else {
-    ungroups <- lapply(ungroups, function(.) rlang::quo(-!!.))
-    groups_update <- tidyselect::vars_select(group_vars(x), !!!ungroups)
+    gvars <- group_vars(x)
+    names(gvars) <- gvars
+    groups_update <- tidyselect::eval_select(rlang::expr(-c(...)), gvars)
     if (length(groups_update) == 0) {
       return(x@delegate)
     }
     
-    groups_update <- syms(groups_update)
+    groups_update <- syms(names(groups_update))
     new_grouping(x@delegate, !!!groups_update, target = class(x))
   }
 }
