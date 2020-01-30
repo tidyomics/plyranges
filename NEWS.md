@@ -1,3 +1,7 @@
+# plyranges 1.7.11
+
+* move from `tidyselect::vars_select()` to `tidyselect::eval_select()`
+
 # plyranges 1.7.7
 
 * update handling of list columns, `expand_ranges()` no longer takes
