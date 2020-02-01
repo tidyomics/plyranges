@@ -48,6 +48,7 @@ select_rng <- function(.data, .drop_ranges, ...) {
 #' @seealso [dplyr::select()]
 #' @importFrom dplyr select
 #' @importFrom tidyselect eval_select
+#' @importFrom S4Vectors parallelVectorNames
 #' @examples
 #' df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
 #' strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10), counts = rpois(10, 2))
