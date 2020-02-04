@@ -1,11 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-<<<<<<< HEAD
-Version: 1.6.7
-=======
-Version: 1.7.12
->>>>>>> 6d90809... import parallelVectorNames to remove note from build
+Version: 1.6.8
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
