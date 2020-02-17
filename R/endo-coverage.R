@@ -29,3 +29,8 @@ compute_coverage.default <- function(x, shift = 0L, width = NULL, weight = 1L, .
   as_ranges(coverage(x, shift, width, weight, ...))
 }
 
+
+setMethod("coverage", "DelegatingGenomicRanges",
+          function(x, shift = 0L, width = NULL, weight = 1L, ...) {
+            coverage(load_delegate(x), shift, width, weight, ...)
+          })

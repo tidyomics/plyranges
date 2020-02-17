@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.7.12
+Version: 1.7.13
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
@@ -22,7 +22,7 @@ Imports:
   dplyr, 
   rlang (>= 0.2.0), 
   magrittr,
-  tidyselect,
+  tidyselect (>= 1.0.0),
   rtracklayer,
   GenomicAlignments,
   GenomeInfoDb,
