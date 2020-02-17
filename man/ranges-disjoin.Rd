@@ -15,7 +15,7 @@ disjoin_ranges_directed(.data, ...)
 \item{...}{Name-value pairs of summary functions.}
 }
 \value{
-a Ranges object with the
+a Ranges object that is now disjoint (no bases overlap).
 }
 \description{
 Disjoin then aggregate a Ranges object

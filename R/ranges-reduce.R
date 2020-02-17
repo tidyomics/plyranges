@@ -1,9 +1,12 @@
 # ranges-reduce
 group_by_revmap <- function(.data, revmap) {
   groups <- Rle(seq_along(revmap), elementNROWS(revmap))
-  groups <- groups[order(unlist(revmap))]
+  
+  group_vars <- syms(c(group_vars(.data), "revmap"))
+  .data <- ungroup(.data)
+  .data <- .data[unlist(revmap)]
   mcols(.data)[["revmap"]] <- groups
-  group_by(.data, !!!syms("revmap"), add = TRUE)
+  return(group_by(.data, !!!group_vars))
 } 
 
 make_key_rle <- function(x) {
