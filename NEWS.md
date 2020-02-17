@@ -1,3 +1,14 @@
+# plyranges 1.7.14
+
+* fixes reduce/disjoin internals cleans up disjoin cases when
+an expansion occurs
+
+# plyranges 1.7.13
+
+* set tidyselect version to be v 1.0
+* set coverage method for delegating ranges
+* fix docs for bam reading
+
 # plyranges 1.7.11
 
 * move from `tidyselect::vars_select()` to `tidyselect::eval_select()`
