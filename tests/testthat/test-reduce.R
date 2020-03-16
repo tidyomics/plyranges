@@ -136,7 +136,8 @@ test_that("expected behaviour for grouped filter w reduce #37",
                                           width = sample(6,  n, replace = TRUE))
             )
             mcols(r) <- data.frame(score = runif(n, 0, 100), 
-                                   condition = rep_len(c("One","Two"), n))
+                                   condition = rep_len(c("One","Two"), n),
+                                   stringsAsFactors = TRUE)
             red1 <- r %>% group_by(condition) %>% reduce_ranges()
             
             exp <- S4Vectors::split(r, r$condition) %>% 
