@@ -137,7 +137,7 @@ test_that("expected behaviour for grouped filter w reduce #37",
             )
             mcols(r) <- data.frame(score = runif(n, 0, 100), 
                                    condition = rep_len(c("One","Two"), n))
-            red1 <- r %>% group_by(condition) %>% reduce_ranges
+            red1 <- r %>% group_by(condition) %>% reduce_ranges()
             
             exp <- S4Vectors::split(r, r$condition) %>% 
               reduce() %>%
@@ -151,7 +151,7 @@ test_that("expected behaviour for grouped filter w reduce #37",
             red2 <- r %>%  
               group_by(condition) %>% 
               filter(score > 2) %>% 
-              reduce_ranges
+              reduce_ranges()
             
             exp <- S4Vectors::split(r, r$condition) 
             is_gt2 <- as(lapply(exp, function(x) x$score > 2), "List")

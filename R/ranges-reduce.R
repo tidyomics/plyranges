@@ -1,10 +1,8 @@
 # ranges-reduce
-group_by_revmap <- function(.data, revmap) {
-  groups <- Rle(seq_along(revmap), elementNROWS(revmap))
-  
+group_by_revmap <- function(.data, indexes, groups) {
   group_vars <- syms(c(group_vars(.data), "revmap"))
   .data <- ungroup(.data)
-  .data <- .data[unlist(revmap)]
+  .data <- .data[unlist(indexes)]
   mcols(.data)[["revmap"]] <- groups
   return(group_by(.data, !!!group_vars))
 } 
@@ -13,11 +11,23 @@ make_key_rle <- function(x) {
   Rle(as.integer(S4Vectors::runValue(x)), S4Vectors::runLength(x))
 }
 
-add_revmap_grouping <- function(.data, key, lookup) {
-  key <- make_key_rle(key)
+make_revmap_rle <- function(x) {
+  Rle(seq_along(x), elementNROWS(x))
+}
+
+unsplice <- function(x, y) x[unlist(y)]
+
+
+
+add_revmap_grouping <- function(.data, key, revmap) {
+  # lookup indexes for each group
+  lookup <- S4Vectors::splitAsList(revmap, key)
   inx <- .group_rows(.data)
-  grouping <- inx[key][lookup]
-  group_by_revmap(.data, grouping)
+  # indexes we will expand by
+  indexes <- S4Vectors::mendoapply(unsplice, inx, lookup)
+  # groupings from revmap
+  groups <- make_revmap_rle(revmap)
+  group_by_revmap(.data, indexes, groups)
 }
 
 reduce_single <- function(.data, ..., rfun = reduce) {
@@ -27,7 +37,9 @@ reduce_single <- function(.data, ..., rfun = reduce) {
   }
   reduced <- rfun(.data, with.revmap = TRUE)
   
-  .data <- group_by_revmap(.data, mcols(reduced)[["revmap"]])
+  .data <- group_by_revmap(.data, 
+                           mcols(reduced)[["revmap"]],
+                           make_revmap_rle(mcols(reduced)[["revmap"]]))
   
   sd <- summarise(.data, !!!dots)
   

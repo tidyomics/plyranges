@@ -1,5 +1,9 @@
 # plyranges 1.7.14
 
+* further fixes to reduce/disjoin internals
+
+# plyranges 1.7.14
+
 * fixes reduce/disjoin internals cleans up disjoin cases when
 an expansion occurs
 
@@ -16,7 +20,7 @@ an expansion occurs
 # plyranges 1.7.7
 
 * update handling of list columns, `expand_ranges()` no longer takes
-cartesian produce if lists are parallel. `summarize()` properly handles list
+cartesian product if lists are parallel. `summarize()` properly handles list
 column output without blowing out number of columns. 
 
 # plyranges 1.7.6 
