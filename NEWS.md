@@ -1,4 +1,9 @@
-# plyranges 1.7.14
+# plyranges 1.7.16
+
+* refactoring of select internals, improved speed when casting a GRanges -> 
+DataFrame
+
+# plyranges 1.7.15
 
 * further fixes to reduce/disjoin internals
 

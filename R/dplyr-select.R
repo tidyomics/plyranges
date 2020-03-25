@@ -4,6 +4,12 @@ select_rng <- function(.data, .drop_ranges, ...) {
   names(var_names) <- var_names
   if (.drop_ranges) {
     pos <- tidyselect::eval_select(rlang::expr(c(...)), var_names)
+    
+    .env <- overscope_ranges(.data)
+    
+    ans <- lapply(syms(names(pos)), eval_tidy, data = .env)
+    names(ans) <- names(pos)
+    return(as(ans, "DataFrame"))
   } else {
     
     core <- S4Vectors::parallelVectorNames(.data)
@@ -17,14 +23,6 @@ select_rng <- function(.data, .drop_ranges, ...) {
       invalid_cols <- paste(core, collapse = ", ")
       stop(paste0("Cannot select/rename the following columns: ",invalid_cols))
     }
-  }
-
-  # do not need to use any tidyeval here
-  if (.drop_ranges) {
-    .data <- as.data.frame(.data)[, var_names, drop = FALSE]
-    .data <- .data[, pos, drop = FALSE]
-    names(.data) <- names(pos)
-    return(as(.data, "DataFrame"))
   }
   
   mcols(.data) <- mcols(.data)[ , pos, drop = FALSE]
