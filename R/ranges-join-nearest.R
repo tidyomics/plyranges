@@ -170,7 +170,8 @@ join_nearest_downstream.GenomicRanges <- function(x, y, suffix = c(".x", ".y"), 
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
-####### Utils
+# -----------------------
+# Nearest Distance Utils
 
 #' Add distance to nearest feature
 #' 
@@ -202,40 +203,12 @@ join_nearest_downstream.GenomicRanges <- function(x, y, suffix = c(".x", ".y"), 
 #' add_nearest_distance(query, subject)
 #' add_nearest_distance(query, subject, ignore.strand = TRUE)
 add_nearest_distance <- function(query, subject = query, ..., .id = "distance", suffix = ".y"){
-  UseMethod("add_nearest_distance")
   
-}
-
-#' @export 
-add_nearest_distance.GenomicRanges <- function(query, subject = query, ..., .id = "distance", suffix = ".y"){
   hits <- distanceToNearest(query, subject, ...)
-  colname <- add_suffix(.id, suffix, names(mcols(query)))
   
-  mcols(query)[colname] <- mcols(hits)$distance
-  return(query)
+  add_distance_col(query, hits, colname = .id, suffix = suffix)
   
 }
-
-#' @export 
-#' @importFrom S4Vectors DataFrame
-add_nearest_distance.IRanges <- function(query, subject = query, ..., .id = "distance", suffix = ".y"){
-  hits <- distanceToNearest(query, subject, ...)
-  colname <- add_suffix(.id, suffix, names(mcols(query)))
-  
-  # For some reason, assigning mcols on IRanges w/ NULL mcols
-  # causes replacement length error
-  # This is a workaround
-  if (is.null(mcols(query))){
-    metadata <- DataFrame(colname = mcols(hits)$distance)
-    mcols(query) <- metadata
-  } else {
-    mcols(query)[colname] <- mcols(hits)$distance
-  }
-  
-  return(query)
-  
-}
-
 
 #' Add suffix to column name
 #' 
@@ -289,10 +262,18 @@ add_nearest_hits_distance <- function(expanded_hits, hits, suffix = ".y", distan
   return(expanded_hits)
 }
 
+#' @param ranges ranges object from join_nearest expand_hits internal function
+#'
+#' @param hits  hits from distanceToNearest
+#' @param colname name of column to hold distance values
+#' @param suffix suffix to add to colname if exists
+#'
+#' @noRd
 add_distance_col <- function(ranges, hits, colname = "distance", suffix = ".y"){
   UseMethod("add_distance_col")
 }
 
+#' @noRd
 add_distance_col.GenomicRanges <- function(ranges, hits, colname = "distance", suffix = ".y"){
   
   if (!("distance" %in% names(mcols(hits)))) {
@@ -306,6 +287,7 @@ add_distance_col.GenomicRanges <- function(ranges, hits, colname = "distance", s
   return(ranges)
 }
 
+#' @noRd
 add_distance_col.IRanges <- function(ranges, hits, colname = "distance", suffix = ".y"){
   
   if (!("distance" %in% names(mcols(hits)))) {
