@@ -74,7 +74,7 @@ join_nearest <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
 #'   `character(1)`, will use that as distance column name. (Default: FALSE)
 #'
 #' @noRd
-add_nearest_distance <- function(expanded_hits, hits, suffix = ".y", distance = FALSE){
+add_nearest_hits_distance <- function(expanded_hits, hits, suffix = ".y", distance = FALSE){
   if (!("distance" %in% names(mcols(hits)))) {
     stop("hits object must contain a distance column")
   }
@@ -113,14 +113,14 @@ add_nearest_distance <- function(expanded_hits, hits, suffix = ".y", distance = 
 join_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- make_hits(x, y, distanceToNearest, select = "arbitrary")
   join <- expand_by_hits(x, y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @export
 join_nearest.GenomicRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- make_hits(x, y, distanceToNearest, select = "arbitrary", ignore.strand = TRUE)
   join <- expand_by_hits(x, y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @rdname ranges-nearest
@@ -136,7 +136,7 @@ join_nearest_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distanc
     end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
   join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @export
@@ -146,7 +146,7 @@ join_nearest_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y"), distanc
     end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
   join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @importFrom IRanges nearest
@@ -160,7 +160,7 @@ join_nearest_right.IntegerRanges <- function(x, y, suffix = c(".x", ".y"), dista
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]
   join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @export
@@ -169,7 +169,7 @@ join_nearest_right.GenomicRanges <- function(x, y,  suffix = c(".x", ".y"), dist
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   hits <- hits[mcols(hits)$is_right]
   join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 
@@ -188,7 +188,7 @@ join_nearest_upstream.GenomicRanges <- function(x, y,  suffix = c(".x", ".y"), d
                                     mcols(hits)$is_right)
   hits <- hits[mcols(hits)$is_upstream]
   join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @rdname ranges-nearest
@@ -210,5 +210,5 @@ join_nearest_downstream.GenomicRanges <- function(x, y, suffix = c(".x", ".y"), 
 
   hits <- hits[mcols(hits)$is_downstream]
   join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_distance(join, hits, suffix[2], distance)
+  add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
