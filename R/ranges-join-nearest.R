@@ -298,7 +298,8 @@ add_distance_col.IRanges <- function(ranges, hits, colname = "distance", suffix 
   colname <- add_suffix(colname, suffix = suffix, names(mcols(ranges)))
   
   if (is.null(mcols(ranges))){
-    metadata <- DataFrame(colname = mcols(hits)$distance)
+    metadata <- DataFrame("distance" = mcols(hits)$distance)
+    names(metadata) <- colname
     mcols(ranges) <- metadata
   } else {
     mcols(ranges)[colname] <- mcols(hits)$distance
