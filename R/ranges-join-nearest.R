@@ -210,6 +210,32 @@ add_nearest_distance <- function(query, subject = query, ..., .id = "distance", 
   
 }
 
+#' @param expanded_hits output of expand_hits()
+#' @param hits output from make_hits() when f_in() = nearestDistance
+#' @param suffix suffix to prepend to distance column if name exists already
+#' @param distance `logical(1)` whether to add "distance" column to output. If set to
+#'   `character(1)`, will use that as distance column name. (Default: FALSE)
+#'
+#' @noRd
+add_nearest_hits_distance <- function(expanded_hits, hits, suffix = ".y", distance = FALSE){
+  
+  if (length(distance) > 1){
+    stop("distance must be of length 1")
+  }
+  
+  if (distance == TRUE){
+    
+    expanded_hits <- add_distance_col(expanded_hits, hits, colname = "distance", suffix = suffix)
+    
+  } else if (is.character(distance)) {
+    
+    expanded_hits <- add_distance_col(expanded_hits, hits, colname = distance, suffix = suffix)
+  }
+  
+  return(expanded_hits)
+}
+
+
 #' Add suffix to column name
 #' 
 #' I think dplyr::add_count will change how they add names in 1.0.0
@@ -235,31 +261,6 @@ add_suffix <- function(name, suffix, names){
     return(name)
   }
   add_suffix(name, suffix, names)
-}
-
-#' @param expanded_hits output of expand_hits()
-#' @param hits output from make_hits() when f_in() = nearestDistance
-#' @param suffix suffix to prepend to distance column if name exists already
-#' @param distance `logical(1)` whether to add "distance" column to output. If set to
-#'   `character(1)`, will use that as distance column name. (Default: FALSE)
-#'
-#' @noRd
-add_nearest_hits_distance <- function(expanded_hits, hits, suffix = ".y", distance = FALSE){
-  
-  if (length(distance) > 1){
-    stop("distance must be of length 1")
-  }
-  
-  if (distance == TRUE){
-    
-    expanded_hits <- add_distance_col(expanded_hits, hits, colname = "distance", suffix = suffix)
-    
-  } else if (is.character(distance)) {
-    
-    expanded_hits <- add_distance_col(expanded_hits, hits, colname = distance, suffix = suffix)
-  }
-  
-  return(expanded_hits)
 }
 
 #' @param ranges ranges object from join_nearest expand_hits internal function
