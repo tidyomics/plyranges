@@ -88,7 +88,7 @@ join_nearest_left <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
 
 #' @export
 join_nearest_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- make_hits(x, y, nearest, select = "all")
+  hits <- make_hits(x, y, distanceToNearest, select = "all")
   mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
     end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
   hits <- hits[mcols(hits)$is_left]
@@ -253,6 +253,9 @@ add_nearest_distance.IRanges <- function(query, subject = query, ..., .id = "dis
 #'     a unique name is found
 #' @noRd
 add_suffix <- function(name, suffix, names){
+  
+  stopifnot(length(suffix) == 1)
+  
   if (name %in% names) {
     name <- paste0(name, suffix)
   } else {
@@ -269,23 +272,53 @@ add_suffix <- function(name, suffix, names){
 #'
 #' @noRd
 add_nearest_hits_distance <- function(expanded_hits, hits, suffix = ".y", distance = FALSE){
-  if (!("distance" %in% names(mcols(hits)))) {
-    stop("hits object must contain a distance column")
-  }
   
   if (length(distance) > 1){
     stop("distance must be of length 1")
   }
   
   if (distance == TRUE){
-    mcols(expanded_hits)$distance <- mcols(hits)$distance
+    
+    expanded_hits <- add_distance_col(expanded_hits, hits, colname = "distance", suffix = suffix)
+    
   } else if (is.character(distance)) {
     
-    
-    distance <- add_suffix(distance, suffix, names(mcols(expanded_hits)))
-    
-    mcols(expanded_hits)[distance] <- mcols(hits)$distance
+    expanded_hits <- add_distance_col(expanded_hits, hits, colname = distance, suffix = suffix)
   }
   
   return(expanded_hits)
+}
+
+add_distance_col <- function(ranges, hits, colname = "distance", suffix = ".y"){
+  UseMethod("add_distance_col")
+}
+
+add_distance_col.GenomicRanges <- function(ranges, hits, colname = "distance", suffix = ".y"){
+  
+  if (!("distance" %in% names(mcols(hits)))) {
+    stop("hits object must contain a distance column")
+  }
+  
+  colname <- add_suffix(colname, suffix, names(mcols(ranges)))
+  
+  mcols(ranges)[colname] <- mcols(hits)$distance
+  
+  return(ranges)
+}
+
+add_distance_col.IRanges <- function(ranges, hits, colname = "distance", suffix = ".y"){
+  
+  if (!("distance" %in% names(mcols(hits)))) {
+    stop("hits object must contain a distance column")
+  }
+  
+  colname <- add_suffix(colname, suffix = suffix, names(mcols(ranges)))
+  
+  if (is.null(mcols(ranges))){
+    metadata <- DataFrame(colname = mcols(hits)$distance)
+    mcols(ranges) <- metadata
+  } else {
+    mcols(ranges)[colname] <- mcols(hits)$distance
+  }
+  return(ranges)
 }
