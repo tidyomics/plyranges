@@ -5,19 +5,19 @@
 #' @param suffix A character vector of length two used to identify metadata columns
 #' coming from x and y.
 #'
-#' @details By default `join_nearest` will find abritrary nearest
+#' @details By default `join_nearest` will find arbitrary nearest
 #' neighbours in either direction and ignore any strand information.
 #' The `join_nearest_left` and `join_nearest_right`  methods
-#' will find abritrary nearest neighbour ranges on x that are left/right of
+#' will find arbitrary nearest neighbour ranges on x that are left/right of
 #' those on y and ignore any strand information.
 #'
-#' The `join_nearest_upstream` method will find abritrary nearest
+#' The `join_nearest_upstream` method will find arbitrary nearest
 #' neighbour ranges on x that are upstream of those on y. This takes into
 #' account strandedness of the ranges.
 #' On the positive strand nearest upstream will be on the
 #' left and on the negative strand nearest upstream will be on the right.
 #'
-#' The `join_nearest_downstream` method will find abritrary nearest
+#' The `join_nearest_downstream` method will find arbitrary nearest
 #' neighbour ranges on x that are upstream of those on y. This takes into
 #' account strandedness of the ranges.On the positive strand nearest downstream
 #' will be on the right and on the negative strand nearest upstream will be on
