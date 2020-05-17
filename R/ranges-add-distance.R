@@ -1,18 +1,48 @@
-#' Add distance to nearest feature
+#' Macro for building add_nearest_distance_* family of functions
+#' Change this to edit defaults for all functions
+make_add_nearest_distance <- function(fun){
+  f <- function(query, subject = query, .id = "distance", suffix = ".y"){
+    hits <- fun(query, subject)
+    
+    add_distance_col(query, hits, colname = .id, suffix = suffix)
+  }
+}
+
+#' Add distance to nearest neighbours between two Ranges objects
 #' 
-#' A light wrapper around `distanceToNearest()` for appending distance values to query ranges.
+#' Appends distance to nearest subject range to query ranges similar to setting
+#' `distance` in `join_nearest_`. Distance is set to `NA` for features with no
+#' nearest feature by the selected nearest metric.
 #'
 #' @param query The query ranges
 #' @param subject the subject ranges within which the nearest ranges are found.
 #'   If missing, query ranges are used as the subject.
-#' @param ... Additional arguments passed to distanceToNearest()
 #' @param .id column name to create containing distance values
 #' @param suffix if .id already exists as column in query, prepend this value to .id column name
+#'   
+#' @details By default `add_nearest_distance` will find arbitrary nearest
+#' neighbours in either direction and ignore any strand information.
+#' The `add_nearest_distance_left` and `add_nearest_distance_right`  methods
+#' will find arbitrary nearest neighbour ranges on x that are left/right of
+#' those on y and ignore any strand information.
+#'
+#' The `add_nearest_distance_upstream` method will find arbitrary nearest
+#' neighbour ranges on x that are upstream of those on y. This takes into
+#' account strandedness of the ranges.
+#' On the positive strand nearest upstream will be on the
+#' left and on the negative strand nearest upstream will be on the right.
+#'
+#' The `add_nearest_distance_downstream` method will find arbitrary nearest
+#' neighbour ranges on x that are upstream of those on y. This takes into
+#' account strandedness of the ranges. On the positive strand nearest downstream
+#' will be on the right and on the negative strand nearest upstream will be on
+#' the left.
 #'
 #' @return query ranges with additional column containing the distance to the
 #'   nearest range in subject.
 #'  
-#' @seealso ranges-nearest
+#' @rdname add-nearest-distance
+#' @seealso \code{\link{join_nearest}}
 #' @export
 #'
 #' @examples
@@ -26,28 +56,25 @@
 #'              as_iranges()
 #'              
 #' add_nearest_distance(query, subject)
-#' add_nearest_distance(query, subject, ignore.strand = TRUE)
-#add_nearest_distance <- function(query, subject = query, ..., .id = "distance", suffix = ".y"){
-#  
-#  hits <- distanceToNearest(query, subject, ...)
-#  
-#  add_distance_col(query, hits, colname = .id, suffix = suffix)
-#  
-#}
-
-#' Macro for building add_nearest_distance_* family of functions
-make_add_nearest_distance <- function(fun){
-  f <- function(query, subject = query, .id = "distance", suffix = ".y"){
-    hits <- fun(query, subject)
-    
-    add_distance_col(query, hits, colname = .id, suffix = suffix)
-  }
-}
-
+#' add_nearest_distance_left(query, subject)
+#' add_nearest_distance_left(query)
+#' @export
 add_nearest_distance <- make_add_nearest_distance(hits_nearest)
+
+#' @rdname add-nearest-distance
+#' @export
 add_nearest_distance_left <- make_add_nearest_distance(hits_nearest_left)
+
+#' @rdname add-nearest-distance
+#' @export
 add_nearest_distance_right <- make_add_nearest_distance(hits_nearest_right)
+
+#' @rdname add-nearest-distance
+#' @export
 add_nearest_distance_upstream <- make_add_nearest_distance(hits_nearest_upstream)
+
+#' @rdname add-nearest-distance
+#' @export
 add_nearest_distance_downstream <- make_add_nearest_distance(hits_nearest_downstream)
 
 #' @param expanded_hits output of expand_hits()

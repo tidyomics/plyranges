@@ -8,22 +8,26 @@
 \alias{join_nearest_downstream}
 \title{Find nearest neighbours between two Ranges objects}
 \usage{
-join_nearest(x, y, suffix = c(".x", ".y"))
+join_nearest(x, y, suffix = c(".x", ".y"), distance = FALSE)
 
-join_nearest_left(x, y, suffix = c(".x", ".y"))
+join_nearest_left(x, y, suffix = c(".x", ".y"), distance = FALSE)
 
-join_nearest_right(x, y, suffix = c(".x", ".y"))
+join_nearest_right(x, y, suffix = c(".x", ".y"), distance = FALSE)
 
-join_nearest_upstream(x, y, suffix = c(".x", ".y"))
+join_nearest_upstream(x, y, suffix = c(".x", ".y"), distance = FALSE)
 
-join_nearest_downstream(x, y, suffix = c(".x", ".y"))
+join_nearest_downstream(x, y, suffix = c(".x", ".y"), distance = FALSE)
 }
 \arguments{
 \item{x, y}{Ranges objects, add the nearest neighbours of ranges in x to
 those in y.}
 
-\item{suffix}{A character vector of length two used to identify metadata columns
-coming from x and y.}
+\item{suffix}{A character vector of length two used to identify metadata columns}
+
+\item{distance}{logical vector whether to add "distance" column to output. If set to
+a character vector of length 1, will use that as distance column name. If a
+column matching the distance column already exits, will prepend the suffix
+for y with a warning.}
 }
 \value{
 A Ranges object corresponding to the nearest ranges, all metadata
@@ -33,19 +37,19 @@ is copied over from the right-hand side ranges \code{y}.
 Find nearest neighbours between two Ranges objects
 }
 \details{
-By default \code{join_nearest} will find abritrary nearest
+By default \code{join_nearest} will find arbitrary nearest
 neighbours in either direction and ignore any strand information.
 The \code{join_nearest_left} and \code{join_nearest_right}  methods
-will find abritrary nearest neighbour ranges on x that are left/right of
+will find arbitrary nearest neighbour ranges on x that are left/right of
 those on y and ignore any strand information.
 
-The \code{join_nearest_upstream} method will find abritrary nearest
+The \code{join_nearest_upstream} method will find arbitrary nearest
 neighbour ranges on x that are upstream of those on y. This takes into
 account strandedness of the ranges.
 On the positive strand nearest upstream will be on the
 left and on the negative strand nearest upstream will be on the right.
 
-The \code{join_nearest_downstream} method will find abritrary nearest
+The \code{join_nearest_downstream} method will find arbitrary nearest
 neighbour ranges on x that are upstream of those on y. This takes into
 account strandedness of the ranges.On the positive strand nearest downstream
 will be on the right and on the negative strand nearest upstream will be on
