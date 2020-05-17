@@ -45,7 +45,17 @@ add_distance_col.GenomicRanges <- function(ranges, hits, colname = "distance", s
   
   colname <- add_colname_suffix(colname, suffix, names(mcols(ranges)))
   
-  mcols(ranges)[colname] <- mcols(hits)$distance
+  # This is to fix a failure with upstream/downstream joins if using add_dist_or_NA
+  # Ranges & hits should only be same length if they've undergone a join operation,
+  # in which case the order should correspond to query regions anyway 
+  # (this was old default behavior)
+  if (length(ranges) == length(hits)){
+    mcols(ranges)[colname] <- mcols(hits)$distance
+  } else {
+    # This allows add_nearest_distance_* family functions to work
+    # by adding an NA if there is no nearest feature
+    ranges <- add_distance_or_NA(ranges, hits, colname)
+  }
   
   return(ranges)
 }
@@ -59,12 +69,29 @@ add_distance_col.IRanges <- function(ranges, hits, colname = "distance", suffix 
   
   colname <- add_colname_suffix(colname, suffix = suffix, names(mcols(ranges)))
   
+  # initialize distance col with NA_integer_ if no metadata exists
+  # must do this because setting mcols() when empty on IRanges fails
   if (is.null(mcols(ranges))){
-    metadata <- DataFrame("distance" = mcols(hits)$distance)
+    metadata <- DataFrame("distance" = NA_integer_)
     names(metadata) <- colname
     mcols(ranges) <- metadata
-  } else {
+  } 
+  
+  if (length(ranges) == length(hits)){
     mcols(ranges)[colname] <- mcols(hits)$distance
+  } else {
+    ranges <- add_distance_or_NA(ranges, hits, colname)
   }
+  
   return(ranges)
 }
+
+add_distance_or_NA <- function(query, hits, colname = "distance"){
+  # Problem: if ranges don't have nearest entry, hits object will be incomplete
+  # Solution: add distance by queryHits
+  # set NA if not present
+  mcols(query)[colname] <- NA_integer_
+  mcols(query[queryHits(hits)])[colname] <- mcols(hits)$distance
+  return(query)
+}
+
