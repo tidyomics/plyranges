@@ -68,14 +68,14 @@ join_nearest <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
 
 #' @export
 join_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest(x, y, suffix)
+  hits <- hits_nearest(x, y)
   join <- expand_by_hits(x, y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @export
 join_nearest.GenomicRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest(x, y, suffix)
+  hits <- hits_nearest(x, y)
   join <- expand_by_hits(x, y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
@@ -89,14 +89,14 @@ join_nearest_left <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
 
 #' @export
 join_nearest_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_left(x, y, suffix)
+  hits <- hits_nearest_left(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @export
 join_nearest_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_left(x, y, suffix)
+  hits <- hits_nearest_left(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
@@ -109,14 +109,14 @@ join_nearest_right <- function(x, y,  suffix = c(".x", ".y"), distance = FALSE) 
 
 #' @export
 join_nearest_right.IntegerRanges <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_right(x, y, suffix)
+  hits <- hits_nearest_right(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 #' @export
 join_nearest_right.GenomicRanges <- function(x, y,  suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_right(x, y, suffix)
+  hits <- hits_nearest_right(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
@@ -128,7 +128,7 @@ join_nearest_upstream <- function(x, y,  suffix = c(".x", ".y"), distance = FALS
 
 #' @export
 join_nearest_upstream.GenomicRanges <- function(x, y,  suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_upstream(x, y, suffix)
+  hits <- hits_nearest_upstream(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
@@ -140,45 +140,94 @@ join_nearest_downstream <- function(x, y,  suffix = c(".x", ".y"), distance = FA
 
 #' @export
 join_nearest_downstream.GenomicRanges <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_downstream(x, y, suffix)
+  hits <- hits_nearest_downstream(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
 # -----------------------
-# Directed join hits helpers
-hits_nearest <- function(x, y, suffix){
+# Directed hits helpers
+
+hits_nearest <- function(x, y){ 
+  UseMethod("hits_nearest")
+}
+hits_nearest_left <- function(x, y){ 
+  UseMethod("hits_nearest_left")
+}
+hits_nearest_right <- function(x, y){ 
+  UseMethod("hits_nearest_right")
+}
+hits_nearest_upstream <- function(x, y){ 
+  UseMethod("hits_nearest_upstream")
+}
+hits_nearest_downstream <- function(x, y){ 
+  UseMethod("hits_nearest_downstream")
+}
+
+hits_nearest.IRanges <- function(x, y){
+  make_hits(x, y, distanceToNearest, select = "arbitrary")
+}
+
+hits_nearest.GenomicRanges <- function(x, y){
   make_hits(x, y, distanceToNearest, select = "arbitrary", ignore.strand = TRUE)
 }
 
-hits_nearest_left <- function(x, y, suffix){
-  hits <- make_hits(x, y, distanceToNearest, select = "all", ignore.strand = TRUE)
-  mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
-    end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
-  hits <- hits[mcols(hits)$is_left]
-  return(hits)
-}
-hits_nearest_right <- function(x, y, suffix){
-  hits <- make_hits(x, y, distanceToNearest, select = "all", ignore.strand = TRUE)
-  mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
-  hits <- hits[mcols(hits)$is_right]
-  return(hits)
+hits_nearest_left.IRanges <- function(x, y){
+  hits <- make_hits(x, y, distanceToNearest, select = "all")
+  get_hits_left(x, y, hits)
 }
 
-hits_nearest_upstream <- function(x, y, suffix){
+hits_nearest_left.GenomicRanges <- function(x, y){
+  hits <- make_hits(x, y, distanceToNearest, select = "all", ignore.strand = TRUE)
+  get_hits_left(x,y, hits)
+}
+
+hits_nearest_right.IRanges <- function(x, y){
+  hits <- make_hits(x, y, distanceToNearest, select = "all")
+  get_hits_right(x, y, hits)
+}
+
+hits_nearest_right.GenomicRanges <- function(x, y){
+  hits <- make_hits(x, y, distanceToNearest, select = "all", ignore.strand = TRUE)
+  get_hits_right(x, y, hits)
+}
+
+hits_nearest_upstream.GenomicRanges <- function(x, y){
   hits <- distanceToNearest(x,y, select = "all", ignore.strand = FALSE)
+  get_hits_upstream(x, y, hits)
+}
+
+hits_nearest_downstream.GenomicRanges <- function(x, y){
+  hits <- distanceToNearest(x,y, select = "all", ignore.strand = FALSE)
+  get_hits_downstream(x, y, hits)
+}
+
+
+# -----------------------
+# Hits logic helpers
+
+get_hits_left <- function(x, y, hits){
+  mcols(hits)$is_left <- start(y[subjectHits(hits)]) <= start(x[queryHits(hits)]) &
+    end(y[subjectHits(hits)]) <= start(x[queryHits(hits)])
+  hits[mcols(hits)$is_left]
+}
+
+get_hits_right <- function(x, y, hits){
+  mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
+  hits[mcols(hits)$is_right]
+}
+
+get_hits_upstream <- function(x, y, hits){
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   mcols(hits)$is_left <- start(x[queryHits(hits)]) >= start(y[subjectHits(hits)])
   mcols(hits)$direction <- strand(x[queryHits(hits)])
   mcols(hits)$is_upstream <- ifelse(mcols(hits)$direction == "+",
                                     mcols(hits)$is_left,
                                     mcols(hits)$is_right)
-  hits <- hits[mcols(hits)$is_upstream]
-  return(hits)
+  hits[mcols(hits)$is_upstream]
 }
 
-hits_nearest_downstream <- function(x, y, suffix){
-  hits <- distanceToNearest(x,y, select = "all", ignore.strand = FALSE)
+get_hits_downstream <- function(x, y, hits){
   mcols(hits)$is_right <- end(x[queryHits(hits)]) <= start(y[subjectHits(hits)])
   mcols(hits)$is_left <- start(x[queryHits(hits)]) >= start(y[subjectHits(hits)])
   mcols(hits)$direction <- strand(x[queryHits(hits)])
@@ -188,6 +237,5 @@ hits_nearest_downstream <- function(x, y, suffix){
                                     mcols(hits)$is_left,
                                     mcols(hits)$is_right)
 
-  hits <- hits[mcols(hits)$is_downstream]
-  return(hits)
+  hits[mcols(hits)$is_downstream]
 }
