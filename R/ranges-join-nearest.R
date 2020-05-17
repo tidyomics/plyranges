@@ -164,39 +164,47 @@ hits_nearest_downstream <- function(x, y){
   UseMethod("hits_nearest_downstream")
 }
 
+#' @importFrom IRanges distanceToNearest
 hits_nearest.IRanges <- function(x, y){
   make_hits(x, y, distanceToNearest, select = "arbitrary")
 }
 
+#' @importFrom GRanges distanceToNearest
 hits_nearest.GenomicRanges <- function(x, y){
   make_hits(x, y, distanceToNearest, select = "arbitrary", ignore.strand = TRUE)
 }
 
+#' @importFrom IRanges distanceToNearest
 hits_nearest_left.IRanges <- function(x, y){
   hits <- make_hits(x, y, distanceToNearest, select = "all")
   get_hits_left(x, y, hits)
 }
 
+#' @importFrom GRanges distanceToNearest
 hits_nearest_left.GenomicRanges <- function(x, y){
   hits <- make_hits(x, y, distanceToNearest, select = "all", ignore.strand = TRUE)
   get_hits_left(x,y, hits)
 }
 
+#' @importFrom IRanges distanceToNearest
 hits_nearest_right.IRanges <- function(x, y){
   hits <- make_hits(x, y, distanceToNearest, select = "all")
   get_hits_right(x, y, hits)
 }
 
+#' @importFrom GRanges distanceToNearest
 hits_nearest_right.GenomicRanges <- function(x, y){
   hits <- make_hits(x, y, distanceToNearest, select = "all", ignore.strand = TRUE)
   get_hits_right(x, y, hits)
 }
 
+#' @importFrom GRanges distanceToNearest
 hits_nearest_upstream.GenomicRanges <- function(x, y){
   hits <- distanceToNearest(x,y, select = "all", ignore.strand = FALSE)
   get_hits_upstream(x, y, hits)
 }
 
+#' @importFrom GRanges distanceToNearest
 hits_nearest_downstream.GenomicRanges <- function(x, y){
   hits <- distanceToNearest(x,y, select = "all", ignore.strand = FALSE)
   get_hits_downstream(x, y, hits)
