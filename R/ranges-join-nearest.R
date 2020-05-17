@@ -62,65 +62,26 @@
 #' @rdname ranges-nearest
 #' @importFrom IRanges nearest
 #' @export
-join_nearest <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
-  UseMethod("join_nearest")
-}
-
-#' @export
-join_nearest.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
+join_nearest <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest(x, y)
   join <- expand_by_hits(x, y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
-#' @export
-join_nearest.GenomicRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest(x, y)
-  join <- expand_by_hits(x, y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
-}
-
-
 #' @rdname ranges-nearest
-#' @export
-join_nearest_left <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
-  UseMethod("join_nearest_left")
-}
-
-#' @export
-join_nearest_left.IntegerRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
+join_nearest_left <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_left(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
 
-#' @export
-join_nearest_left.GenomicRanges <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_left(x, y)
-  join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
-}
-
-
-#' @importFrom IRanges nearest
 #' @rdname ranges-nearest
 #' @export
-join_nearest_right <- function(x, y,  suffix = c(".x", ".y"), distance = FALSE) { UseMethod("join_nearest_right")}
-
-#' @export
-join_nearest_right.IntegerRanges <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
+join_nearest_right <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_right(x, y)
   join <- expand_by_hits(x,y, suffix, hits)
   add_nearest_hits_distance(join, hits, suffix[2], distance)
 }
-
-#' @export
-join_nearest_right.GenomicRanges <- function(x, y,  suffix = c(".x", ".y"), distance = FALSE) {
-  hits <- hits_nearest_right(x, y)
-  join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
-}
-
 
 #' @rdname ranges-nearest
 #' @export
