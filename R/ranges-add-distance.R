@@ -27,13 +27,28 @@
 #'              
 #' add_nearest_distance(query, subject)
 #' add_nearest_distance(query, subject, ignore.strand = TRUE)
-add_nearest_distance <- function(query, subject = query, ..., .id = "distance", suffix = ".y"){
-  
-  hits <- distanceToNearest(query, subject, ...)
-  
-  add_distance_col(query, hits, colname = .id, suffix = suffix)
-  
+#add_nearest_distance <- function(query, subject = query, ..., .id = "distance", suffix = ".y"){
+#  
+#  hits <- distanceToNearest(query, subject, ...)
+#  
+#  add_distance_col(query, hits, colname = .id, suffix = suffix)
+#  
+#}
+
+#' Macro for building add_nearest_distance_* family of functions
+make_add_nearest_distance <- function(fun){
+  f <- function(query, subject = query, .id = "distance", suffix = ".y"){
+    hits <- fun(query, subject)
+    
+    add_distance_col(query, hits, colname = .id, suffix = suffix)
+  }
 }
+
+add_nearest_distance <- make_add_nearest_distance(hits_nearest)
+add_nearest_distance_left <- make_add_nearest_distance(hits_nearest_left)
+add_nearest_distance_right <- make_add_nearest_distance(hits_nearest_right)
+add_nearest_distance_upstream <- make_add_nearest_distance(hits_nearest_upstream)
+add_nearest_distance_downstream <- make_add_nearest_distance(hits_nearest_downstream)
 
 #' @param expanded_hits output of expand_hits()
 #' @param hits output from make_hits() when f_in() = nearestDistance
