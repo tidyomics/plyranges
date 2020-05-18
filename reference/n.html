@@ -153,35 +153,35 @@ returns an integer.</p>
                 )
 <span class='no'>by_names</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>ir</span>, <span class='no'>name</span>)
 <span class='fu'><a href='tidyverse-reexports.html'>summarise</a></span>(<span class='no'>by_names</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>n</span>())</div><div class='output co'>#&gt; DataFrame with 3 rows and 2 columns
-#&gt;          name         n
-#&gt;   &lt;character&gt; &lt;integer&gt;
-#&gt; 1           a         5
-#&gt; 2           b         3
-#&gt; 3           c         2</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='no'>by_names</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>n</span>())</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
+#&gt;       name         n
+#&gt;   &lt;factor&gt; &lt;integer&gt;
+#&gt; 1        a         5
+#&gt; 2        b         3
+#&gt; 3        c         2</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='no'>by_names</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>n</span>())</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
 #&gt; Groups: name [3]
-#&gt;            start       end     width |        name         n
-#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;character&gt; &lt;integer&gt;
-#&gt;    [1]         1         5         5 |           a         5
-#&gt;    [2]         2         6         5 |           a         5
-#&gt;    [3]         3         7         5 |           a         5
-#&gt;    [4]         4         8         5 |           a         5
-#&gt;    [5]         5         9         5 |           a         5
-#&gt;    [6]         6        10         5 |           b         3
-#&gt;    [7]         7        11         5 |           b         3
-#&gt;    [8]         8        12         5 |           b         3
-#&gt;    [9]         9        13         5 |           c         2
-#&gt;   [10]        10        14         5 |           c         2</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>filter</a></span>(<span class='no'>by_names</span>, <span class='fu'>n</span>() <span class='kw'>&gt;=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 1 metadata column:
+#&gt;            start       end     width |     name         n
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt; &lt;integer&gt;
+#&gt;    [1]         1         5         5 |        a         5
+#&gt;    [2]         2         6         5 |        a         5
+#&gt;    [3]         3         7         5 |        a         5
+#&gt;    [4]         4         8         5 |        a         5
+#&gt;    [5]         5         9         5 |        a         5
+#&gt;    [6]         6        10         5 |        b         3
+#&gt;    [7]         7        11         5 |        b         3
+#&gt;    [8]         8        12         5 |        b         3
+#&gt;    [9]         9        13         5 |        c         2
+#&gt;   [10]        10        14         5 |        c         2</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>filter</a></span>(<span class='no'>by_names</span>, <span class='fu'>n</span>() <span class='kw'>&gt;=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 1 metadata column:
 #&gt; Groups: name [2]
-#&gt;           start       end     width |        name
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;character&gt;
-#&gt;   [1]         1         5         5 |           a
-#&gt;   [2]         2         6         5 |           a
-#&gt;   [3]         3         7         5 |           a
-#&gt;   [4]         4         8         5 |           a
-#&gt;   [5]         5         9         5 |           a
-#&gt;   [6]         6        10         5 |           b
-#&gt;   [7]         7        11         5 |           b
-#&gt;   [8]         8        12         5 |           b</div></pre>
+#&gt;           start       end     width |     name
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;factor&gt;
+#&gt;   [1]         1         5         5 |        a
+#&gt;   [2]         2         6         5 |        a
+#&gt;   [3]         3         7         5 |        a
+#&gt;   [4]         4         8         5 |        a
+#&gt;   [5]         5         9         5 |        a
+#&gt;   [6]         6        10         5 |        b
+#&gt;   [7]         7        11         5 |        b
+#&gt;   [8]         8        12         5 |        b</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -197,7 +197,7 @@ returns an integer.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

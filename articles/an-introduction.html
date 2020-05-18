@@ -86,7 +86,7 @@
       <h1 data-toc-skip>Getting started with the plyranges package</h1>
                         <h4 class="author">Stuart Lee</h4>
             
-            <h4 class="date">2020-05-08</h4>
+            <h4 class="date">2020-05-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/sa-lee/plyranges/blob/master/vignettes/an-introduction.Rmd"><code>vignettes/an-introduction.Rmd</code></a></small>
       <div class="hidden name"><code>an-introduction.Rmd</code></div>
@@ -136,15 +136,15 @@
 
 <span class="no">grng</span></pre></body></html></div>
 <pre><code>## GRanges object with 7 ranges and 1 metadata column:
-##       seqnames    ranges strand |        gc
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr2       2-1      - |  0.762551
-##   [2]     chr1         1      - |  0.669022
-##   [3]     chr2       0-1      + |  0.204612
-##   [4]     chr2      -1-1      - |  0.357525
-##   [5]     chr1     13-14      - |  0.359475
-##   [6]     chr1        14      - |  0.690291
-##   [7]     chr2     15-14      - |  0.535811
+##       seqnames    ranges strand |                gc
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+##   [1]     chr2       2-1      - |  0.76255108229816
+##   [2]     chr1         1      - | 0.669021712383255
+##   [3]     chr2       0-1      + | 0.204612161964178
+##   [4]     chr2      -1-1      - | 0.357524853432551
+##   [5]     chr1     13-14      - | 0.359475114848465
+##   [6]     chr1        14      - | 0.690290528349578
+##   [7]     chr2     15-14      - | 0.535811153938994
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 </div>
@@ -299,15 +299,15 @@
 <span class="no">grng_by_strand</span></pre></body></html></div>
 <pre><code>## GRanges object with 7 ranges and 1 metadata column:
 ## Groups: strand [2]
-##       seqnames    ranges strand |        gc
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr2      1-10      - |  0.889454
-##   [2]     chr2      2-11      + |  0.180407
-##   [3]     chr1      3-12      - |  0.629391
-##   [4]     chr2      4-13      + |  0.989564
-##   [5]     chr1      5-14      - |  0.130289
-##   [6]     chr1      6-15      - |  0.330661
-##   [7]     chr2      7-16      - |  0.865121
+##       seqnames    ranges strand |                gc
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+##   [1]     chr2      1-10      - | 0.889453538926318
+##   [2]     chr2      2-11      + | 0.180407245177776
+##   [3]     chr1      3-12      - | 0.629390850430354
+##   [4]     chr2      4-13      + | 0.989564136601985
+##   [5]     chr1      5-14      - | 0.130288870073855
+##   [6]     chr1      6-15      - | 0.330660525709391
+##   [7]     chr2      7-16      - | 0.865120546659455
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 </div>
@@ -318,20 +318,20 @@
 <p>The verb <code>filter</code> can be used to restrict rows in the <code>Ranges</code>. Note that grouping will cause the <code>filter</code> to act within each group of the data.</p>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">grng</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/tidyverse-reexports.html">filter</a></span>(<span class="no">gc</span> <span class="kw">&lt;</span> <span class="fl">0.3</span>)</pre></body></html></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |        gc
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr2      2-11      + |  0.180407
-##   [2]     chr1      5-14      - |  0.130289
+##       seqnames    ranges strand |                gc
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+##   [1]     chr2      2-11      + | 0.180407245177776
+##   [2]     chr1      5-14      - | 0.130288870073855
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="co"># filtering by group</span>
 <span class="no">grng_by_strand</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/tidyverse-reexports.html">filter</a></span>(<span class="no">gc</span> <span class="kw">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">gc</span>))</pre></body></html></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
 ## Groups: strand [2]
-##       seqnames    ranges strand |        gc
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-##   [1]     chr2      1-10      - |  0.889454
-##   [2]     chr2      4-13      + |  0.989564
+##       seqnames    ranges strand |                gc
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+##   [1]     chr2      1-10      - | 0.889453538926318
+##   [2]     chr2      4-13      + | 0.989564136601985
 ##   -------
 ##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</code></pre>
 <p>We also provide the convenience methods <code>filter_by_overlaps</code> and <code>filter_by_non_overlaps</code> for restricting by any overlapping <code>Ranges</code>.</p>
@@ -381,10 +381,10 @@
   <span class="fu"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span>(<span class="no">ir1</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/tidyverse-reexports.html">summarise</a></span>(<span class="kw">gc</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(<span class="no">gc</span>))</pre></body></html></div>
 <pre><code>## DataFrame with 2 rows and 2 columns
-##       query        gc
-##   &lt;integer&gt; &lt;numeric&gt;
-## 1         1  0.675555
-## 2         2  0.635795</code></pre>
+##       query                gc
+##   &lt;integer&gt;         &lt;numeric&gt;
+## 1         1 0.675554534769617
+## 2         2 0.635795166483149</code></pre>
 </div>
 <div id="joins-or-another-way-at-looking-at-overlaps-between-ranges" class="section level1">
 <h1 class="hasAnchor">
@@ -415,10 +415,10 @@ Query and Subject Ranges
 <div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="no">intersect_rng</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/overlap-joins.html">join_overlap_intersect</a></span>(<span class="no">query</span>, <span class="no">subject</span>)
 <span class="no">intersect_rng</span></pre></body></html></div>
 <pre><code>## GRanges object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |       key.a       key.b
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr1       2-4      + |           a           A
-##   [2]     chr1       6-7      + |           a           B
+##       seqnames    ranges strand |    key.a    key.b
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
+##   [1]     chr1       2-4      + |        a        A
+##   [2]     chr1       6-7      + |        a        B
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="figure">
@@ -430,10 +430,10 @@ Intersect Join
 <div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="no">inner_rng</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span>(<span class="no">query</span>, <span class="no">subject</span>)
 <span class="no">inner_rng</span></pre></body></html></div>
 <pre><code>## GRanges object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |       key.a       key.b
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr1       1-7      + |           a           A
-##   [2]     chr1       1-7      + |           a           B
+##       seqnames    ranges strand |    key.a    key.b
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
+##   [1]     chr1       1-7      + |        a        A
+##   [2]     chr1       1-7      + |        a        B
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="figure">
@@ -444,10 +444,10 @@ Inner Join
 <p>We also provide a convenience method called <code>find_overlaps</code> that computes the same result as <code><a href="../reference/overlap-joins.html">join_overlap_inner()</a></code>.</p>
 <div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="fu"><a href="../reference/ranges-overlaps.html">find_overlaps</a></span>(<span class="no">query</span>, <span class="no">subject</span>)</pre></body></html></div>
 <pre><code>## GRanges object with 2 ranges and 2 metadata columns:
-##       seqnames    ranges strand |       key.a       key.b
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr1       1-7      + |           a           A
-##   [2]     chr1       1-7      + |           a           B
+##       seqnames    ranges strand |    key.a    key.b
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
+##   [1]     chr1       1-7      + |        a        A
+##   [2]     chr1       1-7      + |        a        B
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>The <code><a href="../reference/overlap-joins.html">join_overlap_left()</a></code> method will perform an outer left join.</p>
@@ -455,11 +455,11 @@ Inner Join
 <div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="no">left_rng</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/overlap-joins.html">join_overlap_left</a></span>(<span class="no">query</span>, <span class="no">subject</span>)
 <span class="no">left_rng</span></pre></body></html></div>
 <pre><code>## GRanges object with 3 ranges and 2 metadata columns:
-##       seqnames    ranges strand |       key.a       key.b
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;character&gt;
-##   [1]     chr1       1-7      + |           a           A
-##   [2]     chr1       1-7      + |           a           B
-##   [3]     chr1      9-10      - |           b        &lt;NA&gt;
+##       seqnames    ranges strand |    key.a    key.b
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;factor&gt;
+##   [1]     chr1       1-7      + |        a        A
+##   [2]     chr1       1-7      + |        a        B
+##   [3]     chr1      9-10      - |        b     &lt;NA&gt;
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <div class="figure">
@@ -475,33 +475,33 @@ Left Join
 <p><img src="neighbours.png" width="600px"></p>
 <div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="fu"><a href="../reference/ranges-nearest.html">join_nearest</a></span>(<span class="no">ir0</span>, <span class="no">ir1</span>)</pre></body></html></div>
 <pre><code>## IRanges object with 4 ranges and 1 metadata column:
-##           start       end     width |        gc
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;
-##   [1]         5         9         5 |  0.780359
-##   [2]        10        14         5 |  0.780359
-##   [3]        15        19         5 |  0.780359
-##   [4]        20        24         5 |  0.780359</code></pre>
+##           start       end     width |                gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+##   [1]         5         9         5 | 0.780358511023223
+##   [2]        10        14         5 | 0.780358511023223
+##   [3]        15        19         5 | 0.780358511023223
+##   [4]        20        24         5 | 0.780358511023223</code></pre>
 <div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="fu"><a href="../reference/ranges-follow.html">join_follow</a></span>(<span class="no">ir0</span>, <span class="no">ir1</span>)</pre></body></html></div>
 <pre><code>## IRanges object with 4 ranges and 1 metadata column:
-##           start       end     width |        gc
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;
-##   [1]         5         9         5 |  0.777584
-##   [2]        10        14         5 |  0.603324
-##   [3]        15        19         5 |  0.780359
-##   [4]        20        24         5 |  0.780359</code></pre>
+##           start       end     width |                gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+##   [1]         5         9         5 | 0.777584439376369
+##   [2]        10        14         5 | 0.603324356488883
+##   [3]        15        19         5 | 0.780358511023223
+##   [4]        20        24         5 | 0.780358511023223</code></pre>
 <div class="sourceCode" id="cb64"><html><body><pre class="r"><span class="fu"><a href="../reference/ranges-precede.html">join_precede</a></span>(<span class="no">ir0</span>, <span class="no">ir1</span>) <span class="co"># nothing precedes returns empty `Ranges`</span></pre></body></html></div>
 <pre><code>## IRanges object with 0 ranges and 1 metadata column:
 ##        start       end     width |        gc
 ##    &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;</code></pre>
 <div class="sourceCode" id="cb66"><html><body><pre class="r"><span class="fu"><a href="../reference/ranges-precede.html">join_precede</a></span>(<span class="no">ir1</span>, <span class="no">ir0</span>)</pre></body></html></div>
 <pre><code>## IRanges object with 5 ranges and 1 metadata column:
-##           start       end     width |        gc
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;
-##   [1]         2         4         3 |  0.777584
-##   [2]         3         6         4 |  0.827303
-##   [3]         4         8         5 |  0.603324
-##   [4]         5        10         6 |  0.491232
-##   [5]         6        12         7 |  0.780359</code></pre>
+##           start       end     width |                gc
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+##   [1]         2         4         3 | 0.777584439376369
+##   [2]         3         6         4 | 0.827303449623287
+##   [3]         4         8         5 | 0.603324356488883
+##   [4]         5        10         6 | 0.491231821943074
+##   [5]         6        12         7 | 0.780358511023223</code></pre>
 </div>
 <div id="example-dealing-with-multi-mapping" class="section level2">
 <h2 class="hasAnchor">
@@ -535,10 +535,10 @@ Left Join
 
 <span class="no">genes</span></pre></body></html></div>
 <pre><code>## GRanges object with 2 ranges and 1 metadata column:
-##       seqnames    ranges strand |     gene_id
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-##   [1]       VI 3322-3846      * |     YFL064C
-##   [2]       VI 3030-3338      * |     YFL065C
+##       seqnames    ranges strand |  gene_id
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
+##   [1]       VI 3322-3846      * |  YFL064C
+##   [2]       VI 3030-3338      * |  YFL065C
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Now to find where the positions overlap each gene, we can perform an overlap join. This will automatically carry over the gene_id information as well as their coordinates (we can drop those by only selecting the gene_id).</p>
@@ -546,16 +546,16 @@ Left Join
   <span class="fu"><a href="../reference/tidyverse-reexports.html">select</a></span>(<span class="no">gene_id</span>)
 <span class="no">olap</span></pre></body></html></div>
 <pre><code>## GRanges object with 8 ranges and 1 metadata column:
-##       seqnames    ranges strand |     gene_id
-##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-##   [1]       VI      3320      * |     YFL065C
-##   [2]       VI      3321      * |     YFL065C
-##   [3]       VI      3330      * |     YFL065C
-##   [4]       VI      3330      * |     YFL064C
-##   [5]       VI      3331      * |     YFL065C
-##   [6]       VI      3331      * |     YFL064C
-##   [7]       VI      3341      * |     YFL064C
-##   [8]       VI      3342      * |     YFL064C
+##       seqnames    ranges strand |  gene_id
+##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
+##   [1]       VI      3320      * |  YFL065C
+##   [2]       VI      3321      * |  YFL065C
+##   [3]       VI      3330      * |  YFL065C
+##   [4]       VI      3330      * |  YFL064C
+##   [5]       VI      3331      * |  YFL065C
+##   [6]       VI      3331      * |  YFL064C
+##   [7]       VI      3341      * |  YFL064C
+##   [8]       VI      3342      * |  YFL064C
 ##   -------
 ##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</code></pre>
 <p>Several positions match to both genes. We can count them using <code>summarise</code> and grouping by the <code>start</code> position:</p>
@@ -581,26 +581,26 @@ Left Join
 <span class="no">grp_by_olap</span></pre></body></html></div>
 <pre><code>## IRanges object with 6 ranges and 2 metadata columns:
 ## Groups: query [2]
-##           start       end     width |        gc     query
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;integer&gt;
-##   [1]         5         9         5 |  0.827303         1
-##   [2]         5         9         5 |  0.603324         1
-##   [3]         5         9         5 |  0.491232         1
-##   [4]         5         9         5 |  0.780359         1
-##   [5]        10        14         5 |  0.491232         2
-##   [6]        10        14         5 |  0.780359         2</code></pre>
+##           start       end     width |                gc     query
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;integer&gt;
+##   [1]         5         9         5 | 0.827303449623287         1
+##   [2]         5         9         5 | 0.603324356488883         1
+##   [3]         5         9         5 | 0.491231821943074         1
+##   [4]         5         9         5 | 0.780358511023223         1
+##   [5]        10        14         5 | 0.491231821943074         2
+##   [6]        10        14         5 | 0.780358511023223         2</code></pre>
 <div class="sourceCode" id="cb78"><html><body><pre class="r"><span class="no">grp_by_olap</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="kw">n_overlaps</span> <span class="kw">=</span> <span class="fu"><a href="../reference/n.html">n</a></span>())</pre></body></html></div>
 <pre><code>## IRanges object with 6 ranges and 3 metadata columns:
 ## Groups: query [2]
-##           start       end     width |        gc     query n_overlaps
-##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;integer&gt;  &lt;integer&gt;
-##   [1]         5         9         5 |  0.827303         1          4
-##   [2]         5         9         5 |  0.603324         1          4
-##   [3]         5         9         5 |  0.491232         1          4
-##   [4]         5         9         5 |  0.780359         1          4
-##   [5]        10        14         5 |  0.491232         2          2
-##   [6]        10        14         5 |  0.780359         2          2</code></pre>
+##           start       end     width |                gc     query n_overlaps
+##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt; &lt;integer&gt;  &lt;integer&gt;
+##   [1]         5         9         5 | 0.827303449623287         1          4
+##   [2]         5         9         5 | 0.603324356488883         1          4
+##   [3]         5         9         5 | 0.491231821943074         1          4
+##   [4]         5         9         5 | 0.780358511023223         1          4
+##   [5]        10        14         5 | 0.491231821943074         2          2
+##   [6]        10        14         5 | 0.780358511023223         2          2</code></pre>
 <p>Of course we can also add overlap counts via the <code><a href="../reference/ranges-count-overlaps.html">count_overlaps()</a></code> function.</p>
 <div class="sourceCode" id="cb80"><html><body><pre class="r"><span class="no">ir0</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span>(<span class="kw">n_overlaps</span> <span class="kw">=</span> <span class="fu"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span>(<span class="no">.</span>, <span class="no">ir1</span>))</pre></body></html></div>
@@ -636,63 +636,59 @@ Left Join
 <h1 class="hasAnchor">
 <a href="#appendix" class="anchor"></a>Appendix</h1>
 <div class="sourceCode" id="cb82"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()</pre></body></html></div>
-<pre><code>## R Under development (unstable) (2020-05-08 r78390)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 14.04.5 LTS
+<pre><code>## R version 3.6.3 (2020-02-29)
+## Platform: x86_64-apple-darwin15.6.0 (64-bit)
+## Running under: macOS Mojave 10.14.6
 ## 
 ## Matrix products: default
-## BLAS:   /home/travis/R-bin/lib/R/lib/libRblas.so
-## LAPACK: /home/travis/R-bin/lib/R/lib/libRlapack.so
+## BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats4    parallel  stats     graphics  grDevices utils     datasets 
 ## [8] methods   base     
 ## 
 ## other attached packages:
-## [1] ggplot2_3.3.0        plyranges_1.9.0      GenomicRanges_1.41.1
-## [4] GenomeInfoDb_1.25.0  IRanges_2.23.4       S4Vectors_0.27.5    
-## [7] BiocGenerics_0.35.2  BiocStyle_2.17.0    
+## [1] ggplot2_3.3.0.9000   plyranges_1.7.16     GenomicRanges_1.38.0
+## [4] GenomeInfoDb_1.22.1  IRanges_2.20.2       S4Vectors_0.24.4    
+## [7] BiocGenerics_0.32.0  BiocStyle_2.14.4    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.4.6                lattice_0.20-41            
-##  [3] Rsamtools_2.5.0             Biostrings_2.57.0          
+##  [1] Rcpp_1.0.4.6                lattice_0.20-40            
+##  [3] Rsamtools_2.2.3             Biostrings_2.54.0          
 ##  [5] assertthat_0.2.1            rprojroot_1.3-2            
 ##  [7] digest_0.6.25               R6_2.4.1                   
 ##  [9] backports_1.1.6             evaluate_0.14              
-## [11] highr_0.8                   pillar_1.4.4               
-## [13] zlibbioc_1.35.0             rlang_0.4.6                
-## [15] Matrix_1.2-18               rmarkdown_2.1              
-## [17] pkgdown_1.5.1               desc_1.2.0                 
-## [19] labeling_0.3                BiocParallel_1.23.0        
-## [21] stringr_1.4.0               RCurl_1.98-1.2             
-## [23] munsell_0.5.0               DelayedArray_0.15.1        
-## [25] compiler_4.1.0              rtracklayer_1.49.1         
-## [27] xfun_0.13                   pkgconfig_2.0.3            
-## [29] htmltools_0.4.0             tidyselect_1.0.0           
-## [31] SummarizedExperiment_1.19.2 tibble_3.0.1               
-## [33] GenomeInfoDbData_1.2.3      bookdown_0.18              
-## [35] matrixStats_0.56.0          XML_3.99-0.3               
-## [37] crayon_1.3.4                dplyr_0.8.5                
-## [39] withr_2.2.0                 GenomicAlignments_1.25.0   
-## [41] MASS_7.3-51.6               bitops_1.0-6               
-## [43] grid_4.1.0                  gtable_0.3.0               
-## [45] lifecycle_0.2.0             magrittr_1.5               
-## [47] scales_1.1.0                stringi_1.4.6              
-## [49] farver_2.0.3                XVector_0.29.0             
-## [51] fs_1.4.1                    ellipsis_0.3.0             
-## [53] vctrs_0.2.4                 tools_4.1.0                
-## [55] Biobase_2.49.0              glue_1.4.0                 
-## [57] purrr_0.3.4                 yaml_2.2.1                 
-## [59] colorspace_1.4-1            BiocManager_1.30.10        
-## [61] memoise_1.1.0               knitr_1.28</code></pre>
+## [11] highr_0.8                   pillar_1.4.3               
+## [13] zlibbioc_1.32.0             rlang_0.4.5                
+## [15] rstudioapi_0.11             Matrix_1.2-18              
+## [17] rmarkdown_2.1               pkgdown_1.5.0              
+## [19] labeling_0.3                desc_1.2.0                 
+## [21] BiocParallel_1.20.1         stringr_1.4.0              
+## [23] RCurl_1.98-1.1              munsell_0.5.0              
+## [25] DelayedArray_0.12.2         compiler_3.6.3             
+## [27] rtracklayer_1.46.0          xfun_0.12                  
+## [29] pkgconfig_2.0.3             htmltools_0.4.0            
+## [31] tidyselect_1.0.0            SummarizedExperiment_1.16.1
+## [33] tibble_3.0.1                GenomeInfoDbData_1.2.2     
+## [35] bookdown_0.18               matrixStats_0.56.0         
+## [37] XML_3.99-0.3                withr_2.2.0                
+## [39] crayon_1.3.4                dplyr_0.8.5                
+## [41] GenomicAlignments_1.22.1    MASS_7.3-51.5              
+## [43] bitops_1.0-6                grid_3.6.3                 
+## [45] gtable_0.3.0                lifecycle_0.2.0            
+## [47] magrittr_1.5                scales_1.1.0               
+## [49] stringi_1.4.6               farver_2.0.3               
+## [51] XVector_0.26.0              fs_1.3.2                   
+## [53] ellipsis_0.3.0              vctrs_0.2.4                
+## [55] tools_3.6.3                 Biobase_2.46.0             
+## [57] glue_1.4.0                  purrr_0.3.4                
+## [59] yaml_2.2.1                  colorspace_1.4-1           
+## [61] BiocManager_1.30.10         memoise_1.1.0              
+## [63] knitr_1.28</code></pre>
 </div>
   </div>
 
@@ -711,7 +707,7 @@ Left Join
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

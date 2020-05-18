@@ -181,23 +181,23 @@ representing paired alignments with plyranges.</p>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
 <span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 6 rows and 4 columns
-#&gt;    ranges.x  ranges.y        gc       label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;character&gt;
-#&gt; 1       5-9       3-6  0.836571           b
-#&gt; 2       5-9       4-8  0.836571           c
-#&gt; 3       5-9      5-10  0.836571           d
-#&gt; 4       5-9      6-12  0.836571           e
-#&gt; 5     10-14      5-10  0.806867           d
-#&gt; 6     10-14      6-12  0.806867           e</div><div class='input'><span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; DataFrame with 1 row and 4 columns
-#&gt;    ranges.x  ranges.y        gc       label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;character&gt;
-#&gt; 1       5-9      5-10  0.836571           d</div><div class='input'><span class='fu'>pair_nearest</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 4 rows and 4 columns
-#&gt;    ranges.x  ranges.y        gc       label
-#&gt;   &lt;IRanges&gt; &lt;IRanges&gt; &lt;numeric&gt; &lt;character&gt;
-#&gt; 1       5-9      6-12 0.8365715           e
-#&gt; 2     10-14      6-12 0.8068667           e
-#&gt; 3     15-19      6-12 0.0809326           e
-#&gt; 4     20-24      6-12 0.2389093           e</div><div class='input'>
+#&gt;    ranges.x  ranges.y                gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;         &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1       5-9       3-6 0.836571462685242        b
+#&gt; 2       5-9       4-8 0.836571462685242        c
+#&gt; 3       5-9      5-10 0.836571462685242        d
+#&gt; 4       5-9      6-12 0.836571462685242        e
+#&gt; 5     10-14      5-10 0.806866742437705        d
+#&gt; 6     10-14      6-12 0.806866742437705        e</div><div class='input'><span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; DataFrame with 1 row and 4 columns
+#&gt;    ranges.x  ranges.y                gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;         &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1       5-9      5-10 0.836571462685242        d</div><div class='input'><span class='fu'>pair_nearest</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; DataFrame with 4 rows and 4 columns
+#&gt;    ranges.x  ranges.y                 gc    label
+#&gt;   &lt;IRanges&gt; &lt;IRanges&gt;          &lt;numeric&gt; &lt;factor&gt;
+#&gt; 1       5-9      6-12  0.836571462685242        e
+#&gt; 2     10-14      6-12  0.806866742437705        e
+#&gt; 3     15-19      6-12 0.0809326432645321        e
+#&gt; 4     20-24      6-12  0.238909301813692        e</div><div class='input'>
 
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
@@ -216,34 +216,34 @@ representing paired alignments with plyranges.</p>
 
 <span class='co'># ignores strandedness</span>
 <span class='fu'>pair_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; DataFrame with 3 rows and 6 columns
-#&gt;    granges.query granges.subject  name.query score.query name.subject
-#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt; &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
-#&gt; 1   chr1:11-21:+    chr1:21-30:+          a1           1           b1
-#&gt; 2 chr1:101-200:-   chr1:91-101:-          a2           2           b2
-#&gt; 3 chr1:101-200:-  chr1:101-110:+          a2           2           b3
+#&gt;    granges.query granges.subject name.query score.query name.subject
+#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt;   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt; 1   chr1:11-21:+    chr1:21-30:+         a1           1           b1
+#&gt; 2 chr1:101-200:-   chr1:91-101:-         a2           2           b2
+#&gt; 3 chr1:101-200:-  chr1:101-110:+         a2           2           b3
 #&gt;   score.subject
 #&gt;       &lt;integer&gt;
 #&gt; 1             1
 #&gt; 2             2
 #&gt; 3             3</div><div class='input'><span class='fu'>pair_follow</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; DataFrame with 1 row and 6 columns
-#&gt;    granges.query granges.subject  name.query score.query name.subject
-#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt; &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
-#&gt; 1 chr1:101-200:-    chr1:21-30:+          a2           2           b1
+#&gt;    granges.query granges.subject name.query score.query name.subject
+#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt;   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt; 1 chr1:101-200:-    chr1:21-30:+         a2           2           b1
 #&gt;   score.subject
 #&gt;       &lt;integer&gt;
 #&gt; 1             1</div><div class='input'><span class='fu'>pair_precede</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; DataFrame with 2 rows and 6 columns
-#&gt;    granges.query granges.subject  name.query score.query name.subject
-#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt; &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
-#&gt; 1   chr1:11-21:+   chr1:91-101:-          a1           1           b2
-#&gt; 2 chr1:101-200:-  chr1:201-210:-          a2           2           b4
+#&gt;    granges.query granges.subject name.query score.query name.subject
+#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt;   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt; 1   chr1:11-21:+   chr1:91-101:-         a1           1           b2
+#&gt; 2 chr1:101-200:-  chr1:201-210:-         a2           2           b4
 #&gt;   score.subject
 #&gt;       &lt;integer&gt;
 #&gt; 1             2
 #&gt; 2             4</div><div class='input'><span class='fu'>pair_precede</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; DataFrame with 2 rows and 6 columns
-#&gt;    granges.query granges.subject  name.query score.query name.subject
-#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt; &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
-#&gt; 1   chr1:11-21:+   chr1:91-101:-          a1           1           b2
-#&gt; 2 chr1:101-200:-  chr1:201-210:-          a2           2           b4
+#&gt;    granges.query granges.subject name.query score.query name.subject
+#&gt;        &lt;GRanges&gt;       &lt;GRanges&gt;   &lt;factor&gt;   &lt;numeric&gt;     &lt;factor&gt;
+#&gt; 1   chr1:11-21:+   chr1:91-101:-         a1           1           b2
+#&gt; 2 chr1:101-200:-  chr1:201-210:-         a2           2           b4
 #&gt;   score.subject
 #&gt;       &lt;integer&gt;
 #&gt; 1             2
@@ -263,7 +263,7 @@ representing paired alignments with plyranges.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

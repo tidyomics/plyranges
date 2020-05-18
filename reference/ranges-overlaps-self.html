@@ -173,12 +173,12 @@ directed) between a ranges object and itself.</p>
              <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
 
 <span class='fu'>join_overlap_self</span>(<span class='no'>query</span>)</div><div class='output co'>#&gt; IRanges object with 4 ranges and 2 metadata columns:
-#&gt;           start       end     width |        gc gc.overlap
-#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;  &lt;numeric&gt;
-#&gt;   [1]         5         9         5 | 0.0410528  0.0410528
-#&gt;   [2]        10        14         5 | 0.3613966  0.3613966
-#&gt;   [3]        15        19         5 | 0.5709781  0.5709781
-#&gt;   [4]        20        24         5 | 0.6848802  0.6848802</div><div class='input'>
+#&gt;           start       end     width |                 gc         gc.overlap
+#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |          &lt;numeric&gt;          &lt;numeric&gt;
+#&gt;   [1]         5         9         5 | 0.0410527545027435 0.0410527545027435
+#&gt;   [2]        10        14         5 |  0.361396634485573  0.361396634485573
+#&gt;   [3]        15        19         5 |  0.570978083880618  0.570978083880618
+#&gt;   [4]        20        24         5 |  0.684880241984501  0.684880241984501</div><div class='input'>
 <span class='co'># -- GRanges objects, strand is ignored by default</span>
 <span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
                <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
@@ -190,35 +190,23 @@ directed) between a ranges object and itself.</p>
 
 <span class='co'># ignores strandedness</span>
 <span class='fu'>join_overlap_self</span>(<span class='no'>query</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
-#&gt;       seqnames    ranges strand |        name     score name.overlap
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;  &lt;character&gt;
-#&gt;   [1]     chr1     11-21      + |          a1         1           a1
-#&gt;   [2]     chr1   101-200      - |          a2         2           a2
-#&gt;       score.overlap
-#&gt;           &lt;numeric&gt;
-#&gt;   [1]             1
-#&gt;   [2]             2
+#&gt;       seqnames    ranges strand |     name     score name.overlap score.overlap
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt;     &lt;factor&gt;     &lt;numeric&gt;
+#&gt;   [1]     chr1     11-21      + |       a1         1           a1             1
+#&gt;   [2]     chr1   101-200      - |       a2         2           a2             2
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>join_overlap_self_within</span>(<span class='no'>query</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
-#&gt;       seqnames    ranges strand |        name     score name.overlap
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;  &lt;character&gt;
-#&gt;   [1]     chr1     11-21      + |          a1         1           a1
-#&gt;   [2]     chr1   101-200      - |          a2         2           a2
-#&gt;       score.overlap
-#&gt;           &lt;numeric&gt;
-#&gt;   [1]             1
-#&gt;   [2]             2
+#&gt;       seqnames    ranges strand |     name     score name.overlap score.overlap
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt;     &lt;factor&gt;     &lt;numeric&gt;
+#&gt;   [1]     chr1     11-21      + |       a1         1           a1             1
+#&gt;   [2]     chr1   101-200      - |       a2         2           a2             2
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># adding directed prefix includes strand</span>
 <span class='fu'>join_overlap_self_directed</span>(<span class='no'>query</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
-#&gt;       seqnames    ranges strand |        name     score name.overlap
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;  &lt;character&gt;
-#&gt;   [1]     chr1     11-21      + |          a1         1           a1
-#&gt;   [2]     chr1   101-200      - |          a2         2           a2
-#&gt;       score.overlap
-#&gt;           &lt;numeric&gt;
-#&gt;   [1]             1
-#&gt;   [2]             2
+#&gt;       seqnames    ranges strand |     name     score name.overlap score.overlap
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt; &lt;numeric&gt;     &lt;factor&gt;     &lt;numeric&gt;
+#&gt;   [1]     chr1     11-21      + |       a1         1           a1             1
+#&gt;   [2]     chr1   101-200      - |       a2         2           a2             2
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 
@@ -238,7 +226,7 @@ directed) between a ranges object and itself.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -158,18 +158,18 @@
     <pre class="examples"><div class='input'><span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>1</span>))
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='no'>rng</span>, <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>10</span>))
 <span class='fu'><a href='tidyverse-reexports.html'>arrange</a></span>(<span class='no'>rng</span>, <span class='no'>score</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 1 metadata column:
-#&gt;            start       end     width |     score
-#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;
-#&gt;    [1]         3        10         8 |  0.211409
-#&gt;    [2]         1        10        10 |  0.229906
-#&gt;    [3]         9        10         2 |  0.357774
-#&gt;    [4]         8        10         3 |  0.445148
-#&gt;    [5]        10        10         1 |  0.455731
-#&gt;    [6]         4        10         7 |  0.463701
-#&gt;    [7]         2        10         9 |  0.597575
-#&gt;    [8]         5        10         6 |  0.647101
-#&gt;    [9]         7        10         4 |  0.676398
-#&gt;   [10]         6        10         5 |  0.960573</div><div class='input'># you can also use dplyr::desc to arrange by descending order
+#&gt;            start       end     width |             score
+#&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |         &lt;numeric&gt;
+#&gt;    [1]         3        10         8 | 0.211408555973321
+#&gt;    [2]         1        10        10 | 0.229905887041241
+#&gt;    [3]         9        10         2 |  0.35777378291823
+#&gt;    [4]         8        10         3 | 0.445148021681234
+#&gt;    [5]        10        10         1 | 0.455731456167996
+#&gt;    [6]         4        10         7 | 0.463701178086922
+#&gt;    [7]         2        10         9 | 0.597575292224064
+#&gt;    [8]         5        10         6 | 0.647101194132119
+#&gt;    [9]         7        10         4 | 0.676398171577603
+#&gt;   [10]         6        10         5 | 0.960573092103004</div><div class='input'># you can also use dplyr::desc to arrange by descending order
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -186,7 +186,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

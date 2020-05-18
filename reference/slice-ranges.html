@@ -174,31 +174,31 @@ recomputed, otherwise it is kept as is. Currently ignored.</p></td>
                  <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>10</span>))
 <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>)
 <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='no'>rng</span>, <span class='fl'>1</span>:<span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 2 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     seq1       1-5      - |  0.792625
-#&gt;   [2]     seq1       2-6      - |  0.614470
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1       1-5      - | 0.792624769965187
+#&gt;   [2]     seq1       2-6      - | 0.614469551481307
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='no'>rng</span>, -<span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     seq1       1-5      - |  0.792625
-#&gt;   [2]     seq1       2-6      - |  0.614470
-#&gt;   [3]     seq1       3-7      - |  0.700621
-#&gt;   [4]     seq1       4-8      - |  0.107933
-#&gt;   [5]     seq1       5-9      * |  0.333866
-#&gt;   [6]     seq1      6-10      + |  0.324132
-#&gt;   [7]     seq1      7-11      * |  0.565426
-#&gt;   [8]     seq1      8-12      + |  0.203178
-#&gt;   [9]     seq1      9-13      + |  0.219705
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1       1-5      - | 0.792624769965187
+#&gt;   [2]     seq1       2-6      - | 0.614469551481307
+#&gt;   [3]     seq1       3-7      - | 0.700620528310537
+#&gt;   [4]     seq1       4-8      - | 0.107933233957738
+#&gt;   [5]     seq1       5-9      * | 0.333865793189034
+#&gt;   [6]     seq1      6-10      + | 0.324131608242169
+#&gt;   [7]     seq1      7-11      * | 0.565425756154582
+#&gt;   [8]     seq1      8-12      + | 0.203178191324696
+#&gt;   [9]     seq1      9-13      + | 0.219704507384449
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='no'>rng</span>, -<span class='fl'>5</span>:-<span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 4 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |        gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     seq1       1-5      - |  0.792625
-#&gt;   [2]     seq1       2-6      - |  0.614470
-#&gt;   [3]     seq1       3-7      - |  0.700621
-#&gt;   [4]     seq1       4-8      - |  0.107933
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1       1-5      - | 0.792624769965187
+#&gt;   [2]     seq1       2-6      - | 0.614469551481307
+#&gt;   [3]     seq1       3-7      - | 0.700620528310537
+#&gt;   [4]     seq1       4-8      - | 0.107933233957738
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='no'>by_strand</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>rng</span>, <span class='no'>strand</span>)
@@ -206,34 +206,34 @@ recomputed, otherwise it is kept as is. Currently ignored.</p></td>
 <span class='co'># slice with group by finds positions within each group</span>
 <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='no'>by_strand</span>, <span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 3 ranges and 1 metadata column:
 #&gt; Groups: strand [3]
-#&gt;       seqnames    ranges strand |        gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     seq1      7-11      * |  0.565426
-#&gt;   [2]     seq1      9-13      + |  0.219705
-#&gt;   [3]     seq1     10-14      - |  0.633115
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1      7-11      * | 0.565425756154582
+#&gt;   [2]     seq1      9-13      + | 0.219704507384449
+#&gt;   [3]     seq1     10-14      - | 0.633115279255435
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='no'>by_strand</span>, <span class='fu'><a href='https://rdrr.io/r/base/which.min.html'>which.max</a></span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 3 ranges and 1 metadata column:
 #&gt; Groups: strand [3]
-#&gt;       seqnames    ranges strand |        gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     seq1       1-5      - |  0.792625
-#&gt;   [2]     seq1      6-10      + |  0.324132
-#&gt;   [3]     seq1      7-11      * |  0.565426
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1       1-5      - | 0.792624769965187
+#&gt;   [2]     seq1      6-10      + | 0.324131608242169
+#&gt;   [3]     seq1      7-11      * | 0.565425756154582
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='co'># if the index is beyond the number of groups slice are ignored</span>
 <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='no'>by_strand</span>, <span class='fl'>1</span>:<span class='fl'>3</span>)</div><div class='output co'>#&gt; GRanges object with 8 ranges and 1 metadata column:
 #&gt; Groups: strand [3]
-#&gt;       seqnames    ranges strand |        gc
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;   [1]     seq1       1-5      - |  0.792625
-#&gt;   [2]     seq1       2-6      - |  0.614470
-#&gt;   [3]     seq1       3-7      - |  0.700621
-#&gt;   [4]     seq1       5-9      * |  0.333866
-#&gt;   [5]     seq1      6-10      + |  0.324132
-#&gt;   [6]     seq1      7-11      * |  0.565426
-#&gt;   [7]     seq1      8-12      + |  0.203178
-#&gt;   [8]     seq1      9-13      + |  0.219705
+#&gt;       seqnames    ranges strand |                gc
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;   [1]     seq1       1-5      - | 0.792624769965187
+#&gt;   [2]     seq1       2-6      - | 0.614469551481307
+#&gt;   [3]     seq1       3-7      - | 0.700620528310537
+#&gt;   [4]     seq1       5-9      * | 0.333865793189034
+#&gt;   [5]     seq1      6-10      + | 0.324131608242169
+#&gt;   [6]     seq1      7-11      * | 0.565425756154582
+#&gt;   [7]     seq1      8-12      + | 0.203178191324696
+#&gt;   [8]     seq1      9-13      + | 0.219704507384449
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 
@@ -253,7 +253,7 @@ recomputed, otherwise it is kept as is. Currently ignored.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

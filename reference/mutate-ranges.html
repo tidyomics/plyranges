@@ -166,152 +166,188 @@ create new metadata columns or modify existing ones.</p></td>
 <span class='co'># mutate adds new columns</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>avg_gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>gc</span>), <span class='kw'>row_id</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 10 ranges and 3 metadata columns:
-#&gt;        seqnames    ranges strand |        gc    avg_gc    row_id
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;
-#&gt;    [1]     seq1       1-5      - |  0.884227  0.340702         1
-#&gt;    [2]     seq1       2-6      * |  0.207714  0.340702         2
-#&gt;    [3]     seq1       3-7      - |  0.307086  0.340702         3
-#&gt;    [4]     seq1       4-8      + |  0.330530  0.340702         4
-#&gt;    [5]     seq1       5-9      * |  0.198679  0.340702         5
-#&gt;    [6]     seq1      6-10      * |  0.235694  0.340702         6
-#&gt;    [7]     seq1      7-11      + |  0.274887  0.340702         7
-#&gt;    [8]     seq1      8-12      * |  0.591321  0.340702         8
-#&gt;    [9]     seq1      9-13      - |  0.253391  0.340702         9
-#&gt;   [10]     seq1     10-14      - |  0.123487  0.340702        10
+#&gt;        seqnames    ranges strand |                gc            avg_gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;         &lt;numeric&gt;
+#&gt;    [1]     seq1       1-5      - | 0.884227027418092 0.340701564052142
+#&gt;    [2]     seq1       2-6      * | 0.207713897805661 0.340701564052142
+#&gt;    [3]     seq1       3-7      - | 0.307085896842182 0.340701564052142
+#&gt;    [4]     seq1       4-8      + | 0.330529848113656 0.340701564052142
+#&gt;    [5]     seq1       5-9      * |  0.19867907022126 0.340701564052142
+#&gt;    [6]     seq1      6-10      * | 0.235694302013144 0.340701564052142
+#&gt;    [7]     seq1      7-11      + | 0.274886660277843 0.340701564052142
+#&gt;    [8]     seq1      8-12      * | 0.591321053681895 0.340701564052142
+#&gt;    [9]     seq1      9-13      - | 0.253390653757378 0.340701564052142
+#&gt;   [10]     seq1     10-14      - |  0.12348723039031 0.340701564052142
+#&gt;           row_id
+#&gt;        &lt;integer&gt;
+#&gt;    [1]         1
+#&gt;    [2]         2
+#&gt;    [3]         3
+#&gt;    [4]         4
+#&gt;    [5]         5
+#&gt;    [6]         6
+#&gt;    [7]         7
+#&gt;    [8]         8
+#&gt;    [9]         9
+#&gt;   [10]        10
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># can also compute on newly created columns</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>score</span> <span class='kw'>=</span> <span class='no'>gc</span> * <span class='no'>width</span>, <span class='kw'>score2</span> <span class='kw'>=</span> <span class='no'>score</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 3 metadata columns:
-#&gt;        seqnames    ranges strand |        gc     score    score2
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;
-#&gt;    [1]     seq1       1-5      - |  0.884227  4.421135   5.42114
-#&gt;    [2]     seq1       2-6      * |  0.207714  1.038569   2.03857
-#&gt;    [3]     seq1       3-7      - |  0.307086  1.535429   2.53543
-#&gt;    [4]     seq1       4-8      + |  0.330530  1.652649   2.65265
-#&gt;    [5]     seq1       5-9      * |  0.198679  0.993395   1.99340
-#&gt;    [6]     seq1      6-10      * |  0.235694  1.178472   2.17847
-#&gt;    [7]     seq1      7-11      + |  0.274887  1.374433   2.37443
-#&gt;    [8]     seq1      8-12      * |  0.591321  2.956605   3.95661
-#&gt;    [9]     seq1      9-13      - |  0.253391  1.266953   2.26695
-#&gt;   [10]     seq1     10-14      - |  0.123487  0.617436   1.61744
+#&gt;        seqnames    ranges strand |                gc             score
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;         &lt;numeric&gt;
+#&gt;    [1]     seq1       1-5      - | 0.884227027418092  4.42113513709046
+#&gt;    [2]     seq1       2-6      * | 0.207713897805661   1.0385694890283
+#&gt;    [3]     seq1       3-7      - | 0.307085896842182  1.53542948421091
+#&gt;    [4]     seq1       4-8      + | 0.330529848113656  1.65264924056828
+#&gt;    [5]     seq1       5-9      * |  0.19867907022126 0.993395351106301
+#&gt;    [6]     seq1      6-10      * | 0.235694302013144  1.17847151006572
+#&gt;    [7]     seq1      7-11      + | 0.274886660277843  1.37443330138922
+#&gt;    [8]     seq1      8-12      * | 0.591321053681895  2.95660526840948
+#&gt;    [9]     seq1      9-13      - | 0.253390653757378  1.26695326878689
+#&gt;   [10]     seq1     10-14      - |  0.12348723039031 0.617436151951551
+#&gt;                  score2
+#&gt;               &lt;numeric&gt;
+#&gt;    [1] 5.42113513709046
+#&gt;    [2]  2.0385694890283
+#&gt;    [3] 2.53542948421091
+#&gt;    [4] 2.65264924056828
+#&gt;    [5]  1.9933953511063
+#&gt;    [6] 2.17847151006572
+#&gt;    [7] 2.37443330138922
+#&gt;    [8] 3.95660526840948
+#&gt;    [9] 2.26695326878689
+#&gt;   [10] 1.61743615195155
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># group by partitions the data and computes within each group</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>strand</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>avg_gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>gc</span>), <span class='kw'>row_id</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='n.html'>n</a></span>())</div><div class='output co'>#&gt; GRanges object with 10 ranges and 3 metadata columns:
 #&gt; Groups: strand [3]
-#&gt;        seqnames    ranges strand |        gc    avg_gc    row_id
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;
-#&gt;    [1]     seq1       1-5      - |  0.884227  0.392048         1
-#&gt;    [2]     seq1       2-6      * |  0.207714  0.308352         1
-#&gt;    [3]     seq1       3-7      - |  0.307086  0.392048         2
-#&gt;    [4]     seq1       4-8      + |  0.330530  0.302708         1
-#&gt;    [5]     seq1       5-9      * |  0.198679  0.308352         2
-#&gt;    [6]     seq1      6-10      * |  0.235694  0.308352         3
-#&gt;    [7]     seq1      7-11      + |  0.274887  0.302708         2
-#&gt;    [8]     seq1      8-12      * |  0.591321  0.308352         4
-#&gt;    [9]     seq1      9-13      - |  0.253391  0.392048         3
-#&gt;   [10]     seq1     10-14      - |  0.123487  0.392048         4
+#&gt;        seqnames    ranges strand |                gc            avg_gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;         &lt;numeric&gt;
+#&gt;    [1]     seq1       1-5      - | 0.884227027418092 0.392047702101991
+#&gt;    [2]     seq1       2-6      * | 0.207713897805661  0.30835208093049
+#&gt;    [3]     seq1       3-7      - | 0.307085896842182 0.392047702101991
+#&gt;    [4]     seq1       4-8      + | 0.330529848113656  0.30270825419575
+#&gt;    [5]     seq1       5-9      * |  0.19867907022126  0.30835208093049
+#&gt;    [6]     seq1      6-10      * | 0.235694302013144  0.30835208093049
+#&gt;    [7]     seq1      7-11      + | 0.274886660277843  0.30270825419575
+#&gt;    [8]     seq1      8-12      * | 0.591321053681895  0.30835208093049
+#&gt;    [9]     seq1      9-13      - | 0.253390653757378 0.392047702101991
+#&gt;   [10]     seq1     10-14      - |  0.12348723039031 0.392047702101991
+#&gt;           row_id
+#&gt;        &lt;integer&gt;
+#&gt;    [1]         1
+#&gt;    [2]         1
+#&gt;    [3]         2
+#&gt;    [4]         1
+#&gt;    [5]         2
+#&gt;    [6]         3
+#&gt;    [7]         2
+#&gt;    [8]         4
+#&gt;    [9]         3
+#&gt;   [10]         4
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='co'># mutate can be used in conjuction with anchoring to resize ranges</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |        gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    [1]     seq1      1-10      - |  0.884227
-#&gt;    [2]     seq1      2-11      * |  0.207714
-#&gt;    [3]     seq1      3-12      - |  0.307086
-#&gt;    [4]     seq1      4-13      + |  0.330530
-#&gt;    [5]     seq1      5-14      * |  0.198679
-#&gt;    [6]     seq1      6-15      * |  0.235694
-#&gt;    [7]     seq1      7-16      + |  0.274887
-#&gt;    [8]     seq1      8-17      * |  0.591321
-#&gt;    [9]     seq1      9-18      - |  0.253391
-#&gt;   [10]     seq1     10-19      - |  0.123487
+#&gt;        seqnames    ranges strand |                gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;    [1]     seq1      1-10      - | 0.884227027418092
+#&gt;    [2]     seq1      2-11      * | 0.207713897805661
+#&gt;    [3]     seq1      3-12      - | 0.307085896842182
+#&gt;    [4]     seq1      4-13      + | 0.330529848113656
+#&gt;    [5]     seq1      5-14      * |  0.19867907022126
+#&gt;    [6]     seq1      6-15      * | 0.235694302013144
+#&gt;    [7]     seq1      7-16      + | 0.274886660277843
+#&gt;    [8]     seq1      8-17      * | 0.591321053681895
+#&gt;    [9]     seq1      9-18      - | 0.253390653757378
+#&gt;   [10]     seq1     10-19      - |  0.12348723039031
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># by default width modfication fixes by start</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='ranges-anchor.html'>anchor_start</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |        gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    [1]     seq1      1-10      - |  0.884227
-#&gt;    [2]     seq1      2-11      * |  0.207714
-#&gt;    [3]     seq1      3-12      - |  0.307086
-#&gt;    [4]     seq1      4-13      + |  0.330530
-#&gt;    [5]     seq1      5-14      * |  0.198679
-#&gt;    [6]     seq1      6-15      * |  0.235694
-#&gt;    [7]     seq1      7-16      + |  0.274887
-#&gt;    [8]     seq1      8-17      * |  0.591321
-#&gt;    [9]     seq1      9-18      - |  0.253391
-#&gt;   [10]     seq1     10-19      - |  0.123487
+#&gt;        seqnames    ranges strand |                gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;    [1]     seq1      1-10      - | 0.884227027418092
+#&gt;    [2]     seq1      2-11      * | 0.207713897805661
+#&gt;    [3]     seq1      3-12      - | 0.307085896842182
+#&gt;    [4]     seq1      4-13      + | 0.330529848113656
+#&gt;    [5]     seq1      5-14      * |  0.19867907022126
+#&gt;    [6]     seq1      6-15      * | 0.235694302013144
+#&gt;    [7]     seq1      7-16      + | 0.274886660277843
+#&gt;    [8]     seq1      8-17      * | 0.591321053681895
+#&gt;    [9]     seq1      9-18      - | 0.253390653757378
+#&gt;   [10]     seq1     10-19      - |  0.12348723039031
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># fix by end or midpoint</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='ranges-anchor.html'>anchor_end</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='no'>width</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |        gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    [1]     seq1       0-5      - |  0.884227
-#&gt;    [2]     seq1       1-6      * |  0.207714
-#&gt;    [3]     seq1       2-7      - |  0.307086
-#&gt;    [4]     seq1       3-8      + |  0.330530
-#&gt;    [5]     seq1       4-9      * |  0.198679
-#&gt;    [6]     seq1      5-10      * |  0.235694
-#&gt;    [7]     seq1      6-11      + |  0.274887
-#&gt;    [8]     seq1      7-12      * |  0.591321
-#&gt;    [9]     seq1      8-13      - |  0.253391
-#&gt;   [10]     seq1      9-14      - |  0.123487
+#&gt;        seqnames    ranges strand |                gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;    [1]     seq1       0-5      - | 0.884227027418092
+#&gt;    [2]     seq1       1-6      * | 0.207713897805661
+#&gt;    [3]     seq1       2-7      - | 0.307085896842182
+#&gt;    [4]     seq1       3-8      + | 0.330529848113656
+#&gt;    [5]     seq1       4-9      * |  0.19867907022126
+#&gt;    [6]     seq1      5-10      * | 0.235694302013144
+#&gt;    [7]     seq1      6-11      + | 0.274886660277843
+#&gt;    [8]     seq1      7-12      * | 0.591321053681895
+#&gt;    [9]     seq1      8-13      - | 0.253390653757378
+#&gt;   [10]     seq1      9-14      - |  0.12348723039031
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='ranges-anchor.html'>anchor_center</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='no'>width</span> + <span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |        gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    [1]     seq1       0-5      - |  0.884227
-#&gt;    [2]     seq1       1-6      * |  0.207714
-#&gt;    [3]     seq1       2-7      - |  0.307086
-#&gt;    [4]     seq1       3-8      + |  0.330530
-#&gt;    [5]     seq1       4-9      * |  0.198679
-#&gt;    [6]     seq1      5-10      * |  0.235694
-#&gt;    [7]     seq1      6-11      + |  0.274887
-#&gt;    [8]     seq1      7-12      * |  0.591321
-#&gt;    [9]     seq1      8-13      - |  0.253391
-#&gt;   [10]     seq1      9-14      - |  0.123487
+#&gt;        seqnames    ranges strand |                gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;    [1]     seq1       0-5      - | 0.884227027418092
+#&gt;    [2]     seq1       1-6      * | 0.207713897805661
+#&gt;    [3]     seq1       2-7      - | 0.307085896842182
+#&gt;    [4]     seq1       3-8      + | 0.330529848113656
+#&gt;    [5]     seq1       4-9      * |  0.19867907022126
+#&gt;    [6]     seq1      5-10      * | 0.235694302013144
+#&gt;    [7]     seq1      6-11      + | 0.274886660277843
+#&gt;    [8]     seq1      7-12      * | 0.591321053681895
+#&gt;    [9]     seq1      8-13      - | 0.253390653757378
+#&gt;   [10]     seq1      9-14      - |  0.12348723039031
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># anchoring by strand</span>
 <span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='ranges-anchor.html'>anchor_3p</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='no'>width</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |        gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    [1]     seq1      1-10      - |  0.884227
-#&gt;    [2]     seq1      -3-6      * |  0.207714
-#&gt;    [3]     seq1      3-12      - |  0.307086
-#&gt;    [4]     seq1      -1-8      + |  0.330530
-#&gt;    [5]     seq1       0-9      * |  0.198679
-#&gt;    [6]     seq1      1-10      * |  0.235694
-#&gt;    [7]     seq1      2-11      + |  0.274887
-#&gt;    [8]     seq1      3-12      * |  0.591321
-#&gt;    [9]     seq1      9-18      - |  0.253391
-#&gt;   [10]     seq1     10-19      - |  0.123487
+#&gt;        seqnames    ranges strand |                gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;    [1]     seq1      1-10      - | 0.884227027418092
+#&gt;    [2]     seq1      -3-6      * | 0.207713897805661
+#&gt;    [3]     seq1      3-12      - | 0.307085896842182
+#&gt;    [4]     seq1      -1-8      + | 0.330529848113656
+#&gt;    [5]     seq1       0-9      * |  0.19867907022126
+#&gt;    [6]     seq1      1-10      * | 0.235694302013144
+#&gt;    [7]     seq1      2-11      + | 0.274886660277843
+#&gt;    [8]     seq1      3-12      * | 0.591321053681895
+#&gt;    [9]     seq1      9-18      - | 0.253390653757378
+#&gt;   [10]     seq1     10-19      - |  0.12348723039031
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>rng</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='ranges-anchor.html'>anchor_5p</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>width</span> <span class='kw'>=</span> <span class='no'>width</span> * <span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |        gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
-#&gt;    [1]     seq1      -4-5      - |  0.884227
-#&gt;    [2]     seq1      2-11      * |  0.207714
-#&gt;    [3]     seq1      -2-7      - |  0.307086
-#&gt;    [4]     seq1      4-13      + |  0.330530
-#&gt;    [5]     seq1      5-14      * |  0.198679
-#&gt;    [6]     seq1      6-15      * |  0.235694
-#&gt;    [7]     seq1      7-16      + |  0.274887
-#&gt;    [8]     seq1      8-17      * |  0.591321
-#&gt;    [9]     seq1      4-13      - |  0.253391
-#&gt;   [10]     seq1      5-14      - |  0.123487
+#&gt;        seqnames    ranges strand |                gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |         &lt;numeric&gt;
+#&gt;    [1]     seq1      -4-5      - | 0.884227027418092
+#&gt;    [2]     seq1      2-11      * | 0.207713897805661
+#&gt;    [3]     seq1      -2-7      - | 0.307085896842182
+#&gt;    [4]     seq1      4-13      + | 0.330529848113656
+#&gt;    [5]     seq1      5-14      * |  0.19867907022126
+#&gt;    [6]     seq1      6-15      * | 0.235694302013144
+#&gt;    [7]     seq1      7-16      + | 0.274886660277843
+#&gt;    [8]     seq1      8-17      * | 0.591321053681895
+#&gt;    [9]     seq1      4-13      - | 0.253390653757378
+#&gt;   [10]     seq1      5-14      - |  0.12348723039031
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>
@@ -329,7 +365,7 @@ create new metadata columns or modify existing ones.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>
