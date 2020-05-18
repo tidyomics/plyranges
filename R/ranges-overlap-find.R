@@ -55,7 +55,10 @@ make_hits <- function(x, y, f_in, ...) {
 }
 
 # expand x,y, based on Hits object
-expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE) {
+# hits_mcols_to_keep is a named vector 
+# where names correspond to colname in left, and value corresponds to colname in hits mcols
+# values from hits will be added to colname in left, error if already filled
+expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE, hits_mcols_to_keep = NULL) {
   if (is(hits, "Hits")) {
     left <- x[queryHits(hits), ]
     right <- y[subjectHits(hits), ]
@@ -70,6 +73,22 @@ expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE) {
     return(mcols_overlaps_update(left, right, suffix, return_data_frame))
   }
   mcols(left) <-  mcols_overlaps_update(left, right, suffix)
+  
+  if (!is.null(hits_mcols_to_keep)){
+    
+    hit_meta <- mcols(hits)[hits_mcols_to_keep]
+    names(hit_meta) <- names(hits_mcols_to_keep)
+    
+    if (names(hits_mcols_to_keep) %in% names(mcols(left))) {
+      bad_names <- names(hits_mcols_to_keep)[names(hits_mcols_to_keep) %in% names(mcols(left))]
+      bad_names <- paste(bad_names, collapse = ", ")
+      error <- paste0("Cannot join metadata. The following columns already exist in input: ", bad_names)
+      stop(error)
+    }
+    
+    mcols(left) <- cbind(mcols(left), hit_meta)
+  }
+  
   left
 }
 
