@@ -71,7 +71,6 @@ Collate:
     'methods-DeferredGenomicRanges.R'
     'methods-Operator.R'
     'plyranges.R'
-    'ranges-add-distance-utils.R'
     'ranges-add-distance.R'
     'ranges-anchors.R'
     'ranges-arithmetic-flank.R'
