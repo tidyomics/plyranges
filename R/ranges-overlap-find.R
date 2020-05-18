@@ -75,7 +75,20 @@ expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE, hits_m
   
   mcols(left) <-  mcols_overlaps_update(left, right, suffix)
   
+  add_hits_mcols(left, hits, hits_mcols_to_keep)
+}
+
+# For adding hits metadata to mcols in `left` hits_mcols_to_keep if set to a
+# vector will take those named columns from hits and append them to `left`. If
+# hits_mcols_to_keep is a named vector, the names will correspond to the columns
+# in `left` that will hold the values of the columns in `hits`.
+add_hits_mcols <- function(left, hits, hits_mcols_to_keep = NULL){
   if (!is.null(hits_mcols_to_keep)){
+    
+    # If unnamed, use hits mcols names as new column names
+    if (is.null(names(hits_mcols_to_keep))) {
+      names(hits_mcols_to_keep) <- hits_mcols_to_keep
+    }
     
     hit_meta <- mcols(hits)[hits_mcols_to_keep]
     names(hit_meta) <- names(hits_mcols_to_keep)
@@ -95,8 +108,7 @@ expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE, hits_m
     }
     
   }
-  
-  left
+  return(left)
 }
 
 .find_overlaps <- function(x,y, suffix, f_in, ...) {

@@ -211,7 +211,7 @@ get_hits_downstream <- function(x, y, hits){
 
 set_distance_col <- function(distance){
   if (distance == TRUE){
-    keep_distance <- c("distance" = "distance")
+    keep_distance <- "distance"
   } else if (is.character(distance) & length(distance) == 1) {
     keep_distance <- c("distance")
     names(keep_distance) <- distance
