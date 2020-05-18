@@ -5,10 +5,10 @@
 
 <!-- badges: start -->
 
-[![Build
-Status](https://travis-ci.org/sa-lee/plyranges.svg?branch=master)](https://travis-ci.org/sa-lee/plyranges)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/sa-lee/plyranges?branch=master&svg=true)](https://ci.appveyor.com/project/sa-lee/plyranges)
+[![R build
+status](https://github.com/sa-lee/plyranges/workflows/R-CMD-check/badge.svg)](https://github.com/sa-lee/plyranges/actions)
+[![BioC
+status](http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges)
 [![Codecov test
 coverage](https://codecov.io/gh/sa-lee/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/sa-lee/plyranges?branch=master)
 <!-- badges: end -->
