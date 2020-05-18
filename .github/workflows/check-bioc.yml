@@ -252,7 +252,7 @@ jobs:
       - name: Install pkgdown
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true'
         run: |
-          remotes::install_dev("pkgdown")
+          remotes::install_cran("pkgdown")
         shell: Rscript {0}
 
       - name: Install package
