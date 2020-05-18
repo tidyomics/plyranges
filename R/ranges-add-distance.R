@@ -1,10 +1,35 @@
+#' @param ranges ranges object from join_nearest expand_hits internal function
+#' @param hits  hits from distanceToNearest
+#' @param colname name of column to hold distance values
+#'
+#' @noRd
+add_distance_col <- function(ranges, hits, colname) {
+  
+  if (colname %in% names(mcols(ranges))){
+    stop(paste0(colname, " already exists in destination metadata"))
+  }
+  
+  if (is.null(mcols(ranges))){
+    # handle IRanges NULL adding X column of NA's
+    meta <- DataFrame("distance" = NA_integer_)
+    names(meta) <- colname
+    mcols(ranges) <- meta
+  } else {
+    mcols(ranges)[[colname]] <-  NA_integer_
+  }
+  
+  mcols(ranges[queryHits(hits)])[[colname]] <- mcols(hits)$distance
+  
+  return(ranges)
+}
+
 #' Macro for building add_nearest_distance_* family of functions
 #' Change this to edit defaults for all functions
 make_add_nearest_distance <- function(fun){
-  f <- function(query, subject = query, .id = "distance", suffix = ".y"){
-    hits <- fun(query, subject)
+  f <- function(x, y = x, name = "distance"){
+    hits <- fun(x, y)
     
-    add_distance_col(query, hits, colname = .id, suffix = suffix)
+    add_distance_col(x, hits, colname = name)
   }
 }
 
@@ -14,11 +39,10 @@ make_add_nearest_distance <- function(fun){
 #' `distance` in `join_nearest_`. Distance is set to `NA` for features with no
 #' nearest feature by the selected nearest metric.
 #'
-#' @param query The query ranges
-#' @param subject the subject ranges within which the nearest ranges are found.
+#' @param x The query ranges
+#' @param y the subject ranges within which the nearest ranges are found.
 #'   If missing, query ranges are used as the subject.
-#' @param .id column name to create containing distance values
-#' @param suffix if .id already exists as column in query, prepend this value to .id column name
+#' @param name column name to create containing distance values
 #'   
 #' @details By default `add_nearest_distance` will find arbitrary nearest
 #' neighbours in either direction and ignore any strand information.
@@ -38,8 +62,8 @@ make_add_nearest_distance <- function(fun){
 #' will be on the right and on the negative strand nearest upstream will be on
 #' the left.
 #'
-#' @return query ranges with additional column containing the distance to the
-#'   nearest range in subject.
+#' @return ranges in `x` with additional column containing the distance to the
+#'   nearest range in `y`.
 #'  
 #' @rdname add-nearest-distance
 #' @seealso \code{\link{join_nearest}}
@@ -77,27 +101,3 @@ add_nearest_distance_upstream <- make_add_nearest_distance(hits_nearest_upstream
 #' @export
 add_nearest_distance_downstream <- make_add_nearest_distance(hits_nearest_downstream)
 
-#' @param expanded_hits output of expand_hits()
-#' @param hits output from make_hits() when f_in() = nearestDistance
-#' @param suffix suffix to prepend to distance column if name exists already
-#' @param distance `logical(1)` whether to add "distance" column to output. If set to
-#'   `character(1)`, will use that as distance column name. (Default: FALSE)
-#'
-#' @noRd
-add_nearest_hits_distance <- function(expanded_hits, hits, suffix = ".y", distance = FALSE){
-  
-  if (length(distance) > 1){
-    stop("distance must be of length 1")
-  }
-  
-  if (distance == TRUE){
-    
-    expanded_hits <- add_distance_col(expanded_hits, hits, colname = "distance", suffix = suffix)
-    
-  } else if (is.character(distance)) {
-    
-    expanded_hits <- add_distance_col(expanded_hits, hits, colname = distance, suffix = suffix)
-  }
-  
-  return(expanded_hits)
-}
