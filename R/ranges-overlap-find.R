@@ -87,7 +87,13 @@ expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE, hits_m
       stop(error)
     }
     
-    mcols(left) <- cbind(mcols(left), hit_meta)
+    if (is.null(mcols(left))) {
+      # handles IRanges NULL mcols
+      mcols(left) <- hit_meta
+    } else {
+      mcols(left) <- cbind(mcols(left), hit_meta)
+    }
+    
   }
   
   left
