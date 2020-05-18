@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-\[![R-CMD-check-bioc](https://github.com/sa-lee/plyranges/workflows/R-CMD-check-bioc/badge.svg)\]
+[![R-CMD-check-bioc](https://github.com/sa-lee/plyranges/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/sa-lee/plyranges/actions?query=workflow%3AR-CMD-check-bioc)
 [![BioC
 status](http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges)
 [![Codecov test
@@ -352,5 +352,5 @@ If you found `plyranges` useful for your work please cite our
 # Contributing
 
 We welcome contributions from the R/Bioconductor community. We ask that
-contributors follow the [code of conduct](CODE_OF_CONDUCT.md) and the
-guide outlined [here](CONTRIBUTING.md).
+contributors follow the [code of conduct](.github/CODE_OF_CONDUCT.md)
+and the guide outlined [here](.github/CONTRIBUTING.md).
