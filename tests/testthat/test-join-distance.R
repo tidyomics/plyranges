@@ -7,6 +7,10 @@ test_nearest_join_distance <- function(query, subject, join_fun, range_fun = gra
   expect_equal(range_fun(join), range_fun(join_dist))
   expect_equal(mcols(join_dist)$distance, mcols(join_test)$test)
   
+  meta <- DataFrame('test' = 1:length(query))
+  mcols(query) <- meta
+  expect_error(join_fun(query, subject, distance = "test"), "columns already exist")
+  
 }
 
 test_that("join_nearest behaves correctly on GRanges", {
@@ -45,15 +49,15 @@ test_that("join_nearest works on IRanges", {
 
 test_add_nearest_distance <- function(query, subject){
   dist <- add_nearest_distance(query, subject)
-  test <- add_nearest_distance(query, subject, .id = "test")
+  test <- add_nearest_distance(query, subject, name = "test")
   
   meta <- DataFrame('test' = 1:length(query))
   mcols(query) <- meta
   
-  test.y <- add_nearest_distance(query, subject, .id = "test")
+  # test errors on existing column
+  expect_error(add_nearest_distance(query, subject, name = "test"), "already exists in destination")
   
   expect_equal(mcols(dist)$distance, mcols(test)$test)
-  expect_equal(mcols(test)$test, mcols(test.y)$test.y)
 }
 
 test_that("add_nearest_distance works", {
