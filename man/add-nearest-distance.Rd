@@ -8,49 +8,27 @@
 \alias{add_nearest_distance_downstream}
 \title{Add distance to nearest neighbours between two Ranges objects}
 \usage{
-add_nearest_distance(query, subject = query, .id = "distance", suffix = ".y")
+add_nearest_distance(x, y = x, name = "distance")
 
-add_nearest_distance_left(
-  query,
-  subject = query,
-  .id = "distance",
-  suffix = ".y"
-)
+add_nearest_distance_left(x, y = x, name = "distance")
 
-add_nearest_distance_right(
-  query,
-  subject = query,
-  .id = "distance",
-  suffix = ".y"
-)
+add_nearest_distance_right(x, y = x, name = "distance")
 
-add_nearest_distance_upstream(
-  query,
-  subject = query,
-  .id = "distance",
-  suffix = ".y"
-)
+add_nearest_distance_upstream(x, y = x, name = "distance")
 
-add_nearest_distance_downstream(
-  query,
-  subject = query,
-  .id = "distance",
-  suffix = ".y"
-)
+add_nearest_distance_downstream(x, y = x, name = "distance")
 }
 \arguments{
-\item{query}{The query ranges}
+\item{x}{The query ranges}
 
-\item{subject}{the subject ranges within which the nearest ranges are found.
+\item{y}{the subject ranges within which the nearest ranges are found.
 If missing, query ranges are used as the subject.}
 
-\item{.id}{column name to create containing distance values}
-
-\item{suffix}{if .id already exists as column in query, prepend this value to .id column name}
+\item{name}{column name to create containing distance values}
 }
 \value{
-query ranges with additional column containing the distance to the
-nearest range in subject.
+ranges in \code{x} with additional column containing the distance to the
+nearest range in \code{y}.
 }
 \description{
 Appends distance to nearest subject range to query ranges similar to setting

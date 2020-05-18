@@ -52,4 +52,9 @@ Authors:
   \item Dianne Cook [contributor]
 }
 
+Other contributors:
+\itemize{
+  \item Spencer Nystrom (\href{https://orcid.org/0000-0003-1000-1579}{ORCID}) [contributor]
+}
+
 }
