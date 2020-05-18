@@ -64,23 +64,23 @@
 #' @export
 join_nearest <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest(x, y)
-  join <- expand_by_hits(x, y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
+  distance_col <- set_distance_col(distance)
+  expand_by_hits(x, y, suffix, hits, hits_mcols_to_keep = distance_col)
 }
 
 #' @rdname ranges-nearest
 join_nearest_left <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_left(x, y)
-  join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
+  distance_col <- set_distance_col(distance)
+  expand_by_hits(x, y, suffix, hits, hits_mcols_to_keep = distance_col)
 }
 
 #' @rdname ranges-nearest
 #' @export
 join_nearest_right <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_right(x, y)
-  join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
+  distance_col <- set_distance_col(distance)
+  expand_by_hits(x, y, suffix, hits, hits_mcols_to_keep = distance_col)
 }
 
 #' @rdname ranges-nearest
@@ -90,8 +90,8 @@ join_nearest_upstream <- function(x, y,  suffix = c(".x", ".y"), distance = FALS
 #' @export
 join_nearest_upstream.GenomicRanges <- function(x, y,  suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_upstream(x, y)
-  join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
+  distance_col <- set_distance_col(distance)
+  expand_by_hits(x, y, suffix, hits, hits_mcols_to_keep = distance_col)
 }
 
 #' @rdname ranges-nearest
@@ -102,8 +102,8 @@ join_nearest_downstream <- function(x, y,  suffix = c(".x", ".y"), distance = FA
 #' @export
 join_nearest_downstream.GenomicRanges <- function(x, y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_downstream(x, y)
-  join <- expand_by_hits(x,y, suffix, hits)
-  add_nearest_hits_distance(join, hits, suffix[2], distance)
+  distance_col <- set_distance_col(distance)
+  expand_by_hits(x, y, suffix, hits, hits_mcols_to_keep = distance_col)
 }
 
 # -----------------------
@@ -207,4 +207,19 @@ get_hits_downstream <- function(x, y, hits){
                                     mcols(hits)$is_right)
 
   hits[mcols(hits)$is_downstream]
+}
+
+set_distance_col <- function(distance){
+  if (distance == TRUE){
+    keep_distance <- c("distance" = "distance")
+  } else if (is.character(distance) & length(distance) == 1) {
+    keep_distance <- c("distance")
+    names(keep_distance) <- distance
+  } else if (distance == FALSE) {
+    keep_distance = NULL
+  } else {
+    stop("Invalid argument passed to distance")
+  }
+  
+  return(keep_distance)
 }

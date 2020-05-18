@@ -72,6 +72,7 @@ expand_by_hits <- function(x, y, suffix, hits, return_data_frame = FALSE, hits_m
   if (return_data_frame) {
     return(mcols_overlaps_update(left, right, suffix, return_data_frame))
   }
+  
   mcols(left) <-  mcols_overlaps_update(left, right, suffix)
   
   if (!is.null(hits_mcols_to_keep)){
