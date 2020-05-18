@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/sa-lee/plyranges/workflows/R-CMD-check/badge.svg)](https://github.com/sa-lee/plyranges/actions)
+\[![R-CMD-check-bioc](https://github.com/sa-lee/plyranges/workflows/R-CMD-check-bioc/badge.svg)\]
 [![BioC
 status](http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges)
 [![Codecov test
