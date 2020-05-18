@@ -187,46 +187,46 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 #&gt;   [10]     seq1     10-14      + |         1
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |                 gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |          &lt;numeric&gt;
-#&gt;    [1]     seq1       1-5      * |  0.761121743358672
-#&gt;    [2]     seq1       2-6      * |  0.573356448905542
-#&gt;    [3]     seq1       3-7      + |  0.447508045937866
-#&gt;    [4]     seq1       4-8      - | 0.0838020080700517
-#&gt;    [5]     seq1       5-9      * |  0.219138547312468
-#&gt;    [6]     seq1      6-10      - |   0.07557029183954
-#&gt;    [7]     seq1      7-11      - |  0.534426784375682
-#&gt;    [8]     seq1      8-12      + |  0.641356576699764
-#&gt;    [9]     seq1      9-13      + |  0.525739317527041
-#&gt;   [10]     seq1     10-14      + | 0.0392813880462199
+#&gt;        seqnames    ranges strand |        gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
+#&gt;    [1]     seq1       1-5      * | 0.7611217
+#&gt;    [2]     seq1       2-6      * | 0.5733564
+#&gt;    [3]     seq1       3-7      + | 0.4475080
+#&gt;    [4]     seq1       4-8      - | 0.0838020
+#&gt;    [5]     seq1       5-9      * | 0.2191385
+#&gt;    [6]     seq1      6-10      - | 0.0755703
+#&gt;    [7]     seq1      7-11      - | 0.5344268
+#&gt;    [8]     seq1      8-12      + | 0.6413566
+#&gt;    [9]     seq1      9-13      + | 0.5257393
+#&gt;   [10]     seq1     10-14      + | 0.0392814
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>counts</span>, <span class='no'>gc</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
-#&gt;        seqnames    ranges strand |    counts                 gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;          &lt;numeric&gt;
-#&gt;    [1]     seq1       1-5      * |         2  0.761121743358672
-#&gt;    [2]     seq1       2-6      * |         1  0.573356448905542
-#&gt;    [3]     seq1       3-7      + |         5  0.447508045937866
-#&gt;    [4]     seq1       4-8      - |         1 0.0838020080700517
-#&gt;    [5]     seq1       5-9      * |         1  0.219138547312468
-#&gt;    [6]     seq1      6-10      - |         4   0.07557029183954
-#&gt;    [7]     seq1      7-11      - |         2  0.534426784375682
-#&gt;    [8]     seq1      8-12      + |         1  0.641356576699764
-#&gt;    [9]     seq1      9-13      + |         2  0.525739317527041
-#&gt;   [10]     seq1     10-14      + |         1 0.0392813880462199
+#&gt;        seqnames    ranges strand |    counts        gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;numeric&gt;
+#&gt;    [1]     seq1       1-5      * |         2 0.7611217
+#&gt;    [2]     seq1       2-6      * |         1 0.5733564
+#&gt;    [3]     seq1       3-7      + |         5 0.4475080
+#&gt;    [4]     seq1       4-8      - |         1 0.0838020
+#&gt;    [5]     seq1       5-9      * |         1 0.2191385
+#&gt;    [6]     seq1      6-10      - |         4 0.0755703
+#&gt;    [7]     seq1      7-11      - |         2 0.5344268
+#&gt;    [8]     seq1      8-12      + |         1 0.6413566
+#&gt;    [9]     seq1      9-13      + |         2 0.5257393
+#&gt;   [10]     seq1     10-14      + |         1 0.0392814
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>select</a></span>(<span class='no'>rng</span>, <span class='fl'>2</span>:<span class='fl'>1</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
-#&gt;        seqnames    ranges strand |    counts                 gc
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;          &lt;numeric&gt;
-#&gt;    [1]     seq1       1-5      * |         2  0.761121743358672
-#&gt;    [2]     seq1       2-6      * |         1  0.573356448905542
-#&gt;    [3]     seq1       3-7      + |         5  0.447508045937866
-#&gt;    [4]     seq1       4-8      - |         1 0.0838020080700517
-#&gt;    [5]     seq1       5-9      * |         1  0.219138547312468
-#&gt;    [6]     seq1      6-10      - |         4   0.07557029183954
-#&gt;    [7]     seq1      7-11      - |         2  0.534426784375682
-#&gt;    [8]     seq1      8-12      + |         1  0.641356576699764
-#&gt;    [9]     seq1      9-13      + |         2  0.525739317527041
-#&gt;   [10]     seq1     10-14      + |         1 0.0392813880462199
+#&gt;        seqnames    ranges strand |    counts        gc
+#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;numeric&gt;
+#&gt;    [1]     seq1       1-5      * |         2 0.7611217
+#&gt;    [2]     seq1       2-6      * |         1 0.5733564
+#&gt;    [3]     seq1       3-7      + |         5 0.4475080
+#&gt;    [4]     seq1       4-8      - |         1 0.0838020
+#&gt;    [5]     seq1       5-9      * |         1 0.2191385
+#&gt;    [6]     seq1      6-10      - |         4 0.0755703
+#&gt;    [7]     seq1      7-11      - |         2 0.5344268
+#&gt;    [8]     seq1      8-12      + |         1 0.6413566
+#&gt;    [9]     seq1      9-13      + |         2 0.5257393
+#&gt;   [10]     seq1     10-14      + |         1 0.0392814
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>select</a></span>(<span class='no'>rng</span>, <span class='no'>seqnames</span>, <span class='no'>strand</span>, <span class='kw'>.drop_ranges</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; DataFrame with 10 rows and 2 columns
 #&gt;    seqnames strand
@@ -256,7 +256,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

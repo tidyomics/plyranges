@@ -192,23 +192,23 @@ overlapping between ranges, to consider there to be overlap.</p>
 <span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df2</span>)
 
 <span class='fu'>filter_by_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 3 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |     name
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
-#&gt;   [1]     chr1      1-10      - |        a
-#&gt;   [2]     chr2      2-10      + |        b
-#&gt;   [3]     chr2      3-10      + |        c
+#&gt;       seqnames    ranges strand |        name
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+#&gt;   [1]     chr1      1-10      - |           a
+#&gt;   [2]     chr2      2-10      + |           b
+#&gt;   [3]     chr2      3-10      + |           c
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 <span class='fu'>filter_by_non_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 1 metadata column:
-#&gt;       seqnames    ranges strand |     name
-#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;factor&gt;
-#&gt;   [1]     chr3      4-10      * |        d
-#&gt;   [2]     chr3      5-10      * |        e
-#&gt;   [3]     chr3      6-10      + |        f
-#&gt;   [4]     chr4      7-10      + |        g
-#&gt;   [5]     chr4      8-10      + |        h
-#&gt;   [6]     chr4      9-10      - |        i
-#&gt;   [7]     chr4        10      - |        j
+#&gt;       seqnames    ranges strand |        name
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
+#&gt;   [1]     chr3      4-10      * |           d
+#&gt;   [2]     chr3      5-10      * |           e
+#&gt;   [3]     chr3      6-10      + |           f
+#&gt;   [4]     chr4      7-10      + |           g
+#&gt;   [5]     chr4      8-10      + |           h
+#&gt;   [6]     chr4      9-10      - |           i
+#&gt;   [7]     chr4        10      - |           j
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths</div><div class='input'>
 </div></pre>
@@ -227,7 +227,7 @@ overlapping between ranges, to consider there to be overlap.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
