@@ -30,6 +30,9 @@ reference:
     - shift_downstream
     - flank_upstream
     - chop_by_introns
+    - matches("^n$")
+    - n_distinct
+
 
 - title: Core verbs
   contents:
@@ -88,7 +91,7 @@ reference:
 
 - title: Utilities
   contents:
-    - matches("^n$")
+    - contains("names")
     - as_ranges
     - set_width
     - overscope_ranges
