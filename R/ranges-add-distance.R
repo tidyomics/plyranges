@@ -25,6 +25,8 @@ add_distance_col <- function(ranges, hits, colname) {
 
 #' Macro for building add_nearest_distance_* family of functions
 #' Change this to edit defaults for all functions
+#' @param fun nearest hits helper function
+#' @noRd
 make_add_nearest_distance <- function(fun){
   f <- function(x, y = x, name = "distance"){
     hits <- fun(x, y)
