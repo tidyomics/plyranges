@@ -69,6 +69,7 @@ join_nearest <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
 }
 
 #' @rdname ranges-nearest
+#' @export
 join_nearest_left <- function(x,y, suffix = c(".x", ".y"), distance = FALSE) {
   hits <- hits_nearest_left(x, y)
   distance_col <- set_distance_col(distance)
