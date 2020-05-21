@@ -44,7 +44,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Stuart Lee \email{lee.s@wehi.edu.au}
+\strong{Maintainer}: Stuart Lee \email{lee.s@wehi.edu.au} (\href{https://orcid.org/0000-0003-1179-8436}{ORCID})
 
 Authors:
 \itemize{
