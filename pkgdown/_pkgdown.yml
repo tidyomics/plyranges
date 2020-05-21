@@ -62,6 +62,7 @@ reference:
     - starts_with("join_follow")
     - starts_with("join_precede")
     - starts_with("join_nearest")
+    - starts_with("add_nearest")
 
 - title: Pairing up Ranges
   contents:

@@ -1,3 +1,16 @@
+# plyranges 1.9.1
+
+* [Spencer Nystrom](https://github.com/snystrom) has made several significant 
+contributions to the `join_nearest` family of functions:
+    
+    1. `join_nearest_(x, y, ..., distance =  TRUE)` family of functions 
+    now takes a new argument, `distance`, which allows the user to add a 
+    column for the distance of the nearest range `y` to that in `x`.
+    2. `add_nearest_distance_(x, y, ...)` family of functions, which will add 
+    a new metadata column to the `x` ranges object which contains the distance to 
+    its nearest neighbor in `y`. If there are no nearest neighbors, the new
+    column will be given a missing value.
+
 # plyranges 1.7.16
 
 * refactoring of select internals, improved speed when casting a GRanges -> 
