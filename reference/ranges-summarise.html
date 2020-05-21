@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Aggregate a Ranges object — summarise.Ranges • plyranges</title>
+<title>Reduce multiple values in a Ranges down to a single value — summarise.Ranges • plyranges</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Aggregate a Ranges object — summarise.Ranges" />
-<meta property="og:description" content="Aggregate a Ranges object" />
+<meta property="og:title" content="Reduce multiple values in a Ranges down to a single value — summarise.Ranges" />
+<meta property="og:description" content="Reduce multiple values in a Ranges down to a single value" />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -125,13 +125,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Aggregate a Ranges object</h1>
+    <h1>Reduce multiple values in a Ranges down to a single value</h1>
     <small class="dont-index">Source: <a href='https://github.com/sa-lee/plyranges/blob/master/R/dplyr-summarize.R'><code>R/dplyr-summarize.R</code></a></small>
     <div class="hidden name"><code>ranges-summarise.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Aggregate a Ranges object</p>
+    <p>Reduce multiple values in a Ranges down to a single value</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for Ranges</span>
@@ -146,16 +146,22 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Name-value pairs of summary functions.</p></td>
+      <td><p>Name-value pairs of summary functions. The name will be the
+name of the variable in the result. The value should be an expression that
+will return a value that has length one or length equal to the number of
+groups.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code><a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>S4Vectors::DataFrame()</a></code></p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <p>A <code>S4Vectors::<a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame()</a></code></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <div class='dont-index'><p><code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>dplyr::summarise()</a></code></p></div>
+    <p>Creates one or more variables as a <code>S4Vectors::<a href='https://rdrr.io/pkg/S4Vectors/man/DataFrame-class.html'>DataFrame()</a></code>
+from the input Ranges object. If the ranges object is grouped, there will
+be a row for each group. Because grouping may remove whether a Ranges object
+is valid, a DataFrame is always returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,  <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,

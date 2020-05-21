@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Interweave a pair of Ranges objects together — interweave • plyranges</title>
+<title>Generate flanking regions — flank_left • plyranges</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="Interweave a pair of Ranges objects together — interweave" />
-<meta property="og:description" content="Interweave a pair of Ranges objects together" />
+<meta property="og:title" content="Generate flanking regions — flank_left" />
+<meta property="og:description" content="Find flanking regions  to the left or right or
+upstream or downstream of a Ranges object." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -125,75 +126,106 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Interweave a pair of Ranges objects together</h1>
-    <small class="dont-index">Source: <a href='https://github.com/sa-lee/plyranges/blob/master/R/ranges-bind.R'><code>R/ranges-bind.R</code></a></small>
-    <div class="hidden name"><code>ranges-interweave.Rd</code></div>
+    <h1>Generate flanking regions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/sa-lee/plyranges/blob/master/R/ranges-arithmetic-flank.R'><code>R/ranges-arithmetic-flank.R</code></a></small>
+    <div class="hidden name"><code>ranges-flank.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Interweave a pair of Ranges objects together</p>
+    <p>Find flanking regions  to the left or right or
+upstream or downstream of a Ranges object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>interweave</span>(<span class='no'>left</span>, <span class='no'>right</span>, <span class='kw'>.id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>flank_left</span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>flank_right</span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>flank_upstream</span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+
+<span class='fu'>flank_downstream</span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>left, right</th>
-      <td><p>Ranges objects.</p></td>
+      <th>x</th>
+      <td><p>a Ranges object.</p></td>
     </tr>
     <tr>
-      <th>.id</th>
-      <td><p>When supplied a new column that represents the origin column
-and is linked to each row of the resulting Ranges object.</p></td>
+      <th>width</th>
+      <td><p>the width of the flanking region relative to the ranges in
+<code>x</code>. Either an integer vector of length 1 or an integer vector
+the same length as x. The width can be negative in which case the
+flanking region is reversed.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a Ranges object</p>
+    <p>A Ranges object of same length as <code>x</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The output of <code>interweave()</code> takes pairs of Ranges
-objects and combines them into a single  Ranges object. If an .id
-argument is supplied, an origin column with name .id is created indicated which side
-the resulting Range comes from (eit)</p>
+    <p>The function
+<code>flank_left</code> will create the flanking region to the left of starting
+coordinates in <code>x</code>, while <code>flank_right</code> will create the flanking
+region to the right of the starting coordinates in <code>x</code>. The function
+<code>flank_upstream</code> will <code>flank_left</code> if the strand of rows in <code>x</code> is
+not negative and will <code>flank_right</code> if the strand of rows in <code>x</code> is
+negative. The function <code>flank_downstream</code> will <code>flank_right</code> if the strand of rows in <code>x</code> is
+not negative and will <code>flank_leftt</code> if the strand of rows in <code>x</code> is
+negative.</p>
+<p>By default <code>flank_left</code> and <code>flank_right</code> will
+ignore strandedness of any ranges, while <code>flank_upstream</code> and
+<code>flank_downstream</code> will take into account the strand of <code>x</code>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code>IRanges::<a href='https://rdrr.io/pkg/IRanges/man/intra-range-methods.html'>flank()</a></code>,
+<code>GenomicRanges::<a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>flank()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>15</span>,
                             <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,
                             <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,
                             <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"*"</span>)))
-<span class='fu'>interweave</span>(<span class='fu'><a href='ranges-flank.html'>flank_left</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>), <span class='fu'><a href='ranges-flank.html'>flank_right</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>))</div><div class='output co'>#&gt; GRanges object with 12 ranges and 0 metadata columns:
-#&gt;        seqnames    ranges strand
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
-#&gt;    [1]     seq1       5-9      +
-#&gt;    [2]     seq1     15-19      +
-#&gt;    [3]     seq1      6-10      +
-#&gt;    [4]     seq1     16-20      +
-#&gt;    [5]     seq1      7-11      -
-#&gt;    ...      ...       ...    ...
-#&gt;    [8]     seq1     18-22      -
-#&gt;    [9]     seq1      9-13      +
-#&gt;   [10]     seq1     19-23      +
-#&gt;   [11]     seq1     10-14      *
-#&gt;   [12]     seq1     20-24      *
+<span class='fu'>flank_left</span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     seq1       5-9      +
+#&gt;   [2]     seq1      6-10      +
+#&gt;   [3]     seq1      7-11      -
+#&gt;   [4]     seq1      8-12      -
+#&gt;   [5]     seq1      9-13      +
+#&gt;   [6]     seq1     10-14      *
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>interweave</span>(<span class='fu'><a href='ranges-flank.html'>flank_left</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>), <span class='fu'><a href='ranges-flank.html'>flank_right</a></span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>), <span class='kw'>.id</span> <span class='kw'>=</span> <span class='st'>"origin"</span>)</div><div class='output co'>#&gt; GRanges object with 12 ranges and 1 metadata column:
-#&gt;        seqnames    ranges strand |      origin
-#&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
-#&gt;    [1]     seq1       5-9      + |        left
-#&gt;    [2]     seq1     15-19      + |       right
-#&gt;    [3]     seq1      6-10      + |        left
-#&gt;    [4]     seq1     16-20      + |       right
-#&gt;    [5]     seq1      7-11      - |        left
-#&gt;    ...      ...       ...    ... .         ...
-#&gt;    [8]     seq1     18-22      - |       right
-#&gt;    [9]     seq1      9-13      + |        left
-#&gt;   [10]     seq1     19-23      + |       right
-#&gt;   [11]     seq1     10-14      * |        left
-#&gt;   [12]     seq1     20-24      * |       right
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flank_right</span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     seq1     15-19      +
+#&gt;   [2]     seq1     16-20      +
+#&gt;   [3]     seq1     17-21      -
+#&gt;   [4]     seq1     18-22      -
+#&gt;   [5]     seq1     19-23      +
+#&gt;   [6]     seq1     20-24      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flank_upstream</span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     seq1       5-9      +
+#&gt;   [2]     seq1      6-10      +
+#&gt;   [3]     seq1     17-21      -
+#&gt;   [4]     seq1     18-22      -
+#&gt;   [5]     seq1      9-13      +
+#&gt;   [6]     seq1     10-14      *
+#&gt;   -------
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>flank_downstream</span>(<span class='no'>gr</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;       seqnames    ranges strand
+#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
+#&gt;   [1]     seq1     15-19      +
+#&gt;   [2]     seq1     16-20      +
+#&gt;   [3]     seq1      7-11      -
+#&gt;   [4]     seq1      8-12      -
+#&gt;   [5]     seq1     19-23      +
+#&gt;   [6]     seq1     20-24      *
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div></pre>
   </div>

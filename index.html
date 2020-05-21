@@ -286,8 +286,8 @@
 <span class="co">#&gt; 1618    rs995030    NM_000899         4</span>
 <span class="co">#&gt; 1619    rs995030    NM_003994         4</span></pre></div>
 <p>We can also generate 2bp splice sites on either side of the exon using <code>flank_left</code> and <code>flank_right</code>. We add a column indicating the side of flanking for illustrative purposes. The <code>interweave</code> function pairs the left and right ranges objects.</p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="no">left_ss</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/flank-ranges.html">flank_left</a></span>(<span class="no">exons</span>, <span class="fl">2L</span>)
-<span class="no">right_ss</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/flank-ranges.html">flank_right</a></span>(<span class="no">exons</span>, <span class="fl">2L</span>)
+<div class="sourceCode" id="cb9"><pre class="r"><span class="no">left_ss</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/ranges-flank.html">flank_left</a></span>(<span class="no">exons</span>, <span class="fl">2L</span>)
+<span class="no">right_ss</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/ranges-flank.html">flank_right</a></span>(<span class="no">exons</span>, <span class="fl">2L</span>)
 <span class="no">all_ss</span> <span class="kw">&lt;-</span> <span class="fu"><a href="reference/ranges-interweave.html">interweave</a></span>(<span class="no">left_ss</span>, <span class="no">right_ss</span>, <span class="kw">.id</span> <span class="kw">=</span> <span class="st">"side"</span>)
 <span class="no">all_ss</span>
 <span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span>
