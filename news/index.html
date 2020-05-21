@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -128,6 +128,21 @@
       <small>Source: <a href='https://github.com/sa-lee/plyranges/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="plyranges-1-9-1" class="section level1">
+<h1 class="page-header" data-toc-text="1.9.1">
+<a href="#plyranges-1-9-1" class="anchor"></a>plyranges 1.9.1</h1>
+<ul>
+<li>
+<p><a href="https://github.com/snystrom">Spencer Nystrom</a> has made several significant contributions to the <code>join_nearest</code> family of functions:</p>
+<ol>
+<li>
+<code>join_nearest_(x, y, ..., distance =  TRUE)</code> family of functions now takes a new argument, <code>distance</code>, which allows the user to add a column for the distance of the nearest range <code>y</code> to that in <code>x</code>.</li>
+<li>
+<code>add_nearest_distance_(x, y, ...)</code> family of functions, which will add a new metadata column to the <code>x</code> ranges object which contains the distance to its nearest neighbor in <code>y</code>. If there are no nearest neighbors, the new column will be given a missing value.</li>
+</ol>
+</li>
+</ul>
+</div>
     <div id="plyranges-1-7-16" class="section level1">
 <h1 class="page-header" data-toc-text="1.7.16">
 <a href="#plyranges-1-7-16" class="anchor"></a>plyranges 1.7.16</h1>

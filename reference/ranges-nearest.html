@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -134,15 +134,15 @@
     <p>Find nearest neighbours between two Ranges objects</p>
     </div>
 
-    <pre class="usage"><span class='fu'>join_nearest</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+    <pre class="usage"><span class='fu'>join_nearest</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>), <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>join_nearest_left</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_nearest_left</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>), <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>join_nearest_right</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_nearest_right</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>), <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>join_nearest_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_nearest_upstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>), <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>join_nearest_downstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))</pre>
+<span class='fu'>join_nearest_downstream</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>), <span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,8 +154,14 @@ those in y.</p></td>
     </tr>
     <tr>
       <th>suffix</th>
-      <td><p>A character vector of length two used to identify metadata columns
-coming from x and y.</p></td>
+      <td><p>A character vector of length two used to identify metadata columns</p></td>
+    </tr>
+    <tr>
+      <th>distance</th>
+      <td><p>logical vector whether to add "distance" column to output. If set to
+a character vector of length 1, will use that as distance column name. If a
+column matching the distance column already exits, will prepend the suffix
+for y with a warning.</p></td>
     </tr>
     </table>
 
@@ -165,17 +171,17 @@ coming from x and y.</p></td>
 is copied over from the right-hand side ranges <code>y</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>By default <code>join_nearest</code> will find abritrary nearest
+    <p>By default <code>join_nearest</code> will find arbitrary nearest
 neighbours in either direction and ignore any strand information.
 The <code>join_nearest_left</code> and <code>join_nearest_right</code>  methods
-will find abritrary nearest neighbour ranges on x that are left/right of
+will find arbitrary nearest neighbour ranges on x that are left/right of
 those on y and ignore any strand information.</p>
-<p>The <code>join_nearest_upstream</code> method will find abritrary nearest
+<p>The <code>join_nearest_upstream</code> method will find arbitrary nearest
 neighbour ranges on x that are upstream of those on y. This takes into
 account strandedness of the ranges.
 On the positive strand nearest upstream will be on the
 left and on the negative strand nearest upstream will be on the right.</p>
-<p>The <code>join_nearest_downstream</code> method will find abritrary nearest
+<p>The <code>join_nearest_downstream</code> method will find arbitrary nearest
 neighbour ranges on x that are upstream of those on y. This takes into
 account strandedness of the ranges.On the positive strand nearest downstream
 will be on the right and on the negative strand nearest upstream will be on
