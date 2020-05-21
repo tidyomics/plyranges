@@ -1,11 +1,12 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.9.0
+Version: 1.9.1
 Authors@R: c(
       person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
-      person("Dianne", "Cook", role = c("aut", "ctb"))
+      person("Dianne", "Cook", role = c("aut", "ctb")),
+      person("Spencer", "Nystrom", role = c("ctb"), comment = c(ORCID = "0000-0003-1000-1579"))
     )
 Maintainer: Stuart Lee <lee.s@wehi.edu.au>
 Description: A dplyr-like interface for interacting with the common Bioconductor 
@@ -47,7 +48,7 @@ Suggests:
     ggplot2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Collate: 
     'class-AnchoredRanges.R'
     'class-Operator.R'
@@ -70,6 +71,7 @@ Collate:
     'methods-DeferredGenomicRanges.R'
     'methods-Operator.R'
     'plyranges.R'
+    'ranges-add-distance.R'
     'ranges-anchors.R'
     'ranges-arithmetic-flank.R'
     'ranges-arithmetic-setters.R'
