@@ -1,9 +1,9 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.9.1
+Version: 1.9.2
 Authors@R: c(
-      person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre")),
+      person("Stuart", "Lee", email = "lee.s@wehi.edu.au", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1179-8436")),
       person("Michael", "Lawrence", role = c("aut", "ctb")),
       person("Dianne", "Cook", role = c("aut", "ctb")),
       person("Spencer", "Nystrom", role = c("ctb"), comment = c(ORCID = "0000-0003-1000-1579"))

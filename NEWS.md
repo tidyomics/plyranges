@@ -1,3 +1,7 @@
+# plyranges 1.9.2
+
+* minor documentation fixes
+
 # plyranges 1.9.1
 
 * [Spencer Nystrom](https://github.com/snystrom) has made several significant 
