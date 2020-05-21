@@ -48,5 +48,6 @@ shift_upstream(gr, 5L)
 shift_downstream(gr, 5L)
 }
 \seealso{
-\code{\link[IRanges:shift]{IRanges::shift()}}
+\code{IRanges::\link[IRanges:intra-range-methods]{shift()}},
+\code{GenomicRanges::\link[GenomicRanges:intra-range-methods]{shift()}}
 }

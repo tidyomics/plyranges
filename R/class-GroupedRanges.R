@@ -100,3 +100,16 @@ setMethod("initialize", "GroupedIntegerRanges",
 setMethod("show", "GroupedIntegerRanges", function(object) {
   show_GroupedRanges(object)
 })
+
+
+
+#' @importFrom dplyr tbl_vars
+#' @export
+tbl_vars.Ranges <- function(x) {
+  c("start", "end", "width", names(mcols(x)))
+}
+
+#' @export
+tbl_vars.GenomicRanges <- function(x) {
+  c("start", "end", "width", "strand", "seqnames", names(mcols(x)))
+}

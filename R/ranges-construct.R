@@ -13,7 +13,8 @@
 #' metadata columns) slot of the returned object.
 #'
 #' @return a Ranges object.
-#' @seealso [IRanges::IRanges()][GenomicRanges::GRanges()]
+#' @seealso \code{IRanges::\link[IRanges:IRanges-constructor]{IRanges()}},
+#' \code{GenomicRanges::\link[GenomicRanges:GRanges-class]{GRanges()}}
 #'
 #' @importFrom rlang quos eval_tidy
 #' @importFrom S4Vectors mcols metadata mcols<- metadata<-
@@ -232,7 +233,8 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 #'
 #' @details This function is behind [compute_coverage()].
 #'
-#' @seealso [S4Vectors::Rle()],[IRanges::RleList()]
+#' @seealso \code{S4Vectors::\link[S4Vectors:Rle-class]{Rle()}},
+#' \code{IRanges::\link[IRanges:AtomicList]{RleList()}}
 #' @examples
 #' x <- S4Vectors::Rle(10:1, 1:10)
 #' as_ranges(x)

@@ -122,22 +122,6 @@ n_distinct <- function(var) {
   }
 }
 
-
 is_empty_quos <- function(quos) {
   length(quos) == 0L
-}
-
-
-#' @importFrom dplyr tbl_vars
-#' @export
-#' @rdname tidyverse-reexports
-tbl_vars.Ranges <- function(x) {
-  c("start", "end", "width", names(mcols(x)))
-}
-
-#' @importFrom dplyr tbl_vars
-#' @export
-#' @rdname tidyverse-reexports
-tbl_vars.GenomicRanges <- function(x) {
-  c("start", "end", "width", "strand", "seqnames", names(mcols(x)))
 }

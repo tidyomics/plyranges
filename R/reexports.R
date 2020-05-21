@@ -1,15 +1,11 @@
-#' Re-exports
-
-#' Rexported functions from the tidyverse
-#' 
-#' @name tidyverse-reexports
+#' Objects exported from other packages.
 #' @rdname tidyverse-reexports
-#' @importFrom rlang !!
+#' @importFrom rlang !!!
 #' @export
 rlang::`!!!`
 
 #' @rdname tidyverse-reexports
-#' @importFrom rlang !!!
+#' @importFrom rlang !!
 #' @export
 rlang::`!!`
 
@@ -27,11 +23,11 @@ dplyr::filter
 dplyr::group_by
 
 #' @rdname tidyverse-reexports
-#'@export
+#' @export
 dplyr::groups
 
 #' @rdname tidyverse-reexports
-#'@export
+#' @export
 dplyr::ungroup
 
 #' @rdname tidyverse-reexports

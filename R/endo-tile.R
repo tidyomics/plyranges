@@ -8,7 +8,6 @@ partition_rng <- function(rglist) {
 
 
 #' @rdname ranges-tile
-#' @seealso [IRanges::tile()], [GenomicRanges::tile()]
 #' @importFrom IRanges tile
 #' @export
 tile_ranges <- function(x, width) { UseMethod("tile_ranges") }
@@ -51,7 +50,7 @@ tile_ranges.Ranges <- function(x, width) {
 #' # make sliding windows of width 3, moving window with step size of 2
 #' slide_ranges(gr, width = 3, step = 2)
 #' 
-#' @seealso [IRanges::slidingWindows()], [GenomicRanges::slidingWindows()]
+#' @seealso \code{GenomicRanges::\link[GenomicRanges:tile-methods]{tile()}}
 #' @rdname ranges-tile
 #' @export
 slide_ranges <- function(x, width, step) { UseMethod("slide_ranges") }

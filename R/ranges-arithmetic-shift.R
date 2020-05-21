@@ -15,10 +15,11 @@
 #'
 #' @return a Ranges object with start and end coordinates shifted.
 #'
-#' @seealso [IRanges::shift()]
+#' @seealso \code{IRanges::\link[IRanges:intra-range-methods]{shift()}},
+#' \code{GenomicRanges::\link[GenomicRanges:intra-range-methods]{shift()}}
 #' @importFrom IRanges shift
 #' @importFrom BiocGenerics "%in%" which
-#' @rdname shift-ranges
+#' @rdname ranges-shift
 #' @examples
 #' ir <- as_iranges(data.frame(start = 10:15, width = 5))
 #' shift_left(ir, 5L)
@@ -36,14 +37,14 @@ shift_left <- function(x, shift = 0L) {
   shift(x, shift_l)
 }
 
-#' @rdname shift-ranges
+#' @rdname ranges-shift
 #' @export
 shift_right <- function(x, shift = 0L) {
   .norm_args_shift(x, shift)
   shift(x, shift)
 }
 
-#' @rdname shift-ranges
+#' @rdname ranges-shift
 #' @export
 shift_upstream <- function(x, shift = 0L) {
   stopifnot(is(x, "GenomicRanges"))
@@ -62,7 +63,7 @@ shift_upstream <- function(x, shift = 0L) {
   x
 }
 
-#' @rdname shift-ranges
+#' @rdname ranges-shift
 #' @export
 shift_downstream <- function(x, shift = 0L) {
   stopifnot(is(x, "GenomicRanges"))

@@ -30,5 +30,6 @@ as_ranges(y)
 
 }
 \seealso{
-\code{\link[S4Vectors:Rle]{S4Vectors::Rle()}},\code{\link[IRanges:RleList]{IRanges::RleList()}}
+\code{S4Vectors::\link[S4Vectors:Rle-class]{Rle()}},
+\code{IRanges::\link[IRanges:AtomicList]{RleList()}}
 }

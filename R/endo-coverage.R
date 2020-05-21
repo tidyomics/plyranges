@@ -11,7 +11,8 @@
 #' @return An expanded Ranges object with a score column corresponding to
 #' the coverage value over that interval. Note that compute_coverage
 #' drops metadata associated with the orginal ranges.
-#' @seealso [IRanges::coverage()], [GenomicRanges::coverage()]
+#' @seealso \code{IRanges::\link[IRanges:coverage-methods]{coverage()}}, 
+#'          \code{GenomicRanges::\link[GenomicRanges:coverage-methods]{coverage()}}
 #' @examples
 #' rng <- as_iranges(data.frame(start = 1:10, width = 5))
 #' compute_coverage(rng)

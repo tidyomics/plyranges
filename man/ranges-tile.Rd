@@ -49,7 +49,5 @@ slide_ranges(gr, width = 3, step = 2)
 
 }
 \seealso{
-\code{\link[IRanges:tile]{IRanges::tile()}}, \code{\link[GenomicRanges:tile]{GenomicRanges::tile()}}
-
-\code{\link[IRanges:slidingWindows]{IRanges::slidingWindows()}}, \code{\link[GenomicRanges:slidingWindows]{GenomicRanges::slidingWindows()}}
+\code{GenomicRanges::\link[GenomicRanges:tile-methods]{tile()}}
 }

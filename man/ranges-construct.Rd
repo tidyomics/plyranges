@@ -53,5 +53,6 @@ as_granges(df, seqnames = chr)
 
 }
 \seealso{
-\link[GenomicRanges:GRanges]{IRanges::IRanges()}
+\code{IRanges::\link[IRanges:IRanges-constructor]{IRanges()}},
+\code{GenomicRanges::\link[GenomicRanges:GRanges-class]{GRanges()}}
 }

@@ -26,7 +26,8 @@
 #'
 #' @return A Ranges object of same length as `x`.
 #'
-#' @seealso [IRanges::flank()][GenomicRanges::flank()]
+#' @seealso \code{IRanges::\link[IRanges:intra-range-methods]{flank()}},
+#' \code{GenomicRanges::\link[GenomicRanges:intra-range-methods]{flank()}}
 #' @importFrom IRanges flank
 #' @examples
 #' gr <- as_granges(data.frame(start = 10:15,
@@ -37,21 +38,21 @@
 #' flank_right(gr, width = 5L)
 #' flank_upstream(gr, width = 5L)
 #' flank_downstream(gr, width = 5L)
-#' @rdname flank-ranges
+#' @rdname ranges-flank
 #' @export
 flank_left <- function(x, width = 0L) {
   stopifnot(is.numeric(width))
   flank(x, width, start = TRUE, ignore.strand = TRUE)
 }
 
-#' @rdname flank-ranges
+#' @rdname ranges-flank
 #' @export
 flank_right <- function(x, width = 0L) {
   stopifnot(is.numeric(width))
   flank(x, width, start = FALSE, ignore.strand = TRUE)
 }
 
-#' @rdname flank-ranges
+#' @rdname ranges-flank
 #' @export
 flank_upstream <- function(x, width = 0L) {
   stopifnot(is.numeric(width))
@@ -59,7 +60,7 @@ flank_upstream <- function(x, width = 0L) {
   flank(x, width, start = TRUE, ignore.strand = FALSE)
 }
 
-#' @rdname flank-ranges
+#' @rdname ranges-flank
 #' @export
 flank_downstream <- function(x, width = 0L) {
   stopifnot(is.numeric(width))

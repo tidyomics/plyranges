@@ -56,5 +56,6 @@ flank_upstream(gr, width = 5L)
 flank_downstream(gr, width = 5L)
 }
 \seealso{
-\link[GenomicRanges:flank]{IRanges::flank()}
+\code{IRanges::\link[IRanges:intra-range-methods]{flank()}},
+\code{GenomicRanges::\link[GenomicRanges:intra-range-methods]{flank()}}
 }
