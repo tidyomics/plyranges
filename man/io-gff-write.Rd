@@ -41,5 +41,5 @@ of functions defined in \pkg{rtracklayer}.
 }
 }
 \seealso{
-\code{\link[rtracklayer:GFFFile]{rtracklayer::GFFFile()}}
+\code{rtracklayer::\link[rtracklayer:GFFFile-class]{GFFFile()}}
 }

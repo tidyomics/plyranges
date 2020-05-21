@@ -13,7 +13,7 @@
 #' @return A GRanges object
 #'
 #' @importFrom rtracklayer import.wig
-#' @seealso [rtracklayer::WIGFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:WIGFile-class]{WIGFile()}}
 #' @rdname io-wig-read
 #' @examples
 #' test_path <- system.file("tests", package = "rtracklayer")
@@ -42,7 +42,7 @@ read_wig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 #'             Compressed files with extensions such as '.gz' are handled
 #'             automatically.
 #' @importFrom rtracklayer export.wig
-#' @seealso [rtracklayer::WIGFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:WIGFile-class]{WIGFile()}}
 #' @export
 #' @return The write function returns a WIGFile invisibly.
 #' @rdname io-wig-write

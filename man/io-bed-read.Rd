@@ -59,7 +59,6 @@ the narrowPeaks spec):
 }
 }
 \examples{
-
 test_path <- system.file("tests", package = "rtracklayer")
 bed_file <- file.path(test_path, "test.bed")
 gr <- read_bed(bed_file)
@@ -79,5 +78,5 @@ gr <- read_narrowpeaks(np_file, genome_info = "hg19")
 gr
 }
 \seealso{
-\code{\link[rtracklayer:BEDFile]{rtracklayer::BEDFile()}}
+\code{rtracklayer::\link[rtracklayer:BEDFile-class]{BEDFile()}}
 }

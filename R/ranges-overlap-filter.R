@@ -20,7 +20,7 @@
 #'
 #' @return  a Ranges object
 #' @importFrom IRanges subsetByOverlaps
-#' @seealso [IRanges::subsetByOverlaps()]
+#' @seealso \code{IRanges::\link[IRanges:findOverlaps-methods]{subsetByOverlaps()}}
 #' @export
 #' @examples
 #' df <- data.frame(seqnames = c("chr1", rep("chr2", 2),

@@ -57,5 +57,5 @@ filter_by_non_overlaps(query, subject)
 
 }
 \seealso{
-\code{\link[IRanges:subsetByOverlaps]{IRanges::subsetByOverlaps()}}
+\code{IRanges::\link[IRanges:findOverlaps-methods]{subsetByOverlaps()}}
 }

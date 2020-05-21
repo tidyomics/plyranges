@@ -178,7 +178,8 @@ add_hits_mcols <- function(left, hits, hits_mcols_to_keep = NULL){
 #' # adding directed prefix includes strand
 #' find_overlaps_directed(query, subject, suffix = c(".query", ".subject"))
 #'
-#' @seealso [GenomicRanges::findOverlaps()], [IRanges::findOverlaps()]
+#' @seealso \code{IRanges::\link[IRanges:findOverlaps-methods]{findOverlaps()}},
+#' \code{GenomicRanges::\link[GenomicRanges:findOverlaps-methods]{findOverlaps()}}
 #' @importFrom IRanges findOverlaps
 #' @importFrom S4Vectors queryHits subjectHits
 #' @export

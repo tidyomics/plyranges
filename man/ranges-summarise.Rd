@@ -2,20 +2,29 @@
 % Please edit documentation in R/dplyr-summarize.R
 \name{summarise.Ranges}
 \alias{summarise.Ranges}
-\title{Aggregate a Ranges object}
+\title{Reduce multiple values in a Ranges down to a single value}
 \usage{
 \method{summarise}{Ranges}(.data, ...)
 }
 \arguments{
 \item{.data}{a Ranges object}
 
-\item{...}{Name-value pairs of summary functions.}
+\item{...}{Name-value pairs of summary functions. The name will be the
+name of the variable in the result. The value should be an expression that
+will return a value that has length one or length equal to the number of
+groups.}
 }
 \value{
-a \code{\link[S4Vectors:DataFrame]{S4Vectors::DataFrame()}}
+A \code{S4Vectors::\link[S4Vectors:DataFrame-class]{DataFrame()}}
 }
 \description{
-Aggregate a Ranges object
+Reduce multiple values in a Ranges down to a single value
+}
+\details{
+Creates one or more variables as a \code{S4Vectors::\link[S4Vectors:DataFrame-class]{DataFrame()}}
+from the input Ranges object. If the ranges object is grouped, there will
+be a row for each group. Because grouping may remove whether a Ranges object
+is valid, a DataFrame is always returned.
 }
 \examples{
 df <- data.frame(start = 1:10, width = 5,  seqnames = "seq1",
@@ -23,7 +32,4 @@ strand = sample(c("+", "-", "*"), 10, replace = TRUE), gc = runif(10))
 rng <- as_granges(df)
 rng \%>\% summarise(gc = mean(gc))
 rng \%>\% group_by(strand) \%>\% summarise(gc = mean(gc))
-}
-\seealso{
-\code{\link[dplyr:summarise]{dplyr::summarise()}}
 }

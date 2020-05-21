@@ -76,5 +76,5 @@ if (require(pasillaBamSubset)) {
 
 }
 \seealso{
-\code{\link[Rsamtools:BamFile]{Rsamtools::BamFile()}},\code{\link[GenomicAlignments:readGAlignments]{GenomicAlignments::readGAlignments()}}
+\code{Rsamtools::\link[Rsamtools:BamFile]{BamFile()}},\code{\link[GenomicAlignments:readGAlignments]{GenomicAlignments::readGAlignments()}}
 }

@@ -62,7 +62,7 @@
 #'
 #' @return A DeferredGenomicRanges object
 #' @rdname io-bam-read
-#' @seealso [Rsamtools::BamFile()],[GenomicAlignments::readGAlignments()]
+#' @seealso \code{Rsamtools::\link[Rsamtools:BamFile]{BamFile()}},[GenomicAlignments::readGAlignments()]
 read_bam <- function(file, index = file, paired = FALSE) {
   ops <- new_bam_ops(file, index, paired)
   new_DeferredGenomicRanges(GRanges(), ops)

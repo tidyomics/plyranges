@@ -29,7 +29,7 @@ norm_args_reader_gff <- function(genome_info) {
 #'
 #' @importFrom rtracklayer import.gff
 #' @importFrom GenomeInfoDb seqinfo
-#' @seealso [rtracklayer::GFFFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:GFFFile-class]{GFFFile()}}
 #' @export
 #' @rdname io-gff-read
 #' @examples
@@ -93,7 +93,7 @@ read_gff3 <- function(file, col_names = NULL, genome_info = NULL, overlap_ranges
 #' of functions defined in \pkg{rtracklayer}.
 #'
 #' @importFrom rtracklayer export.gff export.gff1 export.gff2 export.gff3
-#' @seealso [rtracklayer::GFFFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:GFFFile-class]{GFFFile()}}
 #' @return The write function returns a GFFFile object invisibly
 #' @export
 #' @examples 

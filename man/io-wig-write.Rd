@@ -20,5 +20,5 @@ The write function returns a WIGFile invisibly.
 Write a WIG file
 }
 \seealso{
-\code{\link[rtracklayer:WIGFile]{rtracklayer::WIGFile()}}
+\code{rtracklayer::\link[rtracklayer:WIGFile-class]{WIGFile()}}
 }

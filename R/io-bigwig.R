@@ -15,7 +15,7 @@
 #' }
 #' @return a GRanges object
 #' @importFrom rtracklayer import.bw BigWigSelection BigWigFile
-#' @seealso [rtracklayer::BigWigFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:BigWigFile-class]{BigWigFile()}}
 #' @export
 #' @rdname io-bigwig-read
 read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
@@ -56,7 +56,7 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
 #' of functions defined in \pkg{rtracklayer}.
 #'
 #' @importFrom rtracklayer export.bw
-#' @seealso [rtracklayer::BigWigFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:BigWigFile-class]{BigWigFile()}}
 #' @export
 #' @return The write functions return a BigWigFile invisibly
 #' @examples 

@@ -128,5 +128,6 @@ find_overlaps_directed(query, subject, suffix = c(".query", ".subject"))
 
 }
 \seealso{
-\code{\link[GenomicRanges:findOverlaps]{GenomicRanges::findOverlaps()}}, \code{\link[IRanges:findOverlaps]{IRanges::findOverlaps()}}
+\code{IRanges::\link[IRanges:findOverlaps-methods]{findOverlaps()}},
+\code{GenomicRanges::\link[GenomicRanges:findOverlaps-methods]{findOverlaps()}}
 }

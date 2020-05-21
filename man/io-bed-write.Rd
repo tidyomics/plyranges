@@ -54,5 +54,5 @@ of functions defined in \pkg{rtracklayer}.
 }
 }
 \seealso{
-\code{\link[rtracklayer:BEDFile]{rtracklayer::BEDFile()}}
+\code{rtracklayer::\link[rtracklayer:BEDFile-class]{BEDFile()}}
 }

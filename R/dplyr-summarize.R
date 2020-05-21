@@ -37,13 +37,20 @@ check_n <- function(.data) {
   1L
 }
 
-#' Aggregate a Ranges object
+#' Reduce multiple values in a Ranges down to a single value
 #'
 #' @param .data a Ranges object
-#' @param ... Name-value pairs of summary functions.
+#' @param ... Name-value pairs of summary functions. The name will be the 
+#' name of the variable in the result. The value should be an expression that 
+#' will return a value that has length one or length equal to the number of 
+#' groups.
+#' 
+#' @details Creates one or more variables as a \code{S4Vectors::\link[S4Vectors:DataFrame-class]{DataFrame()}}
+#' from the input Ranges object. If the ranges object is grouped, there will
+#' be a row for each group. Because grouping may remove whether a Ranges object
+#' is valid, a DataFrame is always returned.
 #'
-#' @return a [S4Vectors::DataFrame()]
-#' @seealso [dplyr::summarise()]
+#' @return A \code{S4Vectors::\link[S4Vectors:DataFrame-class]{DataFrame()}}
 #' @importFrom S4Vectors rbind cbind
 #' @importFrom dplyr summarise summarize
 #' @examples

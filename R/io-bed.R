@@ -48,10 +48,9 @@ norm_args_reader <- function(genome_info) {
 #' @importFrom rtracklayer import.bed
 #' @importFrom GenomeInfoDb seqinfo
 #' @importFrom methods is
-#' @seealso [rtracklayer::BEDFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:BEDFile-class]{BEDFile()}}
 #'
 #' @examples
-#'
 #' test_path <- system.file("tests", package = "rtracklayer")
 #' bed_file <- file.path(test_path, "test.bed")
 #' gr <- read_bed(bed_file)
@@ -99,7 +98,7 @@ read_bed <- function(file, col_names = NULL, genome_info = NULL,
 #' of functions defined in \pkg{rtracklayer}.
 #'
 #' @importFrom rtracklayer export.bed
-#' @seealso [rtracklayer::BEDFile()]
+#' @seealso \code{rtracklayer::\link[rtracklayer:BEDFile-class]{BEDFile()}}
 #' @export
 #' @return The write functions return a BED(Graph)File invisibly
 #' @rdname io-bed-write

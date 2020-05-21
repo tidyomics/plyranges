@@ -34,5 +34,5 @@ of functions defined in \pkg{rtracklayer}.
 }
 }
 \seealso{
-\code{\link[rtracklayer:BigWigFile]{rtracklayer::BigWigFile()}}
+\code{rtracklayer::\link[rtracklayer:BigWigFile-class]{BigWigFile()}}
 }
