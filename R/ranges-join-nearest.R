@@ -3,10 +3,9 @@
 #' @param x,y Ranges objects, add the nearest neighbours of ranges in x to
 #' those in y.
 #' @param suffix A character vector of length two used to identify metadata columns
-#' @param distance logical vector whether to add "distance" column to output. If set to
-#'   a character vector of length 1, will use that as distance column name. If a
-#'   column matching the distance column already exits, will prepend the suffix
-#'   for y with a warning.
+#' @param distance logical vector whether to add a column named "distance"
+#'   containing the distance to the nearest region. If set to a character vector
+#'   of length 1, will use that as distance column name.
 #'
 #' @details By default `join_nearest` will find arbitrary nearest
 #' neighbours in either direction and ignore any strand information.

@@ -24,10 +24,9 @@ those in y.}
 
 \item{suffix}{A character vector of length two used to identify metadata columns}
 
-\item{distance}{logical vector whether to add "distance" column to output. If set to
-a character vector of length 1, will use that as distance column name. If a
-column matching the distance column already exits, will prepend the suffix
-for y with a warning.}
+\item{distance}{logical vector whether to add a column named "distance"
+containing the distance to the nearest region. If set to a character vector
+of length 1, will use that as distance column name.}
 }
 \value{
 A Ranges object corresponding to the nearest ranges, all metadata
