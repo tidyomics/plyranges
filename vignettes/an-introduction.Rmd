@@ -431,7 +431,8 @@ ir0 %>%
 We provide convenience functions via `rtracklayer` and `GenomicAlignments` for
 reading/writing the following data formats to/from `Ranges` objects.
 
-| `plyranges` functions | File Format | |-----------------------|-------------|
+| `plyranges` functions | File Format |
+|-----------------------|-------------|
 | `read_bam()` | BAM | 
 | `read_bed()`/`write_bed()` | BED | 
 | `read_bedgraph()`/ `write_bedgraph()` | BEDGraph | 
