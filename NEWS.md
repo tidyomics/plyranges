@@ -1,3 +1,8 @@
+# plyranges 1.9.3
+
+* minor spelling and layout fixes to vignette, 
+* [@PeteHaitch](https://github.com/PeteHaitch) corrected table layout in vignette
+
 # plyranges 1.9.2
 
 * minor documentation fixes
