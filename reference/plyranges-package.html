@@ -81,7 +81,7 @@ in Bioconductor." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ in Bioconductor." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -145,19 +145,19 @@ wrangling genomics data from a variety of sources. The package defines a
 grammar of genomic data manipulation through a set of verbs. These verbs
 can be used to construct human readable analysis pipelines based on Ranges
 objects.</p><ul>
-<li><p>Modify genomic regions with the <code><a href='ranges-setters.html'>set_width()</a></code> and <code><a href='stretch.html'>stretch()</a></code> functions.</p></li>
+<li><p>Modify genomic regions with the <code><a href='set_width.html'>set_width()</a></code> and <code><a href='stretch.html'>stretch()</a></code> functions.</p></li>
 <li><p>Modify genomic regions while fixing the start/end/center coordinates
 with the <code>anchors()</code> family of functions.</p></li>
-<li><p>Sort genomic ranges with <code><a href='tidyverse-reexports.html'>arrange()</a></code>.</p></li>
-<li><p>Modify, subset, and aggregate genomic data with the <code><a href='tidyverse-reexports.html'>mutate()</a></code>,
-<code><a href='tidyverse-reexports.html'>filter()</a></code>, and <code><a href='tidyverse-reexports.html'>summarise()</a></code>functions.</p></li>
+<li><p>Sort genomic ranges with <code><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange()</a></code>.</p></li>
+<li><p>Modify, subset, and aggregate genomic data with the <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code>,
+<code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code>, and <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code>functions.</p></li>
 <li><p>Any of the above operations can be performed on partitions of the
-data with <code><a href='tidyverse-reexports.html'>group_by()</a></code>.</p></li>
-<li><p>Find nearest neighbour genomic regions with the <code><a href='ranges-nearest.html'>join_nearest()</a></code> family
+data with <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code>.</p></li>
+<li><p>Find nearest neighbour genomic regions with the <code><a href='join_nearest.html'>join_nearest()</a></code> family
 of functions.</p></li>
-<li><p>Find overlaps between ranges with the <code><a href='overlap-joins.html'>join_overlap_inner()</a></code> family of functions.</p></li>
-<li><p>Merge all overlapping and adjacent genomic regions with <code><a href='ranges-reduce.html'>reduce_ranges()</a></code>.</p></li>
-<li><p>Merge the end points of all genomic regions with <code><a href='ranges-disjoin.html'>disjoin_ranges()</a></code>.</p></li>
+<li><p>Find overlaps between ranges with the <code><a href='join_overlap_intersect.html'>join_overlap_inner()</a></code> family of functions.</p></li>
+<li><p>Merge all overlapping and adjacent genomic regions with <code><a href='reduce_ranges.html'>reduce_ranges()</a></code>.</p></li>
+<li><p>Merge the end points of all genomic regions with <code><a href='disjoin_ranges.html'>disjoin_ranges()</a></code>.</p></li>
 <li><p>Import and write common genomic data formats with the <code>read_/write_</code> family
 of functions.</p></li>
 </ul>
@@ -171,6 +171,19 @@ of functions.</p></li>
 </ul>
 
 </div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p><strong>Maintainer</strong>: Stuart Lee <a href='mailto:lee.s@wehi.edu.au'>lee.s@wehi.edu.au</a> (<a href='https://orcid.org/0000-0003-1179-8436'>ORCID</a>)</p>
+<p>Authors:</p><ul>
+<li><p>Michael Lawrence [contributor]</p></li>
+<li><p>Dianne Cook [contributor]</p></li>
+</ul>
+
+<p>Other contributors:</p><ul>
+<li><p>Spencer Nystrom (<a href='https://orcid.org/0000-0003-1000-1579'>ORCID</a>) [contributor]</p></li>
+</ul>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -187,7 +200,7 @@ of functions.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

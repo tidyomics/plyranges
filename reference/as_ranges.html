@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,7 +134,7 @@
     <p>Coerce an Rle or RleList object to Ranges</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as_ranges</span>(<span class='no'>.data</span>)</pre>
+    <pre class="usage"><span class='fu'>as_ranges</span><span class='op'>(</span><span class='va'>.data</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,8 +159,9 @@ an <code>RleList()</code> object.</p>
 <code>IRanges::<a href='https://rdrr.io/pkg/IRanges/man/AtomicList-class.html'>RleList()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>S4Vectors</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Rle-class.html'>Rle</a></span>(<span class='fl'>10</span>:<span class='fl'>1</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='fu'>as_ranges</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 1 metadata column:
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>S4Vectors</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/S4Vectors/man/Rle-class.html'>Rle</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'>as_ranges</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 1 metadata column:
 #&gt;            start       end     width |     score
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt;
 #&gt;    [1]         1         1         1 |        10
@@ -174,8 +175,9 @@ an <code>RleList()</code> object.</p>
 #&gt;    [9]        37        45         9 |         2
 #&gt;   [10]        46        55        10 |         1</div><div class='input'>
 <span class='co'># must have names set</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>IRanges</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/IRanges/man/AtomicList-class.html'>RleList</a></span>(<span class='kw'>chr1</span> <span class='kw'>=</span> <span class='no'>x</span>)
-<span class='fu'>as_ranges</span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'>IRanges</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/IRanges/man/AtomicList-class.html'>RleList</a></span><span class='op'>(</span>chr1 <span class='op'>=</span> <span class='va'>x</span><span class='op'>)</span>
+<span class='fu'>as_ranges</span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 10 ranges and 1 metadata column:
 #&gt;        seqnames    ranges strand |     score
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;
 #&gt;    [1]     chr1         1      * |        10
@@ -206,7 +208,7 @@ an <code>RleList()</code> object.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

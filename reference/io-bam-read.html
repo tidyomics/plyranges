@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,7 +134,7 @@
     <p>Read a BAM file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_bam</span>(<span class='no'>file</span>, <span class='kw'>index</span> <span class='kw'>=</span> <span class='no'>file</span>, <span class='kw'>paired</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read_bam</span><span class='op'>(</span><span class='va'>file</span>, index <span class='op'>=</span> <span class='va'>file</span>, paired <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,19 +160,19 @@ or single end (FALSE). Default is FALSE.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Reading a BAM file is deferred until an action
-such as using <code><a href='tidyverse-reexports.html'>summarise()</a></code> or <code><a href='tidyverse-reexports.html'>mutate()</a></code> occurs. If paired is set to
+such as using <code><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise()</a></code> or <code><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate()</a></code> occurs. If paired is set to
 TRUE, when alignments are loaded, the GRanges has two additional
 columns called read_pair_id and read_pair_group corresponding
 to paired reads and is grouped by the read_pair_group.</p>
 <p>Certain verbs have different behaviour, after using <code>read_bam()</code>.</p>
-<p>For <code><a href='tidyverse-reexports.html'>select()</a></code> valid columns are the fields available in the
+<p>For <code><a href='https://dplyr.tidyverse.org/reference/select.html'>select()</a></code> valid columns are the fields available in the
 BAM file. Valid entries are qname (QNAME), flag (FLAG),
 rname (RNAME), strand, pos (POS), qwidth (width of query),
 mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos (PNEXT), isize
 (TLEN), seq (SEQ), and qual (QUAL). Any two character tags in the BAM file
 are also valid.</p>
-<p>For <code><a href='tidyverse-reexports.html'>filter()</a></code> the following fields are valid, to select the FALSE option
-place <code>!</code> in front of the field:</p><ul>
+<p>For <code><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter()</a></code> the following fields are valid, to select the FALSE option
+place <code><a href='https://rdrr.io/r/base/Logic.html'>!</a></code> in front of the field:</p><ul>
 <li><p><code>is_paired</code> Select either unpaired (FALSE) or paired (TRUE) reads.</p></li>
 <li><p><code>is_proper_pair</code> Select either improperly paired (FALSE) or properly
 paired (TRUE) reads. This is dependent on the alignment software used.</p></li>
@@ -200,17 +200,18 @@ optical duplicates.</p></li>
     <div class='dont-index'><p><code>Rsamtools::<a href='https://rdrr.io/pkg/Rsamtools/man/BamFile-class.html'>BamFile()</a></code>,<code><a href='https://rdrr.io/pkg/GenomicAlignments/man/readGAlignments.html'>GenomicAlignments::readGAlignments()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>pasillaBamSubset</span>)) {
-   <span class='no'>bamfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pasillaBamSubset/man/pasillaBamSubset-package.html'>untreated1_chr4</a></span>()
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>pasillaBamSubset</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+   <span class='va'>bamfile</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/pasillaBamSubset/man/pasillaBamSubset-package.html'>untreated1_chr4</a></span><span class='op'>(</span><span class='op'>)</span>
    <span class='co'># nothing is read until an action has been performed</span>
-   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'>read_bam</span>(<span class='no'>bamfile</span>))
+   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'>read_bam</span><span class='op'>(</span><span class='va'>bamfile</span><span class='op'>)</span><span class='op'>)</span>
    <span class='co'># define a region of interest</span>
-   <span class='no'>roi</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr4"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>5e5</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>7e5</span>) <span class='kw'>%&gt;%</span>
-            <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
-   <span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bam</span>(<span class='no'>bamfile</span>) <span class='kw'>%&gt;%</span>
-            <span class='fu'><a href='tidyverse-reexports.html'>select</a></span>(<span class='no'>mapq</span>) <span class='kw'>%&gt;%</span>
-            <span class='fu'><a href='ranges-filter-overlaps.html'>filter_by_overlaps</a></span>(<span class='no'>roi</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; DeferredGenomicRanges object with 0 ranges and 0 metadata columns:
+   <span class='va'>roi</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>seqnames <span class='op'>=</span> <span class='st'>"chr4"</span>, start <span class='op'>=</span> <span class='fl'>5e5</span>, end <span class='op'>=</span> <span class='fl'>7e5</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+            <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='op'>)</span>
+   <span class='va'>rng</span> <span class='op'>&lt;-</span> <span class='fu'>read_bam</span><span class='op'>(</span><span class='va'>bamfile</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+            <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>mapq</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+            <span class='fu'><a href='filter_by_overlaps.html'>filter_by_overlaps</a></span><span class='op'>(</span><span class='va'>roi</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: pasillaBamSubset</span></div><div class='output co'>#&gt; DeferredGenomicRanges object with 0 ranges and 0 metadata columns:
 #&gt;    seqnames    ranges strand
 #&gt;       &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   -------
@@ -231,7 +232,7 @@ optical duplicates.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -82,7 +82,7 @@ to be held fixed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@ to be held fixed." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,21 +138,21 @@ class allow components of a <code>GRanges</code> or <code>IRanges</code> (start,
 to be held fixed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>anchor</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>anchor</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>unanchor</span>(<span class='no'>x</span>)
+<span class='fu'>unanchor</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>anchor_start</span>(<span class='no'>x</span>)
+<span class='fu'>anchor_start</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>anchor_end</span>(<span class='no'>x</span>)
+<span class='fu'>anchor_end</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>anchor_center</span>(<span class='no'>x</span>)
+<span class='fu'>anchor_center</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>anchor_centre</span>(<span class='no'>x</span>)
+<span class='fu'>anchor_centre</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>anchor_3p</span>(<span class='no'>x</span>)
+<span class='fu'>anchor_3p</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>anchor_5p</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>anchor_5p</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,7 +175,7 @@ For <code>GRanges</code> objects, the function
 (<code>anchor_3p()</code>) will fix the start for the negative strand,
 while <code>anchor_5p()</code> will fix the end for the
 positive strand. Anchoring modifies how arithmetic is performed, for example
-modifying the width of a range with <code><a href='ranges-setters.html'>set_width()</a></code> or stretching a
+modifying the width of a range with <code><a href='set_width.html'>set_width()</a></code> or stretching a
 range with <code><a href='stretch.html'>stretch()</a></code>. To remove anchoring use <code>unanchor()</code>.</p>
     <h2 class="hasAnchor" id="constructors"><a class="anchor" href="#constructors"></a>Constructors</h2>
 
@@ -204,13 +204,14 @@ It will be set to one of <code><a href='https://rdrr.io/r/base/c.html'>c("start"
 <code><a href='https://rdrr.io/r/base/c.html'>c("start", "end", "center", "3p", "5p")</a></code> for a <code>GRanges</code> object.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><a href='tidyverse-reexports.html'>mutate</a>, <a href='stretch.html'>stretch</a></p></div>
+    <div class='dont-index'><p><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a>, <a href='stretch.html'>stretch</a></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='no'>df</span>)
-<span class='no'>rng_by_start</span> <span class='kw'>&lt;-</span> <span class='fu'>anchor_start</span>(<span class='no'>rng</span>)
-<span class='no'>rng_by_start</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, width <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='va'>rng_by_start</span> <span class='op'>&lt;-</span> <span class='fu'>anchor_start</span><span class='op'>(</span><span class='va'>rng</span><span class='op'>)</span>
+<span class='va'>rng_by_start</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt; Anchored by: start
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
@@ -223,7 +224,9 @@ It will be set to one of <code><a href='https://rdrr.io/r/base/c.html'>c("start"
 #&gt;    [7]         7        11         5
 #&gt;    [8]         8        12         5
 #&gt;    [9]         9        13         5
-#&gt;   [10]        10        14         5</div><div class='input'><span class='fu'>anchor</span>(<span class='no'>rng_by_start</span>)</div><div class='output co'>#&gt; [1] "start"</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='no'>rng_by_start</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;   [10]        10        14         5</div><div class='input'><span class='fu'>anchor</span><span class='op'>(</span><span class='va'>rng_by_start</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "start"</div><div class='input'><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>rng_by_start</span>, width <span class='op'>=</span> <span class='fl'>3L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         1         3         3
@@ -235,11 +238,12 @@ It will be set to one of <code><a href='https://rdrr.io/r/base/c.html'>c("start"
 #&gt;    [7]         7         9         3
 #&gt;    [8]         8        10         3
 #&gt;    [9]         9        11         3
-#&gt;   [10]        10        12         3</div><div class='input'><span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>,
-                   <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
-                   <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"-"</span>, <span class='fl'>5</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"+"</span>, <span class='fl'>5</span>)))
-<span class='no'>rng_by_5p</span> <span class='kw'>&lt;-</span> <span class='fu'>anchor_5p</span>(<span class='no'>grng</span>)
-<span class='no'>rng_by_5p</span></div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
+#&gt;   [10]        10        12         3</div><div class='input'><span class='va'>grng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='va'>df</span>,
+                   seqnames <span class='op'>=</span> <span class='st'>"chr1"</span>,
+                   strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"-"</span>, <span class='fl'>5</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"+"</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rng_by_5p</span> <span class='op'>&lt;-</span> <span class='fu'>anchor_5p</span><span class='op'>(</span><span class='va'>grng</span><span class='op'>)</span>
+<span class='va'>rng_by_5p</span>
+</div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
 #&gt; Anchored by: 5p
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
@@ -254,7 +258,8 @@ It will be set to one of <code><a href='https://rdrr.io/r/base/c.html'>c("start"
 #&gt;    [9]     chr1      9-13      +
 #&gt;   [10]     chr1     10-14      +
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='no'>rng_by_5p</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3L</span>)</div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span><span class='va'>rng_by_5p</span>, width <span class='op'>=</span> <span class='fl'>3L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 10 ranges and 0 metadata columns:
 #&gt;        seqnames    ranges strand
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;    [1]     chr1       3-5      -
@@ -285,7 +290,7 @@ It will be set to one of <code><a href='https://rdrr.io/r/base/c.html'>c("start"
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

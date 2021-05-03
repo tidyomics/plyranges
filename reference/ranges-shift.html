@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,13 +134,13 @@
     <p>Shift all coordinates in a genomic interval left or right, upstream or downstream</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shift_left</span>(<span class='no'>x</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+    <pre class="usage"><span class='fu'>shift_left</span><span class='op'>(</span><span class='va'>x</span>, shift <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span>
 
-<span class='fu'>shift_right</span>(<span class='no'>x</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+<span class='fu'>shift_right</span><span class='op'>(</span><span class='va'>x</span>, shift <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span>
 
-<span class='fu'>shift_upstream</span>(<span class='no'>x</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+<span class='fu'>shift_upstream</span><span class='op'>(</span><span class='va'>x</span>, shift <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span>
 
-<span class='fu'>shift_downstream</span>(<span class='no'>x</span>, <span class='kw'>shift</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</pre>
+<span class='fu'>shift_downstream</span><span class='op'>(</span><span class='va'>x</span>, shift <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,8 +174,9 @@ indexed by the strandedness of the input ranges.</p>
 <code>GenomicRanges::<a href='https://rdrr.io/pkg/GenomicRanges/man/intra-range-methods.html'>shift()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>15</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>))
-<span class='fu'>shift_left</span>(<span class='no'>ir</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 0 metadata columns:
+    <pre class="examples"><div class='input'><span class='va'>ir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>15</span>, width <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>shift_left</span><span class='op'>(</span><span class='va'>ir</span>, <span class='fl'>5L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 6 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]         5         9         5
@@ -183,7 +184,8 @@ indexed by the strandedness of the input ranges.</p>
 #&gt;   [3]         7        11         5
 #&gt;   [4]         8        12         5
 #&gt;   [5]         9        13         5
-#&gt;   [6]        10        14         5</div><div class='input'><span class='fu'>shift_right</span>(<span class='no'>ir</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 0 metadata columns:
+#&gt;   [6]        10        14         5</div><div class='input'><span class='fu'>shift_right</span><span class='op'>(</span><span class='va'>ir</span>, <span class='fl'>5L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 6 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]        15        19         5
@@ -191,11 +193,12 @@ indexed by the strandedness of the input ranges.</p>
 #&gt;   [3]        17        21         5
 #&gt;   [4]        18        22         5
 #&gt;   [5]        19        23         5
-#&gt;   [6]        20        24         5</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>15</span>,
-                            <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-                            <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"seq1"</span>,
-                            <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"*"</span>)))
-<span class='fu'>shift_upstream</span>(<span class='no'>gr</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;   [6]        20        24         5</div><div class='input'><span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>15</span>,
+                            width <span class='op'>=</span> <span class='fl'>5</span>,
+                            seqnames <span class='op'>=</span> <span class='st'>"seq1"</span>,
+                            strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"*"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>shift_upstream</span><span class='op'>(</span><span class='va'>gr</span>, <span class='fl'>5L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   [1]     seq1       5-9      +
@@ -205,7 +208,8 @@ indexed by the strandedness of the input ranges.</p>
 #&gt;   [5]     seq1      9-13      +
 #&gt;   [6]     seq1     10-14      *
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>shift_downstream</span>(<span class='no'>gr</span>, <span class='fl'>5L</span>)</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>shift_downstream</span><span class='op'>(</span><span class='va'>gr</span>, <span class='fl'>5L</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 6 ranges and 0 metadata columns:
 #&gt;       seqnames    ranges strand
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;
 #&gt;   [1]     seq1     15-19      +
@@ -231,7 +235,7 @@ indexed by the strandedness of the input ranges.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

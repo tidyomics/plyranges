@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,57 +134,57 @@
     <p>Find overlap between two Ranges</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+    <pre class="usage"><span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># S3 method for IntegerRanges</span>
-<span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, minoverlap <span class='op'>=</span> <span class='fl'>0L</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>find_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, minoverlap <span class='op'>=</span> <span class='fl'>0L</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>find_overlaps_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps_within</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># S3 method for IntegerRanges</span>
-<span class='fu'>find_overlaps_within</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>find_overlaps_within</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>,
+  minoverlap <span class='op'>=</span> <span class='fl'>0L</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>find_overlaps_within</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>find_overlaps_within</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>,
+  minoverlap <span class='op'>=</span> <span class='fl'>0L</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>find_overlaps_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
-
-<span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>find_overlaps_directed</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
-
-<span class='fu'>find_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps_directed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>find_overlaps_within_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>find_overlaps_directed</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>,
+  minoverlap <span class='op'>=</span> <span class='fl'>0L</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)
+<span class='fu'>find_overlaps_within_directed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># S3 method for GenomicRanges</span>
+<span class='fu'>find_overlaps_within_directed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'>group_by_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span><span class='op'>)</span>
 
 <span class='co'># S3 method for IntegerRanges</span>
-<span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+<span class='fu'>group_by_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, minoverlap <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'>group_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)</pre>
+<span class='fu'>group_by_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, minoverlap <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,7 +223,7 @@ ignored, unless <code>find_overlaps_directed()</code> is used. If the Ranges obj
 metadata, one could use <code>group_by_overlaps()</code> to be able to
 identify the index of the input Range x that overlaps a Range in y.
 Alternatively,
-<code><a href='ranges-pairs.html'>pair_overlaps()</a></code> could be used to place the x ranges next to the range
+<code><a href='pair_overlaps.html'>pair_overlaps()</a></code> could be used to place the x ranges next to the range
 in y they overlap.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -231,12 +231,13 @@ in y they overlap.</p>
 <code>GenomicRanges::<a href='https://rdrr.io/pkg/GenomicRanges/man/findOverlaps-methods.html'>findOverlaps()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>,<span class='fl'>10</span>, <span class='fl'>15</span>,<span class='fl'>20</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>4</span>)) <span class='kw'>%&gt;%</span>
-             <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
-<span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>2</span>:<span class='fl'>6</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>:<span class='fl'>7</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]) <span class='kw'>%&gt;%</span>
-             <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>()
+    <pre class="examples"><div class='input'><span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>,<span class='fl'>10</span>, <span class='fl'>15</span>,<span class='fl'>20</span><span class='op'>)</span>, width <span class='op'>=</span> <span class='fl'>5</span>, gc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+             <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>subject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fl'>2</span><span class='op'>:</span><span class='fl'>6</span>, width <span class='op'>=</span> <span class='fl'>3</span><span class='op'>:</span><span class='fl'>7</span>, label <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+             <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; IRanges object with 6 ranges and 2 metadata columns:
+<span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 6 ranges and 2 metadata columns:
 #&gt;           start       end     width |        gc       label
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;character&gt;
 #&gt;   [1]         5         9         5 |  0.971117           b
@@ -244,13 +245,16 @@ in y they overlap.</p>
 #&gt;   [3]         5         9         5 |  0.971117           d
 #&gt;   [4]         5         9         5 |  0.971117           e
 #&gt;   [5]        10        14         5 |  0.701959           d
-#&gt;   [6]        10        14         5 |  0.701959           e</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
+#&gt;   [6]        10        14         5 |  0.701959           e</div><div class='input'><span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span>, minoverlap <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
 #&gt;           start       end     width |        gc       label
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;character&gt;
-#&gt;   [1]         5         9         5 |  0.971117           d</div><div class='input'><span class='fu'>find_overlaps_within</span>(<span class='no'>query</span>, <span class='no'>subject</span>) <span class='co'># same result as minoverlap</span></div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
+#&gt;   [1]         5         9         5 |  0.971117           d</div><div class='input'><span class='fu'>find_overlaps_within</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span><span class='op'>)</span> <span class='co'># same result as minoverlap</span>
+</div><div class='output co'>#&gt; IRanges object with 1 range and 2 metadata columns:
 #&gt;           start       end     width |        gc       label
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;character&gt;
-#&gt;   [1]         5         9         5 |  0.971117           d</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; IRanges object with 8 ranges and 2 metadata columns:
+#&gt;   [1]         5         9         5 |  0.971117           d</div><div class='input'><span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span>, maxgap <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 8 ranges and 2 metadata columns:
 #&gt;           start       end     width |        gc       label
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;character&gt;
 #&gt;   [1]         5         9         5 |  0.971117           a
@@ -262,23 +266,24 @@ in y they overlap.</p>
 #&gt;   [7]        10        14         5 |  0.701959           d
 #&gt;   [8]        10        14         5 |  0.701959           e</div><div class='input'>
 <span class='co'># -- GRanges objects, strand is ignored by default</span>
-<span class='no'>query</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
-               <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>11</span>,<span class='fl'>101</span>),
-               <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>21</span>, <span class='fl'>200</span>),
-               <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a1"</span>, <span class='st'>"a2"</span>),
-               <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>),
-               <span class='kw'>score</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)) <span class='kw'>%&gt;%</span>
-           <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
-<span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
-                      <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>),
-                      <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>21</span>,<span class='fl'>91</span>,<span class='fl'>101</span>,<span class='fl'>201</span>),
-                      <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>,<span class='fl'>101</span>,<span class='fl'>110</span>,<span class='fl'>210</span>),
-                      <span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"b"</span>, <span class='fl'>1</span>:<span class='fl'>4</span>),
-                      <span class='kw'>score</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>4</span>) <span class='kw'>%&gt;%</span>
-                   <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>()
+<span class='va'>query</span>  <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>seqnames <span class='op'>=</span> <span class='st'>"chr1"</span>,
+               start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span>,<span class='fl'>101</span><span class='op'>)</span>,
+               end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>21</span>, <span class='fl'>200</span><span class='op'>)</span>,
+               name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a1"</span>, <span class='st'>"a2"</span><span class='op'>)</span>,
+               strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"+"</span>, <span class='st'>"-"</span><span class='op'>)</span>,
+               score <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+           <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>subject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>seqnames <span class='op'>=</span> <span class='st'>"chr1"</span>,
+                      strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span><span class='op'>)</span>,
+                      start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>21</span>,<span class='fl'>91</span>,<span class='fl'>101</span>,<span class='fl'>201</span><span class='op'>)</span>,
+                      end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>,<span class='fl'>101</span>,<span class='fl'>110</span>,<span class='fl'>210</span><span class='op'>)</span>,
+                      name <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"b"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span>,
+                      score <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+                   <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># ignores strandedness</span>
-<span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; GRanges object with 3 ranges and 4 metadata columns:
+<span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".query"</span>, <span class='st'>".subject"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 3 ranges and 4 metadata columns:
 #&gt;       seqnames    ranges strand |  name.query score.query name.subject
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
 #&gt;   [1]     chr1     11-21      + |          a1           1           b1
@@ -290,7 +295,8 @@ in y they overlap.</p>
 #&gt;   [2]             2
 #&gt;   [3]             3
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>find_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>), <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; GRanges object with 1 range and 4 metadata columns:
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='fu'>find_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".query"</span>, <span class='st'>".subject"</span><span class='op'>)</span>, minoverlap <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 1 range and 4 metadata columns:
 #&gt;       seqnames    ranges strand |  name.query score.query name.subject
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
 #&gt;   [1]     chr1   101-200      - |          a2           2           b3
@@ -299,7 +305,8 @@ in y they overlap.</p>
 #&gt;   [1]             3
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># adding directed prefix includes strand</span>
-<span class='fu'>find_overlaps_directed</span>(<span class='no'>query</span>, <span class='no'>subject</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".query"</span>, <span class='st'>".subject"</span>))</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
+<span class='fu'>find_overlaps_directed</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".query"</span>, <span class='st'>".subject"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 2 ranges and 4 metadata columns:
 #&gt;       seqnames    ranges strand |  name.query score.query name.subject
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;   &lt;numeric&gt;  &lt;character&gt;
 #&gt;   [1]     chr1     11-21      + |          a1           1           b1
@@ -326,7 +333,7 @@ in y they overlap.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

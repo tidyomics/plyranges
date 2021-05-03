@@ -82,7 +82,7 @@ by their &quot;group&quot;. ungroup() removes grouping." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@ by their &quot;group&quot;. ungroup() removes grouping." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -135,20 +135,20 @@ by their &quot;group&quot;. ungroup() removes grouping." />
     <div class="ref-description">
     <p>The function <code>group_by</code> takes a Ranges object and defines
 groups by one or more variables. Operations are then performed on the Ranges
-by their "group". <code><a href='tidyverse-reexports.html'>ungroup()</a></code> removes grouping.</p>
+by their "group". <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup()</a></code> removes grouping.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for GenomicRanges</span>
-<span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>.data</span>, <span class='no'>...</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>.data</span>, <span class='va'>...</span>, add <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GroupedGenomicRanges</span>
-<span class='fu'><a href='tidyverse-reexports.html'>ungroup</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GroupedGenomicRanges</span>
-<span class='fu'><a href='tidyverse-reexports.html'>groups</a></span>(<span class='no'>x</span>)
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_data.html'>groups</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
 <span class='co'># S3 method for GroupedIntegerRanges</span>
-<span class='fu'><a href='tidyverse-reexports.html'>groups</a></span>(<span class='no'>x</span>)</pre>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_data.html'>groups</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,7 +165,7 @@ or the core variables of a Ranges.</p></td>
     <tr>
       <th>add</th>
       <td><p>if <code>.data</code> is already a GroupedRanges object, when add = FALSE
-the (default), <code><a href='tidyverse-reexports.html'>group_by()</a></code> will override existing groups. If add = TRUE,
+the (default), <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code> will override existing groups. If add = TRUE,
 additional groups will be added.</p></td>
     </tr>
     <tr>
@@ -176,38 +176,39 @@ additional groups will be added.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The <code><a href='tidyverse-reexports.html'>group_by()</a></code> function will return a GroupedRanges object.
+    <p>The <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code> function will return a GroupedRanges object.
 These have the same appearance as a regular Ranges object but with an
 additional groups slot.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code><a href='tidyverse-reexports.html'>group_by()</a></code> creates a new object of class <code>GroupedGenomicRanges</code> if
+    <p><code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by()</a></code> creates a new object of class <code>GroupedGenomicRanges</code> if
 the input is a <code>GRanges</code> object or an object of class <code>GroupedIntegerRanges</code>
 if the input is a <code>IRanges</code> object. Both of these classes contain a slot
 called <code>groups</code> corresponding to the names of grouping variables. They
 also inherit from their parent classes, <code>Ranges</code> and <code>GenomicRanges</code>
-respectively. <code><a href='tidyverse-reexports.html'>ungroup()</a></code> removes the grouping and will return
+respectively. <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup()</a></code> removes the grouping and will return
 either a <code>GRanges</code> or <code>IRanges</code> object.</p>
     <h2 class="hasAnchor" id="accessors"><a class="anchor" href="#accessors"></a>Accessors</h2>
 
     
 
 <p>To return grouping variables on a grouped Ranges use either</p><ul>
-<li><p><code><a href='tidyverse-reexports.html'>groups(x)</a></code>Returns a list of symbols</p></li>
-<li><p><code><a href='tidyverse-reexports.html'>group_vars(x)</a></code>Returns a character vector</p></li>
+<li><p><code><a href='https://dplyr.tidyverse.org/reference/group_data.html'>groups(x)</a></code>Returns a list of symbols</p></li>
+<li><p><code><a href='https://dplyr.tidyverse.org/reference/group_data.html'>group_vars(x)</a></code>Returns a character vector</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>100</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>,
-                 <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-                 <span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>10</span>),
-                 <span class='kw'>cat</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
-<span class='no'>rng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='no'>df</span>)
-<span class='no'>rng_by_cat</span> <span class='kw'>&lt;-</span> <span class='no'>rng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>cat</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,
+                 width <span class='op'>=</span> <span class='fl'>5</span>,
+                 gc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>)</span>,
+                 cat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>, <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
+<span class='va'>rng_by_cat</span> <span class='op'>&lt;-</span> <span class='va'>rng</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cat</span><span class='op'>)</span>
 <span class='co'># grouping does not change appearance or shape of Ranges</span>
-<span class='no'>rng_by_cat</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
+<span class='va'>rng_by_cat</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
 #&gt; Groups: cat [2]
 #&gt;            start       end     width |        gc         cat
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;character&gt;
@@ -221,10 +222,12 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 #&gt;    [8]         8        12         5 | 0.3703205           a
 #&gt;    [9]         9        13         5 | 0.5465586           a
 #&gt;   [10]        10        14         5 | 0.1702621           a</div><div class='input'><span class='co'># a list of symbols</span>
-<span class='fu'><a href='tidyverse-reexports.html'>groups</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; [[1]]
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_data.html'>groups</a></span><span class='op'>(</span><span class='va'>rng_by_cat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [[1]]
 #&gt; cat
 #&gt; </div><div class='input'><span class='co'># ungroup removes any grouping</span>
-<span class='fu'><a href='tidyverse-reexports.html'>ungroup</a></span>(<span class='no'>rng_by_cat</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='va'>rng_by_cat</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 2 metadata columns:
 #&gt;            start       end     width |        gc         cat
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt; &lt;character&gt;
 #&gt;    [1]         1         5         5 | 0.3077661           b
@@ -237,12 +240,13 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 #&gt;    [8]         8        12         5 | 0.3703205           a
 #&gt;    [9]         9        13         5 | 0.5465586           a
 #&gt;   [10]        10        14         5 | 0.1702621           a</div><div class='input'><span class='co'># group_by works best with other verbs</span>
-<span class='no'>grng</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>,
-                   <span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr1"</span>,
-                   <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"+"</span>, <span class='st'>"-"</span>), <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+<span class='va'>grng</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='va'>df</span>,
+                   seqnames <span class='op'>=</span> <span class='st'>"chr1"</span>,
+                   strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"+"</span>, <span class='st'>"-"</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='no'>grng_by_strand</span> <span class='kw'>&lt;-</span> <span class='no'>grng</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>group_by</a></span>(<span class='no'>strand</span>)
-<span class='no'>grng_by_strand</span></div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
+<span class='va'>grng_by_strand</span> <span class='op'>&lt;-</span> <span class='va'>grng</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>strand</span><span class='op'>)</span>
+<span class='va'>grng_by_strand</span>
+</div><div class='output co'>#&gt; GRanges object with 10 ranges and 2 metadata columns:
 #&gt; Groups: strand [2]
 #&gt;        seqnames    ranges strand |        gc         cat
 #&gt;           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;character&gt;
@@ -258,20 +262,23 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 #&gt;   [10]     chr1     10-14      + | 0.1702621           a
 #&gt;   -------
 #&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># grouping with other verbs</span>
-<span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
+<span class='va'>grng_by_strand</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>gc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>gc</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; DataFrame with 2 rows and 2 columns
 #&gt;   strand        gc
 #&gt;    &lt;Rle&gt; &lt;numeric&gt;
 #&gt; 1      +  0.366117
-#&gt; 2      -  0.439085</div><div class='input'><span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>filter</a></span>(<span class='no'>gc</span> <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; GRanges object with 2 ranges and 2 metadata columns:
+#&gt; 2      -  0.439085</div><div class='input'><span class='va'>grng_by_strand</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>gc</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>gc</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 2 ranges and 2 metadata columns:
 #&gt; Groups: strand [2]
 #&gt;       seqnames    ranges strand |        gc         cat
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;character&gt;
 #&gt;   [1]     chr1       2-6      - | 0.2576725           b
 #&gt;   [2]     chr1       4-8      + | 0.0563832           b
 #&gt;   -------
-#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>grng_by_strand</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tidyverse-reexports.html'>ungroup</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='tidyverse-reexports.html'>summarise</a></span>(<span class='kw'>gc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='no'>gc</span>))</div><div class='output co'>#&gt; DataFrame with 1 row and 1 column
+#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</div><div class='input'><span class='va'>grng_by_strand</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>ungroup</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>gc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>gc</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; DataFrame with 1 row and 1 column
 #&gt;          gc
 #&gt;   &lt;numeric&gt;
 #&gt; 1  0.402601</div><div class='input'>
@@ -292,7 +299,7 @@ either a <code>GRanges</code> or <code>IRanges</code> object.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

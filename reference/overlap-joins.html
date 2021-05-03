@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,65 +134,65 @@
     <p>Join by overlapping Ranges</p>
     </div>
 
-    <pre class="usage"><span class='fu'>join_overlap_intersect</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+    <pre class="usage"><span class='fu'>join_overlap_intersect</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>join_overlap_intersect_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_overlap_intersect_within</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>join_overlap_intersect_directed</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='no'>maxgap</span>,
-  <span class='no'>minoverlap</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>join_overlap_intersect_directed</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  <span class='va'>maxgap</span>,
+  <span class='va'>minoverlap</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>join_overlap_intersect_within_directed</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='no'>maxgap</span>,
-  <span class='no'>minoverlap</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>join_overlap_intersect_within_directed</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  <span class='va'>maxgap</span>,
+  <span class='va'>minoverlap</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>join_overlap_inner</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_overlap_inner</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, minoverlap <span class='op'>=</span> <span class='fl'>0L</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>join_overlap_inner_within</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>join_overlap_inner_within</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>,
+  minoverlap <span class='op'>=</span> <span class='fl'>0L</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>join_overlap_inner_directed</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>join_overlap_inner_directed</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>,
+  minoverlap <span class='op'>=</span> <span class='fl'>0L</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>join_overlap_inner_within_directed</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>,
-  <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)
+<span class='fu'>join_overlap_inner_within_directed</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>,
+  minoverlap <span class='op'>=</span> <span class='fl'>0L</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>join_overlap_left</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_overlap_left</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>join_overlap_left_within</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_overlap_left_within</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>join_overlap_left_directed</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>))
+<span class='fu'>join_overlap_left_directed</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span><span class='op'>)</span>
 
-<span class='fu'>join_overlap_left_within_directed</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='no'>maxgap</span>,
-  <span class='no'>minoverlap</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".x"</span>, <span class='st'>".y"</span>)
-)</pre>
+<span class='fu'>join_overlap_left_within_directed</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>y</span>,
+  <span class='va'>maxgap</span>,
+  <span class='va'>minoverlap</span>,
+  suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".x"</span>, <span class='st'>".y"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,12 +222,12 @@ as an integer greater than zero, accounting for the maximum gap.</p></td>
     <p>The function <code>join_overlap_intersect()</code> finds
 the genomic intervals that are the overlapping ranges between x and y and
 returns a new ranges object with metadata columns from x and y.</p>
-<p>The function <code>join_overlap_inner()</code> is equivalent to <code><a href='ranges-overlaps.html'>find_overlaps()</a></code>.</p>
+<p>The function <code>join_overlap_inner()</code> is equivalent to <code><a href='find_overlaps.html'>find_overlaps()</a></code>.</p>
 <p>The function <code>join_overlap_left()</code> performs a left outer join between x
 and y. It returns all ranges in x that overlap or do not overlap ranges in y
 plus metadata columns common to both. If there is no overlapping range
 the metadata column will contain a missing value.</p>
-<p>The function <code><a href='ranges-overlaps-self.html'>join_overlap_self()</a></code> find all overlaps between a ranges
+<p>The function <code><a href='join_overlap_self.html'>join_overlap_self()</a></code> find all overlaps between a ranges
 object x and itself.</p>
 <p>All of these functions have two suffixes that modify their behavior.
 The <code>within</code> suffix, returns only ranges in x that are completely
@@ -235,15 +235,16 @@ overlapped within in y. The <code>directed</code> suffix accounts for the strand
 of the ranges when performing overlaps.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='ranges-overlaps-self.html'>join_overlap_self()</a></code>, <code>join_overlap_left()</code>, <code><a href='ranges-overlaps.html'>find_overlaps()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='join_overlap_self.html'>join_overlap_self()</a></code>, <code>join_overlap_left()</code>, <code><a href='find_overlaps.html'>find_overlaps()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>11</span>, <span class='fl'>101</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>21</span>, <span class='fl'>201</span>)))
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>1</span>),
-                           <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>19</span>, <span class='fl'>21</span>, <span class='fl'>105</span>, <span class='fl'>202</span>, <span class='fl'>5</span>)))
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>11</span>, <span class='fl'>101</span><span class='op'>)</span>, end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>21</span>, <span class='fl'>201</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>100</span>, <span class='fl'>1</span><span class='op'>)</span>,
+                           end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>19</span>, <span class='fl'>21</span>, <span class='fl'>105</span>, <span class='fl'>202</span>, <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># self</span>
-<span class='fu'><a href='ranges-overlaps-self.html'>join_overlap_self</a></span>(<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
+<span class='fu'><a href='join_overlap_self.html'>join_overlap_self</a></span><span class='op'>(</span><span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 7 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]        10        19        10
@@ -254,7 +255,8 @@ of the ranges when performing overlaps.</p>
 #&gt;   [6]       100       202       103
 #&gt;   [7]         1         5         5</div><div class='input'>
 <span class='co'># intersect takes common interval</span>
-<span class='fu'>join_overlap_intersect</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 4 ranges and 0 metadata columns:
+<span class='fu'>join_overlap_intersect</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 4 ranges and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]        11        19         9
@@ -262,20 +264,23 @@ of the ranges when performing overlaps.</p>
 #&gt;   [3]       101       105         5
 #&gt;   [4]       101       201       101</div><div class='input'>
 <span class='co'># within</span>
-<span class='fu'>join_overlap_intersect_within</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 1 range and 0 metadata columns:
+<span class='fu'>join_overlap_intersect_within</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 1 range and 0 metadata columns:
 #&gt;           start       end     width
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]       101       201       101</div><div class='input'>
 <span class='co'># left, and inner join, it's often useful having an id column here</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='no'>y</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='n.html'>n</a></span>())
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='no'>x</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='tidyverse-reexports.html'>mutate</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='n.html'>n</a></span>())
-<span class='fu'>join_overlap_inner</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 4 ranges and 2 metadata columns:
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='va'>y</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='n.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> 
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>id <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='n.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> 
+<span class='fu'>join_overlap_inner</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 4 ranges and 2 metadata columns:
 #&gt;           start       end     width |      id.x      id.y
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]        11        21        11 |         1         1
 #&gt;   [2]        11        21        11 |         1         2
 #&gt;   [3]       101       201       101 |         2         3
-#&gt;   [4]       101       201       101 |         2         4</div><div class='input'><span class='fu'>join_overlap_left</span>(<span class='no'>y</span>,<span class='no'>x</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".left"</span>, <span class='st'>".right"</span>))</div><div class='output co'>#&gt; IRanges object with 5 ranges and 2 metadata columns:
+#&gt;   [4]       101       201       101 |         2         4</div><div class='input'><span class='fu'>join_overlap_left</span><span class='op'>(</span><span class='va'>y</span>,<span class='va'>x</span>, suffix <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".left"</span>, <span class='st'>".right"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 5 ranges and 2 metadata columns:
 #&gt;           start       end     width |   id.left  id.right
 #&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;integer&gt; &lt;integer&gt;
 #&gt;   [1]        10        19        10 |         1         1
@@ -299,7 +304,7 @@ of the ranges when performing overlaps.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,9 +134,9 @@
     <p>Filter by overlapping/non-overlapping ranges</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filter_by_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='kw'>maxgap</span> <span class='kw'>=</span> -<span class='fl'>1L</span>, <span class='kw'>minoverlap</span> <span class='kw'>=</span> <span class='fl'>0L</span>)
+    <pre class="usage"><span class='fu'>filter_by_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, maxgap <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1L</span>, minoverlap <span class='op'>=</span> <span class='fl'>0L</span><span class='op'>)</span>
 
-<span class='fu'>filter_by_non_overlaps</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>maxgap</span>, <span class='no'>minoverlap</span>)</pre>
+<span class='fu'>filter_by_non_overlaps</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>maxgap</span>, <span class='va'>minoverlap</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,21 +177,22 @@ overlapping between ranges, to consider there to be overlap.</p>
     <div class='dont-index'><p><code>IRanges::<a href='https://rdrr.io/pkg/IRanges/man/findOverlaps-methods.html'>subsetByOverlaps()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"chr1"</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"chr2"</span>, <span class='fl'>2</span>),
-                              <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"chr3"</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"chr4"</span>, <span class='fl'>4</span>)),
-                 <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>,
-                 <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>10</span>:<span class='fl'>1</span>,
-                 <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"*"</span>, <span class='st'>"*"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span>),
-                 <span class='kw'>name</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>])
-<span class='no'>query</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df</span>)
+    <pre class="examples"><div class='input'><span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>seqnames <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"chr1"</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"chr2"</span>, <span class='fl'>2</span><span class='op'>)</span>,
+                              <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"chr3"</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"chr4"</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>,
+                 start <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>,
+                 width <span class='op'>=</span> <span class='fl'>10</span><span class='op'>:</span><span class='fl'>1</span>,
+                 strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"-"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"*"</span>, <span class='st'>"*"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"+"</span>, <span class='st'>"-"</span>, <span class='st'>"-"</span><span class='op'>)</span>,
+                 name <span class='op'>=</span> <span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>query</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span>
 
-<span class='no'>df2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"chr2"</span>, <span class='fl'>2</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"chr1"</span>, <span class='fl'>3</span>), <span class='st'>"chr2"</span>),
-                  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>7</span>,<span class='fl'>13</span>,<span class='fl'>1</span>,<span class='fl'>4</span>),
-                  <span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>6</span>,<span class='fl'>6</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>9</span>),
-                  <span class='kw'>strand</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"+"</span>, <span class='fl'>3</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='st'>"-"</span>, <span class='fl'>3</span>)))
-<span class='no'>subject</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='no'>df2</span>)
+<span class='va'>df2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>seqnames <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"chr2"</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"chr1"</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='st'>"chr2"</span><span class='op'>)</span>,
+                  start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>,<span class='fl'>3</span>,<span class='fl'>7</span>,<span class='fl'>13</span>,<span class='fl'>1</span>,<span class='fl'>4</span><span class='op'>)</span>,
+                  width <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>6</span>,<span class='fl'>6</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>3</span>,<span class='fl'>9</span><span class='op'>)</span>,
+                  strand <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"+"</span>, <span class='fl'>3</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='st'>"-"</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>subject</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='va'>df2</span><span class='op'>)</span>
 
-<span class='fu'>filter_by_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 3 ranges and 1 metadata column:
+<span class='fu'>filter_by_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 3 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |        name
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
 #&gt;   [1]     chr1      1-10      - |           a
@@ -199,7 +200,8 @@ overlapping between ranges, to consider there to be overlap.</p>
 #&gt;   [3]     chr2      3-10      + |           c
 #&gt;   -------
 #&gt;   seqinfo: 4 sequences from an unspecified genome; no seqlengths</div><div class='input'>
-<span class='fu'>filter_by_non_overlaps</span>(<span class='no'>query</span>, <span class='no'>subject</span>)</div><div class='output co'>#&gt; GRanges object with 7 ranges and 1 metadata column:
+<span class='fu'>filter_by_non_overlaps</span><span class='op'>(</span><span class='va'>query</span>, <span class='va'>subject</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; GRanges object with 7 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |        name
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;
 #&gt;   [1]     chr3      4-10      * |           d
@@ -227,7 +229,7 @@ overlapping between ranges, to consider there to be overlap.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

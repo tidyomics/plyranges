@@ -82,7 +82,7 @@ Read common interval based formats as GRanges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@ Read common interval based formats as GRanges." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -138,21 +138,21 @@ of functions defined in <span class="pkg">rtracklayer</span>.</p>
 <p>Read common interval based formats as GRanges.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_bed</span>(<span class='no'>file</span>, <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>file</span>, col_names <span class='op'>=</span> <span class='cn'>NULL</span>, genome_info <span class='op'>=</span> <span class='cn'>NULL</span>, overlap_ranges <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>read_bed_graph</span>(
-  <span class='no'>file</span>,
-  <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+<span class='fu'>read_bed_graph</span><span class='op'>(</span>
+  <span class='va'>file</span>,
+  col_names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  genome_info <span class='op'>=</span> <span class='cn'>NULL</span>,
+  overlap_ranges <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>read_narrowpeaks</span>(
-  <span class='no'>file</span>,
-  <span class='kw'>col_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+<span class='fu'>read_narrowpeaks</span><span class='op'>(</span>
+  <span class='va'>file</span>,
+  col_names <span class='op'>=</span> <span class='cn'>NULL</span>,
+  genome_info <span class='op'>=</span> <span class='cn'>NULL</span>,
+  overlap_ranges <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,10 +201,11 @@ the narrowPeaks spec):</p><ul>
     <div class='dont-index'><p><code>rtracklayer::<a href='https://rdrr.io/pkg/rtracklayer/man/BEDFile-class.html'>BEDFile()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>test_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"tests"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtracklayer"</span>)
-<span class='no'>bed_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>test_path</span>, <span class='st'>"test.bed"</span>)
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>)
-<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
+    <pre class="examples"><div class='input'><span class='va'>test_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"tests"</span>, package <span class='op'>=</span> <span class='st'>"rtracklayer"</span><span class='op'>)</span>
+<span class='va'>bed_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>test_path</span>, <span class='st'>"test.bed"</span><span class='op'>)</span>
+<span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>bed_file</span><span class='op'>)</span>
+<span class='va'>gr</span>
+</div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
 #&gt;       seqnames              ranges strand |        name     score     itemRgb
 #&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt; &lt;character&gt;
 #&gt;   [1]     chr7 127471197-127472363      + |        Pos1         0     #FF0000
@@ -220,10 +221,12 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [4] 127474698-127475864                  1-1167
 #&gt;   [5] 127475865-127477031                  1-1167
 #&gt;   -------
-#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>bed_file</span>, genome_info <span class='op'>=</span> <span class='st'>"hg19"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘Biostrings’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    strsplit</span></div><div class='input'><span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
+#&gt; <span class='message'>    strsplit</span></div><div class='input'><span class='va'>gr</span>
+</div><div class='output co'>#&gt; GRanges object with 5 ranges and 5 metadata columns:
 #&gt;       seqnames              ranges strand |        name     score     itemRgb
 #&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt; &lt;character&gt;
 #&gt;   [1]     chr7 127471197-127472363      + |        Pos1         0     #FF0000
@@ -239,13 +242,14 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [4] 127474698-127475864                  1-1167
 #&gt;   [5] 127475865-127477031                  1-1167
 #&gt;   -------
-#&gt;   seqinfo: 298 sequences (2 circular) from hg19 genome</div><div class='input'><span class='no'>olap</span> <span class='kw'>&lt;-</span>  <span class='fu'><a href='ranges-construct.html'>as_granges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>seqnames</span> <span class='kw'>=</span> <span class='st'>"chr7"</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='fl'>127473000</span>))
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed</span>(<span class='no'>bed_file</span>,
-              <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='no'>olap</span>)
+#&gt;   seqinfo: 298 sequences (2 circular) from hg19 genome</div><div class='input'><span class='va'>olap</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='as_iranges.html'>as_granges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>seqnames <span class='op'>=</span> <span class='st'>"chr7"</span>, start <span class='op'>=</span> <span class='fl'>1</span>, end <span class='op'>=</span> <span class='fl'>127473000</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>read_bed</span><span class='op'>(</span><span class='va'>bed_file</span>,
+              overlap_ranges <span class='op'>=</span> <span class='va'>olap</span><span class='op'>)</span>
 <span class='co'># bedGraph</span>
-<span class='no'>bg_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>test_path</span>, <span class='st'>"test.bedGraph"</span>)
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bed_graph</span>(<span class='no'>bg_file</span>)
-<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
+<span class='va'>bg_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>test_path</span>, <span class='st'>"test.bedGraph"</span><span class='op'>)</span>
+<span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>read_bed_graph</span><span class='op'>(</span><span class='va'>bg_file</span><span class='op'>)</span>
+<span class='va'>gr</span>
+</div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
 #&gt;       seqnames            ranges strand |     score
 #&gt;          &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
 #&gt;   [1]    chr19 59102001-59102300      * |     -1.00
@@ -259,9 +263,10 @@ the narrowPeaks spec):</p><ul>
 #&gt;   [9]    chr18 59104401-59104700      * |      1.00
 #&gt;   -------
 #&gt;   seqinfo: 3 sequences from an unspecified genome; no seqlengths</div><div class='input'><span class='co'># narrowpeaks</span>
-<span class='no'>np_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"demo.narrowPeak.gz"</span>,  <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"rtracklayer"</span>)
-<span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_narrowpeaks</span>(<span class='no'>np_file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='st'>"hg19"</span>)
-<span class='no'>gr</span></div><div class='output co'>#&gt; GRanges object with 6 ranges and 6 metadata columns:
+<span class='va'>np_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"extdata"</span>, <span class='st'>"demo.narrowPeak.gz"</span>,  package<span class='op'>=</span><span class='st'>"rtracklayer"</span><span class='op'>)</span>
+<span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>read_narrowpeaks</span><span class='op'>(</span><span class='va'>np_file</span>, genome_info <span class='op'>=</span> <span class='st'>"hg19"</span><span class='op'>)</span>
+<span class='va'>gr</span>
+</div><div class='output co'>#&gt; GRanges object with 6 ranges and 6 metadata columns:
 #&gt;       seqnames              ranges strand |        name     score signalValue
 #&gt;          &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;   &lt;numeric&gt;
 #&gt;   [1]    chr19       893203-893659      * |        &lt;NA&gt;         0      16.705
@@ -295,7 +300,7 @@ the narrowPeaks spec):</p><ul>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

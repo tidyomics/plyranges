@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,15 +134,15 @@
     <p>Row-wise set operations on Ranges objects</p>
     </div>
 
-    <pre class="usage"><span class='no'>x</span> <span class='kw'>%union%</span> <span class='no'>y</span>
+    <pre class="usage"><span class='va'>x</span> <span class='op'>%union%</span> <span class='va'>y</span>
 
-<span class='no'>x</span> <span class='kw'>%intersect%</span> <span class='no'>y</span>
+<span class='va'>x</span> <span class='op'>%intersect%</span> <span class='va'>y</span>
 
-<span class='no'>x</span> <span class='kw'>%setdiff%</span> <span class='no'>y</span>
+<span class='va'>x</span> <span class='op'>%setdiff%</span> <span class='va'>y</span>
 
-<span class='fu'>between</span>(<span class='no'>x</span>, <span class='no'>y</span>)
+<span class='fu'>between</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 
-<span class='fu'>span</span>(<span class='no'>x</span>, <span class='no'>y</span>)</pre>
+<span class='fu'>span</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,11 +174,12 @@ two ranges.</p>
     <div class='dont-index'><p>[IRanges::punion()][IRanges::pintersect()][IRanges::pgap()][IRanges::psetdiff()]</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>5</span>))
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, width <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># stretch x by 3 on the right</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='stretch.html'>stretch</a></span>(<span class='fu'><a href='ranges-anchor.html'>anchor_start</a></span>(<span class='no'>x</span>), <span class='fl'>3</span>)
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='stretch.html'>stretch</a></span><span class='op'>(</span><span class='fu'><a href='anchor.html'>anchor_start</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span>
 <span class='co'># take the rowwise union</span>
-<span class='no'>x</span> <span class='kw'>%union%</span> <span class='no'>y</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+<span class='va'>x</span> <span class='op'>%union%</span> <span class='va'>y</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         1         8         8
@@ -191,7 +192,8 @@ two ranges.</p>
 #&gt;    [8]         8        15         8
 #&gt;    [9]         9        16         8
 #&gt;   [10]        10        17         8</div><div class='input'><span class='co'># take the rowwise intersection</span>
-<span class='no'>x</span> <span class='kw'>%intersect%</span> <span class='no'>y</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+<span class='va'>x</span> <span class='op'>%intersect%</span> <span class='va'>y</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         1         5         5
@@ -204,7 +206,8 @@ two ranges.</p>
 #&gt;    [8]         8        12         5
 #&gt;    [9]         9        13         5
 #&gt;   [10]        10        14         5</div><div class='input'><span class='co'># asymetric difference</span>
-<span class='no'>y</span> <span class='kw'>%setdiff%</span> <span class='no'>x</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+<span class='va'>y</span> <span class='op'>%setdiff%</span> <span class='va'>x</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         6         8         3
@@ -216,7 +219,8 @@ two ranges.</p>
 #&gt;    [7]        12        14         3
 #&gt;    [8]        13        15         3
 #&gt;    [9]        14        16         3
-#&gt;   [10]        15        17         3</div><div class='input'><span class='no'>x</span> <span class='kw'>%setdiff%</span> <span class='no'>y</span></div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+#&gt;   [10]        15        17         3</div><div class='input'><span class='va'>x</span> <span class='op'>%setdiff%</span> <span class='va'>y</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         1         0         0
@@ -229,10 +233,11 @@ two ranges.</p>
 #&gt;    [8]         8         7         0
 #&gt;    [9]         9         8         0
 #&gt;   [10]        10         9         0</div><div class='input'><span class='co'># if there are gaps between the rows of each range use span</span>
-<span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='ranges-construct.html'>as_iranges</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>:<span class='fl'>15</span>, <span class='fl'>2</span>:<span class='fl'>5</span>),
-<span class='kw'>width</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>:<span class='fl'>15</span>,<span class='fl'>1</span>:<span class='fl'>4</span>)))
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as_iranges.html'>as_iranges</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span><span class='op'>:</span><span class='fl'>15</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span>,
+width <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span><span class='op'>:</span><span class='fl'>15</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># fill in the gaps and take the rowwise union</span>
-<span class='fu'>span</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+<span class='fu'>span</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         1        29        29
@@ -245,7 +250,8 @@ two ranges.</p>
 #&gt;    [8]         3        12        10
 #&gt;    [9]         4        13        10
 #&gt;   [10]         5        14        10</div><div class='input'><span class='co'># find the gaps</span>
-<span class='fu'>between</span>(<span class='no'>x</span>,<span class='no'>y</span>)</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
+<span class='fu'>between</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; IRanges object with 10 ranges and 0 metadata columns:
 #&gt;            start       end     width
 #&gt;        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;
 #&gt;    [1]         6        19        14
@@ -273,7 +279,7 @@ two ranges.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -108,7 +108,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/sa-lee/plyranges">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -134,7 +134,7 @@
     <p>Read a BigWig file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_bigwig</span>(<span class='no'>file</span>, <span class='kw'>genome_info</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>overlap_ranges</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>read_bigwig</span><span class='op'>(</span><span class='va'>file</span>, genome_info <span class='op'>=</span> <span class='cn'>NULL</span>, overlap_ranges <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,12 +164,13 @@ that overlap the Ranges will be loaded.</p></td>
     <div class='dont-index'><p><code>rtracklayer::<a href='https://rdrr.io/pkg/rtracklayer/man/BigWigFile.html'>BigWigFile()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='no'>.Platform</span>$<span class='no'>OS.type</span> <span class='kw'>!=</span> <span class='st'>"windows"</span>) {
-  <span class='no'>test_path</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"tests"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"rtracklayer"</span>)
-  <span class='no'>bw_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='no'>test_path</span>, <span class='st'>"test.bw"</span>)
-  <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'>read_bigwig</span>(<span class='no'>bw_file</span>)
-  <span class='no'>gr</span>
-}</div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='va'>.Platform</span><span class='op'>$</span><span class='va'>OS.type</span> <span class='op'>!=</span> <span class='st'>"windows"</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>test_path</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"tests"</span>, package <span class='op'>=</span> <span class='st'>"rtracklayer"</span><span class='op'>)</span>
+  <span class='va'>bw_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>test_path</span>, <span class='st'>"test.bw"</span><span class='op'>)</span>
+  <span class='va'>gr</span> <span class='op'>&lt;-</span> <span class='fu'>read_bigwig</span><span class='op'>(</span><span class='va'>bw_file</span><span class='op'>)</span>
+  <span class='va'>gr</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt; GRanges object with 9 ranges and 1 metadata column:
 #&gt;       seqnames    ranges strand |     score
 #&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;
 #&gt;   [1]     chr2     1-300      * |     -1.00
@@ -198,7 +199,7 @@ that overlap the Ranges will be loaded.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
