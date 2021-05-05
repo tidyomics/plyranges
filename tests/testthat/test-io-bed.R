@@ -92,7 +92,7 @@ test_that("write bed returns correct bed files", {
   expect_identical(correct_gr, test_gr)
 
   # url input
-  test_bed_url <- paste("file:///", test_bed_out, sep = "")
+  test_bed_url <- paste("file://", test_bed_out, sep = "")
   write_bed(correct_gr, test_bed_url)
   test_gr <- read_bed(test_bed_url)
   expect_identical(correct_gr, test_gr)
@@ -103,7 +103,7 @@ test_that("write bed returns correct bed files", {
   test_gr <- read_bed(test_bed_gz)
   expect_identical(correct_gr, test_gr)
 
-  test_bed_gz_url <- paste("file:///", test_bed_gz, sep = "")
+  test_bed_gz_url <- paste("file://", test_bed_gz, sep = "")
   write_bed(correct_gr, test_bed_gz_url)
   test_gr <- read_bed(test_bed_gz_url)
   expect_identical(correct_gr, test_gr)
