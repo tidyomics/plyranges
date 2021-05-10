@@ -35,10 +35,12 @@ test_that("read_bed_graph returns correct GRanges", {
   expect_identical(correct_which, test_gr)
 
   # test genome_info
-  if (!require(BSgenome.Hsapiens.UCSC.hg19)) {
-    stop("'BSgenome.Hsapiens.UCSC.hg19' must be installed to run tests")
-  }
+  skip_if_not(
+    requireNamespace("BSgenome.Hsapiens.UCSC.hg19", quietly = TRUE),
+    message = "'BSgenome.Hsapiens.UCSC.hg19' must be installed to run tests"
+  )
 
+  library(BSgenome.Hsapiens.UCSC.hg19)
   hg19_seqinfo <- SeqinfoForBSGenome("hg19")
   correct_genome <- createCorrectGR(hg19_seqinfo)
   test_gr <- read_bed_graph(test_bg, genome_info = "hg19")

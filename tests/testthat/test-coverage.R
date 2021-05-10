@@ -52,7 +52,10 @@ test_that("produces same results as GRanges", {
 
 })
 test_that("Compatible with GenomicRanges", {
-  stopifnot(requireNamespace("HelloRanges"))
+  skip_if_not(
+    requireNamespace("HelloRanges", quietly = TRUE),
+    message = "'HelloRanges' must be installed to run coverage unit tests."
+  )
   oldwd <- getwd()
   setwd(system.file("unitTests", "data", "genomecov", package="HelloRanges"))
 

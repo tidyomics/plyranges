@@ -1,6 +1,5 @@
 context("reading/writing bed files")
 # tests adapted from rtracklayer
-
 createCorrectGR <- function(seqinfo) {
   ir <- IRanges(c(127471197, 127472364, 127473531, 127474698, 127475865),
                 width = 1167)
@@ -63,10 +62,12 @@ test_that("read_bed returns correct GRanges",{
   expect_identical(correct_which, test_gr)
 
   # check that import by genome name works
-  if (!require(BSgenome.Hsapiens.UCSC.hg19)) {
-    stop("'BSgenome.Hsapiens.UCSC.hg19' must be installed to run tests")
-  }
+  skip_if_not(
+    requireNamespace("BSgenome.Hsapiens.UCSC.hg19", quietly = TRUE),
+    message = "'BSgenome.Hsapiens.UCSC.hg19' must be installed to run tests"
+  )
 
+  library(BSgenome.Hsapiens.UCSC.hg19)
   hg19_seqinfo <- SeqinfoForBSGenome(genome = "hg19")
   correct_gr <- createCorrectGR(hg19_seqinfo)
   test_gr <- read_bed(test_bed, genome_info = "hg19")
@@ -91,21 +92,10 @@ test_that("write bed returns correct bed files", {
   test_gr <- read_bed(test_bed_out)
   expect_identical(correct_gr, test_gr)
 
-  # url input
-  test_bed_url <- paste("file://", test_bed_out, sep = "")
-  write_bed(correct_gr, test_bed_url)
-  test_gr <- read_bed(test_bed_url)
-  expect_identical(correct_gr, test_gr)
-
   # gzipped output
   test_bed_gz <- paste(test_bed_out, ".gz", sep = "")
   write_bed(correct_gr, test_bed_gz)
   test_gr <- read_bed(test_bed_gz)
-  expect_identical(correct_gr, test_gr)
-
-  test_bed_gz_url <- paste("file://", test_bed_gz, sep = "")
-  write_bed(correct_gr, test_bed_gz_url)
-  test_gr <- read_bed(test_bed_gz_url)
   expect_identical(correct_gr, test_gr)
 
   # tabixed output
@@ -116,6 +106,19 @@ test_that("write bed returns correct bed files", {
   correct_which <- filter_by_overlaps(correct_gr, which)
   test_gr <- read_bed(test_bed_bgz, overlap_ranges =  which)
   expect_identical(correct_which, test_gr)
+
+  # url input
+  # skip on windows for now
+  skip_on_os("windows")
+  test_bed_url <- paste("file://", test_bed_out, sep = "")
+  write_bed(correct_gr, test_bed_url)
+  test_gr <- read_bed(test_bed_url)
+  expect_identical(correct_gr, test_gr)
+
+  test_bed_gz_url <- paste("file://", test_bed_gz, sep = "")
+  write_bed(correct_gr, test_bed_gz_url)
+  test_gr <- read_bed(test_bed_gz_url)
+  expect_identical(correct_gr, test_gr)
 
 })
 
