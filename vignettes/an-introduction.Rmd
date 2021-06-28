@@ -79,6 +79,8 @@ This is achieved with the `mutate` verb along with `anchor_*` adverbs.
 The act of anchoring fixes either the start, end, center coordinates of the
 `Range` object, as shown in the figure and code below and anchors are used in
 combination with either `mutate` or `stretch`.
+By default, the start coordinate will be anchored, so regardless of strand. 
+For behavior similar to `GenomicRanges::resize`, use `anchor_5p`.
 
 ```{r anchor_fig, echo = FALSE, out.width="400px", fig.align="center"}
 knitr::include_graphics("anchors.png", dpi = 150)
@@ -115,10 +117,10 @@ stretch(anchor_5p(grng), 10)
 can also shift upstream or downstream.
 
 ```{r}
-shift_left(rng, 10)
-shift_right(rng, 10)
-shift_upstream(grng, 10)
-shift_downstream(grng, 10)
+shift_left(rng, 100)
+shift_right(rng, 100)
+shift_upstream(grng, 100)
+shift_downstream(grng, 100)
 ```
 
 # Grouping `Ranges`
