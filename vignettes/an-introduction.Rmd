@@ -117,10 +117,10 @@ stretch(anchor_5p(grng), 10)
 can also shift upstream or downstream.
 
 ```{r}
-shift_left(rng, 10)
-shift_right(rng, 10)
-shift_upstream(grng, 10)
-shift_downstream(grng, 10)
+shift_left(rng, 100)
+shift_right(rng, 100)
+shift_upstream(grng, 100)
+shift_downstream(grng, 100)
 ```
 
 # Grouping `Ranges`
