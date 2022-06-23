@@ -73,5 +73,5 @@ if (interactive()) {
 
 }
 \seealso{
-\code{\link[GenomeInfoDb:Seqinfo]{GenomeInfoDb::Seqinfo()}}, \code{\link[GenomeInfoDb:fetchExtendedChromInfoFromUCSC]{GenomeInfoDb::fetchExtendedChromInfoFromUCSC()}}
+\code{\link[GenomeInfoDb:Seqinfo-class]{GenomeInfoDb::Seqinfo()}}, \code{\link[GenomeInfoDb:fetchExtendedChromInfoFromUCSC]{GenomeInfoDb::fetchExtendedChromInfoFromUCSC()}}
 }

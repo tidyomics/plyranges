@@ -3,11 +3,17 @@
 \name{filter_by_overlaps}
 \alias{filter_by_overlaps}
 \alias{filter_by_non_overlaps}
+\alias{filter_by_overlaps_directed}
+\alias{filter_by_non_overlaps_directed}
 \title{Filter by overlapping/non-overlapping ranges}
 \usage{
 filter_by_overlaps(x, y, maxgap = -1L, minoverlap = 0L)
 
 filter_by_non_overlaps(x, y, maxgap, minoverlap)
+
+filter_by_overlaps_directed(x, y, maxgap = -1L, minoverlap = 0L)
+
+filter_by_non_overlaps_directed(x, y, maxgap, minoverlap)
 }
 \arguments{
 \item{x, y}{Objects representing ranges}
@@ -29,7 +35,7 @@ Filter by overlapping/non-overlapping ranges
 \details{
 By default, \code{filter_by_overlaps} and
 \code{filter_by_non_overlaps} ignore strandedness for \code{\link[=GRanges]{GRanges()}}
-objects. The argument \code{maxgap} is the maximum number of positions
+objects. To perform stranded operations use \code{filter_by_overlaps_directed} and \code{filter_by_nonoverlaps_directed}. The argument \code{maxgap} is the maximum number of positions
 between two ranges for them to be considered overlapping. Here the default
 is set to be -1 as that is the the gap between two ranges that
 has its start or end strictly inside the other. The argugment
@@ -53,7 +59,11 @@ subject <- as_granges(df2)
 
 filter_by_overlaps(query, subject)
 
+filter_by_overlaps_directed(query, subject)
+
 filter_by_non_overlaps(query, subject)
+
+filter_by_non_overlaps_directed(query, subject)
 
 }
 \seealso{
