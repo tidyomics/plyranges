@@ -11,7 +11,7 @@
 #'
 #' @details By default, `filter_by_overlaps` and
 #' `filter_by_non_overlaps` ignore strandedness for [GRanges()]
-#' objects. To perform stranded operations use `filter_by_overlaps_directed` and `filter_by_nonoverlaps_directed`. The argument `maxgap` is the maximum number of positions
+#' objects. To perform stranded operations use `filter_by_overlaps_directed` and `filter_by_non_overlaps_directed`. The argument `maxgap` is the maximum number of positions
 #' between two ranges for them to be considered overlapping. Here the default
 #' is set to be -1 as that is the the gap between two ranges that
 #' has its start or end strictly inside the other. The argugment
