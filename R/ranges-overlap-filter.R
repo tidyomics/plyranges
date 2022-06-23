@@ -78,20 +78,21 @@ filter_by_non_overlaps.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap =
                    ignore.strand = TRUE)
 }
 
+#' @export
 #' @rdname ranges-filter-overlaps
 filter_by_overlaps_directed <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   UseMethod("filter_by_overlaps_directed")
 }
 
 #' @export
-filter_by_overlaps_directed.GenomicRanges <- function(x, y, maxgap = -1L, minoverlap =0L) {
+filter_by_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
   subsetByOverlaps(x,y, maxgap, minoverlap, ignore.strand = FALSE)
 }
 
 #' @export
 #' @rdname ranges-filter-overlaps
 filter_by_non_overlaps_directed <- function(x,y, maxgap, minoverlap) {
-  UseMethod("filter_by_non_overlaps")
+  UseMethod("filter_by_non_overlaps_directed")
 }
 
 #' @export
