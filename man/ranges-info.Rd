@@ -25,9 +25,7 @@ set_genome_info(
 get_genome_info(.data)
 }
 \arguments{
-\item{genome}{A character vector of length one indicating the genome build.
-If this is the only argument supplied, the build information will be
-retrieved from UCSC database.}
+\item{genome}{A character vector of length one indicating the genome build.}
 
 \item{seqnames}{A character vector containing the name of sequences.}
 
@@ -43,8 +41,7 @@ as a Ranges object use \code{get_genome_info}.
 }
 \description{
 To construct annotations by supplying annotation information
-use \code{genome_info}. This function allows you to get UCSC build information
-via \code{\link[GenomeInfoDb:fetchExtendedChromInfoFromUCSC]{GenomeInfoDb::fetchExtendedChromInfoFromUCSC()}}. To add
+use \code{genome_info}. To add
 annotations to an existing Ranges object use \code{set_genome_info}. To retrieve
 an annotation as a Ranges object use \code{get_genome_info}.
 }
@@ -73,5 +70,5 @@ if (interactive()) {
 
 }
 \seealso{
-\code{\link[GenomeInfoDb:Seqinfo]{GenomeInfoDb::Seqinfo()}}, \code{\link[GenomeInfoDb:fetchExtendedChromInfoFromUCSC]{GenomeInfoDb::fetchExtendedChromInfoFromUCSC()}}
+\code{\link[GenomeInfoDb:Seqinfo]{GenomeInfoDb::Seqinfo()}}
 }
