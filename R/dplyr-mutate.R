@@ -1,38 +1,21 @@
-mutate_mcols <- function(.data, .mutated) {
-  all_cols <- names(.mutated)
-  only_mcols <- !(all_cols %in%
-                    c("start", "end", "width", "seqnames", "strand"))
-  .mutated <- .mutated[only_mcols]
-  update_cols <- all_cols[only_mcols]
-
-  matches_mcols <- match(update_cols, names(mcols(.data)))
-  idx_mcols <- !is.na(matches_mcols)
-
-  if (any(idx_mcols)) {
-    mcols(.data)[matches_mcols[idx_mcols]] <- .mutated[idx_mcols]
-  }
-
-  if (!all(idx_mcols)) {
-    if (is.null(mcols(.data))) {
-      mcols(.data) <- S4Vectors::DataFrame(.mutated[!idx_mcols])
-    } else {
-      mcols(.data) <- S4Vectors::DataFrame(list(mcols(.data), 
-                                                .mutated[!idx_mcols]))
-    }
-  }
-  .data
+#' @import dplyr
+mutate_mcols <- function(df, dots) {
+  
+  core_cols <- intersect(colnames(df),c("start", "end", "width", "seqnames", "strand"))
+  
+  df <- mutate(df, !!!dots) %>%
+    ungroup() %>%
+    dplyr::select(-all_of(core_cols)) %>%
+    as("DataFrame")
 }
 
 #' @importFrom methods selectMethod
-mutate_core <- function(.data, .mutated) {
-  all_cols <- names(.mutated)
-  core_cols <- all_cols[all_cols %in%
-                           c("start", "end", "width", "seqnames", "strand")]
-  if (length(core_cols == 0)) {
-    .data
-  }
-
-  for (col in core_cols) {
+mutate_core <- function(.data, dots) {
+  
+  overscope <- overscope_ranges(.data)
+  .mutated <- overscope_eval_update(overscope, dots)
+  
+  for (col in names(.mutated)) {
     modifier <- match.fun(paste0("set_", col))
     .data <- modifier(.data, .mutated[[col]])
   }
@@ -40,36 +23,64 @@ mutate_core <- function(.data, .mutated) {
 }
 
 
-mutate_rng <- function(.data, dots) {
+
+mutate_rng <- function(.data, ...) {
+  
+  dots <- set_dots_named(...)
+  
   col_names <- names(dots)
+  core_cols <- col_names %in% c("start", "end", "width", "seqnames", "strand")
   if (any(col_names %in% "")) {
     stop("mutate must have name-variable pairs as input", call. = FALSE)
   }
-
-  overscope <- overscope_ranges(.data)
-  .mutated <- overscope_eval_update(overscope, dots)
-  .data <- mutate_core(.data, .mutated)
-  mutate_mcols(.data, .mutated)
+  
+  if(any(core_cols)) {
+    .data <- mutate_core(.data, dots[core_cols])
+  }
+  
+  if(any(!core_cols)) {
+    mcols(.data) <- mutate_mcols(as.data.frame(.data),
+                          dots[!core_cols])
+  }
+  return(.data)
 }
 
-# idea could simply dispatch to summarise here, and store 
-# list columns, if the length is smaller then we can repeat,
-# otherwise we try to expand 
+#' @importFrom dplyr group_by
 mutate_grp <- function(.data, ...) {
   dots <- set_dots_named(...)
-  inx <- .group_rows(.data)
-  rng <- unname(S4Vectors::split(.data@delegate, .data@group_indices))
-  rng <- S4Vectors::endoapply(rng, function(x) {
-    mutate_rng(x, dots)    
-  })
   
-  rng <- unlist(rng)[BiocGenerics::order(unlist(inx))]
-  new(class(.data),
-      delegate = rng, 
-      group_keys =  .data@group_keys, 
-      group_indices = .data@group_indices,
-      n = .data@n )
+  
+  col_names <- names(dots)
+  core_cols <- col_names %in% c("start", "end", "width", "seqnames", "strand")
+  if (any(col_names %in% "")) {
+    stop("mutate must have name-variable pairs as input", call. = FALSE)
+  }
+  
+  if(any(core_cols)) {
+    inx <- .group_rows(.data)
+    rng <- unname(S4Vectors::split(.data@delegate, .data@group_indices))
+    rng <- S4Vectors::endoapply(rng, function(x) {
+      mutate_core(x, dots[core_cols])  
+    })
+    
+    rng <- unlist(rng)[BiocGenerics::order(unlist(inx))]
+    new(class(.data),
+        delegate = rng, 
+        group_keys =  .data@group_keys, 
+        group_indices = .data@group_indices,
+        n = .data@n )
+  }
+  
+  if (any(!core_cols)) {
+    groups <- group_vars(.data)
+    
+    mcols(.data) <-
+      mutate_mcols(group_by(as.data.frame(.data),!!!syms(groups)),
+                   dots[!core_cols])
+  }
+  return(.data)
 }
+
 #' Modify a Ranges object
 #'
 #' @param .data a `Ranges` object
@@ -123,8 +134,7 @@ mutate_grp <- function(.data, ...) {
 #'     mutate(width = width * 2)
 #' @export
 mutate.Ranges <- function(.data, ...) {
-  dots <- set_dots_named(...)
-  mutate_rng(.data, dots)
+  mutate_rng(.data, ...)
 }
 
 #' @method mutate AnchoredIntegerRanges
