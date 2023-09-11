@@ -1,4 +1,5 @@
 #' @import dplyr
+#' @importFrom tidyselect all_of
 mutate_mcols <- function(df, dots) {
   
   core_cols <- intersect(colnames(df),c("start", "end", "width", "seqnames", "strand"))
@@ -72,10 +73,12 @@ mutate_grp <- function(.data, ...) {
   }
   
   if (any(!core_cols)) {
-    groups <- group_vars(.data)
+    grps <- groups(.data)
     
+    df <- group_by(as.data.frame(.data),!!!grps)
+
     mcols(.data) <-
-      mutate_mcols(group_by(as.data.frame(.data),!!!syms(groups)),
+      mutate_mcols(df,
                    dots[!core_cols])
   }
   return(.data)
