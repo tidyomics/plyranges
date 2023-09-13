@@ -40,7 +40,8 @@ names_to_column <- function(.data, var = "name") {
   if (is.null(names(.data))) {
     stop("No names present in .data")
   }
-  .data <- mutate(.data, `:=`(!!var, names(.data)))
+  r_names <- names(.data)
+  .data <- mutate(.data, `:=`(!!rlang::sym(var), r_names))
   .data <- select(.data, !!var, tidyselect::everything())
   remove_names(.data)
 }
@@ -52,8 +53,8 @@ id_to_column <- function(.data, var = "id") {
   if (var %in% names(mcols(.data))) {
     stop(paste("Column", var, "already exists in .data."))
   }
-  
-  .data <- mutate(.data, `:=`(!!var, seq_len(length(.data))))
+  r_id <- seq_len(length(.data))
+  .data <- mutate(.data, `:=`(!!var, r_id))
   .data <- select(.data, !!var, tidyselect::everything())
   remove_names(.data)
 }
