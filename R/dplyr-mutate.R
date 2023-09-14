@@ -73,9 +73,11 @@ mutate_grp <- function(.data, ...) {
   }
   
   if (any(!core_cols)) {
-    grps <- groups(.data)
-    
-    df <- group_by(as.data.frame(.data),!!!grps)
+    grps <- group_vars(.data)
+
+    df <- as.data.frame(ungroup(.data))
+
+    df <- group_by(df,!!!rlang::syms(grps))
 
     mcols(.data) <-
       mutate_mcols(df,
