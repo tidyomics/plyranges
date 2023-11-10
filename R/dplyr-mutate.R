@@ -6,7 +6,7 @@ mutate_mcols <- function(df, dots) {
   
   df <- mutate(df, !!!dots) %>%
     ungroup() %>%
-    dplyr::select(-all_of(core_cols)) %>%
+    dplyr::select(-tidyselect::all_of(core_cols)) %>%
     as("DataFrame")
 }
 
