@@ -64,8 +64,8 @@ test_that("matches IRanges/GRanges tests", {
   gr_by_group <- stack(grl, "name") %>% group_by(name)
 
   target <- stack(disjoin(grl, ignore.strand = TRUE), "name")
-  current <- disjoin_ranges(gr_by_group) %>%
-    mutate(name = Rle(name))
+  current <- disjoin_ranges(gr_by_group)
+  
   expect_identical(target, current)
 })
 
