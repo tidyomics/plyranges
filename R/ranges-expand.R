@@ -100,7 +100,7 @@ expand_ranges <- function(data, ..., .drop = FALSE, .id = NULL, .keep_empty = FA
 
 
 get_list_cols <- function(data) {
-  list_cols_pos <- unlist(Map(function(.) is(., "List"), mcols(data)))
+  list_cols_pos <- unlist(Map(function(.) is(., "list"), mcols(data)))
   
   list_cols <- Filter(isTRUE, list_cols_pos)
   
