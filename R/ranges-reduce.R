@@ -35,9 +35,10 @@ reduce_single <- function(.data, ..., rfun = reduce) {
   if (length(dots) == 0L) {
     return(rfun(.data))
   }
+
   reduced <- rfun(.data, with.revmap = TRUE)
   
-  .data <- group_by_revmap(.data, 
+  .data <- group_by_revmap(.data,
                            mcols(reduced)[["revmap"]],
                            make_revmap_rle(mcols(reduced)[["revmap"]]))
   
@@ -78,6 +79,7 @@ reduce_by_grp <- function(.data, ..., rfun = IRanges::reduce) {
 #' Reduce then aggregate a Ranges object
 #'
 #' @param .data a Ranges object to reduce
+#' @param min.gapwidth Ranges separated by a gap of at least min.gapwidth positions are not merged. 
 #' @param ... Name-value pairs of summary functions.
 #'
 #' @return a Ranges object with the
@@ -106,60 +108,65 @@ reduce_by_grp <- function(.data, ..., rfun = IRanges::reduce) {
 #' x %>% reduce_ranges(score = sum(score))
 #' x %>% group_by(id) %>% reduce_ranges(score = sum(score))
 #' @export
-reduce_ranges <- function(.data, ...) { UseMethod("reduce_ranges") }
+reduce_ranges <- function(.data, min.gapwidth = 1L, ...) { UseMethod("reduce_ranges") }
 
 #' @method reduce_ranges IntegerRanges
 #' @export
-reduce_ranges.IntegerRanges <- function(.data, ...) {
-  reduce_single(.data, ...)
+reduce_ranges.IntegerRanges <- function(.data, min.gapwidth = 1L, ...) {
+  reduce_single(.data, ..., 
+                rfun = function(x, ...) {
+                  reduce(x, ..., min.gapwidth = min.gapwidth)
+                })
 }
 
 #' @method reduce_ranges GroupedIntegerRanges
 #' @export
-reduce_ranges.GroupedIntegerRanges <- function(.data, ...) {
-  reduce_by_grp(.data, ...)
+reduce_ranges.GroupedIntegerRanges <- function(.data, min.gapwidth = 1L, ...) {
+  reduce_by_grp(.data, ..., 
+                rfun = function(x, ...) {
+                  reduce(x, ..., min.gapwidth = min.gapwidth)
+                })
 }
-
 
 #' @method reduce_ranges GroupedGenomicRanges
 #' @export
-reduce_ranges.GroupedGenomicRanges <- function(.data, ...) {
+reduce_ranges.GroupedGenomicRanges <- function(.data, min.gapwidth = 1L, ...) {
   reduce_by_grp(.data, ..., 
                 rfun = function(x, ...) {
-                  reduce(x, ..., ignore.strand = TRUE)
+                  reduce(x, ..., min.gapwidth = min.gapwidth, ignore.strand = TRUE)
                   })
 }
 
 #' @method reduce_ranges GenomicRanges
 #' @export
-reduce_ranges.GenomicRanges <- function(.data, ...) {
+reduce_ranges.GenomicRanges <- function(.data, min.gapwidth = 1L, ...) {
   reduce_single(.data, ..., 
                 rfun = function(x, ...) {
-                  reduce(x, ..., ignore.strand = TRUE)
+                  reduce(x, ..., min.gapwidth = min.gapwidth, ignore.strand = TRUE)
                 })
 }
 
 #' @rdname ranges-reduce
 #' @export
-reduce_ranges_directed <- function(.data, ...) {
+reduce_ranges_directed <- function(.data, min.gapwidth = 1L, ...) {
   UseMethod("reduce_ranges_directed")
 }
 
 #' @importFrom IRanges reduce
 #' @method reduce_ranges_directed GenomicRanges
 #' @export
-reduce_ranges_directed.GenomicRanges <- function(.data, ...) {
+reduce_ranges_directed.GenomicRanges <- function(.data, min.gapwidth = 1L, ...) {
   reduce_single(.data, ..., 
                 rfun = function(x, ...) {
-                  reduce(x, ..., ignore.strand = FALSE)
+                  reduce(x, ..., min.gapwidth = min.gapwidth, ignore.strand = FALSE)
                 })
 }
 
 #' @method reduce_ranges_directed GroupedGenomicRanges
 #' @export
-reduce_ranges_directed.GroupedGenomicRanges <- function(.data, ...) {
+reduce_ranges_directed.GroupedGenomicRanges <- function(.data, min.gapwidth = 1L, ...) {
   reduce_by_grp(.data, ..., 
                 rfun = function(x, ...) {
-                  reduce(x, ..., ignore.strand = FALSE)
+                  reduce(x, ..., min.gapwidth = min.gapwidth, ignore.strand = FALSE)
                 })
 }

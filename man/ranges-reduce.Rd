@@ -5,12 +5,14 @@
 \alias{reduce_ranges_directed}
 \title{Reduce then aggregate a Ranges object}
 \usage{
-reduce_ranges(.data, ...)
+reduce_ranges(.data, min.gapwidth = 1L, ...)
 
-reduce_ranges_directed(.data, ...)
+reduce_ranges_directed(.data, min.gapwidth = 1L, ...)
 }
 \arguments{
 \item{.data}{a Ranges object to reduce}
+
+\item{min.gapwidth}{Ranges separated by a gap of at least min.gapwidth positions are not merged.}
 
 \item{...}{Name-value pairs of summary functions.}
 }

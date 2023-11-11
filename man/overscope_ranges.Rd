@@ -21,5 +21,5 @@ Create an overscoped environment from a Ranges object
 This is the backend for non-standard evaluation in \code{plyranges}.
 }
 \seealso{
-\code{\link[rlang:new_data_mask]{rlang::new_data_mask()}}, \code{\link[rlang:eval_tidy]{rlang::eval_tidy()}}
+\code{\link[rlang:as_data_mask]{rlang::new_data_mask()}}, \code{\link[rlang:eval_tidy]{rlang::eval_tidy()}}
 }
