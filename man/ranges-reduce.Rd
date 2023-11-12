@@ -34,6 +34,7 @@ rng <- as_granges(df)
 rng \%>\% reduce_ranges()
 rng \%>\% reduce_ranges(gc = mean(gc))
 rng \%>\% reduce_ranges_directed(gc = mean(gc))
+rng \%>\% reduce_ranges_directed(gc = mean(gc), min.gapwidth = 10)
 
 x <- data.frame(start = c(11:13, 2, 7:6), 
                width=3, 
