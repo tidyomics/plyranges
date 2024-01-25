@@ -42,14 +42,15 @@ Expand list-columns in a Ranges object
 \examples{
 grng <- as_granges(data.frame(seqnames = "chr1", start = 20:23, width = 1000))
 grng <- mutate(grng, 
-               exon_id = list(a = 1, b = c(4,5), c = 3, d = c(2,5))
+               exon_id = List(a = 1, b = c(4,5), c = 3, d = c(2,5))
                )
+grng                
 expand_ranges(grng)
 expand_ranges(grng, .id = "name")
 
 # empty list elements are not preserved by default
 grng <- mutate(grng, 
-               exon_id = list(a = NULL, b = c(4,5), c= 3, d = c(2,5))
+               exon_id = List(a = NULL, b = c(4,5), c= 3, d = c(2,5))
                )
 expand_ranges(grng)
 expand_ranges(grng, .keep_empty = TRUE)

@@ -13,8 +13,8 @@ test_that("expanding makes sense", {
   # by default expand_ranges does cartesian product of list columns
   gr <- as_granges(data.frame(seqnames = "chr1", start = 20:22, width = 1000))
   gr <- mutate(gr,
-                 col1 = list(a = 1L, b = c(4L,5L), c = c(2L,3L)),
-                 col2 = list(c(1L,2L), c(3L,4L), c(5L)),
+                 col1 = List(a = 1L, b = c(4L,5L), c = c(2L,3L)),
+                 col2 = List(c(1L,2L), c(3L,4L), c(5L)),
                  score = 1:3)
 
   correct_gr <- GRanges(seqnames = "chr1",

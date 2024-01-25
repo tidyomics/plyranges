@@ -1,6 +1,37 @@
+mutate_mcols <- function(.data, dots) {
+  
+  overscope <- overscope_ranges(.data)
+  .mutated <- overscope_eval_update(overscope, dots)
+  
+  all_cols <- names(.mutated)
+  only_mcols <- !(all_cols %in%
+                    c("start", "end", "width", "seqnames", "strand"))
+  .mutated <- .mutated[only_mcols]
+  update_cols <- all_cols[only_mcols]
+  
+  matches_mcols <- match(update_cols, names(mcols(.data)))
+  idx_mcols <- !is.na(matches_mcols)
+  
+  if (any(idx_mcols)) {
+    mcols(.data)[matches_mcols[idx_mcols]] <- .mutated[idx_mcols]
+  }
+  
+  if (!all(idx_mcols)) {
+    if (is.null(mcols(.data))) {
+      mcols(.data) <- S4Vectors::DataFrame(.mutated[!idx_mcols])
+    } else {
+      
+      mcols(.data) <- S4Vectors::DataFrame(list(mcols(.data), 
+                                                .mutated[!idx_mcols]))
+    }
+  }
+  .data
+}
+
+
 #' @import dplyr
 #' @importFrom tidyselect all_of
-mutate_mcols <- function(df, dots) {
+mutate_mcols_grp <- function(df, dots) {
   
   core_cols <- intersect(colnames(df),c("start", "end", "width", "seqnames", "strand"))
   
@@ -16,7 +47,14 @@ mutate_core <- function(.data, dots) {
   overscope <- overscope_ranges(.data)
   .mutated <- overscope_eval_update(overscope, dots)
   
-  for (col in names(.mutated)) {
+  all_cols <- names(.mutated)
+  core_cols <- all_cols[all_cols %in%
+                          c("start", "end", "width", "seqnames", "strand")]
+  if (length(core_cols == 0)) {
+    .data
+  }
+  
+  for (col in core_cols) {
     modifier <- match.fun(paste0("set_", col))
     .data <- modifier(.data, .mutated[[col]])
   }
@@ -36,12 +74,12 @@ mutate_rng <- function(.data, ...) {
   }
   
   if(any(core_cols)) {
-    .data <- mutate_core(.data, dots[core_cols])
+    .data <- mutate_core(.data, dots)
   }
   
   if(any(!core_cols)) {
-    mcols(.data) <- mutate_mcols(as.data.frame(.data),
-                          dots[!core_cols])
+    .data <- mutate_mcols(.data,
+                          dots)
   }
   return(.data)
 }
@@ -61,7 +99,7 @@ mutate_grp <- function(.data, ...) {
     inx <- .group_rows(.data)
     rng <- unname(S4Vectors::split(.data@delegate, .data@group_indices))
     rng <- S4Vectors::endoapply(rng, function(x) {
-      mutate_core(x, dots[core_cols])  
+      mutate_core(x, dots)  
     })
     
     rng <- unlist(rng)[BiocGenerics::order(unlist(inx))]
@@ -80,8 +118,8 @@ mutate_grp <- function(.data, ...) {
     df <- group_by(df,!!!rlang::syms(grps))
 
     mcols(.data) <-
-      mutate_mcols(df,
-                   dots[!core_cols])
+      mutate_mcols_grp(df,
+                   dots)
   }
   return(.data)
 }
