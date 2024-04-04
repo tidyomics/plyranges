@@ -48,7 +48,16 @@ test_that("matches IRanges/GenomicRanges", {
   expect_identical(reduce_ranges(gr, mapping = name),
                    target)
 
+  # reduce with min.gapwidth
+  gr <- GRanges(Rle(factor(c("chr1", "chr2")), c(3, 3)),
+          IRanges(c(1,6,12,1,6,12), width=4),
+          name = paste0("a", 1:6))
 
+  target <- GRanges(Rle(c("chr1", "chr2"), c(2, 2)),
+                    IRanges(start=c(1, 12, 1, 12), end=c(9, 15, 9, 15)))
+
+  expect_identical(reduce_ranges(gr, min.gapwidth = 2), target)
+  
 })
 
 
