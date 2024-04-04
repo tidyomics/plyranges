@@ -11,7 +11,7 @@
 #'
 #' @details By default, `filter_by_overlaps` and
 #' `filter_by_non_overlaps` ignore strandedness for [GRanges()]
-#' objects. The argument `maxgap` is the maximum number of positions
+#' objects. To perform stranded operations use `filter_by_overlaps_directed` and `filter_by_non_overlaps_directed`. The argument `maxgap` is the maximum number of positions
 #' between two ranges for them to be considered overlapping. Here the default
 #' is set to be -1 as that is the the gap between two ranges that
 #' has its start or end strictly inside the other. The argugment
@@ -39,7 +39,11 @@
 #'
 #' filter_by_overlaps(query, subject)
 #'
+#' filter_by_overlaps_directed(query, subject)
+#'
 #' filter_by_non_overlaps(query, subject)
+#'
+#' filter_by_non_overlaps_directed(query, subject)
 #'
 #' @rdname ranges-filter-overlaps
 filter_by_overlaps <- function(x,y, maxgap = -1L, minoverlap = 0L) {
@@ -72,6 +76,30 @@ filter_by_non_overlaps.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap =
   subsetByOverlaps(x,y, maxgap, minoverlap,
                    invert = TRUE,
                    ignore.strand = TRUE)
+}
+
+#' @export
+#' @rdname ranges-filter-overlaps
+filter_by_overlaps_directed <- function(x,y, maxgap = -1L, minoverlap = 0L) {
+  UseMethod("filter_by_overlaps_directed")
+}
+
+#' @export
+filter_by_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
+  subsetByOverlaps(x,y, maxgap, minoverlap, ignore.strand = FALSE)
+}
+
+#' @export
+#' @rdname ranges-filter-overlaps
+filter_by_non_overlaps_directed <- function(x,y, maxgap, minoverlap) {
+  UseMethod("filter_by_non_overlaps_directed")
+}
+
+#' @export
+filter_by_non_overlaps_directed.GenomicRanges <- function(x,y, maxgap = -1L, minoverlap = 0L) {
+  subsetByOverlaps(x,y, maxgap, minoverlap,
+                   invert = TRUE,
+                   ignore.strand = FALSE)
 }
 
 # TODO -- add in more variants here?
