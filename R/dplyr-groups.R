@@ -158,8 +158,8 @@ group_vars.Ranges <- function(x) character(0)
 #' @method group_keys GroupedGenomicRanges
 #' @export
 #' @importFrom dplyr group_keys
-group_keys.GroupedGenomicRanges <- function(.data, ...) {
-  .data@group_keys
+group_keys.GroupedGenomicRanges <- function(.tbl, ...) {
+  .tbl@group_keys
 }
 
 #' @method group_keys GroupedIntegerRanges
@@ -168,11 +168,11 @@ group_keys.GroupedIntegerRanges <- group_keys.GroupedGenomicRanges
 
 #' @method group_keys Ranges
 #' @export
-group_keys.Ranges <- function(.data, ...) {
+group_keys.Ranges <- function(.tbl, ...) {
   if (length(enquos(...)) == 0) {
     return(new("DFrame", nrows = 1L))
   }
-  NextMethod(group_by(.data, ...))
+  NextMethod(group_by(.tbl, ...))
 }
 
 #' @method group_indices GroupedGenomicRanges
@@ -228,20 +228,20 @@ group_data.Ranges <- function(.data) {
 #' @method group_split GroupedGenomicRanges
 #' @export
 #' @importFrom dplyr group_split
-group_split.GroupedGenomicRanges <- function(.data, ..., keep = TRUE) {
+group_split.GroupedGenomicRanges <- function(.tbl, ..., keep = TRUE) {
   if (length(enquos(...)) > 0) {
     warning("Ignoring arguments to `...` 
             and using existing group structure")
   }
   
-  rng <- .data@delegate 
+  rng <- .tbl@delegate 
   
   if (!keep) {
-    vars_drop <- lapply(group_vars(.data), function(.) rlang::quo(-!!.))
+    vars_drop <- lapply(group_vars(.tbl), function(.) rlang::quo(-!!.))
     rng <- select(rng, !!!vars_drop)
   } 
   
-  unname(S4Vectors::split(rng, .data@group_indices))
+  unname(S4Vectors::split(rng, .tbl@group_indices))
 }
 
 #' @method group_split GroupedIntegerRanges
@@ -250,9 +250,9 @@ group_split.GroupedIntegerRanges <- group_split.GroupedGenomicRanges
 
 #' @method group_split Ranges
 #' @export
-group_split.Ranges <- function(.data, ..., keep = TRUE) {
+group_split.Ranges <- function(.tbl, ..., keep = TRUE) {
   if (length(enquos(...)) == 0) {
-    return(as(.data, "List"))
+    return(as(.tbl, "List"))
   }
-  NextMethod(group_by(.data, ...))
+  NextMethod(group_by(.tbl, ...))
 }
