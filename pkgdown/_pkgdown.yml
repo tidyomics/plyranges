@@ -96,7 +96,7 @@ reference:
     - as_ranges
     - set_width
     - overscope_ranges
-    - tidyverse-reexports
+    - reexports
 
 navbar:
   type: default
