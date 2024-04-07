@@ -15,10 +15,10 @@ knitr::opts_chunk$set(
 # plyranges: fluent genomic data analysis <img id="plyranges_logo" src="man/figures/logo.png" align="right" width = "125" />
 
 <!-- badges: start -->
-[![R-CMD-check-bioc](https://github.com/sa-lee/plyranges/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/sa-lee/plyranges/actions?query=workflow%3AR-CMD-check-bioc)
+[![R-CMD-check-bioc](https://github.com/tidyomics/plyranges/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/tidyomics/plyranges/actions?query=workflow%3AR-CMD-check-bioc)
 [![BioC status](http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges)
 [![Codecov test
-coverage](https://codecov.io/gh/sa-lee/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/sa-lee/plyranges?branch=master)
+coverage](https://codecov.io/gh/tidyomics/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyomics/plyranges?branch=master)
 <!-- badges: end -->
 
 [plyranges](https://www.bioconductor.org/packages/release/bioc/html/plyranges.html) provides a consistent interface for importing and wrangling
@@ -44,10 +44,10 @@ of functions.
 of functions.
 
 For more details on the features of plyranges, read the
-[vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
+[vignette](https://tidyomics.github.io/plyranges/articles/an-introduction.html).
 For a complete case-study on using plyranges to combine ATAC-seq and RNA-seq
 results read the [*fluentGenomics*
-workflow](https://sa-lee.github.io/fluentGenomics).
+workflow](https://tidyomics.github.io/fluentGenomics).
 
 # Installation
 
@@ -62,7 +62,7 @@ BiocManager::install("plyranges")
 To install the development version from GitHub:
 
 ```{r, eval=FALSE}
-BiocManager::install("sa-lee/plyranges")
+BiocManager::install("tidyomics/plyranges")
 ```
 
 # Quick overview
