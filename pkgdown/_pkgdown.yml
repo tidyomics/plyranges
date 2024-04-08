@@ -9,6 +9,10 @@ authors:
     href: https://github.com/lawremi
   Di Cook:
     href: http://dicook.org
+  footer:
+    roles: [aut]
+  sidebar:
+    roles: [aut, ctb]
 
 reference:
 - title: About plyranges

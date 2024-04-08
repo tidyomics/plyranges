@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check-bioc](https://github.com/sa-lee/plyranges/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/sa-lee/plyranges/actions?query=workflow%3AR-CMD-check-bioc)
+[![R-CMD-check-bioc](https://github.com/tidyomics/plyranges/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/tidyomics/plyranges/actions?query=workflow%3AR-CMD-check-bioc)
 [![BioC
 status](http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges)
 [![Codecov test
-coverage](https://codecov.io/gh/sa-lee/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/sa-lee/plyranges?branch=master)
+coverage](https://codecov.io/gh/tidyomics/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyomics/plyranges?branch=master)
 <!-- badges: end -->
 
 [plyranges](https://www.bioconductor.org/packages/release/bioc/html/plyranges.html)
@@ -20,30 +20,29 @@ data transformation based on `dplyr` and the Bioconductor packages
 a set of verbs for developing analysis pipelines based on *Ranges*
 objects that represent genomic regions:
 
-  - Modify genomic regions with the `mutate()` and `stretch()`
-    functions.
-  - Modify genomic regions while fixing the start/end/center coordinates
-    with the `anchor_` family of functions.
-  - Sort genomic ranges with `arrange()`.
-  - Modify, subset, and aggregate genomic data with the `mutate()`,
-    `filter()`, and `summarise()`functions.
-  - Any of the above operations can be performed on partitions of the
-    data with `group_by()`.
-  - Find nearest neighbour genomic regions with the `join_nearest_`
-    family of functions.
-  - Find overlaps between ranges with the `join_overlaps_` family of
-    functions.
-  - Merge all overlapping and adjacent genomic regions with
-    `reduce_ranges()`.
-  - Merge the end points of all genomic regions with `disjoin_ranges()`.
-  - Import and write common genomic data formats with the `read_/write_`
-    family of functions.
+- Modify genomic regions with the `mutate()` and `stretch()` functions.
+- Modify genomic regions while fixing the start/end/center coordinates
+  with the `anchor_` family of functions.
+- Sort genomic ranges with `arrange()`.
+- Modify, subset, and aggregate genomic data with the `mutate()`,
+  `filter()`, and `summarise()`functions.
+- Any of the above operations can be performed on partitions of the data
+  with `group_by()`.
+- Find nearest neighbour genomic regions with the `join_nearest_` family
+  of functions.
+- Find overlaps between ranges with the `join_overlaps_` family of
+  functions.
+- Merge all overlapping and adjacent genomic regions with
+  `reduce_ranges()`.
+- Merge the end points of all genomic regions with `disjoin_ranges()`.
+- Import and write common genomic data formats with the `read_/write_`
+  family of functions.
 
 For more details on the features of plyranges, read the
-[vignette](https://sa-lee.github.io/plyranges/articles/an-introduction.html).
+[vignette](https://tidyomics.github.io/plyranges/articles/an-introduction.html).
 For a complete case-study on using plyranges to combine ATAC-seq and
 RNA-seq results read the [*fluentGenomics*
-workflow](https://sa-lee.github.io/fluentGenomics).
+workflow](https://tidyomics.github.io/fluentGenomics).
 
 # Installation
 
@@ -58,7 +57,7 @@ BiocManager::install("plyranges")
 To install the development version from GitHub:
 
 ``` r
-BiocManager::install("sa-lee/plyranges")
+BiocManager::install("tidyomics/plyranges")
 ```
 
 # Quick overview
@@ -156,54 +155,41 @@ We could check the number of exons per chromosome using `group_by` and
 ``` r
 exons
 #> GRanges object with 459752 ranges and 2 metadata columns:
-#>            seqnames            ranges strand |
-#>               <Rle>         <IRanges>  <Rle> |
-#>        [1]     chr1       11874-12227      + |
-#>        [2]     chr1       12613-12721      + |
-#>        [3]     chr1       13221-14409      + |
-#>        [4]     chr1       14362-14829      - |
-#>        [5]     chr1       14970-15038      - |
-#>        ...      ...               ...    ... .
-#>   [459748]     chrY 59338754-59338859      + |
-#>   [459749]     chrY 59338754-59338859      + |
-#>   [459750]     chrY 59340194-59340278      + |
-#>   [459751]     chrY 59342487-59343488      + |
-#>   [459752]     chrY 59342487-59343488      + |
-#>                                          name     score
-#>                                   <character> <numeric>
-#>        [1]    NR_046018_exon_0_0_chr1_11874_f         0
-#>        [2]    NR_046018_exon_1_0_chr1_12613_f         0
-#>        [3]    NR_046018_exon_2_0_chr1_13221_f         0
-#>        [4]    NR_024540_exon_0_0_chr1_14362_r         0
-#>        [5]    NR_024540_exon_1_0_chr1_14970_r         0
-#>        ...                                ...       ...
-#>   [459748] NM_002186_exon_6_0_chrY_59338754_f         0
-#>   [459749] NM_176786_exon_7_0_chrY_59338754_f         0
-#>   [459750] NM_002186_exon_7_0_chrY_59340194_f         0
-#>   [459751] NM_002186_exon_8_0_chrY_59342487_f         0
-#>   [459752] NM_176786_exon_8_0_chrY_59342487_f         0
+#>            seqnames            ranges strand |                   name     score
+#>               <Rle>         <IRanges>  <Rle> |            <character> <numeric>
+#>        [1]     chr1       11874-12227      + | NR_046018_exon_0_0_c..         0
+#>        [2]     chr1       12613-12721      + | NR_046018_exon_1_0_c..         0
+#>        [3]     chr1       13221-14409      + | NR_046018_exon_2_0_c..         0
+#>        [4]     chr1       14362-14829      - | NR_024540_exon_0_0_c..         0
+#>        [5]     chr1       14970-15038      - | NR_024540_exon_1_0_c..         0
+#>        ...      ...               ...    ... .                    ...       ...
+#>   [459748]     chrY 59338754-59338859      + | NM_002186_exon_6_0_c..         0
+#>   [459749]     chrY 59338754-59338859      + | NM_176786_exon_7_0_c..         0
+#>   [459750]     chrY 59340194-59340278      + | NM_002186_exon_7_0_c..         0
+#>   [459751]     chrY 59342487-59343488      + | NM_002186_exon_8_0_c..         0
+#>   [459752]     chrY 59342487-59343488      + | NM_176786_exon_8_0_c..         0
 #>   -------
 #>   seqinfo: 93 sequences from an unspecified genome; no seqlengths
 exons %>%
   group_by(seqnames) %>%
   summarise(n = n())
 #> DataFrame with 49 rows and 2 columns
-#>                 seqnames         n
-#>                    <Rle> <integer>
-#> 1                   chr1     43366
-#> 2   chr1_gl000191_random        42
-#> 3   chr1_gl000192_random        46
-#> 4                  chr10     19420
-#> 5                  chr11     24476
-#> ...                  ...       ...
-#> 45        chrUn_gl000222        20
-#> 46        chrUn_gl000223        22
-#> 47        chrUn_gl000228        85
-#> 48                  chrX     18173
-#> 49                  chrY      4128
+#>           seqnames         n
+#>              <Rle> <integer>
+#> 1             chr1     43366
+#> 2            chr10     19420
+#> 3            chr11     24476
+#> 4            chr12     24949
+#> 5            chr13      7974
+#> ...            ...       ...
+#> 45  chrUn_gl000222        20
+#> 46  chrUn_gl000223        22
+#> 47  chrUn_gl000228        85
+#> 48            chrX     18173
+#> 49            chrY      4128
 ```
 
-Next we create a column representing the transcript\_id with `mutate`:
+Next we create a column representing the transcript_id with `mutate`:
 
 ``` r
 exons <- exons %>%
@@ -218,32 +204,32 @@ overlap exons, as well as metadata from both objects.
 olap <- join_overlap_inner(gwas, exons)
 olap
 #> GRanges object with 3439 ranges and 4 metadata columns:
-#>          seqnames    ranges strand |      name.x
-#>             <Rle> <IRanges>  <Rle> | <character>
-#>      [1]     chr1   1079198      * |  rs11260603
-#>      [2]     chr1   1247494      * |     rs12103
-#>      [3]     chr1   1247494      * |     rs12103
-#>      [4]     chr1   1247494      * |     rs12103
-#>      [5]     chr1   1247494      * |     rs12103
-#>      ...      ...       ...    ... .         ...
-#>   [3435]     chrX 153764217      * |   rs1050828
-#>   [3436]     chrX 153764217      * |   rs1050828
-#>   [3437]     chrX 153764217      * |   rs1050828
-#>   [3438]     chrX 153764217      * |   rs1050828
-#>   [3439]     chrX 153764217      * |   rs1050828
-#>                                          name.y     score        tx_id
-#>                                     <character> <numeric>  <character>
-#>      [1]      NR_038869_exon_2_0_chr1_1078119_f         0    NR_038869
-#>      [2]   NM_001256456_exon_1_0_chr1_1247398_r         0 NM_001256456
-#>      [3]   NM_001256460_exon_1_0_chr1_1247398_r         0 NM_001256460
-#>      [4]   NM_001256462_exon_1_0_chr1_1247398_r         0 NM_001256462
-#>      [5]   NM_001256463_exon_1_0_chr1_1247398_r         0 NM_001256463
-#>      ...                                    ...       ...          ...
-#>   [3435] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351
-#>   [3436]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402
-#>   [3437] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351
-#>   [3438]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402
-#>   [3439] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351
+#>          seqnames    ranges strand |      name.x                 name.y     score
+#>             <Rle> <IRanges>  <Rle> | <character>            <character> <numeric>
+#>      [1]     chr1   1079198      * |  rs11260603 NR_038869_exon_2_0_c..         0
+#>      [2]     chr1   1247494      * |     rs12103 NM_001256456_exon_1_..         0
+#>      [3]     chr1   1247494      * |     rs12103 NM_001256460_exon_1_..         0
+#>      [4]     chr1   1247494      * |     rs12103 NM_001256462_exon_1_..         0
+#>      [5]     chr1   1247494      * |     rs12103 NM_001256463_exon_1_..         0
+#>      ...      ...       ...    ... .         ...                    ...       ...
+#>   [3435]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0
+#>   [3436]     chrX 153764217      * |   rs1050828 NM_000402_exon_9_0_c..         0
+#>   [3437]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0
+#>   [3438]     chrX 153764217      * |   rs1050828 NM_000402_exon_9_0_c..         0
+#>   [3439]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0
+#>                 tx_id
+#>           <character>
+#>      [1]    NR_038869
+#>      [2] NM_001256456
+#>      [3] NM_001256460
+#>      [4] NM_001256462
+#>      [5] NM_001256463
+#>      ...          ...
+#>   [3435] NM_001042351
+#>   [3436]    NM_000402
+#>   [3437] NM_001042351
+#>   [3438]    NM_000402
+#>   [3439] NM_001042351
 #>   -------
 #>   seqinfo: 93 sequences from an unspecified genome; no seqlengths
 ```
@@ -281,54 +267,54 @@ right_ss <- flank_right(exons, 2L)
 all_ss <- interweave(left_ss, right_ss, .id = "side")
 all_ss
 #> GRanges object with 919504 ranges and 4 metadata columns:
-#>            seqnames            ranges strand |
-#>               <Rle>         <IRanges>  <Rle> |
-#>        [1]     chr1       11872-11873      + |
-#>        [2]     chr1       12228-12229      + |
-#>        [3]     chr1       12611-12612      + |
-#>        [4]     chr1       12722-12723      + |
-#>        [5]     chr1       13219-13220      + |
-#>        ...      ...               ...    ... .
-#>   [919500]     chrY 59340279-59340280      + |
-#>   [919501]     chrY 59342485-59342486      + |
-#>   [919502]     chrY 59343489-59343490      + |
-#>   [919503]     chrY 59342485-59342486      + |
-#>   [919504]     chrY 59343489-59343490      + |
-#>                                          name     score       tx_id        side
-#>                                   <character> <numeric> <character> <character>
-#>        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018        left
-#>        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018       right
-#>        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018        left
-#>        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018       right
-#>        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018        left
-#>        ...                                ...       ...         ...         ...
-#>   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186       right
-#>   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186        left
-#>   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186       right
-#>   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786        left
-#>   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786       right
+#>            seqnames            ranges strand |                   name     score
+#>               <Rle>         <IRanges>  <Rle> |            <character> <numeric>
+#>        [1]     chr1       11872-11873      + | NR_046018_exon_0_0_c..         0
+#>        [2]     chr1       12228-12229      + | NR_046018_exon_0_0_c..         0
+#>        [3]     chr1       12611-12612      + | NR_046018_exon_1_0_c..         0
+#>        [4]     chr1       12722-12723      + | NR_046018_exon_1_0_c..         0
+#>        [5]     chr1       13219-13220      + | NR_046018_exon_2_0_c..         0
+#>        ...      ...               ...    ... .                    ...       ...
+#>   [919500]     chrY 59340279-59340280      + | NM_002186_exon_7_0_c..         0
+#>   [919501]     chrY 59342485-59342486      + | NM_002186_exon_8_0_c..         0
+#>   [919502]     chrY 59343489-59343490      + | NM_002186_exon_8_0_c..         0
+#>   [919503]     chrY 59342485-59342486      + | NM_176786_exon_8_0_c..         0
+#>   [919504]     chrY 59343489-59343490      + | NM_176786_exon_8_0_c..         0
+#>                  tx_id        side
+#>            <character> <character>
+#>        [1]   NR_046018        left
+#>        [2]   NR_046018       right
+#>        [3]   NR_046018        left
+#>        [4]   NR_046018       right
+#>        [5]   NR_046018        left
+#>        ...         ...         ...
+#>   [919500]   NM_002186       right
+#>   [919501]   NM_002186        left
+#>   [919502]   NM_002186       right
+#>   [919503]   NM_176786        left
+#>   [919504]   NM_176786       right
 #>   -------
 #>   seqinfo: 93 sequences from an unspecified genome; no seqlengths
 ```
 
 # Learning more
 
-  - The [*fluentGenomics*
-    workflow](https://sa-lee.github.io/fluentGenomics) package shows you
-    how to combine differential expression genes and differential
-    chromatin accessibility peaks using plyranges. It extends the [case
-    study](https://github.com/mikelove/plyrangesTximetaCaseStudy) by
-    Michael Love for using plyranges with
-    [tximeta](https://bioconductor.org/packages/release/bioc/html/tximeta.html).
+- The [*fluentGenomics*
+  workflow](https://sa-lee.github.io/fluentGenomics) package shows you
+  how to combine differential expression genes and differential
+  chromatin accessibility peaks using plyranges. It extends the [case
+  study](https://github.com/mikelove/plyrangesTximetaCaseStudy) by
+  Michael Love for using plyranges with
+  [tximeta](https://bioconductor.org/packages/release/bioc/html/tximeta.html).
 
-  - The [extended vignette in the plyrangesWorkshops
-    package](https://github.com/sa-lee/plyrangesWorkshops) has a
-    detailed walk through of using plyranges for coverage analysis.
+- The [extended vignette in the plyrangesWorkshops
+  package](https://github.com/sa-lee/plyrangesWorkshops) has a detailed
+  walk through of using plyranges for coverage analysis.
 
-  - The [Bioc 2018 Workshop
-    book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html)
-    has worked examples of using `plyranges` to analyse publicly
-    available genomics data.
+- The [Bioc 2018 Workshop
+  book](https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html)
+  has worked examples of using `plyranges` to analyse publicly available
+  genomics data.
 
 # Citation
 
