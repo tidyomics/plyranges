@@ -106,7 +106,7 @@
 <li>Merge the end points of all genomic regions with <code><a href="reference/ranges-disjoin.html">disjoin_ranges()</a></code>.</li>
 <li>Import and write common genomic data formats with the <code>read_/write_</code> family of functions.</li>
 </ul>
-<p>For more details on the features of plyranges, read the <a href="https://sa-lee.github.io/plyranges/articles/an-introduction.html" class="external-link">vignette</a>. For a complete case-study on using plyranges to combine ATAC-seq and RNA-seq results read the <a href="https://sa-lee.github.io/fluentGenomics" class="external-link"><em>fluentGenomics</em> workflow</a>.</p>
+<p>For more details on the features of plyranges, read the <a href="https://tidyomics.github.io/plyranges/articles/an-introduction.html" class="external-link">vignette</a>. For a complete case-study on using plyranges to combine ATAC-seq and RNA-seq results read the <a href="https://tidyomics.github.io/fluentGenomics" class="external-link"><em>fluentGenomics</em> workflow</a>.</p>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -117,7 +117,7 @@
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plyranges"</span><span class="op">)</span></span></code></pre></div>
 <p>To install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"sa-lee/plyranges"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"tidyomics/plyranges"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="quick-overview">Quick overview<a class="anchor" aria-label="anchor" href="#quick-overview"></a>
@@ -193,51 +193,38 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exons</span></span>
 <span><span class="co">#&gt; GRanges object with 459752 ranges and 2 metadata columns:</span></span>
-<span><span class="co">#&gt;            seqnames            ranges strand |</span></span>
-<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |</span></span>
-<span><span class="co">#&gt;        [1]     chr1       11874-12227      + |</span></span>
-<span><span class="co">#&gt;        [2]     chr1       12613-12721      + |</span></span>
-<span><span class="co">#&gt;        [3]     chr1       13221-14409      + |</span></span>
-<span><span class="co">#&gt;        [4]     chr1       14362-14829      - |</span></span>
-<span><span class="co">#&gt;        [5]     chr1       14970-15038      - |</span></span>
-<span><span class="co">#&gt;        ...      ...               ...    ... .</span></span>
-<span><span class="co">#&gt;   [459748]     chrY 59338754-59338859      + |</span></span>
-<span><span class="co">#&gt;   [459749]     chrY 59338754-59338859      + |</span></span>
-<span><span class="co">#&gt;   [459750]     chrY 59340194-59340278      + |</span></span>
-<span><span class="co">#&gt;   [459751]     chrY 59342487-59343488      + |</span></span>
-<span><span class="co">#&gt;   [459752]     chrY 59342487-59343488      + |</span></span>
-<span><span class="co">#&gt;                                          name     score</span></span>
-<span><span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0</span></span>
-<span><span class="co">#&gt;        [2]    NR_046018_exon_1_0_chr1_12613_f         0</span></span>
-<span><span class="co">#&gt;        [3]    NR_046018_exon_2_0_chr1_13221_f         0</span></span>
-<span><span class="co">#&gt;        [4]    NR_024540_exon_0_0_chr1_14362_r         0</span></span>
-<span><span class="co">#&gt;        [5]    NR_024540_exon_1_0_chr1_14970_r         0</span></span>
-<span><span class="co">#&gt;        ...                                ...       ...</span></span>
-<span><span class="co">#&gt;   [459748] NM_002186_exon_6_0_chrY_59338754_f         0</span></span>
-<span><span class="co">#&gt;   [459749] NM_176786_exon_7_0_chrY_59338754_f         0</span></span>
-<span><span class="co">#&gt;   [459750] NM_002186_exon_7_0_chrY_59340194_f         0</span></span>
-<span><span class="co">#&gt;   [459751] NM_002186_exon_8_0_chrY_59342487_f         0</span></span>
-<span><span class="co">#&gt;   [459752] NM_176786_exon_8_0_chrY_59342487_f         0</span></span>
+<span><span class="co">#&gt;            seqnames            ranges strand |                   name     score</span></span>
+<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;character&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt;        [1]     chr1       11874-12227      + | NR_046018_exon_0_0_c..         0</span></span>
+<span><span class="co">#&gt;        [2]     chr1       12613-12721      + | NR_046018_exon_1_0_c..         0</span></span>
+<span><span class="co">#&gt;        [3]     chr1       13221-14409      + | NR_046018_exon_2_0_c..         0</span></span>
+<span><span class="co">#&gt;        [4]     chr1       14362-14829      - | NR_024540_exon_0_0_c..         0</span></span>
+<span><span class="co">#&gt;        [5]     chr1       14970-15038      - | NR_024540_exon_1_0_c..         0</span></span>
+<span><span class="co">#&gt;        ...      ...               ...    ... .                    ...       ...</span></span>
+<span><span class="co">#&gt;   [459748]     chrY 59338754-59338859      + | NM_002186_exon_6_0_c..         0</span></span>
+<span><span class="co">#&gt;   [459749]     chrY 59338754-59338859      + | NM_176786_exon_7_0_c..         0</span></span>
+<span><span class="co">#&gt;   [459750]     chrY 59340194-59340278      + | NM_002186_exon_7_0_c..         0</span></span>
+<span><span class="co">#&gt;   [459751]     chrY 59342487-59343488      + | NM_002186_exon_8_0_c..         0</span></span>
+<span><span class="co">#&gt;   [459752]     chrY 59342487-59343488      + | NM_176786_exon_8_0_c..         0</span></span>
 <span><span class="co">#&gt;   -------</span></span>
 <span><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></span>
 <span><span class="va">exons</span> <span class="op"><a href="reference/tidyverse-reexports.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/tidyverse-reexports.html">group_by</a></span><span class="op">(</span><span class="va">seqnames</span><span class="op">)</span> <span class="op"><a href="reference/tidyverse-reexports.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/tidyverse-reexports.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DataFrame with 49 rows and 2 columns</span></span>
-<span><span class="co">#&gt;                 seqnames         n</span></span>
-<span><span class="co">#&gt;                    &lt;Rle&gt; &lt;integer&gt;</span></span>
-<span><span class="co">#&gt; 1                   chr1     43366</span></span>
-<span><span class="co">#&gt; 2   chr1_gl000191_random        42</span></span>
-<span><span class="co">#&gt; 3   chr1_gl000192_random        46</span></span>
-<span><span class="co">#&gt; 4                  chr10     19420</span></span>
-<span><span class="co">#&gt; 5                  chr11     24476</span></span>
-<span><span class="co">#&gt; ...                  ...       ...</span></span>
-<span><span class="co">#&gt; 45        chrUn_gl000222        20</span></span>
-<span><span class="co">#&gt; 46        chrUn_gl000223        22</span></span>
-<span><span class="co">#&gt; 47        chrUn_gl000228        85</span></span>
-<span><span class="co">#&gt; 48                  chrX     18173</span></span>
-<span><span class="co">#&gt; 49                  chrY      4128</span></span></code></pre></div>
+<span><span class="co">#&gt;           seqnames         n</span></span>
+<span><span class="co">#&gt;              &lt;Rle&gt; &lt;integer&gt;</span></span>
+<span><span class="co">#&gt; 1             chr1     43366</span></span>
+<span><span class="co">#&gt; 2            chr10     19420</span></span>
+<span><span class="co">#&gt; 3            chr11     24476</span></span>
+<span><span class="co">#&gt; 4            chr12     24949</span></span>
+<span><span class="co">#&gt; 5            chr13      7974</span></span>
+<span><span class="co">#&gt; ...            ...       ...</span></span>
+<span><span class="co">#&gt; 45  chrUn_gl000222        20</span></span>
+<span><span class="co">#&gt; 46  chrUn_gl000223        22</span></span>
+<span><span class="co">#&gt; 47  chrUn_gl000228        85</span></span>
+<span><span class="co">#&gt; 48            chrX     18173</span></span>
+<span><span class="co">#&gt; 49            chrY      4128</span></span></code></pre></div>
 <p>Next we create a column representing the transcript_id with <code>mutate</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exons</span> <span class="op">&lt;-</span> <span class="va">exons</span> <span class="op"><a href="reference/tidyverse-reexports.html">%&gt;%</a></span></span>
@@ -247,32 +234,32 @@
 <code class="sourceCode R"><span><span class="va">olap</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/overlap-joins.html">join_overlap_inner</a></span><span class="op">(</span><span class="va">gwas</span>, <span class="va">exons</span><span class="op">)</span></span>
 <span><span class="va">olap</span></span>
 <span><span class="co">#&gt; GRanges object with 3439 ranges and 4 metadata columns:</span></span>
-<span><span class="co">#&gt;          seqnames    ranges strand |      name.x</span></span>
-<span><span class="co">#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;</span></span>
-<span><span class="co">#&gt;      [1]     chr1   1079198      * |  rs11260603</span></span>
-<span><span class="co">#&gt;      [2]     chr1   1247494      * |     rs12103</span></span>
-<span><span class="co">#&gt;      [3]     chr1   1247494      * |     rs12103</span></span>
-<span><span class="co">#&gt;      [4]     chr1   1247494      * |     rs12103</span></span>
-<span><span class="co">#&gt;      [5]     chr1   1247494      * |     rs12103</span></span>
-<span><span class="co">#&gt;      ...      ...       ...    ... .         ...</span></span>
-<span><span class="co">#&gt;   [3435]     chrX 153764217      * |   rs1050828</span></span>
-<span><span class="co">#&gt;   [3436]     chrX 153764217      * |   rs1050828</span></span>
-<span><span class="co">#&gt;   [3437]     chrX 153764217      * |   rs1050828</span></span>
-<span><span class="co">#&gt;   [3438]     chrX 153764217      * |   rs1050828</span></span>
-<span><span class="co">#&gt;   [3439]     chrX 153764217      * |   rs1050828</span></span>
-<span><span class="co">#&gt;                                          name.y     score        tx_id</span></span>
-<span><span class="co">#&gt;                                     &lt;character&gt; &lt;numeric&gt;  &lt;character&gt;</span></span>
-<span><span class="co">#&gt;      [1]      NR_038869_exon_2_0_chr1_1078119_f         0    NR_038869</span></span>
-<span><span class="co">#&gt;      [2]   NM_001256456_exon_1_0_chr1_1247398_r         0 NM_001256456</span></span>
-<span><span class="co">#&gt;      [3]   NM_001256460_exon_1_0_chr1_1247398_r         0 NM_001256460</span></span>
-<span><span class="co">#&gt;      [4]   NM_001256462_exon_1_0_chr1_1247398_r         0 NM_001256462</span></span>
-<span><span class="co">#&gt;      [5]   NM_001256463_exon_1_0_chr1_1247398_r         0 NM_001256463</span></span>
-<span><span class="co">#&gt;      ...                                    ...       ...          ...</span></span>
-<span><span class="co">#&gt;   [3435] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span></span>
-<span><span class="co">#&gt;   [3436]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402</span></span>
-<span><span class="co">#&gt;   [3437] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span></span>
-<span><span class="co">#&gt;   [3438]    NM_000402_exon_9_0_chrX_153764152_r         0    NM_000402</span></span>
-<span><span class="co">#&gt;   [3439] NM_001042351_exon_9_0_chrX_153764152_r         0 NM_001042351</span></span>
+<span><span class="co">#&gt;          seqnames    ranges strand |      name.x                 name.y     score</span></span>
+<span><span class="co">#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;            &lt;character&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt;      [1]     chr1   1079198      * |  rs11260603 NR_038869_exon_2_0_c..         0</span></span>
+<span><span class="co">#&gt;      [2]     chr1   1247494      * |     rs12103 NM_001256456_exon_1_..         0</span></span>
+<span><span class="co">#&gt;      [3]     chr1   1247494      * |     rs12103 NM_001256460_exon_1_..         0</span></span>
+<span><span class="co">#&gt;      [4]     chr1   1247494      * |     rs12103 NM_001256462_exon_1_..         0</span></span>
+<span><span class="co">#&gt;      [5]     chr1   1247494      * |     rs12103 NM_001256463_exon_1_..         0</span></span>
+<span><span class="co">#&gt;      ...      ...       ...    ... .         ...                    ...       ...</span></span>
+<span><span class="co">#&gt;   [3435]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0</span></span>
+<span><span class="co">#&gt;   [3436]     chrX 153764217      * |   rs1050828 NM_000402_exon_9_0_c..         0</span></span>
+<span><span class="co">#&gt;   [3437]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0</span></span>
+<span><span class="co">#&gt;   [3438]     chrX 153764217      * |   rs1050828 NM_000402_exon_9_0_c..         0</span></span>
+<span><span class="co">#&gt;   [3439]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0</span></span>
+<span><span class="co">#&gt;                 tx_id</span></span>
+<span><span class="co">#&gt;           &lt;character&gt;</span></span>
+<span><span class="co">#&gt;      [1]    NR_038869</span></span>
+<span><span class="co">#&gt;      [2] NM_001256456</span></span>
+<span><span class="co">#&gt;      [3] NM_001256460</span></span>
+<span><span class="co">#&gt;      [4] NM_001256462</span></span>
+<span><span class="co">#&gt;      [5] NM_001256463</span></span>
+<span><span class="co">#&gt;      ...          ...</span></span>
+<span><span class="co">#&gt;   [3435] NM_001042351</span></span>
+<span><span class="co">#&gt;   [3436]    NM_000402</span></span>
+<span><span class="co">#&gt;   [3437] NM_001042351</span></span>
+<span><span class="co">#&gt;   [3438]    NM_000402</span></span>
+<span><span class="co">#&gt;   [3439] NM_001042351</span></span>
 <span><span class="co">#&gt;   -------</span></span>
 <span><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
 <p>For each SNP we can count the number of times it overlaps a transcript.</p>
@@ -301,32 +288,32 @@
 <span><span class="va">all_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ranges-interweave.html">interweave</a></span><span class="op">(</span><span class="va">left_ss</span>, <span class="va">right_ss</span>, .id <span class="op">=</span> <span class="st">"side"</span><span class="op">)</span></span>
 <span><span class="va">all_ss</span></span>
 <span><span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span></span>
-<span><span class="co">#&gt;            seqnames            ranges strand |</span></span>
-<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |</span></span>
-<span><span class="co">#&gt;        [1]     chr1       11872-11873      + |</span></span>
-<span><span class="co">#&gt;        [2]     chr1       12228-12229      + |</span></span>
-<span><span class="co">#&gt;        [3]     chr1       12611-12612      + |</span></span>
-<span><span class="co">#&gt;        [4]     chr1       12722-12723      + |</span></span>
-<span><span class="co">#&gt;        [5]     chr1       13219-13220      + |</span></span>
-<span><span class="co">#&gt;        ...      ...               ...    ... .</span></span>
-<span><span class="co">#&gt;   [919500]     chrY 59340279-59340280      + |</span></span>
-<span><span class="co">#&gt;   [919501]     chrY 59342485-59342486      + |</span></span>
-<span><span class="co">#&gt;   [919502]     chrY 59343489-59343490      + |</span></span>
-<span><span class="co">#&gt;   [919503]     chrY 59342485-59342486      + |</span></span>
-<span><span class="co">#&gt;   [919504]     chrY 59343489-59343490      + |</span></span>
-<span><span class="co">#&gt;                                          name     score       tx_id        side</span></span>
-<span><span class="co">#&gt;                                   &lt;character&gt; &lt;numeric&gt; &lt;character&gt; &lt;character&gt;</span></span>
-<span><span class="co">#&gt;        [1]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018        left</span></span>
-<span><span class="co">#&gt;        [2]    NR_046018_exon_0_0_chr1_11874_f         0   NR_046018       right</span></span>
-<span><span class="co">#&gt;        [3]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018        left</span></span>
-<span><span class="co">#&gt;        [4]    NR_046018_exon_1_0_chr1_12613_f         0   NR_046018       right</span></span>
-<span><span class="co">#&gt;        [5]    NR_046018_exon_2_0_chr1_13221_f         0   NR_046018        left</span></span>
-<span><span class="co">#&gt;        ...                                ...       ...         ...         ...</span></span>
-<span><span class="co">#&gt;   [919500] NM_002186_exon_7_0_chrY_59340194_f         0   NM_002186       right</span></span>
-<span><span class="co">#&gt;   [919501] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186        left</span></span>
-<span><span class="co">#&gt;   [919502] NM_002186_exon_8_0_chrY_59342487_f         0   NM_002186       right</span></span>
-<span><span class="co">#&gt;   [919503] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786        left</span></span>
-<span><span class="co">#&gt;   [919504] NM_176786_exon_8_0_chrY_59342487_f         0   NM_176786       right</span></span>
+<span><span class="co">#&gt;            seqnames            ranges strand |                   name     score</span></span>
+<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;character&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">#&gt;        [1]     chr1       11872-11873      + | NR_046018_exon_0_0_c..         0</span></span>
+<span><span class="co">#&gt;        [2]     chr1       12228-12229      + | NR_046018_exon_0_0_c..         0</span></span>
+<span><span class="co">#&gt;        [3]     chr1       12611-12612      + | NR_046018_exon_1_0_c..         0</span></span>
+<span><span class="co">#&gt;        [4]     chr1       12722-12723      + | NR_046018_exon_1_0_c..         0</span></span>
+<span><span class="co">#&gt;        [5]     chr1       13219-13220      + | NR_046018_exon_2_0_c..         0</span></span>
+<span><span class="co">#&gt;        ...      ...               ...    ... .                    ...       ...</span></span>
+<span><span class="co">#&gt;   [919500]     chrY 59340279-59340280      + | NM_002186_exon_7_0_c..         0</span></span>
+<span><span class="co">#&gt;   [919501]     chrY 59342485-59342486      + | NM_002186_exon_8_0_c..         0</span></span>
+<span><span class="co">#&gt;   [919502]     chrY 59343489-59343490      + | NM_002186_exon_8_0_c..         0</span></span>
+<span><span class="co">#&gt;   [919503]     chrY 59342485-59342486      + | NM_176786_exon_8_0_c..         0</span></span>
+<span><span class="co">#&gt;   [919504]     chrY 59343489-59343490      + | NM_176786_exon_8_0_c..         0</span></span>
+<span><span class="co">#&gt;                  tx_id        side</span></span>
+<span><span class="co">#&gt;            &lt;character&gt; &lt;character&gt;</span></span>
+<span><span class="co">#&gt;        [1]   NR_046018        left</span></span>
+<span><span class="co">#&gt;        [2]   NR_046018       right</span></span>
+<span><span class="co">#&gt;        [3]   NR_046018        left</span></span>
+<span><span class="co">#&gt;        [4]   NR_046018       right</span></span>
+<span><span class="co">#&gt;        [5]   NR_046018        left</span></span>
+<span><span class="co">#&gt;        ...         ...         ...</span></span>
+<span><span class="co">#&gt;   [919500]   NM_002186       right</span></span>
+<span><span class="co">#&gt;   [919501]   NM_002186        left</span></span>
+<span><span class="co">#&gt;   [919502]   NM_002186       right</span></span>
+<span><span class="co">#&gt;   [919503]   NM_176786        left</span></span>
+<span><span class="co">#&gt;   [919504]   NM_176786       right</span></span>
 <span><span class="co">#&gt;   -------</span></span>
 <span><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
 </div>
@@ -405,17 +392,18 @@
 <li>
 <a href="https://github.com/lawremi" class="external-link">Michael Lawrence</a> <br><small class="roles"> Author, contributor </small>  </li>
 <li>Dianne Cook <br><small class="roles"> Author, contributor </small>  </li>
+<li>Spencer Nystrom <br><small class="roles"> Contributor </small> <a href="https://orcid.org/0000-0003-1000-1579" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Pierre-Paul Axisa <br><small class="roles"> Contributor </small>  </li>
 <li>Michael Love <br><small class="roles"> Contributor, maintainer </small>  </li>
-<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/sa-lee/plyranges/actions?query=workflow%3AR-CMD-check-bioc" class="external-link"><img src="https://github.com/sa-lee/plyranges/workflows/R-CMD-check-bioc/badge.svg" alt="R-CMD-check-bioc"></a></li>
+<li><a href="https://github.com/tidyomics/plyranges/actions?query=workflow%3AR-CMD-check-bioc" class="external-link"><img src="https://github.com/tidyomics/plyranges/workflows/R-CMD-check-bioc/badge.svg" alt="R-CMD-check-bioc"></a></li>
 <li><a href="https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges" class="external-link"><img src="http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg" alt="BioC status"></a></li>
-<li><a href="https://codecov.io/gh/sa-lee/plyranges?branch=master" class="external-link"><img src="https://codecov.io/gh/sa-lee/plyranges/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://codecov.io/gh/tidyomics/plyranges?branch=master" class="external-link"><img src="https://codecov.io/gh/tidyomics/plyranges/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
@@ -425,7 +413,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="http://stuartlee.org" class="external-link">Stuart Lee</a>, <a href="https://github.com/lawremi" class="external-link">Michael Lawrence</a>, Dianne Cook, Michael Love.</p>
+<p>Developed by <a href="http://stuartlee.org" class="external-link">Stuart Lee</a>, <a href="https://github.com/lawremi" class="external-link">Michael Lawrence</a>, Dianne Cook.</p>
 </div>
 
 <div class="pkgdown">
