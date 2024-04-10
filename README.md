@@ -8,8 +8,6 @@
 [![R-CMD-check-bioc](https://github.com/tidyomics/plyranges/workflows/R-CMD-check-bioc/badge.svg)](https://github.com/tidyomics/plyranges/actions?query=workflow%3AR-CMD-check-bioc)
 [![BioC
 status](http://www.bioconductor.org/shields/build/release/bioc/plyranges.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/plyranges)
-[![Codecov test
-coverage](https://codecov.io/gh/tidyomics/plyranges/branch/master/graph/badge.svg)](https://codecov.io/gh/tidyomics/plyranges?branch=master)
 <!-- badges: end -->
 
 [plyranges](https://www.bioconductor.org/packages/release/bioc/html/plyranges.html)
@@ -43,6 +41,10 @@ For more details on the features of plyranges, read the
 For a complete case-study on using plyranges to combine ATAC-seq and
 RNA-seq results read the [*fluentGenomics*
 workflow](https://tidyomics.github.io/fluentGenomics).
+
+plyranges is part of the [tidyomics](https://github.com/tidyomics)
+project, providing a `dplyr`-based interface for many types of
+genomics datasets represented in Bioconductor.
 
 # Installation
 
