@@ -12,9 +12,10 @@ test_that("expanding makes sense", {
 
   # by default expand_ranges does cartesian product of list columns
   gr <- as_granges(data.frame(seqnames = "chr1", start = 20:22, width = 1000))
+  
   gr <- mutate(gr,
-                 col1 = IntegerList(a = 1, b = c(4,5), c = c(2,3)),
-                 col2 = IntegerList(c(1,2), c(3,4), c(5)),
+                 col1 = IntegerList(a = 1L, b = c(4L,5L), c = c(2L,3L)),
+                 col2 = IntegerList(c(1L,2L), c(3L,4L), c(5L)),
                  score = 1:3)
 
   correct_gr <- GRanges(seqnames = "chr1",
@@ -23,7 +24,9 @@ test_that("expanding makes sense", {
                         col1 = c(1L,1L,4L,4L,5L,5L,2L,3L),
                         col2 = c(1L,2L,3L,4L,3L,4L,5L,5L),
                         score = c(1L,1L,2L,2L,2L,2L,3L,3L))
+
   test_gr <- expand_ranges(gr, .recursive = TRUE)
+  
   expect_identical(correct_gr, test_gr)
   test_gr <- expand_ranges(gr, col1, col2, .recursive = TRUE)
   expect_identical(correct_gr, test_gr)
@@ -42,7 +45,7 @@ test_that("expanding makes sense", {
                           ranges = IRanges(start = c(20,21,21,22,22),
                                            width = 1000),
                           col1 = as.integer(c(1,4,5,2,3)),
-                          col2 = IntegerList(c(1,2), c(3,4), c(3,4), 5,5),
+                          col2 = IntegerList(c(1L,2L), c(3L,4L), c(3L,4L), 5L,5L),
                           score = as.integer(c(1,2,2,3,3)))
   test_gr <- expand_ranges(gr, col1)
   expect_identical(correct_gr, test_gr)
@@ -75,7 +78,7 @@ test_that("expanding makes sense", {
                         ranges = IRanges(start = c(20,21,21,22,22),
                                          width = 1000),
                         col1 = as.integer(c(1,4,5,2,3)),
-                        col2 = IntegerList(c(1,2), c(3,4), c(3,4), 5,5),
+                        col2 = IntegerList(c(1L,2L), c(3L,4L), c(3L,4L), 5L,5L),
                         score = as.integer(c(1,2,2,3,3)),
                         id1 = c("a", "b", "b", "c", "c"))
   test_gr <- expand_ranges(gr, col1, .id = "id1", .recursive = TRUE)
