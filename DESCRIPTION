@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.23.1
+Version: 1.23.2
 Authors@R: c(
       person("Stuart", "Lee", role = c("aut"), 
              comment = c(ORCID = "0000-0003-1179-8436")),
