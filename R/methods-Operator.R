@@ -43,6 +43,7 @@ valid_flag_filters <- function() {
 }
 
 #' @importFrom Rsamtools bamMapqFilter<-
+#' @export
 filter.BamFileOperator <- function(.data, ...) {
   dots <- set_dots_unnamed(...)
   filters <- unlist(valid_flag_filters())
@@ -90,6 +91,7 @@ filter.BamFileOperator <- function(.data, ...) {
 }
 
 #' @importFrom Rsamtools bamWhich<-
+#' @export
 filter_by_overlaps.BamFileOperator <- function(x, y, maxgap = -1L, minoverlap = 0L) {
   stopifnot(is(y, "GenomicRanges"))
   bamWhich(x@param) <- y

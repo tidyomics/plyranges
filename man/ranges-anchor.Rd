@@ -54,7 +54,7 @@ range with \code{stretch()}. To remove anchoring use \code{unanchor()}.
 Depending on how you want to fix the components of a Ranges, there are
 five ways to construct a RangesAnchored class. Here \code{x} is either
 an \code{IRanges} or \code{GRanges} object.
-\itemize{
+\describe{
 \item{\code{anchor_start(x)}}{Fix the start coordinates}
 \item{\code{anchor_end(x)}}{Fix the end coordinates}
 \item{\code{anchor_center(x)}}{Fix the center coordinates}
@@ -90,5 +90,5 @@ mutate(rng_by_5p, width = 3L)
 
 }
 \seealso{
-\link{mutate}, \link{stretch}
+\link{mutate.Ranges}, \link{stretch}
 }

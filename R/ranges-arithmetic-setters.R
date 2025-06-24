@@ -15,11 +15,13 @@
 #' @export
 set_width <- function(x, width) UseMethod("set_width")
 
+#' @export
 set_width.Ranges <- function(x, width = 0L) {
   width(x) <- width
   x
 }
 
+#' @export
 set_width.AnchoredIntegerRanges <- function(x, width = 0L) {
   anchor <- anchor(x)
   rng <- x@delegate
@@ -31,6 +33,7 @@ set_width.AnchoredIntegerRanges <- function(x, width = 0L) {
 }
 
 
+#' @export
 set_width.AnchoredGenomicRanges <- function(x, width = 0L) {
   anchor <- anchor(x)
   rng <- x@delegate
@@ -57,6 +60,7 @@ resize_by_strand <- function(x, width, anchor) {
 #' @export
 set_start <- function(x, start = 0L) { UseMethod("set_start") }
 
+#' @export
 set_start.Ranges <- function(x, start = 0L) {
   start(x) <- start
   x
@@ -66,6 +70,7 @@ set_start.Ranges <- function(x, start = 0L) {
 #' @export
 set_end <- function(x, end = 0L) { UseMethod("set_end") }
 
+#' @export
 set_end.Ranges <- function(x, end = 0L) {
   end(x) <- end
   x
@@ -75,6 +80,7 @@ set_end.Ranges <- function(x, end = 0L) {
 #' @export
 set_seqnames <- function(x, seqnames) { UseMethod("set_seqnames") }
 
+#' @export
 set_seqnames.GenomicRanges <- function(x, seqnames) {
   seqnames(x) <- seqnames
   x
@@ -84,6 +90,7 @@ set_seqnames.GenomicRanges <- function(x, seqnames) {
 #' @export
 set_strand <- function(x, strand) { UseMethod("set_strand") }
 
+#' @export
 set_strand.GenomicRanges <- function(x, strand = "*") {
   strand(x) <- strand
   x

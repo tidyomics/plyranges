@@ -47,7 +47,7 @@
 #' pull(rng, score, name = gc)
 #'
 #' @method pull Ranges
-#' @export
+#' @exportS3Method dplyr::pull
 pull.Ranges <- function(.data, var = -1, name = NULL, ...) {
   
   var <- tidyselect::vars_pull(tbl_vars(.data), !!rlang::enquo(var))

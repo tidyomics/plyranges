@@ -53,7 +53,7 @@ either a \code{GRanges} or \code{IRanges} object.
 \section{Accessors}{
 
 To return grouping variables on a grouped Ranges use either
-\itemize{
+\describe{
 \item{\code{groups(x)}}{Returns a list of symbols}
 \item{\code{group_vars(x)}}{Returns a character vector}
 }

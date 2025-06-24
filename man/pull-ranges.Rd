@@ -8,41 +8,26 @@
 \method{pull}{Ranges}(.data, var = -1, name = NULL, ...)
 }
 \arguments{
-\item{.data}{A data frame, data frame extension (e.g. a tibble), or a
-lazy data frame (e.g. from dbplyr or dtplyr). See \emph{Methods}, below, for
-more details.}
+\item{.data}{a \code{Ranges} object}
 
 \item{var}{A variable specified as:
 \itemize{
 \item a literal variable name
-\item a positive integer, giving the position counting from the left
+\item a positive integer, giving the position counting from the left. In this
+case order is start, end, width, (strand, seqnames), gc and score.
 \item a negative integer, giving the position counting from the right.
-}
+The default returns the last column (on the assumption that's the column
+you've created most recently). This argument is taken by expression and
+supports quasiquotation (you can unquote column names and column locations).
+}}
 
-The default returns the last column (on the assumption that's the
-column you've created most recently).
-
-This argument is taken by expression and supports
-\link[rlang:topic-inject]{quasiquotation} (you can unquote column
-names and column locations).}
-
-\item{name}{An optional parameter that specifies the column to be used
-as names for a named vector. Specified in a similar manner as \code{var}.}
+\item{name}{An optional parameter that specifies the column to be used as
+names for a named vector. Specified in a similar manner as \code{var}.}
 
 \item{...}{For use by methods.}
 }
-\value{
-A vector of the same length as the Ranges object
-}
 \description{
 Extract a single column from a Ranges object as a vector
-}
-\details{
-The \code{pull} method for Ranges objects extracts a single metadata
-column (from mcols) and returns it as a vector. It does not operate on
-the core components of the Ranges object (start, end, width, seqnames, strand).
-If the Ranges object is grouped, \code{pull} will act on the entire dataset,
-not on individual groups.
 }
 \examples{
 df <- data.frame(start = 1:10,
@@ -52,6 +37,10 @@ df <- data.frame(start = 1:10,
                  gc = runif(10),
                  score = rpois(10, 2))
 rng <- as_granges(df)
+
+# Pull parts of the range
+pull(rng, start)
+# equivalent to start(rng)
 
 # Pull by column name
 pull(rng, gc)

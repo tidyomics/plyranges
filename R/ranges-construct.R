@@ -1,6 +1,6 @@
 #' Construct a I/GRanges object from a tibble or data.frame
 #'
-#' @param .data a [data.frame()] or [tibble()] to
+#' @param .data a [data.frame()] or [dplyr::tibble()] to
 #' construct a Ranges object from
 #' @param ... optional named arguments specifying which the columns in .data
 #' containin the core components a Ranges object.
@@ -224,12 +224,12 @@ grng_construct <- function(.data, rd, ir, col_names, core_gr) {
 
 #' Coerce an Rle or RleList object to Ranges
 #'
-#' @param .data a [Rle()] or an [RleList()] object.
+#' @param .data a [S4Vectors::Rle()] or an [IRanges::RleList()] object.
 #'
 #'
-#' @return an [IRanges()] object if the input is an
-#' [Rle()] object or a [GRanges()] object for
-#' an [RleList()] object.
+#' @return an [IRanges::IRanges()] object if the input is an
+#' [S4Vectors::Rle()] object or a [GenomicRanges::GRanges()] object for
+#' an [IRanges::RleList()] object.
 #'
 #' @details This function is behind [compute_coverage()].
 #'
