@@ -39,15 +39,16 @@ For more details on the features of plryanges, read the vignette:
 \seealso{
 Useful links:
 \itemize{
-  \item Report bugs at \url{https://github.com/sa-lee/plyranges}
+  \item Report bugs at \url{https://github.com/tidyomics/plyranges}
 }
 
 }
 \author{
-\strong{Maintainer}: Stuart Lee \email{stuart.andrew.lee@gmail.com} (\href{https://orcid.org/0000-0003-1179-8436}{ORCID})
+\strong{Maintainer}: Michael Love \email{michaelisaiahlove@gmail.com} [contributor]
 
 Authors:
 \itemize{
+  \item Stuart Lee (\href{https://orcid.org/0000-0003-1179-8436}{ORCID})
   \item Michael Lawrence [contributor]
   \item Dianne Cook [contributor]
 }
@@ -55,6 +56,7 @@ Authors:
 Other contributors:
 \itemize{
   \item Spencer Nystrom (\href{https://orcid.org/0000-0003-1000-1579}{ORCID}) [contributor]
+  \item Pierre-Paul Axisa [contributor]
 }
 
 }

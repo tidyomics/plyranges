@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.27.5
+Version: 1.27.6
 Authors@R: c(
       person("Stuart", "Lee", role = c("aut"), 
              comment = c(ORCID = "0000-0003-1179-8436")),
@@ -53,7 +53,7 @@ Suggests:
     ggplot2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Collate: 
     'class-AnchoredRanges.R'
     'class-Operator.R'
@@ -63,6 +63,7 @@ Collate:
     'dplyr-filter.R'
     'dplyr-groups.R'
     'dplyr-mutate.R'
+    'dplyr-pull.R'
     'dplyr-select.R'
     'dplyr-slice.R'
     'dplyr-summarize.R'
