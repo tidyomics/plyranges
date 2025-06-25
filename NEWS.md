@@ -1,6 +1,7 @@
-# playranges 1.27.6
+# plyranges 1.27.6
 
 * added `pull()` method for Ranges objects that extracts a single column as a vector
+* moved `dplyr` to Depends and removing tidyverse reexports 
 
 # plyranges 1.9.3
 
