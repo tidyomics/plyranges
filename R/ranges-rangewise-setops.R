@@ -36,16 +36,14 @@
 #' @export
 intersect_ranges <- function(x,y) { UseMethod("intersect_ranges") }
 
-#' @importFrom IRanges intersect
 #' @export
 intersect_ranges.IntegerRanges <- function(x,y) {
-  intersect(x,y)
+  IRanges::intersect(x,y)
 }
 
-#' @importFrom GenomicRanges intersect
 #' @export
 intersect_ranges.GenomicRanges <- function(x,y) {
-  intersect(x,y,ignore.strand = TRUE)
+  GenomicRanges::intersect(x,y,ignore.strand = TRUE)
 }
 
 #' @export
@@ -53,9 +51,8 @@ intersect_ranges.GenomicRanges <- function(x,y) {
 intersect_ranges_directed <- function(x,y) { UseMethod("intersect_ranges_directed") }
 
 #' @export
-#' @importFrom GenomicRanges intersect
 intersect_ranges_directed.GenomicRanges <- function(x,y) {
-  intersect(x,y, ignore.strand = FALSE)
+  GenomicRanges::intersect(x,y, ignore.strand = FALSE)
 }
 
 #' @export
@@ -63,15 +60,13 @@ intersect_ranges_directed.GenomicRanges <- function(x,y) {
 union_ranges <- function(x,y) { UseMethod("union_ranges") }
 
 #' @export
-#' @importFrom IRanges union
 union_ranges.IntegerRanges <- function(x,y) {
-  union(x,y)
+  IRanges::union(x,y)
 }
 
 #' @export
-#' @importFrom GenomicRanges union
 union_ranges.GenomicRanges <- function(x,y) {
-  union(x,y,ignore.strand = TRUE)
+  GenomicRanges::union(x,y,ignore.strand = TRUE)
 }
 
 #' @export
@@ -79,9 +74,8 @@ union_ranges.GenomicRanges <- function(x,y) {
 union_ranges_directed <- function(x,y) { UseMethod("union_ranges_directed") }
 
 #' @export
-#' @importFrom GenomicRanges union
 union_ranges_directed.GenomicRanges <- function(x,y) {
-  union(x,y, ignore.strand = FALSE)
+  GenomicRanges::union(x,y, ignore.strand = FALSE)
 }
 
 #' @export
@@ -89,15 +83,13 @@ union_ranges_directed.GenomicRanges <- function(x,y) {
 setdiff_ranges <- function(x,y) { UseMethod("setdiff_ranges") }
 
 #' @export
-#' @importFrom IRanges setdiff
 setdiff_ranges.IntegerRanges <- function(x,y) {
-  setdiff(x,y)
+  IRanges::setdiff(x,y)
 }
 
 #' @export
-#' @importFrom GenomicRanges setdiff
 setdiff_ranges.GenomicRanges <- function(x,y) {
-  setdiff(x,y, ignore.strand = TRUE)
+  GenomicRanges::setdiff(x,y, ignore.strand = TRUE)
 }
 
 #' @export
@@ -105,9 +97,8 @@ setdiff_ranges.GenomicRanges <- function(x,y) {
 setdiff_ranges_directed <- function(x,y) { UseMethod("setdiff_ranges_directed") }
 
 #' @export
-#' @importFrom GenomicRanges setdiff
 setdiff_ranges_directed.GenomicRanges <- function(x,y) {
-  setdiff(x,y, ignore.strand = FALSE)
+  GenomicRanges::setdiff(x,y, ignore.strand = FALSE)
 }
 
 #' @rdname ranges-setops
@@ -116,7 +107,7 @@ complement_ranges  <- function(x) { UseMethod("complement_ranges") }
 
 #' @export
 complement_ranges.IntegerRanges <- function(x) {
-  setdiff(IRanges(start = min(start(x)), end = max(end(x))), x)
+  IRanges::setdiff(IRanges(start = min(start(x)), end = max(end(x))), x)
 }
 
 #' @export

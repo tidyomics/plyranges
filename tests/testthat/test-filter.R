@@ -39,20 +39,22 @@ test_that("grouped filter checks", {
 })
 
 # see https://github.com/sa-lee/plyranges/issues/36
+# note this should no longer be necessary as dplyr is part of Depends now
+# may effect downstream packages
 test_that("using `::` works", {
-  expect_identical(gr0 %>% plyranges::group_by(strand) %>%
-                     plyranges::filter(score > mean(score)) %>%
-                     plyranges::ungroup(),
+  expect_identical(gr0 %>% dplyr::group_by(strand) %>%
+                     dplyr::filter(score > mean(score)) %>%
+                     dplyr::ungroup(),
                    gr_gfilter)
   gr <- data.frame(seqnames = c("chr1", "chr2", "chr2", "chr1", "chr2"),
                    start = 1:5,
                    width = 5) %>%
     as_granges()
-  expect_identical(plyranges::filter(gr, seqnames %in% c("chr1", "chr2")),
+  expect_identical(dplyr::filter(gr, seqnames %in% c("chr1", "chr2")),
                    gr)
   expect_identical(gr %>% 
-                     plyranges::group_by(seqnames) %>% 
-                     plyranges::filter(seqnames %in% c("chr1", "chr2")) %>%
-                     plyranges::ungroup(),
+                     dplyr::group_by(seqnames) %>% 
+                     dplyr::filter(seqnames %in% c("chr1", "chr2")) %>%
+                     dplyr::ungroup(),
                    gr)
 })

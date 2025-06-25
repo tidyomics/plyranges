@@ -10,7 +10,7 @@ as_iranges(.data, ..., keep_mcols = TRUE)
 as_granges(.data, ..., keep_mcols = TRUE)
 }
 \arguments{
-\item{.data}{a \code{\link[=data.frame]{data.frame()}} or \code{\link[=tibble]{tibble()}} to
+\item{.data}{a \code{\link[=data.frame]{data.frame()}} or \code{\link[dplyr:reexports]{dplyr::tibble()}} to
 construct a Ranges object from}
 
 \item{...}{optional named arguments specifying which the columns in .data

@@ -20,7 +20,7 @@
 #' Depending on how you want to fix the components of a Ranges, there are
 #' five ways to construct a RangesAnchored class. Here `x` is either
 #' an `IRanges` or `GRanges` object.
-#' \itemize{
+#' \describe{
 #'    \item{`anchor_start(x)`}{Fix the start coordinates}
 #'    \item{`anchor_end(x)`}{Fix the end coordinates}
 #'    \item{`anchor_center(x)`}{Fix the center coordinates}
@@ -37,7 +37,7 @@
 #' `IRanges` object or one of
 #' `c("start", "end", "center", "3p", "5p")` for a `GRanges` object.
 #'
-#' @seealso \link{mutate}, \link{stretch}
+#' @seealso \link{mutate.Ranges}, \link{stretch}
 #'
 #' @return a RangesAnchored object which has the same appearance as a regular
 #' Ranges object but with an additional slot displaying an anchor.

@@ -7,12 +7,12 @@
 as_ranges(.data)
 }
 \arguments{
-\item{.data}{a \code{\link[=Rle]{Rle()}} or an \code{\link[=RleList]{RleList()}} object.}
+\item{.data}{a \code{\link[S4Vectors:Rle-class]{S4Vectors::Rle()}} or an \code{\link[IRanges:AtomicList-class]{IRanges::RleList()}} object.}
 }
 \value{
-an \code{\link[=IRanges]{IRanges()}} object if the input is an
-\code{\link[=Rle]{Rle()}} object or a \code{\link[=GRanges]{GRanges()}} object for
-an \code{\link[=RleList]{RleList()}} object.
+an \code{\link[IRanges:IRanges-constructor]{IRanges::IRanges()}} object if the input is an
+\code{\link[S4Vectors:Rle-class]{S4Vectors::Rle()}} object or a \code{\link[GenomicRanges:GRanges-class]{GenomicRanges::GRanges()}} object for
+an \code{\link[IRanges:AtomicList-class]{IRanges::RleList()}} object.
 }
 \description{
 Coerce an Rle or RleList object to Ranges

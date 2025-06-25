@@ -10,7 +10,7 @@
 #' `maxgap` must be held fixed.
 #'
 #' @details By default, `filter_by_overlaps` and
-#' `filter_by_non_overlaps` ignore strandedness for [GRanges()]
+#' `filter_by_non_overlaps` ignore strandedness for [GenomicRanges::GRanges()]
 #' objects. To perform stranded operations use `filter_by_overlaps_directed` and `filter_by_non_overlaps_directed`. The argument `maxgap` is the maximum number of positions
 #' between two ranges for them to be considered overlapping. Here the default
 #' is set to be -1 as that is the the gap between two ranges that
