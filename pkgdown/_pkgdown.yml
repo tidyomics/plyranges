@@ -47,6 +47,7 @@ reference:
     - select.Ranges
     - slice.Ranges
     - group_by.GenomicRanges
+    - pull.Ranges
     - starts_with("reduce")
     - starts_with("disjoin")
     - compute_coverage
@@ -100,7 +101,7 @@ reference:
     - as_ranges
     - set_width
     - overscope_ranges
-    - pipe
+    - "%>%"
 
 navbar:
   type: default
