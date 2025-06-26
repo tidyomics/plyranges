@@ -100,7 +100,7 @@ reference:
     - as_ranges
     - set_width
     - overscope_ranges
-    - reexports
+    - pipe
 
 navbar:
   type: default
