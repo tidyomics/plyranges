@@ -33,16 +33,15 @@ mutate_mcols <- function(.data, .mutated) {
 }
 
 # PPA grouped mutate speedup, 2025
-#' @import dplyr
 mutate_mcols_grp <- function(.data, dots) {
   
   # generate grouped df
-  grps <- group_vars(.data)
-  df <- as.data.frame(ungroup(.data))
-  df <- group_by(df,!!!rlang::syms(grps))
+  grps <- dplyr::group_vars(.data)
+  df <- as.data.frame(dplyr::ungroup(.data))
+  df <- dplyr::group_by(df,!!!rlang::syms(grps))
   
-  mcols(.data) <- mutate(df, !!!dots) %>%
-    ungroup() %>%
+  mcols(.data) <- dplyr::mutate(df, !!!dots) %>%
+    dplyr::ungroup() %>%
     dplyr::select(-tidyselect::any_of(c("start", "end", "width", "seqnames", "strand"))) %>%
     as("DataFrame")
   
