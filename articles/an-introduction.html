@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <h1 data-toc-skip>Getting started with the plyranges package</h1>
                         <h4 data-toc-skip class="author">Stuart Lee</h4>
             
-            <h4 data-toc-skip class="date">2025-03-19</h4>
+            <h4 data-toc-skip class="date">2025-06-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/tidyomics/plyranges/blob/HEAD/vignettes/an-introduction.Rmd" class="external-link"><code>vignettes/an-introduction.Rmd</code></a></small>
       <div class="hidden name"><code>an-introduction.Rmd</code></div>
@@ -136,7 +136,7 @@ finishing coordinate or the width of the interval.</p>
 <span>                 width<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># produces IRanges</span></span>
-<span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="../reference/ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">rng</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 7 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
@@ -153,10 +153,10 @@ represents that sequence name ( contig or chromosome id), and an
 optional column to represent the strandedness of an interval.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># seqname is required for GRanges, metadata is automatically kept</span></span>
-<span><span class="va">grng</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span><span class="va">grng</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chr1"</span>, <span class="st">"chr2"</span><span class="op">)</span>, <span class="fl">7</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>         strand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"-"</span><span class="op">)</span>, <span class="fl">7</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span>         gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">grng</span></span></code></pre></div>
@@ -192,7 +192,7 @@ so regardless of strand. For behavior similar to
 <span><span class="va">grng</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, end<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span>,</span>
 <span>                          seqnames <span class="op">=</span> <span class="st">"seq1"</span>,</span>
 <span>                          strand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"*"</span>, <span class="st">"-"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="va">rng</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">rng</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 3 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
@@ -200,7 +200,7 @@ so regardless of strand. For behavior similar to
 <span><span class="co">##   [2]         2        11        10</span></span>
 <span><span class="co">##   [3]         3        12        10</span></span></code></pre>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_start</a></span><span class="op">(</span><span class="va">rng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_start</a></span><span class="op">(</span><span class="va">rng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 3 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
@@ -208,7 +208,7 @@ so regardless of strand. For behavior similar to
 <span><span class="co">##   [2]         2        11        10</span></span>
 <span><span class="co">##   [3]         3        12        10</span></span></code></pre>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_end</a></span><span class="op">(</span><span class="va">rng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_end</a></span><span class="op">(</span><span class="va">rng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 3 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
@@ -216,7 +216,7 @@ so regardless of strand. For behavior similar to
 <span><span class="co">##   [2]        -7         2        10</span></span>
 <span><span class="co">##   [3]        -1         8        10</span></span></code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_center</a></span><span class="op">(</span><span class="va">rng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_center</a></span><span class="op">(</span><span class="va">rng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 3 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
@@ -224,7 +224,7 @@ so regardless of strand. For behavior similar to
 <span><span class="co">##   [2]        -3         6        10</span></span>
 <span><span class="co">##   [3]         1        10        10</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_3p</a></span><span class="op">(</span><span class="va">grng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># leave negative strand fixed</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_3p</a></span><span class="op">(</span><span class="va">grng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># leave negative strand fixed</span></span></code></pre></div>
 <pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##       seqnames    ranges strand</span></span>
 <span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
@@ -234,7 +234,7 @@ so regardless of strand. For behavior similar to
 <span><span class="co">##   -------</span></span>
 <span><span class="co">##   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span></span></code></pre>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_5p</a></span><span class="op">(</span><span class="va">grng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># leave positive strand fixed</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="../reference/ranges-anchor.html">anchor_5p</a></span><span class="op">(</span><span class="va">grng</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="co"># leave positive strand fixed</span></span></code></pre></div>
 <pre><code><span><span class="co">## GRanges object with 3 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##       seqnames    ranges strand</span></span>
 <span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
@@ -340,18 +340,18 @@ called <code>RangesGrouped</code>, this is a similar idea to the grouped
 <p>Grouping can act on either the core components or the metadata
 columns of a <code>Ranges</code> object.</p>
 <p>It is most effective when combined with other verbs such as
-<code><a href="../reference/tidyverse-reexports.html">mutate()</a></code>, <code><a href="../reference/tidyverse-reexports.html">summarise()</a></code>, <code><a href="../reference/tidyverse-reexports.html">filter()</a></code>,
+<code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>,
 <code><a href="../reference/ranges-reduce.html">reduce_ranges()</a></code> or <code><a href="../reference/ranges-disjoin.html">disjoin_ranges()</a></code>.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chr1"</span>, <span class="st">"chr2"</span><span class="op">)</span>, <span class="fl">7</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>         strand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"-"</span><span class="op">)</span>, <span class="fl">7</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>         gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">7</span><span class="op">)</span>,</span>
 <span>         start <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">7</span>,</span>
-<span>         width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span>         width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">grng_by_strand</span> <span class="op">&lt;-</span> <span class="va">grng</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">group_by</a></span><span class="op">(</span><span class="va">strand</span><span class="op">)</span></span>
+<span><span class="va">grng_by_strand</span> <span class="op">&lt;-</span> <span class="va">grng</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">strand</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">grng_by_strand</span></span></code></pre></div>
 <pre><code><span><span class="co">## GRanges object with 7 ranges and 1 metadata column:</span></span>
@@ -375,7 +375,7 @@ columns of a <code>Ranges</code> object.</p>
 <code>Ranges</code>. Note that grouping will cause the
 <code>filter</code> to act within each group of the data.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">grng</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tidyverse-reexports.html">filter</a></span><span class="op">(</span><span class="va">gc</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">grng</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gc</span> <span class="op">&lt;</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
 <span><span class="co">##       seqnames    ranges strand |        gc</span></span>
 <span><span class="co">##          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span></span>
@@ -385,7 +385,7 @@ columns of a <code>Ranges</code> object.</p>
 <span><span class="co">##   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># filtering by group</span></span>
-<span><span class="va">grng_by_strand</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="../reference/tidyverse-reexports.html">filter</a></span><span class="op">(</span><span class="va">gc</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">grng_by_strand</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">gc</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## GRanges object with 2 ranges and 1 metadata column:</span></span>
 <span><span class="co">## Groups: strand [2]</span></span>
 <span><span class="co">##       seqnames    ranges strand |        gc</span></span>
@@ -398,9 +398,9 @@ columns of a <code>Ranges</code> object.</p>
 <code>filter_by_overlaps</code> and <code>filter_by_non_overlaps</code>
 for restricting by any overlapping <code>Ranges</code>.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>, <span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>, <span class="fl">15</span>,<span class="fl">20</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="va">ir1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, width <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span><span class="va">ir1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, width <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">ir0</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 4 ranges and 0 metadata columns:</span></span>
@@ -421,14 +421,14 @@ for restricting by any overlapping <code>Ranges</code>.</p>
 <span><span class="co">##   [4]         5        10         6</span></span>
 <span><span class="co">##   [5]         6        12         7</span></span></code></pre>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/ranges-filter-overlaps.html">filter_by_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 2 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
 <span><span class="co">##   [1]         5         9         5</span></span>
 <span><span class="co">##   [2]        10        14         5</span></span></code></pre>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="../reference/ranges-filter-overlaps.html">filter_by_non_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/ranges-filter-overlaps.html">filter_by_non_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 2 ranges and 0 metadata columns:</span></span>
 <span><span class="co">##           start       end     width</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
@@ -441,15 +441,15 @@ for restricting by any overlapping <code>Ranges</code>.</p>
 <p>The <code>summarise</code> function will return a
 <code>DataFrame</code> because the information required to return a
 <code>Ranges</code> object is lost. It is often most useful to use
-<code><a href="../reference/tidyverse-reexports.html">summarise()</a></code> in combination with the <code><a href="../reference/tidyverse-reexports.html">group_by()</a></code>
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code> in combination with the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>
 family of functions.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ir1</span> <span class="op">&lt;-</span> <span class="va">ir1</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">ir1</span> <span class="op">&lt;-</span> <span class="va">ir1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ir0</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">summarise</a></span><span class="op">(</span>gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">ir0</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DataFrame with 2 rows and 2 columns</span></span>
 <span><span class="co">##       query        gc</span></span>
 <span><span class="co">##   &lt;integer&gt; &lt;numeric&gt;</span></span>
@@ -466,14 +466,14 @@ family of functions.</p>
 <span>               strand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"-"</span><span class="op">)</span>,</span>
 <span>               start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">9</span><span class="op">)</span>,</span>
 <span>               end <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span>,</span>
-<span>               key.a <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span>               key.a <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">subject</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="st">"chr1"</span>,</span>
 <span>               strand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"-"</span>, <span class="st">"+"</span><span class="op">)</span>,</span>
 <span>               start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>,</span>
 <span>               end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">8</span><span class="op">)</span>,</span>
-<span>               key.b <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span>               key.b <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="an-introduction_files/figure-html/olap-1.png" alt="Query and Subject Ranges" width="700"><p class="caption">
@@ -625,7 +625,7 @@ position that overlaps a single gene.</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">intensities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="st">"VI"</span>,</span>
 <span>                          start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3320</span><span class="op">:</span><span class="fl">3321</span>,<span class="fl">3330</span><span class="op">:</span><span class="fl">3331</span>,<span class="fl">3341</span><span class="op">:</span><span class="fl">3342</span><span class="op">)</span>,</span>
-<span>                          width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span>                          width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">intensities</span></span></code></pre></div>
@@ -644,7 +644,7 @@ position that overlaps a single gene.</p>
 <code class="sourceCode R"><span><span class="va">genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="st">"VI"</span>,</span>
 <span>                    start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3322</span>, <span class="fl">3030</span><span class="op">)</span>,</span>
 <span>                    end <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3846</span>, <span class="fl">3338</span><span class="op">)</span>,</span>
-<span>                    gene_id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<span>                    gene_id<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"YFL064C"</span>, <span class="st">"YFL065C"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">genes</span></span></code></pre></div>
@@ -660,8 +660,8 @@ overlap join. This will automatically carry over the gene_id information
 as well as their coordinates (we can drop those by only selecting the
 gene_id).</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">olap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span><span class="op">(</span><span class="va">intensities</span>, <span class="va">genes</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">gene_id</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">olap</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/overlap-joins.html">join_overlap_inner</a></span><span class="op">(</span><span class="va">intensities</span>, <span class="va">genes</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">gene_id</span><span class="op">)</span></span>
 <span><span class="va">olap</span></span></code></pre></div>
 <pre><code><span><span class="co">## GRanges object with 8 ranges and 1 metadata column:</span></span>
 <span><span class="co">##       seqnames    ranges strand |     gene_id</span></span>
@@ -680,9 +680,9 @@ gene_id).</p>
 <code>summarise</code> and grouping by the <code>start</code>
 position:</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">olap</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">group_by</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="../reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">olap</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">start</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="../reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DataFrame with 6 rows and 2 columns</span></span>
 <span><span class="co">##       start         n</span></span>
 <span><span class="co">##   &lt;integer&gt; &lt;integer&gt;</span></span>
@@ -699,7 +699,7 @@ position:</p>
 <p>It’s also possible to group by overlaps. Using this approach we can
 count the number of overlaps that are greater than 0.</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">grp_by_olap</span> <span class="op">&lt;-</span> <span class="va">ir0</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">grp_by_olap</span> <span class="op">&lt;-</span> <span class="va">ir0</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="../reference/ranges-overlaps.html">group_by_overlaps</a></span><span class="op">(</span><span class="va">ir1</span><span class="op">)</span></span>
 <span><span class="va">grp_by_olap</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 6 ranges and 2 metadata columns:</span></span>
@@ -713,8 +713,8 @@ count the number of overlaps that are greater than 0.</p>
 <span><span class="co">##   [5]        10        14         5 |  0.491232         2</span></span>
 <span><span class="co">##   [6]        10        14         5 |  0.780359         2</span></span></code></pre>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">grp_by_olap</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>n_overlaps <span class="op">=</span> <span class="fu"><a href="../reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">grp_by_olap</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_overlaps <span class="op">=</span> <span class="fu"><a href="../reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 6 ranges and 3 metadata columns:</span></span>
 <span><span class="co">## Groups: query [2]</span></span>
 <span><span class="co">##           start       end     width |        gc     query n_overlaps</span></span>
@@ -728,8 +728,8 @@ count the number of overlaps that are greater than 0.</p>
 <p>Of course we can also add overlap counts via the
 <code><a href="../reference/ranges-count-overlaps.html">count_overlaps()</a></code> function.</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op"><a href="../reference/tidyverse-reexports.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tidyverse-reexports.html">mutate</a></span><span class="op">(</span>n_overlaps <span class="op">=</span> <span class="fu"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">ir1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ir0</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_overlaps <span class="op">=</span> <span class="fu"><a href="../reference/ranges-count-overlaps.html">count_overlaps</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">ir1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## IRanges object with 4 ranges and 1 metadata column:</span></span>
 <span><span class="co">##           start       end     width | n_overlaps</span></span>
 <span><span class="co">##       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; |  &lt;integer&gt;</span></span>
@@ -851,9 +851,9 @@ plyranges.</li>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] ggplot2_3.5.0        plyranges_1.27.5     GenomicRanges_1.54.1</span></span>
-<span><span class="co">## [4] GenomeInfoDb_1.38.8  IRanges_2.36.0       S4Vectors_0.40.2    </span></span>
-<span><span class="co">## [7] BiocGenerics_0.48.1  BiocStyle_2.30.0    </span></span>
+<span><span class="co">## [1] ggplot2_3.5.0        plyranges_1.27.6     dplyr_1.1.4         </span></span>
+<span><span class="co">## [4] GenomicRanges_1.54.1 GenomeInfoDb_1.38.8  IRanges_2.36.0      </span></span>
+<span><span class="co">## [7] S4Vectors_0.40.2     BiocGenerics_0.48.1  BiocStyle_2.30.0    </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] SummarizedExperiment_1.32.0 gtable_0.3.5               </span></span>
@@ -872,29 +872,28 @@ plyranges.</li>
 <span><span class="co">## [27] munsell_0.5.1               codetools_0.2-20           </span></span>
 <span><span class="co">## [29] htmltools_0.5.8.1           sass_0.4.9                 </span></span>
 <span><span class="co">## [31] RCurl_1.98-1.14             yaml_2.3.8                 </span></span>
-<span><span class="co">## [33] pkgdown_2.0.9               pillar_1.9.0               </span></span>
+<span><span class="co">## [33] pillar_1.9.0                pkgdown_2.0.9              </span></span>
 <span><span class="co">## [35] crayon_1.5.2                jquerylib_0.1.4            </span></span>
-<span><span class="co">## [37] BiocParallel_1.36.0         DelayedArray_0.28.0        </span></span>
-<span><span class="co">## [39] cachem_1.0.8                abind_1.4-5                </span></span>
+<span><span class="co">## [37] BiocParallel_1.36.0         cachem_1.0.8               </span></span>
+<span><span class="co">## [39] DelayedArray_0.28.0         abind_1.4-5                </span></span>
 <span><span class="co">## [41] tidyselect_1.2.1            digest_0.6.35              </span></span>
-<span><span class="co">## [43] restfulr_0.0.15             dplyr_1.1.4                </span></span>
-<span><span class="co">## [45] purrr_1.0.2                 bookdown_0.39              </span></span>
-<span><span class="co">## [47] labeling_0.4.3              fastmap_1.1.1              </span></span>
-<span><span class="co">## [49] grid_4.3.3                  colorspace_2.1-0           </span></span>
-<span><span class="co">## [51] cli_3.6.2                   SparseArray_1.2.4          </span></span>
-<span><span class="co">## [53] magrittr_2.0.3              S4Arrays_1.2.1             </span></span>
-<span><span class="co">## [55] XML_3.99-0.16.1             utf8_1.2.4                 </span></span>
-<span><span class="co">## [57] withr_3.0.0                 scales_1.3.0               </span></span>
-<span><span class="co">## [59] rmarkdown_2.26              XVector_0.42.0             </span></span>
-<span><span class="co">## [61] matrixStats_1.3.0           ragg_1.3.0                 </span></span>
-<span><span class="co">## [63] memoise_2.0.1               evaluate_0.23              </span></span>
-<span><span class="co">## [65] knitr_1.46                  BiocIO_1.12.0              </span></span>
-<span><span class="co">## [67] rtracklayer_1.62.0          rlang_1.1.3                </span></span>
-<span><span class="co">## [69] glue_1.7.0                  BiocManager_1.30.22        </span></span>
-<span><span class="co">## [71] jsonlite_1.8.8              R6_2.5.1                   </span></span>
-<span><span class="co">## [73] MatrixGenerics_1.14.0       GenomicAlignments_1.38.2   </span></span>
-<span><span class="co">## [75] systemfonts_1.0.6           fs_1.6.3                   </span></span>
-<span><span class="co">## [77] zlibbioc_1.48.2</span></span></code></pre>
+<span><span class="co">## [43] restfulr_0.0.15             purrr_1.0.2                </span></span>
+<span><span class="co">## [45] bookdown_0.39               labeling_0.4.3             </span></span>
+<span><span class="co">## [47] fastmap_1.1.1               grid_4.3.3                 </span></span>
+<span><span class="co">## [49] colorspace_2.1-0            cli_3.6.2                  </span></span>
+<span><span class="co">## [51] SparseArray_1.2.4           magrittr_2.0.3             </span></span>
+<span><span class="co">## [53] S4Arrays_1.2.1              XML_3.99-0.16.1            </span></span>
+<span><span class="co">## [55] utf8_1.2.4                  withr_3.0.0                </span></span>
+<span><span class="co">## [57] scales_1.3.0                rmarkdown_2.26             </span></span>
+<span><span class="co">## [59] XVector_0.42.0              matrixStats_1.3.0          </span></span>
+<span><span class="co">## [61] ragg_1.3.0                  memoise_2.0.1              </span></span>
+<span><span class="co">## [63] evaluate_0.23               knitr_1.46                 </span></span>
+<span><span class="co">## [65] BiocIO_1.12.0               rtracklayer_1.62.0         </span></span>
+<span><span class="co">## [67] rlang_1.1.3                 glue_1.7.0                 </span></span>
+<span><span class="co">## [69] BiocManager_1.30.22         jsonlite_1.8.8             </span></span>
+<span><span class="co">## [71] R6_2.5.1                    MatrixGenerics_1.14.0      </span></span>
+<span><span class="co">## [73] GenomicAlignments_1.38.2    systemfonts_1.0.6          </span></span>
+<span><span class="co">## [75] fs_1.6.3                    zlibbioc_1.48.2</span></span></code></pre>
 </div>
   </div>
 

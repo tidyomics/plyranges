@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -206,8 +206,8 @@ of the ranges when performing overlaps.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [1]       101       201       101</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># left, and inner join, it's often useful having an id column here</span></span></span>
-<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> </span></span>
 <span class="r-in"><span><span class="fu">join_overlap_inner</span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IRanges object with 4 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           start       end     width |      id.x      id.y</span>

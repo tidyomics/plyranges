@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -64,13 +64,13 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Ranges</span></span>
-<span><span class="fu"><a href="tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/slice-methods.html" class="external-link">slice</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for GroupedGenomicRanges</span></span>
-<span><span class="fu"><a href="tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/slice-methods.html" class="external-link">slice</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for GroupedIntegerRanges</span></span>
-<span><span class="fu"><a href="tidyverse-reexports.html">slice</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/IRanges/man/slice-methods.html" class="external-link">slice</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .preserve <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -81,7 +81,7 @@
 
 <dt>...</dt>
 <dd><p>Integer row values indicating rows to keep. If <code>.data</code> has
-been grouped via <code><a href="tidyverse-reexports.html">group_by()</a></code>, then the positions are selected within each group.</p></dd>
+been grouped via <code><a href="group_by-ranges.html">group_by.GenomicRanges()</a></code>, then the positions are selected within each group.</p></dd>
 
 
 <dt>.preserve</dt>
@@ -138,7 +138,7 @@ recomputed, otherwise it is kept as is. Currently ignored.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">by_strand</span> <span class="op">&lt;-</span> <span class="fu"><a href="tidyverse-reexports.html">group_by</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">strand</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">by_strand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">strand</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># slice with group by finds positions within each group</span></span></span>
 <span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="va">by_strand</span>, <span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>

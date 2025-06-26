@@ -19,7 +19,7 @@ to be held fixed."><meta property="og:image" content="/logo.png"><!-- mathjax --
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -114,14 +114,25 @@ range with <code><a href="stretch.html">stretch()</a></code>. To remove anchorin
 
 <p>Depending on how you want to fix the components of a Ranges, there are
 five ways to construct a RangesAnchored class. Here <code>x</code> is either
-an <code>IRanges</code> or <code>GRanges</code> object.</p><ul><li><p><code>anchor_start(x)</code>Fix the start coordinates</p></li>
-<li><p><code>anchor_end(x)</code>Fix the end coordinates</p></li>
-<li><p><code>anchor_center(x)</code>Fix the center coordinates</p></li>
-<li><p><code>anchor_3p(x)</code>On the negative strand fix the start coordinates,
-and for positive or unstranded ranges fix the end coordinates.</p></li>
-<li><p><code>anchor_5p(x)</code>On the positive or unstranded ranges fix the start coordinates,
-coordinates and for negative stranded ranges fix the end coordinates.</p></li>
-</ul></div>
+an <code>IRanges</code> or <code>GRanges</code> object.</p><dl><dt><code>anchor_start(x)</code></dt>
+<dd><p>Fix the start coordinates</p></dd>
+
+<dt><code>anchor_end(x)</code></dt>
+<dd><p>Fix the end coordinates</p></dd>
+
+<dt><code>anchor_center(x)</code></dt>
+<dd><p>Fix the center coordinates</p></dd>
+
+<dt><code>anchor_3p(x)</code></dt>
+<dd><p>On the negative strand fix the start coordinates,
+and for positive or unstranded ranges fix the end coordinates.</p></dd>
+
+<dt><code>anchor_5p(x)</code></dt>
+<dd><p>On the positive or unstranded ranges fix the start coordinates,
+coordinates and for negative stranded ranges fix the end coordinates.</p></dd>
+
+
+</dl></div>
     <div id="accessors">
     <h2>Accessors</h2>
     
@@ -134,7 +145,7 @@ It will be set to one of <code>c("start", "end", "center")</code> for an
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><a href="tidyverse-reexports.html">mutate</a>, <a href="stretch.html">stretch</a></p></div>
+    <div class="dont-index"><p><a href="mutate-ranges.html">mutate.Ranges</a>, <a href="stretch.html">stretch</a></p></div>
     </div>
 
     <div id="ref-examples">
@@ -159,7 +170,7 @@ It will be set to one of <code>c("start", "end", "center")</code> for an
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]        10        14         5</span>
 <span class="r-in"><span><span class="fu">anchor</span><span class="op">(</span><span class="va">rng_by_start</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "start"</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="va">rng_by_start</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">rng_by_start</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IRanges object with 10 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            start       end     width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span>
@@ -194,7 +205,7 @@ It will be set to one of <code>c("start", "end", "center")</code> for an
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     chr1     10-14      +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="va">rng_by_5p</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">rng_by_5p</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>

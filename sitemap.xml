@@ -88,7 +88,13 @@
     <loc>/reference/overscope_ranges.html</loc>
   </url>
   <url>
+    <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
     <loc>/reference/plyranges-package.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pull-ranges.html</loc>
   </url>
   <url>
     <loc>/reference/ranges-anchor.html</loc>
@@ -179,8 +185,5 @@
   </url>
   <url>
     <loc>/reference/stretch.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tidyverse-reexports.html</loc>
   </url>
 </urlset>

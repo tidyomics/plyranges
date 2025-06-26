@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Ranges</span></span>
-<span><span class="fu"><a href="tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .drop_ranges <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .drop_ranges <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -105,7 +105,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, width <span class="op">=</span> <span class="fl">5</span>,  seqnames <span class="op">=</span> <span class="st">"seq1"</span>,</span></span>
 <span class="r-in"><span>strand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"-"</span>, <span class="st">"*"</span><span class="op">)</span>, <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="op">-</span><span class="va">gc</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="op">-</span><span class="va">gc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |    counts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt;</span>
@@ -121,7 +121,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     seq1     10-14      + |         1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">gc</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">gc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -137,7 +137,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     seq1     10-14      + | 0.0392814</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">counts</span>, <span class="va">gc</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">counts</span>, <span class="va">gc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |    counts        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;numeric&gt;</span>
@@ -153,7 +153,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     seq1     10-14      + |         1 0.0392814</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |    counts        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;integer&gt; &lt;numeric&gt;</span>
@@ -169,7 +169,7 @@ width names), then select will throw an error unless .drop_ranges is set to TRUE
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     seq1     10-14      + |         1 0.0392814</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">seqnames</span>, <span class="va">strand</span>, .drop_ranges <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">seqnames</span>, <span class="va">strand</span>, .drop_ranges <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DataFrame with 10 rows and 2 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    seqnames strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       &lt;Rle&gt;  &lt;Rle&gt;</span>

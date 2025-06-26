@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Ranges</span></span>
-<span><span class="fu"><a href="tidyverse-reexports.html">arrange</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -87,21 +87,21 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, width <span class="op">=</span> <span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="va">rng</span>, score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">arrange</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">score</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">rng</span>, score <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">score</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            start       end     width |     score</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt; | &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [1]         3        10         8 |  0.211409</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [2]         1        10        10 |  0.229906</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [3]         9        10         2 |  0.357774</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [4]         8        10         3 |  0.445148</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [5]        10        10         1 |  0.455731</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [6]         4        10         7 |  0.463701</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [7]         2        10         9 |  0.597575</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [8]         5        10         6 |  0.647101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    [9]         7        10         4 |  0.676398</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [10]         6        10         5 |  0.960573</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [1]        10        10         1 | 0.0301457</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [2]         9        10         2 | 0.1252391</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [3]         3        10         8 | 0.2098168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [4]         4        10         7 | 0.3581380</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [5]         7        10         4 | 0.3894393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [6]         5        10         6 | 0.4482991</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [7]         8        10         3 | 0.5174597</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [8]         1        10        10 | 0.7334667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    [9]         6        10         5 | 0.9064264</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [10]         2        10         9 | 0.9069544</span>
 <span class="r-in"><span><span class="co"># you can also use dplyr::desc to arrange by descending order</span></span></span>
 </code></pre></div>
     </div>

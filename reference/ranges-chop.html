@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -97,14 +97,14 @@ the alignment has a deletion from the reference or has an intron.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va">pasillaBamSubset</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>   <span class="va">bamfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/pasillaBamSubset/man/pasillaBamSubset-package.html" class="external-link">untreated1_chr4</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>   <span class="co"># define a region of interest</span></span></span>
-<span class="r-in"><span>   <span class="va">roi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="st">"chr4"</span>, start <span class="op">=</span> <span class="fl">5e5</span>, end <span class="op">=</span> <span class="fl">7e5</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>   <span class="va">roi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="st">"chr4"</span>, start <span class="op">=</span> <span class="fl">5e5</span>, end <span class="op">=</span> <span class="fl">7e5</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>            <span class="fu"><a href="ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>   <span class="co"># results in a grouped ranges object</span></span></span>
-<span class="r-in"><span>   <span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="io-bam-read.html">read_bam</a></span><span class="op">(</span><span class="va">bamfile</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span> </span></span>
-<span class="r-in"><span>            <span class="fu"><a href="ranges-filter-overlaps.html">filter_by_overlaps</a></span><span class="op">(</span><span class="va">roi</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>   <span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="io-bam-read.html">read_bam</a></span><span class="op">(</span><span class="va">bamfile</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> </span></span>
+<span class="r-in"><span>            <span class="fu"><a href="ranges-filter-overlaps.html">filter_by_overlaps</a></span><span class="op">(</span><span class="va">roi</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>            <span class="fu">chop_by_gaps</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span>   <span class="co"># to find ranges that have gaps use filter with `n()`</span></span></span>
-<span class="r-in"><span>   <span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span> <span class="fu"><a href="tidyverse-reexports.html">filter</a></span><span class="op">(</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span>   <span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  </span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 4258 ranges and 5 metadata columns:</span>

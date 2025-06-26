@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for Ranges</span></span>
-<span><span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,8 +95,8 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-in"><span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># mutate adds new columns</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>avg_gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span>, row_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>avg_gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span>, row_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc    avg_gc    row_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span>
@@ -113,8 +113,8 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span><span class="co"># can also compute on newly created columns</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">gc</span> <span class="op">*</span> <span class="va">width</span>, score2 <span class="op">=</span> <span class="va">score</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>score <span class="op">=</span> <span class="va">gc</span> <span class="op">*</span> <span class="va">width</span>, score2 <span class="op">=</span> <span class="va">score</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc     score    score2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt;</span>
@@ -131,9 +131,9 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span><span class="co"># group by partitions the data and computes within each group</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">group_by</a></span><span class="op">(</span><span class="va">strand</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>avg_gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span>, row_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">strand</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>avg_gc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">gc</span><span class="op">)</span>, row_id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 3 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Groups: strand [3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc    avg_gc    row_id</span>
@@ -152,8 +152,8 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># mutate can be used in conjuction with anchoring to resize ranges</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -170,9 +170,9 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span><span class="co"># by default width modfication fixes by start</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_start</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_start</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -189,9 +189,9 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span><span class="co"># fix by end or midpoint</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_end</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_end</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -207,9 +207,9 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     seq1      9-14      - |  0.123487</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_center</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_center</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -226,9 +226,9 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
 <span class="r-in"><span><span class="co"># anchoring by strand</span></span></span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_3p</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_3p</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>
@@ -244,9 +244,9 @@ create new metadata columns or modify existing ones.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     seq1     10-19      - |  0.123487</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_5p</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="tidyverse-reexports.html">%&gt;%</a></span></span></span>
-<span class="r-in"><span>    <span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">rng</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="ranges-anchor.html">anchor_5p</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>width <span class="op">=</span> <span class="va">width</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand |        gc</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;numeric&gt;</span>

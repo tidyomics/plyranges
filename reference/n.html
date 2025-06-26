@@ -18,7 +18,7 @@ within summarise(), mutate() and filter()."><meta property="og:image" content="/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -61,7 +61,7 @@ within summarise(), mutate() and filter()."><meta property="og:image" content="/
 
     <div class="ref-description">
     <p>This function should only be used
-within <code><a href="tidyverse-reexports.html">summarise()</a></code>, <code><a href="tidyverse-reexports.html">mutate()</a></code> and <code><a href="tidyverse-reexports.html">filter()</a></code>.</p>
+within <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>.</p>
     </div>
 
     <div id="ref-usage">
@@ -84,15 +84,15 @@ returns an integer.</p>
 <span class="r-in"><span>                            name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"b"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span>                            <span class="op">)</span></span></span>
 <span class="r-in"><span>                <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">by_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="tidyverse-reexports.html">group_by</a></span><span class="op">(</span><span class="va">ir</span>, <span class="va">name</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">summarise</a></span><span class="op">(</span><span class="va">by_names</span>, n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">by_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ir</span>, <span class="va">name</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span><span class="va">by_names</span>, n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> DataFrame with 3 rows and 2 columns</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          name         n</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   &lt;character&gt; &lt;integer&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           a         5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2           b         3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3           c         2</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">mutate</a></span><span class="op">(</span><span class="va">by_names</span>, n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">by_names</span>, n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IRanges object with 10 ranges and 2 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Groups: name [3]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            start       end     width |        name         n</span>
@@ -107,7 +107,7 @@ returns an integer.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [8]         8        12         5 |           b         3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    [9]         9        13         5 |           c         2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]        10        14         5 |           c         2</span>
-<span class="r-in"><span><span class="fu"><a href="tidyverse-reexports.html">filter</a></span><span class="op">(</span><span class="va">by_names</span>, <span class="fu">n</span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">by_names</span>, <span class="fu">n</span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IRanges object with 8 ranges and 1 metadata column:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Groups: name [2]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           start       end     width |        name</span>

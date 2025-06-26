@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">plyranges</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.27.6</span>
       </span>
     </div>
 
@@ -57,6 +57,11 @@
       <small>Source: <a href="https://github.com/tidyomics/plyranges/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.27.6" id="plyranges-1276">plyranges 1.27.6<a class="anchor" aria-label="anchor" href="#plyranges-1276"></a></h2>
+<ul><li>added <code><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull()</a></code> method for Ranges objects that extracts a single column as a vector</li>
+<li>moved <code>dplyr</code> to Depends and removing tidyverse reexports</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.9.3" id="plyranges-193">plyranges 1.9.3<a class="anchor" aria-label="anchor" href="#plyranges-193"></a></h2>
 <ul><li>minor spelling and layout fixes to vignette,</li>
@@ -102,7 +107,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.7.7" id="plyranges-177">plyranges 1.7.7<a class="anchor" aria-label="anchor" href="#plyranges-177"></a></h2>
-<ul><li>update handling of list columns, <code><a href="../reference/ranges-expand.html">expand_ranges()</a></code> no longer takes cartesian product if lists are parallel. <code><a href="../reference/tidyverse-reexports.html">summarize()</a></code> properly handles list column output without blowing out number of columns.</li>
+<ul><li>update handling of list columns, <code><a href="../reference/ranges-expand.html">expand_ranges()</a></code> no longer takes cartesian product if lists are parallel. <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize()</a></code> properly handles list column output without blowing out number of columns.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.7.6" id="plyranges-176">plyranges 1.7.6<a class="anchor" aria-label="anchor" href="#plyranges-176"></a></h2>
@@ -116,7 +121,7 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.7.4" id="plyranges-174">plyranges 1.7.4<a class="anchor" aria-label="anchor" href="#plyranges-174"></a></h2>
-<ul><li>added <code><a href="../reference/tidyverse-reexports.html">slice()</a></code> for Ranges, and GroupedRanges</li>
+<ul><li>added <code><a href="https://rdrr.io/pkg/IRanges/man/slice-methods.html" class="external-link">slice()</a></code> for Ranges, and GroupedRanges</li>
 <li>internals of grouping have been overhauled, but there shouldn’t be any user facing changes. It is now much faster to generate groupings.</li>
 <li>group information can be interrogated with <code><a href="https://dplyr.tidyverse.org/reference/group_data.html" class="external-link">dplyr::group_keys()</a></code>
 </li>
