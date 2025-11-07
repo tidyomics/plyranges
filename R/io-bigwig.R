@@ -26,7 +26,7 @@ read_bigwig <- function(file, genome_info = NULL, overlap_ranges = NULL) {
     if (is(genome_info, "GRanges")) {
       seq_info <- seqinfo(genome_info)
     } else if (is.character(genome_info)) {
-      seq_info <- GenomeInfoDb::Seqinfo(genome = genome_info)
+      seq_info <- Seqinfo::Seqinfo(genome = genome_info)
     }
   } else {
       seq_info <- NULL

@@ -30,8 +30,8 @@ genome_info <- function(genome = NULL, seqnames = NULL, seqlengths = NULL, is_ci
 #' annotations to an existing Ranges object use `set_genome_info`. To retrieve
 #' an annotation as a Ranges object use `get_genome_info`.
 #'
-#' @importFrom GenomeInfoDb Seqinfo seqnames seqlengths isCircular genome seqinfo
-#' @seealso [GenomeInfoDb::Seqinfo()]
+#' @importFrom Seqinfo Seqinfo seqnames seqlengths isCircular genome seqinfo
+#' @seealso [Seqinfo::Seqinfo()]
 #' @examples
 #' x <- genome_info(genome = "toy",
 #'                  seqnames = letters[1:4],

@@ -86,7 +86,7 @@ add_na_seqlevels <- function(x) {
 }
 
 #' @importFrom S4Vectors queryLength decode
-#' @importFrom GenomeInfoDb seqlevels seqlevels<-
+#' @importFrom Seqinfo seqlevels seqlevels<-
 #' @rdname overlap-joins
 #' @export
 join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {

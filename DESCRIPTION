@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.27.6
+Version: 1.31.1
 Authors@R: c(
       person("Stuart", "Lee", role = c("aut"), 
              comment = c(ORCID = "0000-0003-1179-8436")),
@@ -31,7 +31,7 @@ Imports:
   tidyselect (>= 1.0.0),
   rtracklayer,
   GenomicAlignments,
-  GenomeInfoDb,
+  Seqinfo,
   Rsamtools,
   S4Vectors (>= 0.23.10),
   utils

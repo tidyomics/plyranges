@@ -19,7 +19,7 @@
 #' @importFrom rlang quos eval_tidy
 #' @importFrom S4Vectors mcols metadata mcols<- metadata<-
 #' @importFrom BiocGenerics start end width strand score start<- end<- width<- score<- strand<-
-#' @importFrom GenomeInfoDb seqnames seqnames<- seqinfo<-
+#' @importFrom Seqinfo seqnames seqnames<- seqinfo<-
 #' @importFrom IRanges IRanges
 #' @importFrom GenomicRanges GRanges granges
 #' @rdname ranges-construct

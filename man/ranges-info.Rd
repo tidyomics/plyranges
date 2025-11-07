@@ -70,5 +70,5 @@ if (interactive()) {
 
 }
 \seealso{
-\code{\link[GenomeInfoDb:Seqinfo-class]{GenomeInfoDb::Seqinfo()}}
+\code{\link[Seqinfo:Seqinfo-class]{Seqinfo::Seqinfo()}}
 }
