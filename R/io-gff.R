@@ -28,7 +28,7 @@ norm_args_reader_gff <- function(genome_info) {
 #' @return A GRanges object
 #'
 #' @importFrom rtracklayer import.gff
-#' @importFrom GenomeInfoDb seqinfo
+#' @importFrom Seqinfo seqinfo
 #' @seealso \code{rtracklayer::\link[rtracklayer:GFFFile-class]{GFFFile()}}
 #' @export
 #' @rdname io-gff-read

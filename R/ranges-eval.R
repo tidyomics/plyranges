@@ -17,18 +17,22 @@ overscope_ranges <- function(x, envir = parent.frame()) {
   UseMethod("overscope_ranges")
 }
 
+#' @export
 overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
   env <- as.env(x, envir)
   
   new_data_mask(env, top = parent.env(env))
 }
 
+#' @export
 overscope_ranges.DelegatingGenomicRanges <- function(x, envir = parent.frame()) {
   overscope_ranges(x@delegate, envir)
 }
 
+#' @export
 overscope_ranges.DelegatingIntegerRanges <- overscope_ranges.DelegatingGenomicRanges
 
+#' @export
 overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
   env <- as.env(x@delegate, 
                 envir, 
@@ -37,6 +41,7 @@ overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
 }
 
 
+#' @export
 overscope_ranges.GroupedIntegerRanges <- overscope_ranges.GroupedGenomicRanges
 
 

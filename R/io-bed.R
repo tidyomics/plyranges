@@ -46,7 +46,7 @@ norm_args_reader <- function(genome_info) {
 #' @return A GRanges object
 #'
 #' @importFrom rtracklayer import.bed
-#' @importFrom GenomeInfoDb seqinfo
+#' @importFrom Seqinfo seqinfo
 #' @importFrom methods is
 #' @seealso \code{rtracklayer::\link[rtracklayer:BEDFile-class]{BEDFile()}}
 #'

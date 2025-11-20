@@ -1,6 +1,6 @@
 context("BigWig files")
 
-# tests adapated from rtracklayer
+# tests adapted from rtracklayer
 createCorrectGR <- function() {
   ir <- as(IRanges::PartitioningByWidth(rep(300, 9)), "IRanges")
   space <- factor(c(rep("chr2", 5), rep("chr19", 4)), c("chr2", "chr19"))
@@ -13,6 +13,13 @@ createCorrectGR <- function() {
 
 test_that("reading/ writing bigwig files returns correct GRanges", {
   skip_on_os(os  = "windows")
+  
+  # check that import by genome name works
+  skip_if_not(
+    requireNamespace("BSgenome.Hsapiens.UCSC.hg19", quietly = TRUE),
+    message = "'BSgenome.Hsapiens.UCSC.hg19' must be installed to run tests"
+  )
+  
   test_path <- system.file("tests", package = "rtracklayer")
   test_bw <- file.path(test_path, "test.bw")
 
@@ -39,7 +46,7 @@ test_that("reading/ writing bigwig files returns correct GRanges", {
   ## overlap ranges
   which <- GRanges(c("chr2", "chr2"), IRanges(c(1, 300), c(400, 1000)))
   correct_which <- filter_by_overlaps(correct_bedgraph, which)
-  ranges(correct_which) <- ranges(intersect(correct_which, which))
+  ranges(correct_which) <- IRanges::ranges(IRanges::intersect(correct_which, which))
   test_gr <- read_bigwig(test_bw_out, overlap_ranges = correct_which)
   expect_identical(test_gr, correct_which)
 

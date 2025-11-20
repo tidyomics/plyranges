@@ -8,8 +8,8 @@
   } else {
     inner_rng <- pintersect(pairs)
   }
-  left_rng <- first(pairs)
-  right_rng <- second(pairs)
+  left_rng <- S4Vectors::first(pairs)
+  right_rng <- S4Vectors::second(pairs)
   mcols(inner_rng) <- mcols_overlaps_update(left_rng, right_rng, suffix)
   inner_rng
 }
@@ -44,7 +44,7 @@
 #'
 #' @return a GRanges object
 #'
-#' @importFrom S4Vectors first second DataFrame
+#' @importFrom S4Vectors DataFrame
 #' @importFrom IRanges findOverlapPairs
 #' @examples
 #' x <- as_iranges(data.frame(start = c(11, 101), end = c(21, 201)))

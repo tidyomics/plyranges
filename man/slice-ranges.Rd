@@ -16,7 +16,7 @@
 \item{.data}{a \code{Ranges} object}
 
 \item{...}{Integer row values indicating rows to keep. If \code{.data} has
-been grouped via \code{\link[=group_by]{group_by()}}, then the positions are selected within each group.}
+been grouped via \code{\link[=group_by.GenomicRanges]{group_by.GenomicRanges()}}, then the positions are selected within each group.}
 
 \item{.preserve}{when FALSE (the default) the grouping structure is
 recomputed, otherwise it is kept as is. Currently ignored.}

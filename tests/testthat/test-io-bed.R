@@ -48,11 +48,11 @@ test_that("read_bed returns correct GRanges",{
 
   expect_identical(correct_gr %>%
                      mutate(strand = "*") %>%
-                     select(subcols),
+                     select(dplyr::all_of(subcols)),
                    test_gr)
   test_gr <- read_bed(test_bed, col_names = c(subcols, "strand"))
   expect_identical(correct_gr %>%
-                     select(subcols),
+                     select(dplyr::all_of(subcols)),
                    test_gr)
 
   # check overlaps

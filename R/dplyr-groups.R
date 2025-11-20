@@ -23,7 +23,7 @@
 #'
 #' @section Accessors:
 #' To return grouping variables on a grouped Ranges use either
-#' \itemize{
+#' \describe{
 #'   \item{`groups(x)`}{Returns a list of symbols}
 #'   \item{`group_vars(x)`}{Returns a character vector}
 #' }

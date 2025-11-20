@@ -13,7 +13,7 @@ generate_slice <- function(.data, dots) {
 #' 
 #' @param .data a `Ranges` object
 #' @param ... Integer row values indicating rows to keep. If `.data` has
-#' been grouped via [group_by()], then the positions are selected within each group.
+#' been grouped via [group_by.GenomicRanges()], then the positions are selected within each group.
 #' @param .preserve when FALSE (the default) the grouping structure is 
 #' recomputed, otherwise it is kept as is. Currently ignored. 
 #' @return a GRanges object
