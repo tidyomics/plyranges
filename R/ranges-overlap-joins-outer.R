@@ -60,12 +60,22 @@ add_na_seqlevels <- function(x) {
   right <- y[subjectHits(hits), ]
   mcols(left) <- mcols_overlaps_update(left, right, suffix)
 
+  # add distance if requested
+  if (distance) {
+    # ignore stand because this is not the _directed version
+    mcols(left)$distance <- GenomicRanges::distance(left, right, ignore.strand=TRUE)
+  }
+
   # overlaps not found
   only_left <- rep(TRUE, queryLength(hits))
   only_left[queryHits(hits)] <- FALSE
 
   # ranges object
   rng_only_left <- x[only_left]
+  if (distance) {
+    # add NA distances
+    mcols(rng_only_left)$distance <- rep(NA, length(rng_only_left))
+  }
   
   # if there are no right mcols create an empty DataFrame
   # otherwise propagate missing values to the outer frame
@@ -89,7 +99,7 @@ add_na_seqlevels <- function(x) {
 #' @importFrom GenomeInfoDb seqlevels seqlevels<-
 #' @rdname overlap-joins
 #' @export
-join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"), distance) {
   UseMethod("join_overlap_left")
 }
 
