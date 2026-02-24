@@ -12,7 +12,7 @@ columns containing variables for matching}
 
 \item{y}{A table of data, DataFrame, data.frame or tibble}
 
-\item{...}{arguments passed to \code{dplyr::left_join}}
+\item{...}{arguments passed to \code{left_join}}
 }
 \value{
 Object representing ranges, with new metadata columns

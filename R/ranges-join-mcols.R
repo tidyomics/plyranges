@@ -7,7 +7,7 @@
 #' @param x Object representing ranges, with metadata
 #' columns containing variables for matching
 #' @param y A table of data, DataFrame, data.frame or tibble
-#' @param ... arguments passed to `dplyr::left_join`
+#' @param ... arguments passed to `left_join`
 #' 
 #' @return Object representing ranges, with new metadata columns
 #'
@@ -22,7 +22,6 @@
 #' # metadata join
 #' # join_mcols_left(x, y, by="id")
 #' 
-#' @import DFplyr
 #' @importFrom dplyr left_join
 #' @importFrom rlang .data
 #' 
