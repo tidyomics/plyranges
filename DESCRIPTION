@@ -29,6 +29,7 @@ Imports:
   rlang (>= 0.2.0), 
   magrittr,
   tidyselect (>= 1.0.0),
+  DFplyr,
   rtracklayer,
   GenomicAlignments,
   Seqinfo,

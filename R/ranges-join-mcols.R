@@ -22,6 +22,7 @@
 #' # metadata join
 #' # join_mcols_left(x, y, by="id")
 #' 
+#' @import DFplyr
 #' @importFrom dplyr left_join
 #' @importFrom rlang .data
 #' 
@@ -29,8 +30,8 @@
 join_mcols_left <- function(x, y, ...) {
   x_id <- x
   x_id$.id = factor(seq_along(x))
-  new_mcols <- dplyr::left_join(mcols(x_id), y, ...)
-  new_mcols <- dplyr::arrange(new_mcols, .data[[".id"]])
+  new_mcols <- left_join(mcols(x_id), y, ...)
+  new_mcols <- arrange(new_mcols, .data[[".id"]])
   new_x <- x[as.integer(new_mcols$.id)]
   new_mcols$.id <- NULL
   mcols(new_x) <- NULL
