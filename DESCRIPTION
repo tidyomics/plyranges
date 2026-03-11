@@ -18,6 +18,7 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     classes Ranges and GenomicRanges. By providing a grammatical
     and consistent way of manipulating these classes their accessiblity for new
     Bioconductor users is hopefully increased.
+URL: https://tidyomics.github.io/plyranges
 Depends:
   R (>= 3.5),
   BiocGenerics,
