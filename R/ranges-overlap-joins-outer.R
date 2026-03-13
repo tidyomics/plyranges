@@ -62,8 +62,8 @@ add_na_seqlevels <- function(x) {
 
   # add distance if requested
   if (distance) {
-    # ignore stand because this is not the _directed version
-    mcols(left)$distance <- GenomicRanges::distance(left, right, ignore.strand=TRUE)
+    # ignore.stand will be passed in the ...
+    mcols(left)$distance <- GenomicRanges::distance(left, right, ...)
   }
 
   # overlaps not found
@@ -73,7 +73,7 @@ add_na_seqlevels <- function(x) {
   # ranges object
   rng_only_left <- x[only_left]
   if (distance) {
-    # add NA distances
+    # add NA distances for the ranges only on the left
     mcols(rng_only_left)$distance <- rep(NA, length(rng_only_left))
   }
   
@@ -157,7 +157,7 @@ join_overlap_left_within.GenomicRanges <- function(x, y, maxgap = -1L, minoverla
 
 #' @rdname overlap-joins
 #' @export
-join_overlap_left_directed <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y")) {
+join_overlap_left_directed <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"), distance) {
   UseMethod("join_overlap_left_directed")
 }
 

@@ -7,8 +7,8 @@ test_that("adding distance works as expected",{
     seqnames = "chr1",
     ranges = IRanges(c(11, 66, 101), c(15, 70, 110)),
     strand = c("+", "-", "+"),
-    a_name = c("a1", "a2"),
-    a_score = c(1, 2)
+    a_name = paste0("a", 1:3),
+    a_score = 1:3
   )
 
   b <- GRanges(
@@ -26,5 +26,6 @@ test_that("adding distance works as expected",{
   join_nearest_downstream(a, b, distance=TRUE)
 
   join_overlap_left(a, b, maxgap=15, distance=TRUE)
+  join_overlap_left_directed(a, b, maxgap=15, distance=TRUE)
 
 })
