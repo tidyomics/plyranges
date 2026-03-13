@@ -62,7 +62,7 @@ join_overlap_inner_within_directed(
   suffix = c(".x", ".y")
 )
 
-join_overlap_left(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
+join_overlap_left(x, y, maxgap, minoverlap, suffix = c(".x", ".y"), distance)
 
 join_overlap_left_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 

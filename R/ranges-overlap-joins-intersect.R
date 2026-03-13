@@ -22,6 +22,10 @@
 #' as an integer greater than zero, accounting for the maximum gap.
 #' @param suffix Character to vectors to append to common columns in x and y
 #' (default = `c(".x", ".y")`).
+#' @param distance logical, whether to add a column named "distance"
+#'   containing the distance between the ranges, relevant with non-zero
+#' `maxgap` values. Available for [join_overlap_left()] 
+#' and the `_directed()` version.
 #'
 #' @details The function [join_overlap_intersect()] finds
 #' the genomic intervals that are the overlapping ranges between x and y and
