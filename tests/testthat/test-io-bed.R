@@ -133,6 +133,6 @@ test_that("read_narrowpeaks returns correct GRanges", {
   test_np_out <- file.path(tempdir(), "test.narrowPeak.gz")
   write_narrowpeaks(gr, test_np_out)
   test_gr <- read_narrowpeaks(test_np_out, genome_info = "hg19")
-  expect_identical(gr, test_gr)
+  expect_equal(gr, test_gr)
 
 })

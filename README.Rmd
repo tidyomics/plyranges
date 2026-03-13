@@ -36,6 +36,7 @@ data with `group_by()`.
 * Find nearest neighbour genomic regions with the `join_nearest_` family
 of functions.
 * Find overlaps between ranges with the `join_overlaps_` family of functions.
+* Add additional metadata between ranges and a table with the `join_mcols_` family of functions.
 * Merge all overlapping and adjacent genomic regions with `reduce_ranges()`.
 * Merge the end points of all genomic regions with `disjoin_ranges()`.
 * Import and write common genomic data formats with the `read_/write_` family

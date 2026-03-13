@@ -1,6 +1,7 @@
+url: https://tidyomics.github.io/plyranges
+
 template:
-  params:
-    bootswatch: journal
+  bootstrap: 5
 
 authors:
   Stuart Lee:
@@ -37,7 +38,6 @@ reference:
     - matches("^n$")
     - n_distinct
 
-
 - title: Core verbs
   contents:
     - mutate.Ranges
@@ -53,7 +53,6 @@ reference:
     - compute_coverage
     - expand_ranges
 
-
 - title: Overlaps
   contents:
     - starts_with("join_overlap")
@@ -61,6 +60,10 @@ reference:
     - filter_by_non_overlaps
     - group_by_overlaps
     - starts_with("count")
+
+- title: Joining on metadata columns
+  contents:
+    - starts_with("join_mcols")
 
 - title: Nearest neighbours
   contents:
@@ -93,7 +96,6 @@ reference:
     - ends_with("gff")
     - FileOperator-class
     - DeferredGenomicRanges-class
-
 
 - title: Utilities
   contents:

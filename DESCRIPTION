@@ -1,7 +1,7 @@
 Package: plyranges
 Type: Package
 Title: A fluent interface for manipulating GenomicRanges
-Version: 1.31.1
+Version: 1.31.2
 Authors@R: c(
       person("Stuart", "Lee", role = c("aut"), 
              comment = c(ORCID = "0000-0003-1179-8436")),
@@ -18,6 +18,7 @@ Description: A dplyr-like interface for interacting with the common Bioconductor
     classes Ranges and GenomicRanges. By providing a grammatical
     and consistent way of manipulating these classes their accessiblity for new
     Bioconductor users is hopefully increased.
+URL: https://tidyomics.github.io/plyranges
 Depends:
   R (>= 3.5),
   BiocGenerics,
@@ -53,7 +54,7 @@ Suggests:
     ggplot2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Collate: 
     'class-AnchoredRanges.R'
     'class-Operator.R'
@@ -93,6 +94,7 @@ Collate:
     'ranges-expand.R'
     'ranges-genomeinfo.R'
     'ranges-join-follow.R'
+    'ranges-join-mcols.R'
     'ranges-join-nearest.R'
     'ranges-join-precede.R'
     'ranges-overlap-count.R'
