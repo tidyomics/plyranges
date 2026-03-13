@@ -39,6 +39,7 @@ For more details on the features of plryanges, read the vignette:
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://tidyomics.github.io/plyranges}
   \item Report bugs at \url{https://github.com/tidyomics/plyranges}
 }
 

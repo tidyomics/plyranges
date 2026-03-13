@@ -63,6 +63,7 @@
 #' @importFrom S4Vectors merge
 #'
 #' @rdname mcols-joins
+#' @aliases join_mcols_inner join_mcols_left
 #' @export
 join_mcols_inner <- function(x, y, by = NULL, ...) {
   .join_mcols(x = x, y = y, by = by, all = FALSE, ...)

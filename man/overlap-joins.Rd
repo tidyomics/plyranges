@@ -66,7 +66,14 @@ join_overlap_left(x, y, maxgap, minoverlap, suffix = c(".x", ".y"), distance)
 
 join_overlap_left_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-join_overlap_left_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
+join_overlap_left_directed(
+  x,
+  y,
+  maxgap,
+  minoverlap,
+  suffix = c(".x", ".y"),
+  distance
+)
 
 join_overlap_left_within_directed(
   x,
@@ -85,6 +92,11 @@ as an integer greater than zero, accounting for the maximum gap.}
 
 \item{suffix}{Character to vectors to append to common columns in x and y
 (default = \code{c(".x", ".y")}).}
+
+\item{distance}{logical, whether to add a column named "distance"
+containing the distance between the ranges, relevant with non-zero
+\code{maxgap} values. Available for \code{\link[=join_overlap_left]{join_overlap_left()}}
+and the \verb{_directed()} version.}
 }
 \value{
 a GRanges object
