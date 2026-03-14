@@ -903,7 +903,7 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ##  [1] ggplot2_4.0.2        plyranges_1.31.2     dplyr_1.2.0         
+    ##  [1] ggplot2_4.0.2        plyranges_1.31.3     dplyr_1.2.0         
     ##  [4] GenomicRanges_1.62.1 Seqinfo_1.0.0        IRanges_2.44.0      
     ##  [7] S4Vectors_0.48.0     BiocGenerics_0.56.0  generics_0.1.4      
     ## [10] BiocStyle_2.38.0    

@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   an-introduction: an-introduction.html
-last_built: 2026-03-14T13:49Z
+last_built: 2026-03-14T14:09Z
 urls:
   reference: https://tidyomics.github.io/plyranges/reference
   article: https://tidyomics.github.io/plyranges/articles
