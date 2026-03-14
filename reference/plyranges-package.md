@@ -56,6 +56,8 @@ For more details on the features of plryanges, read the vignette:
 
 Useful links:
 
+- <https://tidyomics.github.io/plyranges>
+
 - Report bugs at <https://github.com/tidyomics/plyranges>
 
 ## Author

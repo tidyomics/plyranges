@@ -51,11 +51,18 @@ join_overlap_inner_within_directed(
   suffix = c(".x", ".y")
 )
 
-join_overlap_left(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
+join_overlap_left(x, y, maxgap, minoverlap, suffix = c(".x", ".y"), distance)
 
 join_overlap_left_within(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
 
-join_overlap_left_directed(x, y, maxgap, minoverlap, suffix = c(".x", ".y"))
+join_overlap_left_directed(
+  x,
+  y,
+  maxgap,
+  minoverlap,
+  suffix = c(".x", ".y"),
+  distance
+)
 
 join_overlap_left_within_directed(
   x,
@@ -82,6 +89,12 @@ join_overlap_left_within_directed(
 
   Character to vectors to append to common columns in x and y (default =
   `c(".x", ".y")`).
+
+- distance:
+
+  logical, whether to add a column named "distance" containing the
+  distance between the ranges, relevant with non-zero `maxgap` values.
+  Available for `join_overlap_left()` and the `_directed()` version.
 
 ## Value
 

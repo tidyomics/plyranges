@@ -86,11 +86,18 @@
 <span>  suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".x"</span>, <span class="st">".y"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">join_overlap_left</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">maxgap</span>, <span class="va">minoverlap</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".x"</span>, <span class="st">".y"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">join_overlap_left</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">maxgap</span>, <span class="va">minoverlap</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".x"</span>, <span class="st">".y"</span><span class="op">)</span>, <span class="va">distance</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">join_overlap_left_within</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">maxgap</span>, <span class="va">minoverlap</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".x"</span>, <span class="st">".y"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">join_overlap_left_directed</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">maxgap</span>, <span class="va">minoverlap</span>, suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".x"</span>, <span class="st">".y"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">join_overlap_left_directed</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  <span class="va">maxgap</span>,</span>
+<span>  <span class="va">minoverlap</span>,</span>
+<span>  suffix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">".x"</span>, <span class="st">".y"</span><span class="op">)</span>,</span>
+<span>  <span class="va">distance</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">join_overlap_left_within_directed</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
@@ -118,6 +125,13 @@ as an integer greater than zero, accounting for the maximum gap.</p></dd>
 <dt id="arg-suffix">suffix<a class="anchor" aria-label="anchor" href="#arg-suffix"></a></dt>
 <dd><p>Character to vectors to append to common columns in x and y
 (default = <code>c(".x", ".y")</code>).</p></dd>
+
+
+<dt id="arg-distance">distance<a class="anchor" aria-label="anchor" href="#arg-distance"></a></dt>
+<dd><p>logical, whether to add a column named "distance"
+containing the distance between the ranges, relevant with non-zero
+<code>maxgap</code> values. Available for <code>join_overlap_left()</code>
+and the <code>_directed()</code> version.</p></dd>
 
 </dl></div>
     <div class="section level2">
