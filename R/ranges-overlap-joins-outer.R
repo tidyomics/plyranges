@@ -104,7 +104,8 @@ join_overlap_left <- function(x, y, maxgap, minoverlap, suffix = c(".x", ".y"), 
 }
 
 #' @export
-join_overlap_left.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, suffix = c(".x", ".y")) {
+join_overlap_left.IntegerRanges <- function(x,y, maxgap = -1L, minoverlap = 0L, 
+  suffix = c(".x", ".y"), distance = FALSE) {
   .join_overlap_left(x,y, suffix, findOverlaps, 
                  maxgap = maxgap, 
                  minoverlap = minoverlap, 
