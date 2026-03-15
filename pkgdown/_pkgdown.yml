@@ -114,6 +114,8 @@ navbar:
     menu:
     - text: Introduction to plyranges
       href: articles/an-introduction.html
+    - text: Additional examples of plyranges
+      href: articles/more-examples.html
   - text: News
     href: news/index.html
   right:

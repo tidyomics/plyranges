@@ -1,0 +1,124 @@
+---
+title: "Additional examples of plyranges"
+author: "Stuart Lee"
+package: plyranges
+date: "`r Sys.Date()`"
+output:
+  BiocStyle::html_document:
+    toc_float: true
+vignette: >
+  %\VignetteIndexEntry{Additional examples of plyranges}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+# Quick overview
+
+## About `Ranges`
+
+`Ranges` objects can either represent sets of integers as `IRanges` (which have
+start, end and width attributes) or represent genomic intervals (which have
+additional attributes, sequence name, and strand) as `GRanges`.  In addition,
+both types of `Ranges` can store information about their intervals as metadata
+columns (for example GC content over a genomic interval).
+
+`Ranges` objects follow the tidy data principle: each row of a `Ranges` object
+corresponds to an interval, while each column will represent a variable about
+that interval, and generally each object will represent a single unit of
+observation (like gene annotations).
+
+We can construct a `IRanges` object from a `data.frame` with a `start` or
+`width` using the `as_iranges()` method.
+
+```{r, message=FALSE}
+library(plyranges)
+df <- data.frame(start = 1:5, width = 5)
+as_iranges(df)
+# alternatively with end
+df <- data.frame(start = 1:5, end = 5:9)
+as_iranges(df)
+```
+
+We can also construct a `GRanges` object in a similar manner. Note that a
+`GRanges` object requires at least a seqnames column to be present in the
+data.frame (but not necessarily a strand column).
+
+```{r}
+df <- data.frame(seqnames = c("chr1", "chr2", "chr2", "chr1", "chr2"),
+                 start = 1:5,
+                 width = 5)
+as_granges(df)
+# strand can be specified with `+`, `*` (mising) and `-`
+df$strand <- c("+", "+", "-", "-", "*")
+as_granges(df)
+```
+
+# Example: finding GWAS hits that overlap known exons
+Let's look at a more a realistic example (taken from HelloRanges vignette).
+
+```{r, include=FALSE}
+dir <- system.file(package = "HelloRangesData", "extdata/")
+genome <- as_granges(read.delim(file.path(dir, "hg19.genome"),
+                     header = FALSE),
+                     seqnames = V1, start = 1L, width = V2)
+
+gwas <- read_bed(file.path(dir, "gwas.bed"), genome_info = genome)
+exons <- read_bed(file.path(dir, "exons.bed"), genome_info = genome)
+```
+
+Suppose we have two _GRanges_ objects: one containing coordinates of known
+exons and another containing SNPs from a GWAS.
+
+The first and last 5 exons are printed below, there are two additional columns
+corresponding to the exon name, and a score.
+
+We could check the number of exons per chromosome using `group_by` and
+`summarise`.
+```{r}
+exons
+exons %>%
+  group_by(seqnames) %>%
+  summarise(n = n())
+```
+
+Next we create a column representing the transcript_id with `mutate`:
+
+```{r}
+exons <- exons %>%
+  mutate(tx_id = sub("_exon.*", "", name))
+```
+
+To find all GWAS SNPs that overlap exons, we use `join_overlap_inner`. This
+will create a new _GRanges_ with the coordinates of SNPs that overlap exons, as
+well as metadata from both objects.
+
+```{r}
+olap <- join_overlap_inner(gwas, exons)
+olap
+```
+
+For each SNP we can count the number of times it overlaps a transcript.
+
+```{r}
+olap %>%
+  group_by(name.x, tx_id) %>%
+  summarise(n = n())
+```
+
+We can also generate 2bp splice sites on either side of the exon using
+`flank_left` and `flank_right`. We add a column indicating the side of flanking
+for illustrative purposes. The `interweave` function pairs the left and right
+ranges objects.
+
+```{r}
+left_ss <- flank_left(exons, 2L)
+right_ss <- flank_right(exons, 2L)
+all_ss <- interweave(left_ss, right_ss, .id = "side")
+all_ss
+```
+
+# Session information
+
+```{r}
+sessionInfo()
+```

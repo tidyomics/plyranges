@@ -460,7 +460,7 @@ up on interesting hits from a combined RNA-seq and ATAC-seq analysis.
 - The [journal article](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1597-8) ([preprint here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
 details about the overall philosophy and design of plyranges.
 
-# Appendix
+# Session information
 
 ```{r}
 sessionInfo()
