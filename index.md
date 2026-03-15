@@ -36,14 +36,14 @@ providing a set of verbs for developing analysis pipelines based on
 For more details on the features of *plyranges*, read the [introductory
 vignette](https://tidyomics.github.io/plyranges/articles/an-introduction.html)
 and the [examples
-vignette](https://tidyomics.github.io/plyranges/articles/more-examples.html)
+vignette](https://tidyomics.github.io/plyranges/articles/more-examples.html).
 
 For a complete case-study on using *plyranges* to combine ATAC-seq and
 RNA-seq results read the [*fluentGenomics*
 workflow](https://tidyomics.github.io/fluentGenomics).
 
 *plyranges* is part of the [tidyomics](https://github.com/tidyomics)
-project, providing a `dplyr`-based interface for many types of genomics
+project, providing a *dplyr*-based interface for many types of genomics
 datasets represented in Bioconductor.
 
 # Installation
