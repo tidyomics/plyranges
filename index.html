@@ -42,6 +42,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
 <li><a class="dropdown-item" href="articles/an-introduction.html">Introduction to plyranges</a></li>
+    <li><a class="dropdown-item" href="articles/more-examples.html">Additional examples of plyranges</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">News</a></li>
@@ -62,26 +63,33 @@
 </div>
 <!-- badges: start -->
 
-<p><a href="https://www.bioconductor.org/packages/release/bioc/html/plyranges.html" class="external-link">plyranges</a> provides a consistent interface for importing and wrangling genomics data from a variety of sources. The package defines a grammar of genomic data transformation based on <code>dplyr</code> and the Bioconductor packages <code>IRanges</code>, <code>GenomicRanges</code>, and <code>rtracklayer</code>. It does this by providing a set of verbs for developing analysis pipelines based on <em>Ranges</em> objects that represent genomic regions:</p>
+<!-- badges: end -->
+<p><em>plyranges</em> provides a consistent interface for importing and wrangling genomics data from a variety of sources. The package defines a grammar of genomic data transformation based on <em>dplyr</em> and the Bioconductor packages <em>IRanges</em>, <em>GenomicRanges</em>, and <em>rtracklayer</em>. It does this by providing a set of verbs for developing analysis pipelines based on <em>GRanges</em> objects that represent genomic regions:</p>
 <ul>
-<li>Modify genomic regions with the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code> and <code><a href="reference/stretch.html">stretch()</a></code> functions.</li>
+<li>Modify genomic regions with the <code>mutate()</code> and <code><a href="reference/stretch.html">stretch()</a></code> functions.</li>
 <li>Modify genomic regions while fixing the start/end/center coordinates with the <code>anchor_</code> family of functions.</li>
-<li>Sort genomic ranges with <code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange()</a></code>.</li>
-<li>Modify, subset, and aggregate genomic data with the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise()</a></code>functions.</li>
-<li>Any of the above operations can be performed on partitions of the data with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by()</a></code>.</li>
+<li>Sort genomic ranges with <code>arrange()</code>.</li>
+<li>Modify, subset, and aggregate genomic data with the <code>mutate()</code>, <code><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter()</a></code>, and <code>summarise()</code>functions.</li>
+<li>Any of the above operations can be performed on partitions of the data with <code>group_by()</code>.</li>
 <li>Find nearest neighbour genomic regions with the <code>join_nearest_</code> family of functions.</li>
 <li>Find overlaps between ranges with the <code>join_overlaps_</code> family of functions.</li>
+<li>Add additional metadata between ranges and a table with the <code>join_mcols_</code> family of functions.</li>
 <li>Merge all overlapping and adjacent genomic regions with <code><a href="reference/ranges-reduce.html">reduce_ranges()</a></code>.</li>
 <li>Merge the end points of all genomic regions with <code><a href="reference/ranges-disjoin.html">disjoin_ranges()</a></code>.</li>
 <li>Import and write common genomic data formats with the <code>read_/write_</code> family of functions.</li>
 </ul>
-<p>For more details on the features of plyranges, read the <a href="https://tidyomics.github.io/plyranges/articles/an-introduction.html">vignette</a>. For a complete case-study on using plyranges to combine ATAC-seq and RNA-seq results read the <a href="https://tidyomics.github.io/fluentGenomics" class="external-link"><em>fluentGenomics</em> workflow</a>.</p>
-<p>plyranges is part of the <a href="https://github.com/tidyomics" class="external-link">tidyomics</a> project, providing a <code>dplyr</code>-based interface for many types of genomics datasets represented in Bioconductor.</p>
+</div>
+<div class="section level1">
+<h1 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h1>
+<p>For more details on the features of <em>plyranges</em>, read the <a href="https://tidyomics.github.io/plyranges/articles/an-introduction.html">introductory vignette</a> and the <a href="https://tidyomics.github.io/plyranges/articles/more-examples.html">examples vignette</a></p>
+<p>For a complete case-study on using <em>plyranges</em> to combine ATAC-seq and RNA-seq results read the <a href="https://tidyomics.github.io/fluentGenomics" class="external-link"><em>fluentGenomics</em> workflow</a>.</p>
+<p><em>plyranges</em> is part of the <a href="https://github.com/tidyomics" class="external-link">tidyomics</a> project, providing a <code>dplyr</code>-based interface for many types of genomics datasets represented in Bioconductor.</p>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p><a href="https://www.bioconductor.org/packages/release/bioc/html/plyranges.html" class="external-link">plyranges</a> can be installed from the latest Bioconductor release:</p>
+<p><em>plyranges</em> can be installed from the latest Bioconductor release:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("BiocManager")</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"plyranges"</span><span class="op">)</span></span></code></pre></div>
@@ -90,229 +98,32 @@
 <code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"tidyomics/plyranges"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level1">
-<h1 id="quick-overview">Quick overview<a class="anchor" aria-label="anchor" href="#quick-overview"></a>
-</h1>
-<div class="section level2">
-<h2 id="about-ranges">About <code>Ranges</code>
-<a class="anchor" aria-label="anchor" href="#about-ranges"></a>
-</h2>
-<p><code>Ranges</code> objects can either represent sets of integers as <code>IRanges</code> (which have start, end and width attributes) or represent genomic intervals (which have additional attributes, sequence name, and strand) as <code>GRanges</code>. In addition, both types of <code>Ranges</code> can store information about their intervals as metadata columns (for example GC content over a genomic interval).</p>
-<p><code>Ranges</code> objects follow the tidy data principle: each row of a <code>Ranges</code> object corresponds to an interval, while each column will represent a variable about that interval, and generally each object will represent a single unit of observation (like gene annotations).</p>
-<p>We can construct a <code>IRanges</code> object from a <code>data.frame</code> with a <code>start</code> or <code>width</code> using the <code><a href="reference/ranges-construct.html">as_iranges()</a></code> method.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyomics.github.io/plyranges">plyranges</a></span><span class="op">)</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IRanges object with 5 ranges and 0 metadata columns:</span></span>
-<span><span class="co">#&gt;           start       end     width</span></span>
-<span><span class="co">#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
-<span><span class="co">#&gt;   [1]         1         5         5</span></span>
-<span><span class="co">#&gt;   [2]         2         6         5</span></span>
-<span><span class="co">#&gt;   [3]         3         7         5</span></span>
-<span><span class="co">#&gt;   [4]         4         8         5</span></span>
-<span><span class="co">#&gt;   [5]         5         9         5</span></span>
-<span><span class="co"># alternatively with end</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, end <span class="op">=</span> <span class="fl">5</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; IRanges object with 5 ranges and 0 metadata columns:</span></span>
-<span><span class="co">#&gt;           start       end     width</span></span>
-<span><span class="co">#&gt;       &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span></span>
-<span><span class="co">#&gt;   [1]         1         5         5</span></span>
-<span><span class="co">#&gt;   [2]         2         6         5</span></span>
-<span><span class="co">#&gt;   [3]         3         7         5</span></span>
-<span><span class="co">#&gt;   [4]         4         8         5</span></span>
-<span><span class="co">#&gt;   [5]         5         9         5</span></span></code></pre></div>
-<p>We can also construct a <code>GRanges</code> object in a similar manner. Note that a <code>GRanges</code> object requires at least a seqnames column to be present in the data.frame (but not necessarily a strand column).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>seqnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"chr1"</span>, <span class="st">"chr2"</span>, <span class="st">"chr2"</span>, <span class="st">"chr1"</span>, <span class="st">"chr2"</span><span class="op">)</span>,</span>
-<span>                 start <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
-<span>                 width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; GRanges object with 5 ranges and 0 metadata columns:</span></span>
-<span><span class="co">#&gt;       seqnames    ranges strand</span></span>
-<span><span class="co">#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
-<span><span class="co">#&gt;   [1]     chr1       1-5      *</span></span>
-<span><span class="co">#&gt;   [2]     chr2       2-6      *</span></span>
-<span><span class="co">#&gt;   [3]     chr2       3-7      *</span></span>
-<span><span class="co">#&gt;   [4]     chr1       4-8      *</span></span>
-<span><span class="co">#&gt;   [5]     chr2       5-9      *</span></span>
-<span><span class="co">#&gt;   -------</span></span>
-<span><span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span>
-<span><span class="co"># strand can be specified with `+`, `*` (mising) and `-`</span></span>
-<span><span class="va">df</span><span class="op">$</span><span class="va">strand</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"+"</span>, <span class="st">"-"</span>, <span class="st">"-"</span>, <span class="st">"*"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; GRanges object with 5 ranges and 0 metadata columns:</span></span>
-<span><span class="co">#&gt;       seqnames    ranges strand</span></span>
-<span><span class="co">#&gt;          &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
-<span><span class="co">#&gt;   [1]     chr1       1-5      +</span></span>
-<span><span class="co">#&gt;   [2]     chr2       2-6      +</span></span>
-<span><span class="co">#&gt;   [3]     chr2       3-7      -</span></span>
-<span><span class="co">#&gt;   [4]     chr1       4-8      -</span></span>
-<span><span class="co">#&gt;   [5]     chr2       5-9      *</span></span>
-<span><span class="co">#&gt;   -------</span></span>
-<span><span class="co">#&gt;   seqinfo: 2 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level1">
-<h1 id="example-finding-gwas-hits-that-overlap-known-exons">Example: finding GWAS hits that overlap known exons<a class="anchor" aria-label="anchor" href="#example-finding-gwas-hits-that-overlap-known-exons"></a>
-</h1>
-<p>Let’s look at a more a realistic example (taken from HelloRanges vignette).</p>
-<p>Suppose we have two <em>GRanges</em> objects: one containing coordinates of known exons and another containing SNPs from a GWAS.</p>
-<p>The first and last 5 exons are printed below, there are two additional columns corresponding to the exon name, and a score.</p>
-<p>We could check the number of exons per chromosome using <code>group_by</code> and <code>summarise</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exons</span></span>
-<span><span class="co">#&gt; GRanges object with 459752 ranges and 2 metadata columns:</span></span>
-<span><span class="co">#&gt;            seqnames            ranges strand |                   name     score</span></span>
-<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt;        [1]     chr1       11874-12227      + | NR_046018_exon_0_0_c..         0</span></span>
-<span><span class="co">#&gt;        [2]     chr1       12613-12721      + | NR_046018_exon_1_0_c..         0</span></span>
-<span><span class="co">#&gt;        [3]     chr1       13221-14409      + | NR_046018_exon_2_0_c..         0</span></span>
-<span><span class="co">#&gt;        [4]     chr1       14362-14829      - | NR_024540_exon_0_0_c..         0</span></span>
-<span><span class="co">#&gt;        [5]     chr1       14970-15038      - | NR_024540_exon_1_0_c..         0</span></span>
-<span><span class="co">#&gt;        ...      ...               ...    ... .                    ...       ...</span></span>
-<span><span class="co">#&gt;   [459748]     chrY 59338754-59338859      + | NM_002186_exon_6_0_c..         0</span></span>
-<span><span class="co">#&gt;   [459749]     chrY 59338754-59338859      + | NM_176786_exon_7_0_c..         0</span></span>
-<span><span class="co">#&gt;   [459750]     chrY 59340194-59340278      + | NM_002186_exon_7_0_c..         0</span></span>
-<span><span class="co">#&gt;   [459751]     chrY 59342487-59343488      + | NM_002186_exon_8_0_c..         0</span></span>
-<span><span class="co">#&gt;   [459752]     chrY 59342487-59343488      + | NM_176786_exon_8_0_c..         0</span></span>
-<span><span class="co">#&gt;   -------</span></span>
-<span><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></span>
-<span><span class="va">exons</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">seqnames</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataFrame with 49 rows and 2 columns</span></span>
-<span><span class="co">#&gt;           seqnames         n</span></span>
-<span><span class="co">#&gt;              &lt;Rle&gt; &lt;integer&gt;</span></span>
-<span><span class="co">#&gt; 1             chr1     43366</span></span>
-<span><span class="co">#&gt; 2            chr10     19420</span></span>
-<span><span class="co">#&gt; 3            chr11     24476</span></span>
-<span><span class="co">#&gt; 4            chr12     24949</span></span>
-<span><span class="co">#&gt; 5            chr13      7974</span></span>
-<span><span class="co">#&gt; ...            ...       ...</span></span>
-<span><span class="co">#&gt; 45  chrUn_gl000222        20</span></span>
-<span><span class="co">#&gt; 46  chrUn_gl000223        22</span></span>
-<span><span class="co">#&gt; 47  chrUn_gl000228        85</span></span>
-<span><span class="co">#&gt; 48            chrX     18173</span></span>
-<span><span class="co">#&gt; 49            chrY      4128</span></span></code></pre></div>
-<p>Next we create a column representing the transcript_id with <code>mutate</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">exons</span> <span class="op">&lt;-</span> <span class="va">exons</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>tx_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">sub</a></span><span class="op">(</span><span class="st">"_exon.*"</span>, <span class="st">""</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>To find all GWAS SNPs that overlap exons, we use <code>join_overlap_inner</code>. This will create a new <em>GRanges</em> with the coordinates of SNPs that overlap exons, as well as metadata from both objects.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">olap</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/overlap-joins.html">join_overlap_inner</a></span><span class="op">(</span><span class="va">gwas</span>, <span class="va">exons</span><span class="op">)</span></span>
-<span><span class="va">olap</span></span>
-<span><span class="co">#&gt; GRanges object with 3439 ranges and 4 metadata columns:</span></span>
-<span><span class="co">#&gt;          seqnames    ranges strand |      name.x                 name.y     score</span></span>
-<span><span class="co">#&gt;             &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt;            &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt;      [1]     chr1   1079198      * |  rs11260603 NR_038869_exon_2_0_c..         0</span></span>
-<span><span class="co">#&gt;      [2]     chr1   1247494      * |     rs12103 NM_001256456_exon_1_..         0</span></span>
-<span><span class="co">#&gt;      [3]     chr1   1247494      * |     rs12103 NM_001256460_exon_1_..         0</span></span>
-<span><span class="co">#&gt;      [4]     chr1   1247494      * |     rs12103 NM_001256462_exon_1_..         0</span></span>
-<span><span class="co">#&gt;      [5]     chr1   1247494      * |     rs12103 NM_001256463_exon_1_..         0</span></span>
-<span><span class="co">#&gt;      ...      ...       ...    ... .         ...                    ...       ...</span></span>
-<span><span class="co">#&gt;   [3435]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0</span></span>
-<span><span class="co">#&gt;   [3436]     chrX 153764217      * |   rs1050828 NM_000402_exon_9_0_c..         0</span></span>
-<span><span class="co">#&gt;   [3437]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0</span></span>
-<span><span class="co">#&gt;   [3438]     chrX 153764217      * |   rs1050828 NM_000402_exon_9_0_c..         0</span></span>
-<span><span class="co">#&gt;   [3439]     chrX 153764217      * |   rs1050828 NM_001042351_exon_9_..         0</span></span>
-<span><span class="co">#&gt;                 tx_id</span></span>
-<span><span class="co">#&gt;           &lt;character&gt;</span></span>
-<span><span class="co">#&gt;      [1]    NR_038869</span></span>
-<span><span class="co">#&gt;      [2] NM_001256456</span></span>
-<span><span class="co">#&gt;      [3] NM_001256460</span></span>
-<span><span class="co">#&gt;      [4] NM_001256462</span></span>
-<span><span class="co">#&gt;      [5] NM_001256463</span></span>
-<span><span class="co">#&gt;      ...          ...</span></span>
-<span><span class="co">#&gt;   [3435] NM_001042351</span></span>
-<span><span class="co">#&gt;   [3436]    NM_000402</span></span>
-<span><span class="co">#&gt;   [3437] NM_001042351</span></span>
-<span><span class="co">#&gt;   [3438]    NM_000402</span></span>
-<span><span class="co">#&gt;   [3439] NM_001042351</span></span>
-<span><span class="co">#&gt;   -------</span></span>
-<span><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
-<p>For each SNP we can count the number of times it overlaps a transcript.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">olap</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name.x</span>, <span class="va">tx_id</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="reference/n.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; DataFrame with 1619 rows and 3 columns</span></span>
-<span><span class="co">#&gt;           name.x        tx_id         n</span></span>
-<span><span class="co">#&gt;      &lt;character&gt;  &lt;character&gt; &lt;integer&gt;</span></span>
-<span><span class="co">#&gt; 1     rs10043775 NM_001271723         1</span></span>
-<span><span class="co">#&gt; 2     rs10043775    NM_030793         1</span></span>
-<span><span class="co">#&gt; 3        rs10078 NM_001242412         1</span></span>
-<span><span class="co">#&gt; 4        rs10078    NM_020731         1</span></span>
-<span><span class="co">#&gt; 5        rs10089    NM_001046         1</span></span>
-<span><span class="co">#&gt; ...          ...          ...       ...</span></span>
-<span><span class="co">#&gt; 1615   rs9906595 NM_001008777         1</span></span>
-<span><span class="co">#&gt; 1616      rs9948    NM_017623         1</span></span>
-<span><span class="co">#&gt; 1617      rs9948    NM_199078         1</span></span>
-<span><span class="co">#&gt; 1618    rs995030    NM_000899         4</span></span>
-<span><span class="co">#&gt; 1619    rs995030    NM_003994         4</span></span></code></pre></div>
-<p>We can also generate 2bp splice sites on either side of the exon using <code>flank_left</code> and <code>flank_right</code>. We add a column indicating the side of flanking for illustrative purposes. The <code>interweave</code> function pairs the left and right ranges objects.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">left_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ranges-flank.html">flank_left</a></span><span class="op">(</span><span class="va">exons</span>, <span class="fl">2L</span><span class="op">)</span></span>
-<span><span class="va">right_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ranges-flank.html">flank_right</a></span><span class="op">(</span><span class="va">exons</span>, <span class="fl">2L</span><span class="op">)</span></span>
-<span><span class="va">all_ss</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ranges-interweave.html">interweave</a></span><span class="op">(</span><span class="va">left_ss</span>, <span class="va">right_ss</span>, .id <span class="op">=</span> <span class="st">"side"</span><span class="op">)</span></span>
-<span><span class="va">all_ss</span></span>
-<span><span class="co">#&gt; GRanges object with 919504 ranges and 4 metadata columns:</span></span>
-<span><span class="co">#&gt;            seqnames            ranges strand |                   name     score</span></span>
-<span><span class="co">#&gt;               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; |            &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">#&gt;        [1]     chr1       11872-11873      + | NR_046018_exon_0_0_c..         0</span></span>
-<span><span class="co">#&gt;        [2]     chr1       12228-12229      + | NR_046018_exon_0_0_c..         0</span></span>
-<span><span class="co">#&gt;        [3]     chr1       12611-12612      + | NR_046018_exon_1_0_c..         0</span></span>
-<span><span class="co">#&gt;        [4]     chr1       12722-12723      + | NR_046018_exon_1_0_c..         0</span></span>
-<span><span class="co">#&gt;        [5]     chr1       13219-13220      + | NR_046018_exon_2_0_c..         0</span></span>
-<span><span class="co">#&gt;        ...      ...               ...    ... .                    ...       ...</span></span>
-<span><span class="co">#&gt;   [919500]     chrY 59340279-59340280      + | NM_002186_exon_7_0_c..         0</span></span>
-<span><span class="co">#&gt;   [919501]     chrY 59342485-59342486      + | NM_002186_exon_8_0_c..         0</span></span>
-<span><span class="co">#&gt;   [919502]     chrY 59343489-59343490      + | NM_002186_exon_8_0_c..         0</span></span>
-<span><span class="co">#&gt;   [919503]     chrY 59342485-59342486      + | NM_176786_exon_8_0_c..         0</span></span>
-<span><span class="co">#&gt;   [919504]     chrY 59343489-59343490      + | NM_176786_exon_8_0_c..         0</span></span>
-<span><span class="co">#&gt;                  tx_id        side</span></span>
-<span><span class="co">#&gt;            &lt;character&gt; &lt;character&gt;</span></span>
-<span><span class="co">#&gt;        [1]   NR_046018        left</span></span>
-<span><span class="co">#&gt;        [2]   NR_046018       right</span></span>
-<span><span class="co">#&gt;        [3]   NR_046018        left</span></span>
-<span><span class="co">#&gt;        [4]   NR_046018       right</span></span>
-<span><span class="co">#&gt;        [5]   NR_046018        left</span></span>
-<span><span class="co">#&gt;        ...         ...         ...</span></span>
-<span><span class="co">#&gt;   [919500]   NM_002186       right</span></span>
-<span><span class="co">#&gt;   [919501]   NM_002186        left</span></span>
-<span><span class="co">#&gt;   [919502]   NM_002186       right</span></span>
-<span><span class="co">#&gt;   [919503]   NM_176786        left</span></span>
-<span><span class="co">#&gt;   [919504]   NM_176786       right</span></span>
-<span><span class="co">#&gt;   -------</span></span>
-<span><span class="co">#&gt;   seqinfo: 93 sequences from an unspecified genome; no seqlengths</span></span></code></pre></div>
-</div>
-<div class="section level1">
 <h1 id="learning-more">Learning more<a class="anchor" aria-label="anchor" href="#learning-more"></a>
 </h1>
+<p>In addition to the two package vignettes, see the following for more informtion:</p>
 <ul>
-<li><p>The <a href="https://sa-lee.github.io/fluentGenomics" class="external-link"><em>fluentGenomics</em> workflow</a> package shows you how to combine differential expression genes and differential chromatin accessibility peaks using plyranges. It extends the <a href="https://github.com/mikelove/plyrangesTximetaCaseStudy" class="external-link">case study</a> by Michael Love for using plyranges with <a href="https://bioconductor.org/packages/release/bioc/html/tximeta.html" class="external-link">tximeta</a>.</p></li>
-<li><p>The <a href="https://github.com/sa-lee/plyrangesWorkshops" class="external-link">extended vignette in the plyrangesWorkshops package</a> has a detailed walk through of using plyranges for coverage analysis.</p></li>
-<li><p>The <a href="https://bioconductor.github.io/BiocWorkshops/fluent-genomic-data-analysis-with-plyranges.html" class="external-link">Bioc 2018 Workshop book</a> has worked examples of using <code>plyranges</code> to analyse publicly available genomics data.</p></li>
+<li><p>The <a href="https://sa-lee.github.io/fluentGenomics" class="external-link">fluentGenomics workflow</a> package shows how to combine differential gene expression and differential chromatin accessibility using <em>plyranges</em>.</p></li>
+<li><p>The <a href="https://github.com/sa-lee/plyrangesWorkshops" class="external-link">extended vignette in the plyrangesWorkshops package</a> has a detailed walk through of using <em>plyranges</em> for coverage analysis.</p></li>
+<li><p>The collection of genomic range applications including <em>plyranges</em>: <a href="https://tidyomics.github.io/tidy-ranges-tutorial" class="external-link">tidy ranges tutorial</a>.</p></li>
 </ul>
 </div>
 <div class="section level1">
 <h1 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h1>
-<p>If you found <code>plyranges</code> useful for your work please cite our <a href="http://dx.doi.org/10.1186/s13059-018-1597-8" class="external-link">paper</a>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="sc">@</span>ARTICLE{Lee2019,</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  title    <span class="ot">=</span> <span class="st">"plyranges: a grammar of genomic data transformation"</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  author   <span class="ot">=</span> <span class="st">"Lee, Stuart and Cook, Dianne and Lawrence, Michael"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  journal  <span class="ot">=</span> <span class="st">"Genome Biol."</span>,</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  volume   <span class="ot">=</span>  <span class="dv">20</span>,</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  number   <span class="ot">=</span>  <span class="dv">1</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>  pages    <span class="ot">=</span> <span class="st">"4"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>  month    <span class="ot">=</span>  jan,</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>  year     <span class="ot">=</span>  <span class="dv">2019</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>  url      <span class="ot">=</span> <span class="st">"http://dx.doi.org/10.1186/s13059-018-1597-8"</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>  doi      <span class="ot">=</span> <span class="st">"10.1186/s13059-018-1597-8"</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>  pmc      <span class="ot">=</span> <span class="st">"PMC6320618"</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>}</span></code></pre></div>
+<p>If you found <em>plyranges</em> useful for your work please cite our <a href="http://doi.org/10.1186/s13059-018-1597-8" class="external-link">paper</a>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="sc">@</span>ARTICLE{Lee2019,</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  title    <span class="ot">=</span> <span class="st">"plyranges: a grammar of genomic data transformation"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  author   <span class="ot">=</span> <span class="st">"Lee, Stuart and Cook, Dianne and Lawrence, Michael"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  journal  <span class="ot">=</span> <span class="st">"Genome Biol."</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  volume   <span class="ot">=</span>  <span class="dv">20</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  number   <span class="ot">=</span>  <span class="dv">1</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  pages    <span class="ot">=</span> <span class="st">"4"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  month    <span class="ot">=</span>  jan,</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  year     <span class="ot">=</span>  <span class="dv">2019</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  url      <span class="ot">=</span> <span class="st">"http://dx.doi.org/10.1186/s13059-018-1597-8"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  doi      <span class="ot">=</span> <span class="st">"10.1186/s13059-018-1597-8"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  pmc      <span class="ot">=</span> <span class="st">"PMC6320618"</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 <div class="section level1">
 <h1 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>

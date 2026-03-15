@@ -1,9 +1,7 @@
 # Compute the number of ranges in each group.
 
-This function should only be used within
-[`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html),
-[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) and
-[`filter()`](https://dplyr.tidyverse.org/reference/filter.html).
+This function should only be used within `summarise()`, `mutate()` and
+[`filter()`](https://rdrr.io/r/stats/filter.html).
 
 ## Usage
 

@@ -2,9 +2,7 @@
 
 The function `group_by` takes a Ranges object and defines groups by one
 or more variables. Operations are then performed on the Ranges by their
-"group".
-[`ungroup()`](https://dplyr.tidyverse.org/reference/group_by.html)
-removes grouping.
+"group". `ungroup()` removes grouping.
 
 ## Usage
 
@@ -36,10 +34,8 @@ groups(x)
 - add:
 
   if `.data` is already a GroupedRanges object, when add = FALSE the
-  (default),
-  [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)
-  will override existing groups. If add = TRUE, additional groups will
-  be added.
+  (default), `group_by()` will override existing groups. If add = TRUE,
+  additional groups will be added.
 
 - x:
 
@@ -47,23 +43,19 @@ groups(x)
 
 ## Value
 
-The [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)
-function will return a GroupedRanges object. These have the same
-appearance as a regular Ranges object but with an additional groups
-slot.
+The `group_by()` function will return a GroupedRanges object. These have
+the same appearance as a regular Ranges object but with an additional
+groups slot.
 
 ## Details
 
-[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html)
-creates a new object of class `GroupedGenomicRanges` if the input is a
-`GRanges` object or an object of class `GroupedIntegerRanges` if the
-input is a `IRanges` object. Both of these classes contain a slot called
-`groups` corresponding to the names of grouping variables. They also
-inherit from their parent classes, `Ranges` and `GenomicRanges`
-respectively.
-[`ungroup()`](https://dplyr.tidyverse.org/reference/group_by.html)
-removes the grouping and will return either a `GRanges` or `IRanges`
-object.
+`group_by()` creates a new object of class `GroupedGenomicRanges` if the
+input is a `GRanges` object or an object of class `GroupedIntegerRanges`
+if the input is a `IRanges` object. Both of these classes contain a slot
+called `groups` corresponding to the names of grouping variables. They
+also inherit from their parent classes, `Ranges` and `GenomicRanges`
+respectively. `ungroup()` removes the grouping and will return either a
+`GRanges` or `IRanges` object.
 
 ## Accessors
 

@@ -32,7 +32,7 @@ a Ranges object with modified start or end (or both) coordinates
 ## See also
 
 [`anchor()`](https://tidyomics.github.io/plyranges/reference/ranges-anchor.md),
-[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html)
+`mutate()`
 
 ## Examples
 

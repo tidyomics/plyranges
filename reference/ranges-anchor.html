@@ -23,6 +23,7 @@ to be held fixed."><meta property="og:image" content="https://tidyomics.github.i
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes"><li><a class="dropdown-item" href="../articles/an-introduction.html">Introduction to plyranges</a></li>
+    <li><a class="dropdown-item" href="../articles/more-examples.html">Additional examples of plyranges</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/tidyomics/plyranges"><span class="fa fa-github fa-lg"></span></a></li>
@@ -149,7 +150,7 @@ It will be set to one of <code>c("start", "end", "center")</code> for an
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]        10        14         5</span>
 <span class="r-in"><span><span class="fu">anchor</span><span class="op">(</span><span class="va">rng_by_start</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "start"</span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">rng_by_start</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mutate</span><span class="op">(</span><span class="va">rng_by_start</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> IRanges object with 10 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            start       end     width</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        &lt;integer&gt; &lt;integer&gt; &lt;integer&gt;</span>
@@ -184,7 +185,7 @@ It will be set to one of <code>c("start", "end", "center")</code> for an
 <span class="r-out co"><span class="r-pr">#&gt;</span>   [10]     chr1     10-14      +</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="va">rng_by_5p</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">mutate</span><span class="op">(</span><span class="va">rng_by_5p</span>, width <span class="op">=</span> <span class="fl">3L</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 10 ranges and 0 metadata columns:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        seqnames    ranges strand</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt;</span>

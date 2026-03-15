@@ -20,17 +20,14 @@ objects.
 - Modify genomic regions while fixing the start/end/center coordinates
   with the `anchors()` family of functions.
 
-- Sort genomic ranges with
-  [`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html).
+- Sort genomic ranges with `arrange()`.
 
-- Modify, subset, and aggregate genomic data with the
-  [`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html),
-  [`filter()`](https://dplyr.tidyverse.org/reference/filter.html), and
-  [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)functions.
+- Modify, subset, and aggregate genomic data with the `mutate()`,
+  [`filter()`](https://rdrr.io/r/stats/filter.html), and
+  `summarise()`functions.
 
 - Any of the above operations can be performed on partitions of the data
-  with
-  [`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html).
+  with `group_by()`.
 
 - Find nearest neighbour genomic regions with the
   [`join_nearest()`](https://tidyomics.github.io/plyranges/reference/ranges-nearest.md)

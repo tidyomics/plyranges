@@ -19,6 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes"><li><a class="dropdown-item" href="../articles/an-introduction.html">Introduction to plyranges</a></li>
+    <li><a class="dropdown-item" href="../articles/more-examples.html">Additional examples of plyranges</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/tidyomics/plyranges"><span class="fa fa-github fa-lg"></span></a></li>
@@ -92,7 +93,7 @@ as an integer greater than zero, accounting for the maximum gap.</p></dd>
 <span class="r-in"><span>             <span class="fu"><a href="ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">subject</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">2</span><span class="op">:</span><span class="fl">6</span>, width <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">7</span>, label <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>             <span class="fu"><a href="ranges-construct.html">as_iranges</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">query</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>n_olap <span class="op">=</span> <span class="fu">count_overlaps</span><span class="op">(</span><span class="va">.</span>, <span class="va">subject</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="va">query</span> <span class="op"><a href="pipe.html">%&gt;%</a></span> <span class="fu">mutate</span><span class="op">(</span>n_olap <span class="op">=</span> <span class="fu">count_overlaps</span><span class="op">(</span><span class="va">.</span>, <span class="va">subject</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                 n_olap_within <span class="op">=</span> <span class="fu">count_overlaps_within</span><span class="op">(</span><span class="va">.</span>, <span class="va">subject</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> unable to find an inherited method for function ‘countOverlaps’ for signature ‘query = "IRanges", subject = "standardGeneric"’</span>
 <span class="r-in"><span></span></span>

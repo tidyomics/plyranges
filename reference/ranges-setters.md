@@ -48,6 +48,5 @@ a Ranges object
 
 ## Details
 
-These methods are used internally in
-[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) to
-modify core columns in Ranges objects.
+These methods are used internally in `mutate()` to modify core columns
+in Ranges objects.

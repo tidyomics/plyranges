@@ -30,24 +30,22 @@ A DeferredGenomicRanges object
 ## Details
 
 Reading a BAM file is deferred until an action such as using
-[`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html) or
-[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html) occurs.
-If paired is set to TRUE, when alignments are loaded, the GRanges has
-two additional columns called read_pair_id and read_pair_group
-corresponding to paired reads and is grouped by the read_pair_group.
+`summarise()` or `mutate()` occurs. If paired is set to TRUE, when
+alignments are loaded, the GRanges has two additional columns called
+read_pair_id and read_pair_group corresponding to paired reads and is
+grouped by the read_pair_group.
 
 Certain verbs have different behaviour, after using `read_bam()`.
 
-For [`select()`](https://dplyr.tidyverse.org/reference/select.html)
-valid columns are the fields available in the BAM file. Valid entries
-are qname (QNAME), flag (FLAG), rname (RNAME), strand, pos (POS), qwidth
-(width of query), mapq (MAPQ), cigar (CIGAR), mrnm (RNEXT), mpos
-(PNEXT), isize (TLEN), seq (SEQ), and qual (QUAL). Any two character
-tags in the BAM file are also valid.
+For `select()` valid columns are the fields available in the BAM file.
+Valid entries are qname (QNAME), flag (FLAG), rname (RNAME), strand, pos
+(POS), qwidth (width of query), mapq (MAPQ), cigar (CIGAR), mrnm
+(RNEXT), mpos (PNEXT), isize (TLEN), seq (SEQ), and qual (QUAL). Any two
+character tags in the BAM file are also valid.
 
-For [`filter()`](https://dplyr.tidyverse.org/reference/filter.html) the
-following fields are valid, to select the FALSE option place `!` in
-front of the field:
+For [`filter()`](https://rdrr.io/r/stats/filter.html) the following
+fields are valid, to select the FALSE option place `!` in front of the
+field:
 
 - `is_paired` Select either unpaired (FALSE) or paired (TRUE) reads.
 

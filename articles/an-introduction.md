@@ -872,7 +872,7 @@ realistic analyses than the ones covered here:
   here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
   details about the overall philosophy and design of plyranges.
 
-## Appendix
+## Session information
 
 ``` r
 

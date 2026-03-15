@@ -19,6 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes"><li><a class="dropdown-item" href="../articles/an-introduction.html">Introduction to plyranges</a></li>
+    <li><a class="dropdown-item" href="../articles/more-examples.html">Additional examples of plyranges</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/tidyomics/plyranges"><span class="fa fa-github fa-lg"></span></a></li>
@@ -41,7 +42,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'Ranges'</span></span>
-<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">.data</span>, var <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, name <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pull</span><span class="op">(</span><span class="va">.data</span>, var <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, name <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -88,28 +89,28 @@ names for a named vector. Specified in a similar manner as <code>var</code>.</p>
 <span class="r-in"><span><span class="va">rng</span> <span class="op">&lt;-</span> <span class="fu"><a href="ranges-construct.html">as_granges</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Pull parts of the range</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">start</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="va">start</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="r-in"><span><span class="co"># equivalent to start(rng)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Pull by column name</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">gc</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="va">gc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.6943507 0.4122370 0.3277259 0.5725648 0.9669991 0.6617790 0.6246977</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.8566530 0.7747789 0.8340271</span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">score</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="va">score</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0 2 2 4 5 0 2 3 1 1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Pull by position (positive from left, negative from right)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="fl">1</span><span class="op">)</span>    <span class="co"># First metadata column</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="fl">1</span><span class="op">)</span>    <span class="co"># First metadata column</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2  3  4  5  6  7  8  9 10</span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>   <span class="co"># Last metadata column (default)</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>   <span class="co"># Last metadata column (default)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0 2 2 4 5 0 2 3 1 1</span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># Second to last metadata column</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="op">-</span><span class="fl">2</span><span class="op">)</span>   <span class="co"># Second to last metadata column</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 0.6943507 0.4122370 0.3277259 0.5725648 0.9669991 0.6617790 0.6246977</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [8] 0.8566530 0.7747789 0.8340271</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Pull with names</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">rng</span>, <span class="va">score</span>, name <span class="op">=</span> <span class="va">gc</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">pull</span><span class="op">(</span><span class="va">rng</span>, <span class="va">score</span>, name <span class="op">=</span> <span class="va">gc</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.694350712001324 0.412237035110593 0.327725868672132  0.57256476697512 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 0                 2                 2                 4 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.966999084455892 0.661779022077098 0.624697716906667 0.856653042603284 </span>
