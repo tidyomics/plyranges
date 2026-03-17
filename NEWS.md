@@ -1,3 +1,9 @@
+# plyranges 1.31.5
+
+* added `distance=TRUE` option for `join_overlap_*`
+* added `join_mcols_left(x,y)` for GRanges `x` and
+  tabular `y`
+
 # plyranges 1.27.6
 
 * added `pull()` method for Ranges objects that extracts a single column as a vector
