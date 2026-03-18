@@ -4,28 +4,129 @@
 \alias{slice.Ranges}
 \alias{slice.GroupedGenomicRanges}
 \alias{slice.GroupedIntegerRanges}
-\title{Choose rows by their position}
+\alias{slice_head.Ranges}
+\alias{slice_head.GroupedGenomicRanges}
+\alias{slice_head.GroupedIntegerRanges}
+\alias{slice_tail.Ranges}
+\alias{slice_tail.GroupedGenomicRanges}
+\alias{slice_tail.GroupedIntegerRanges}
+\alias{slice_sample.Ranges}
+\alias{slice_sample.GroupedGenomicRanges}
+\alias{slice_sample.GroupedIntegerRanges}
+\alias{slice_min.Ranges}
+\alias{slice_min.GroupedGenomicRanges}
+\alias{slice_min.GroupedIntegerRanges}
+\alias{slice_max.Ranges}
+\alias{slice_max.GroupedGenomicRanges}
+\alias{slice_max.GroupedIntegerRanges}
+\title{Choose ranges by their position}
 \usage{
 \method{slice}{Ranges}(.data, ..., .preserve = FALSE)
 
 \method{slice}{GroupedGenomicRanges}(.data, ..., .preserve = FALSE)
 
 \method{slice}{GroupedIntegerRanges}(.data, ..., .preserve = FALSE)
+
+\method{slice_head}{Ranges}(.data, ..., n, prop, .preserve = FALSE)
+
+\method{slice_head}{GroupedGenomicRanges}(.data, ..., n, prop, .preserve = FALSE)
+
+\method{slice_head}{GroupedIntegerRanges}(.data, ..., n, prop, .preserve = FALSE)
+
+\method{slice_tail}{Ranges}(.data, ..., n, prop, .preserve = FALSE)
+
+\method{slice_tail}{GroupedGenomicRanges}(.data, ..., n, prop, .preserve = FALSE)
+
+\method{slice_tail}{GroupedIntegerRanges}(.data, ..., n, prop, .preserve = FALSE)
+
+\method{slice_sample}{Ranges}(
+  .data,
+  ...,
+  n,
+  prop,
+  weight_by = NULL,
+  replace = FALSE,
+  .preserve = FALSE
+)
+
+\method{slice_sample}{GroupedGenomicRanges}(
+  .data,
+  ...,
+  n,
+  prop,
+  weight_by = NULL,
+  replace = FALSE,
+  .preserve = FALSE
+)
+
+\method{slice_sample}{GroupedIntegerRanges}(
+  .data,
+  ...,
+  n,
+  prop,
+  weight_by = NULL,
+  replace = FALSE,
+  .preserve = FALSE
+)
+
+\method{slice_min}{Ranges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+
+\method{slice_min}{GroupedGenomicRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+
+\method{slice_min}{GroupedIntegerRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+
+\method{slice_max}{Ranges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+
+\method{slice_max}{GroupedGenomicRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+
+\method{slice_max}{GroupedIntegerRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
 }
 \arguments{
-\item{.data}{a \code{Ranges} object}
+\item{.data}{a \code{Ranges} object.}
 
-\item{...}{Integer row values indicating rows to keep. If \code{.data} has
-been grouped via \code{\link[=group_by.GenomicRanges]{group_by.GenomicRanges()}}, then the positions are selected within each group.}
+\item{...}{<\code{\link[rlang:args_data_masking]{data-masking}}> Integer row values
+indicating positions to keep.  Only used by \code{slice()}; ignored elsewhere.}
 
-\item{.preserve}{when FALSE (the default) the grouping structure is
-recomputed, otherwise it is kept as is. Currently ignored.}
+\item{.preserve}{Ignored; retained for compatibility with the dplyr generic.}
+
+\item{n}{Number of ranges to select.  Mutually exclusive with \code{prop}.
+For \code{slice_min()} and \code{slice_max()}, negative values are not supported.}
+
+\item{prop}{Fraction of ranges to select, in \verb{(0, 1]}.  Mutually exclusive
+with \code{n}.}
+
+\item{weight_by}{<\code{\link[rlang:args_data_masking]{data-masking}}> Unquoted name
+of a non-negative numeric metadata column used as sampling weights.  Used
+by \code{slice_sample()}.}
+
+\item{replace}{Should sampling be with replacement?  Default \code{FALSE}.  Used
+by \code{slice_sample()}.}
+
+\item{order_by}{<\code{\link[rlang:args_data_masking]{data-masking}}> Unquoted name
+of a numeric metadata column to order by.  Used by \code{slice_min()} and
+\code{slice_max()}.}
+
+\item{with_ties}{If \code{TRUE} (the default), all ranges tied at the boundary
+rank are kept, which may return more than \code{n} ranges.  Set to \code{FALSE} to
+return exactly \code{n}.  Used by \code{slice_min()} and \code{slice_max()}.}
 }
 \value{
-a GRanges object
+A \code{GRanges} (or \code{IRanges}) object of the same class as \code{.data}, with
+grouping structure re-applied when \code{.data} was grouped.
 }
 \description{
-Choose rows by their position
+The \code{slice} family of functions let you select ranges by position.  They
+follow the same conventions as their dplyr counterparts for data frames:
+\itemize{
+\item \code{slice()} selects ranges by explicit integer position.
+\item \code{slice_head()} / \code{slice_tail()} select the first or last ranges.
+\item \code{slice_sample()} randomly selects ranges.
+\item \code{slice_min()} / \code{slice_max()} select ranges with the smallest or largest
+values of a metadata column.
+}
+
+All functions preserve grouping: when \code{.data} has been grouped with
+\code{\link[dplyr:group_by]{dplyr::group_by()}}, selection is performed within each group.
 }
 \examples{
 df <- data.frame(start = 1:10,
