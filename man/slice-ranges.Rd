@@ -27,23 +27,23 @@
 
 \method{slice}{GroupedIntegerRanges}(.data, ..., .preserve = FALSE)
 
-\method{slice_head}{Ranges}(.data, ..., n, prop, .preserve = FALSE)
+\method{slice_head}{Ranges}(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
 
-\method{slice_head}{GroupedGenomicRanges}(.data, ..., n, prop, .preserve = FALSE)
+\method{slice_head}{GroupedGenomicRanges}(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
 
-\method{slice_head}{GroupedIntegerRanges}(.data, ..., n, prop, .preserve = FALSE)
+\method{slice_head}{GroupedIntegerRanges}(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
 
-\method{slice_tail}{Ranges}(.data, ..., n, prop, .preserve = FALSE)
+\method{slice_tail}{Ranges}(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
 
-\method{slice_tail}{GroupedGenomicRanges}(.data, ..., n, prop, .preserve = FALSE)
+\method{slice_tail}{GroupedGenomicRanges}(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
 
-\method{slice_tail}{GroupedIntegerRanges}(.data, ..., n, prop, .preserve = FALSE)
+\method{slice_tail}{GroupedIntegerRanges}(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
 
 \method{slice_sample}{Ranges}(
   .data,
   ...,
-  n,
-  prop,
+  n = NULL,
+  prop = NULL,
   weight_by = NULL,
   replace = FALSE,
   .preserve = FALSE
@@ -52,8 +52,8 @@
 \method{slice_sample}{GroupedGenomicRanges}(
   .data,
   ...,
-  n,
-  prop,
+  n = NULL,
+  prop = NULL,
   weight_by = NULL,
   replace = FALSE,
   .preserve = FALSE
@@ -62,24 +62,66 @@
 \method{slice_sample}{GroupedIntegerRanges}(
   .data,
   ...,
-  n,
-  prop,
+  n = NULL,
+  prop = NULL,
   weight_by = NULL,
   replace = FALSE,
   .preserve = FALSE
 )
 
-\method{slice_min}{Ranges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+\method{slice_min}{Ranges}(
+  .data,
+  order_by,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 
-\method{slice_min}{GroupedGenomicRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+\method{slice_min}{GroupedGenomicRanges}(
+  .data,
+  order_by,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 
-\method{slice_min}{GroupedIntegerRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+\method{slice_min}{GroupedIntegerRanges}(
+  .data,
+  order_by,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 
-\method{slice_max}{Ranges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+\method{slice_max}{Ranges}(
+  .data,
+  order_by,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 
-\method{slice_max}{GroupedGenomicRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+\method{slice_max}{GroupedGenomicRanges}(
+  .data,
+  order_by,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 
-\method{slice_max}{GroupedIntegerRanges}(.data, order_by, n, prop, with_ties = TRUE, .preserve = FALSE)
+\method{slice_max}{GroupedIntegerRanges}(
+  .data,
+  order_by,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 }
 \arguments{
 \item{.data}{a \code{Ranges} object.}
