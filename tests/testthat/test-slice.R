@@ -53,9 +53,11 @@ test_that("groupwise slice produces expected results", {
 
   spl <- split(rng$gc, strand(rng))
   target <- dplyr::slice_max(by_strand, gc) %>% ungroup()
-  expect_identical(target$gc, sapply(spl[strand(target)], max) %>% unname())
+  idx <- as.character(strand(target))
+  expect_identical(target$gc, sapply(spl[idx], max) %>% unname())
   target <- dplyr::slice_min(by_strand, gc) %>% ungroup()
-  expect_identical(target$gc, sapply(spl[strand(target)], min) %>% unname())
+  idx <- as.character(strand(target))
+  expect_identical(target$gc, sapply(spl[idx], min) %>% unname())
 
   set.seed(123)
   target <- dplyr::slice_sample(by_strand, prop=.5)
