@@ -73,7 +73,22 @@
 - [`slice(`*`<Ranges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
   [`slice(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
   [`slice(`*`<GroupedIntegerRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
-  : Choose rows by their position
+  [`slice_head(`*`<Ranges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_head(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_head(`*`<GroupedIntegerRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_tail(`*`<Ranges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_tail(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_tail(`*`<GroupedIntegerRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_sample(`*`<Ranges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_sample(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_sample(`*`<GroupedIntegerRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_min(`*`<Ranges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_min(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_min(`*`<GroupedIntegerRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_max(`*`<Ranges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_max(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  [`slice_max(`*`<GroupedIntegerRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/slice-ranges.md)
+  : Choose ranges by their position
 
 - [`group_by(`*`<GenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/group_by-ranges.md)
   [`ungroup(`*`<GroupedGenomicRanges>`*`)`](https://tidyomics.github.io/plyranges/reference/group_by-ranges.md)

@@ -1,6 +1,20 @@
-# Choose rows by their position
+# Choose ranges by their position
 
-Choose rows by their position
+The `slice` family of functions let you select ranges by position. They
+follow the same conventions as their dplyr counterparts for data frames:
+
+- `slice()` selects ranges by explicit integer position.
+
+- `slice_head()` / `slice_tail()` select the first or last ranges.
+
+- `slice_sample()` randomly selects ranges.
+
+- `slice_min()` / `slice_max()` select ranges with the smallest or
+  largest values of a metadata column.
+
+All functions preserve grouping: when `.data` has been grouped with
+[`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html),
+selection is performed within each group.
 
 ## Usage
 
@@ -13,29 +27,178 @@ slice(.data, ..., .preserve = FALSE)
 
 # S3 method for class 'GroupedIntegerRanges'
 slice(.data, ..., .preserve = FALSE)
+
+# S3 method for class 'Ranges'
+slice_head(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
+
+# S3 method for class 'GroupedGenomicRanges'
+slice_head(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
+
+# S3 method for class 'GroupedIntegerRanges'
+slice_head(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
+
+# S3 method for class 'Ranges'
+slice_tail(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
+
+# S3 method for class 'GroupedGenomicRanges'
+slice_tail(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
+
+# S3 method for class 'GroupedIntegerRanges'
+slice_tail(.data, ..., n = NULL, prop = NULL, .preserve = FALSE)
+
+# S3 method for class 'Ranges'
+slice_sample(
+  .data,
+  ...,
+  n = NULL,
+  prop = NULL,
+  weight_by = NULL,
+  replace = FALSE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'GroupedGenomicRanges'
+slice_sample(
+  .data,
+  ...,
+  n = NULL,
+  prop = NULL,
+  weight_by = NULL,
+  replace = FALSE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'GroupedIntegerRanges'
+slice_sample(
+  .data,
+  ...,
+  n = NULL,
+  prop = NULL,
+  weight_by = NULL,
+  replace = FALSE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'Ranges'
+slice_min(
+  .data,
+  order_by,
+  ...,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'GroupedGenomicRanges'
+slice_min(
+  .data,
+  order_by,
+  ...,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'GroupedIntegerRanges'
+slice_min(
+  .data,
+  order_by,
+  ...,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'Ranges'
+slice_max(
+  .data,
+  order_by,
+  ...,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'GroupedGenomicRanges'
+slice_max(
+  .data,
+  order_by,
+  ...,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
+
+# S3 method for class 'GroupedIntegerRanges'
+slice_max(
+  .data,
+  order_by,
+  ...,
+  n = NULL,
+  prop = NULL,
+  with_ties = TRUE,
+  .preserve = FALSE
+)
 ```
 
 ## Arguments
 
 - .data:
 
-  a `Ranges` object
+  a `Ranges` object.
 
 - ...:
 
-  Integer row values indicating rows to keep. If `.data` has been
-  grouped via
-  [`group_by.GenomicRanges()`](https://tidyomics.github.io/plyranges/reference/group_by-ranges.md),
-  then the positions are selected within each group.
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
+  Integer row values indicating positions to keep. Only used by
+  `slice()`; ignored elsewhere.
 
 - .preserve:
 
-  when FALSE (the default) the grouping structure is recomputed,
-  otherwise it is kept as is. Currently ignored.
+  Ignored; retained for compatibility with the dplyr generic.
+
+- n:
+
+  Number of ranges to select. Mutually exclusive with `prop`. For
+  `slice_min()` and `slice_max()`, negative values are not supported.
+
+- prop:
+
+  Fraction of ranges to select, in `(0, 1]`. Mutually exclusive with
+  `n`.
+
+- weight_by:
+
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
+  Unquoted name of a non-negative numeric metadata column used as
+  sampling weights. Used by `slice_sample()`.
+
+- replace:
+
+  Should sampling be with replacement? Default `FALSE`. Used by
+  `slice_sample()`.
+
+- order_by:
+
+  \<[`data-masking`](https://rlang.r-lib.org/reference/args_data_masking.html)\>
+  Unquoted name of a numeric metadata column to order by. Used by
+  `slice_min()` and `slice_max()`.
+
+- with_ties:
+
+  If `TRUE` (the default), all ranges tied at the boundary rank are
+  kept, which may return more than `n` ranges. Set to `FALSE` to return
+  exactly `n`. Used by `slice_min()` and `slice_max()`.
 
 ## Value
 
-a GRanges object
+A `GRanges` (or `IRanges`) object of the same class as `.data`, with
+grouping structure re-applied when `.data` was grouped.
 
 ## Examples
 
