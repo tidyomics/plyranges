@@ -241,7 +241,7 @@ slice_sample.GroupedIntegerRanges <- slice_sample.GroupedGenomicRanges
 #' @importFrom dplyr slice_min
 #' @method slice_min Ranges
 #' @export
-slice_min.Ranges <- function(.data, order_by, n = NULL, prop = NULL,
+slice_min.Ranges <- function(.data, order_by, ..., n = NULL, prop = NULL,
                              with_ties = TRUE, .preserve = FALSE) {
   order_quo <- rlang::enquo(order_by)
   inx <- minmax_index(.data, order_quo, n = n, prop = prop,
@@ -252,7 +252,7 @@ slice_min.Ranges <- function(.data, order_by, n = NULL, prop = NULL,
 #' @rdname slice-ranges
 #' @method slice_min GroupedGenomicRanges
 #' @export
-slice_min.GroupedGenomicRanges <- function(.data, order_by, n = NULL,
+slice_min.GroupedGenomicRanges <- function(.data, order_by, ..., n = NULL,
                                            prop = NULL, with_ties = TRUE,
                                            .preserve = FALSE) {
   order_quo <- rlang::enquo(order_by)
@@ -272,7 +272,7 @@ slice_min.GroupedIntegerRanges <- slice_min.GroupedGenomicRanges
 #' @importFrom dplyr slice_max
 #' @method slice_max Ranges
 #' @export
-slice_max.Ranges <- function(.data, order_by, n = NULL, prop = NULL,
+slice_max.Ranges <- function(.data, order_by, ..., n = NULL, prop = NULL,
                              with_ties = TRUE, .preserve = FALSE) {
   order_quo <- rlang::enquo(order_by)
   inx <- minmax_index(.data, order_quo, n = n, prop = prop,
@@ -283,7 +283,7 @@ slice_max.Ranges <- function(.data, order_by, n = NULL, prop = NULL,
 #' @rdname slice-ranges
 #' @method slice_max GroupedGenomicRanges
 #' @export
-slice_max.GroupedGenomicRanges <- function(.data, order_by, n = NULL,
+slice_max.GroupedGenomicRanges <- function(.data, order_by, ..., n = NULL,
                                            prop = NULL, with_ties = TRUE,
                                            .preserve = FALSE) {
   order_quo <- rlang::enquo(order_by)

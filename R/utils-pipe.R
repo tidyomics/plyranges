@@ -1,6 +1,6 @@
 #' Pipe operator
 #'
-#' See \link[magrittr:pipe]{%>%} for details.
+#' See _magrittr_ documentation for `%>%`` for details.
 #'
 #' @name %>%
 #' @rdname pipe

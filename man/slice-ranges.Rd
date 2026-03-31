@@ -72,6 +72,7 @@
 \method{slice_min}{Ranges}(
   .data,
   order_by,
+  ...,
   n = NULL,
   prop = NULL,
   with_ties = TRUE,
@@ -81,6 +82,7 @@
 \method{slice_min}{GroupedGenomicRanges}(
   .data,
   order_by,
+  ...,
   n = NULL,
   prop = NULL,
   with_ties = TRUE,
@@ -90,6 +92,7 @@
 \method{slice_min}{GroupedIntegerRanges}(
   .data,
   order_by,
+  ...,
   n = NULL,
   prop = NULL,
   with_ties = TRUE,
@@ -99,6 +102,7 @@
 \method{slice_max}{Ranges}(
   .data,
   order_by,
+  ...,
   n = NULL,
   prop = NULL,
   with_ties = TRUE,
@@ -108,6 +112,7 @@
 \method{slice_max}{GroupedGenomicRanges}(
   .data,
   order_by,
+  ...,
   n = NULL,
   prop = NULL,
   with_ties = TRUE,
@@ -117,6 +122,7 @@
 \method{slice_max}{GroupedIntegerRanges}(
   .data,
   order_by,
+  ...,
   n = NULL,
   prop = NULL,
   with_ties = TRUE,
