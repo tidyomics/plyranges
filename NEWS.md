@@ -1,3 +1,13 @@
+# plyranges 1.32.0 
+
+* added new functionality for `slice_*`, as in dplyr,
+  including head, tail, max, min and sample.
+  These include the dplyr arguments such as `n`,
+  `prop`, and `weight_by` (for sampling).
+* added `join_mcols_left(x,y)` for GRanges `x` and
+  tabular `y`
+* added `distance=TRUE` option for `join_overlap_*`
+
 # plyranges 1.31.5
 
 * added `distance=TRUE` option for `join_overlap_*`
