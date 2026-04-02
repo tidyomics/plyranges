@@ -298,7 +298,7 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] plyranges_1.31.6     dplyr_1.2.0          GenomicRanges_1.62.1
+    ## [1] plyranges_1.31.7     dplyr_1.2.0          GenomicRanges_1.62.1
     ## [4] Seqinfo_1.0.0        IRanges_2.44.0       S4Vectors_0.48.0    
     ## [7] BiocGenerics_0.56.0  generics_0.1.4       BiocStyle_2.38.0    
     ## 
@@ -319,7 +319,7 @@ sessionInfo()
     ## [27] yaml_2.3.12                 pillar_1.11.1              
     ## [29] pkgdown_2.2.0               crayon_1.5.3               
     ## [31] jquerylib_0.1.4             BiocParallel_1.44.0        
-    ## [33] DelayedArray_0.36.0         cachem_1.1.0               
+    ## [33] DelayedArray_0.36.1         cachem_1.1.0               
     ## [35] abind_1.4-8                 tidyselect_1.2.1           
     ## [37] digest_0.6.39               restfulr_0.0.16            
     ## [39] bookdown_0.46               fastmap_1.2.0              
