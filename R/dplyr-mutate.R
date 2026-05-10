@@ -22,29 +22,27 @@ mutate_mcols <- function(.data, .mutated) {
   }
 
   if (!all(idx_mcols)) {
-    if (is.null(mcols(.data))) {
-      mcols(.data) <- S4Vectors::DataFrame(.mutated[!idx_mcols])
-    } else {
-      mcols(.data) <- S4Vectors::DataFrame(list(mcols(.data), 
-                                                .mutated[!idx_mcols]))
-    }
+    mcol_list <- c(as.list(mcols(.data)), .mutated[!idx_mcols])
+    nm <- names(mcol_list)
+    mcols(.data) <- S4Vectors::DataFrame(mcol_list)
+    names(mcols(.data)) <- nm
   }
   .data
 }
 
 # PPA grouped mutate speedup, 2025
 mutate_mcols_grp <- function(.data, dots) {
-  
+
   # generate grouped df
   grps <- dplyr::group_vars(.data)
   df <- as.data.frame(dplyr::ungroup(.data))
   df <- dplyr::group_by(df,!!!rlang::syms(grps))
-  
+
   mcols(.data) <- dplyr::mutate(df, !!!dots) %>%
     dplyr::ungroup() %>%
     dplyr::select(-tidyselect::any_of(c("start", "end", "width", "seqnames", "strand"))) %>%
     as("DataFrame")
-  
+
   return(.data)
 }
 
@@ -77,21 +75,21 @@ mutate_rng <- function(.data, dots) {
   mutate_mcols(.data, .mutated)
 }
 
-# idea could simply dispatch to summarise here, and store 
+# idea could simply dispatch to summarise here, and store
 # list columns, if the length is smaller then we can repeat,
-# otherwise we try to expand 
+# otherwise we try to expand
 mutate_grp <- function(.data, dots) {
-  
+
   inx <- .group_rows(.data)
   rng <- unname(S4Vectors::split(.data@delegate, .data@group_indices))
   rng <- S4Vectors::endoapply(rng, function(x) {
-    mutate_rng(x, dots)    
+    mutate_rng(x, dots)
   })
-  
+
   rng <- unlist(rng)[BiocGenerics::order(unlist(inx))]
   new(class(.data),
-      delegate = rng, 
-      group_keys =  .data@group_keys, 
+      delegate = rng,
+      group_keys =  .data@group_keys,
       group_indices = .data@group_indices,
       n = .data@n )
 }
@@ -176,11 +174,11 @@ mutate.DelegatingIntegerRanges <- mutate.DelegatingGenomicRanges
 #' @method mutate GroupedGenomicRanges
 #' @export
 mutate.GroupedGenomicRanges <- function(.data, ...) {
-  
+
   dots <- set_dots_named(...)
   check_colnames(names(dots))
   core_cols <- names(dots) %in% c("start", "end", "width", "seqnames", "strand")
-  
+
   # if any S4 columns in mcols use plyranges group mutate
   if (any(sapply(mcols(.data), isS4))) {
     message(
