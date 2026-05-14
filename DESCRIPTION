@@ -10,6 +10,7 @@ Authors@R: c(
       person("Spencer", "Nystrom", role = c("ctb"), 
              comment = c(ORCID = "0000-0003-1000-1579")),
       person("Pierre-Paul", "Axisa", role=c("ctb")),
+      person("Stevie", "Pederson", role=c("ctb")),
       person("Michael", "Love", role = c("ctb","cre"),
              email = "michaelisaiahlove@gmail.com")
       )
