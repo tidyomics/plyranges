@@ -15,6 +15,8 @@
 
 - **Pierre-Paul Axisa**. Contributor.
 
+- **Stevie Pederson**. Contributor.
+
 - **Michael Love**. Contributor, maintainer.
 
 ## Citation

@@ -903,9 +903,9 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ##  [1] ggplot2_4.0.2        plyranges_1.31.7     dplyr_1.2.0         
+    ##  [1] ggplot2_4.0.3        plyranges_1.31.7     dplyr_1.2.1         
     ##  [4] GenomicRanges_1.62.1 Seqinfo_1.0.0        IRanges_2.44.0      
-    ##  [7] S4Vectors_0.48.0     BiocGenerics_0.56.0  generics_0.1.4      
+    ##  [7] S4Vectors_0.48.1     BiocGenerics_0.56.0  generics_0.1.4      
     ## [10] BiocStyle_2.38.0    
     ## 
     ## loaded via a namespace (and not attached):
@@ -913,11 +913,11 @@ sessionInfo()
     ##  [3] rjson_0.2.23                xfun_0.57                  
     ##  [5] bslib_0.10.0                htmlwidgets_1.6.4          
     ##  [7] Biobase_2.70.0              lattice_0.22-9             
-    ##  [9] vctrs_0.7.2                 tools_4.5.2                
-    ## [11] bitops_1.0-9                curl_7.0.0                 
+    ##  [9] vctrs_0.7.3                 tools_4.5.2                
+    ## [11] bitops_1.0-9                curl_7.1.0                 
     ## [13] parallel_4.5.2              tibble_3.3.1               
     ## [15] pkgconfig_2.0.3             Matrix_1.7-5               
-    ## [17] RColorBrewer_1.1-3          S7_0.2.1                   
+    ## [17] RColorBrewer_1.1-3          S7_0.2.2                   
     ## [19] desc_1.4.3                  cigarillo_1.0.0            
     ## [21] lifecycle_1.0.5             farver_2.1.2               
     ## [23] compiler_4.5.2              Rsamtools_2.26.0           
@@ -932,16 +932,16 @@ sessionInfo()
     ## [41] digest_0.6.39               restfulr_0.0.16            
     ## [43] bookdown_0.46               labeling_0.4.3             
     ## [45] fastmap_1.2.0               grid_4.5.2                 
-    ## [47] cli_3.6.5                   SparseArray_1.10.10        
-    ## [49] magrittr_2.0.4              S4Arrays_1.10.1            
+    ## [47] cli_3.6.6                   SparseArray_1.10.10        
+    ## [49] magrittr_2.0.5              S4Arrays_1.10.1            
     ## [51] XML_3.99-0.23               withr_3.0.2                
     ## [53] scales_1.4.0                rmarkdown_2.31             
     ## [55] XVector_0.50.0              httr_1.4.8                 
     ## [57] matrixStats_1.5.0           otel_0.2.0                 
     ## [59] ragg_1.5.2                  evaluate_1.0.5             
     ## [61] knitr_1.51                  BiocIO_1.20.0              
-    ## [63] rtracklayer_1.70.1          rlang_1.1.7                
-    ## [65] glue_1.8.0                  BiocManager_1.30.27        
+    ## [63] rtracklayer_1.70.1          rlang_1.2.0                
+    ## [65] glue_1.8.1                  BiocManager_1.30.27        
     ## [67] jsonlite_2.0.0              R6_2.6.1                   
     ## [69] MatrixGenerics_1.22.0       GenomicAlignments_1.46.0   
-    ## [71] systemfonts_1.3.2           fs_2.0.1
+    ## [71] systemfonts_1.3.2           fs_2.1.0
