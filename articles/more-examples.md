@@ -304,7 +304,7 @@ sessionInfo()
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.40.0 rjson_0.2.23               
-    ##  [3] xfun_0.57                   bslib_0.10.0               
+    ##  [3] xfun_0.58                   bslib_0.11.0               
     ##  [5] htmlwidgets_1.6.4           Biobase_2.70.0             
     ##  [7] lattice_0.22-9              vctrs_0.7.3                
     ##  [9] tools_4.5.2                 bitops_1.0-9               

@@ -16,7 +16,9 @@
 - [`bind_ranges()`](https://tidyomics.github.io/plyranges/reference/ranges-bind.md)
   : Combine Ranges by concatentating them together
 - [`tile_ranges()`](https://tidyomics.github.io/plyranges/reference/ranges-tile.md)
+  [`tile_ranges_directed()`](https://tidyomics.github.io/plyranges/reference/ranges-tile.md)
   [`slide_ranges()`](https://tidyomics.github.io/plyranges/reference/ranges-tile.md)
+  [`slide_ranges_directed()`](https://tidyomics.github.io/plyranges/reference/ranges-tile.md)
   : Slide or tile over a Ranges object
 
 ## Arithmetic

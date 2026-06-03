@@ -910,8 +910,8 @@ sessionInfo()
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.40.0 gtable_0.3.6               
-    ##  [3] rjson_0.2.23                xfun_0.57                  
-    ##  [5] bslib_0.10.0                htmlwidgets_1.6.4          
+    ##  [3] rjson_0.2.23                xfun_0.58                  
+    ##  [5] bslib_0.11.0                htmlwidgets_1.6.4          
     ##  [7] Biobase_2.70.0              lattice_0.22-9             
     ##  [9] vctrs_0.7.3                 tools_4.5.2                
     ## [11] bitops_1.0-9                curl_7.1.0                 
