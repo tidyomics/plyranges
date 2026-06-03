@@ -2,7 +2,7 @@ context("tile_ranges and slide_ranges")
 
 gr <- GRanges(
   seqnames = "1",
-  ranges   = IRanges(start = c(1, 101), width = c(30, 50)),
+  ranges   = IRanges(start = c(1, 101), width = c(60, 80)),
   strand   = c("+", "-")
 )
 

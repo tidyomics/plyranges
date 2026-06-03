@@ -2,12 +2,18 @@
 % Please edit documentation in R/endo-tile.R
 \name{tile_ranges}
 \alias{tile_ranges}
+\alias{tile_ranges_directed}
 \alias{slide_ranges}
+\alias{slide_ranges_directed}
 \title{Slide or tile over a Ranges object}
 \usage{
 tile_ranges(x, width)
 
+tile_ranges_directed(x, width)
+
 slide_ranges(x, width, step)
+
+slide_ranges_directed(x, width, step)
 }
 \arguments{
 \item{x}{a Ranges object}
@@ -30,9 +36,12 @@ of size \code{width} and sliding by \code{step}.
 Both \code{slide_ranges()} and \code{tile_ranges()} return a new Ranges object
 with a metadata column called "partition" which contains the index of the
 input range \code{x} that a parition belongs to.
+The \verb{_directed} variants order tiles/windows on negative strand ranges from
+right to left (high to low coordinates), matching the direction of
+transcription. They only accept \code{GRanges} inputs.
 }
 \examples{
- 
+
 gr <- data.frame(seqnames = c("chr1", rep("chr2", 3), rep("chr1", 2), rep("chr3", 4)),
                  start = 1:10,
                  end = 11,
@@ -41,11 +50,17 @@ gr <- data.frame(seqnames = c("chr1", rep("chr2", 3), rep("chr1", 2), rep("chr3"
       set_genome_info(seqlengths = c(11,12,13))
 
 # partition ranges into subranges of width 2, odd width ranges
-# will have one subrange of width 1              
+# will have one subrange of width 1
 tile_ranges(gr, width = 2)
+
+# directed: negative strand tiles ordered right to left
+tile_ranges_directed(gr, width = 2)
 
 # make sliding windows of width 3, moving window with step size of 2
 slide_ranges(gr, width = 3, step = 2)
+
+# directed: negative strand windows ordered right to left
+slide_ranges_directed(gr, width = 3, step = 2)
 
 }
 \seealso{
