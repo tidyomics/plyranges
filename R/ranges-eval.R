@@ -19,9 +19,46 @@ overscope_ranges <- function(x, envir = parent.frame()) {
 
 #' @export
 overscope_ranges.Ranges <- function(x, envir = parent.frame()) {
-  env <- as.env(x, envir)
-  
+  env <- overscope_env(x, envir)
+
   new_data_mask(env, top = parent.env(env))
+}
+
+# The (non-metadata) parallel-slot names of a Ranges object, i.e.
+# seqnames/start/end/width/strand. Introduced because of
+# (https://github.com/Bioconductor/S4Vectors/issues/140). Several
+# call sites treat parallelVectorNames() as "the core slots" 
+# if upstream issue is fixed.
+core_vector_names <- function(x) {
+  setdiff(S4Vectors::parallelVectorNames(x), names(mcols(x, use.names = FALSE)))
+}
+
+#' Build the two-tier data-mask environment for a Ranges object
+#'
+#' @description
+#' Internal backend for [overscope_ranges()]. Constructs the environment used
+#' for non-standard evaluation: a child tier binding the fixed parallel slots
+#' (seqnames/start/end/width/strand) enclosed by a parent tier binding the
+#' metadata columns, mirroring the layout produced by [IRanges::as.env()].
+#'
+#' @param x a Ranges object.
+#' @param envir the enclosing environment for the returned environment.
+#' @param tform a function applied to each bound column, used to split columns
+#'   into a List for grouped Ranges; defaults to [identity()].
+#'
+#' @return An environment whose child tier binds the fixed parallel slots and
+#'   whose parent (enclosing) tier binds the metadata columns.
+#'
+#' @seealso [overscope_ranges()], [IRanges::as.env()]
+#' @noRd
+overscope_env <- function(x, envir, tform = identity) {
+  mcols_env <- as.env(mcols(x, use.names = FALSE), envir, tform)
+  x_bare <- x
+  mcols(x_bare) <- NULL
+  env <- as.env(x_bare, envir, tform)
+  parent.env(env) <- mcols_env
+  env$.. <- x
+  env
 }
 
 #' @export
@@ -34,9 +71,9 @@ overscope_ranges.DelegatingIntegerRanges <- overscope_ranges.DelegatingGenomicRa
 
 #' @export
 overscope_ranges.GroupedGenomicRanges <- function(x, envir = parent.frame()) {
-  env <- as.env(x@delegate, 
-                envir, 
-                tform = function(col) unname(S4Vectors::splitAsList(col, x@group_indices)))
+  env <- overscope_env(x@delegate,
+                       envir,
+                       tform = function(col) unname(S4Vectors::splitAsList(col, x@group_indices)))
   new_data_mask(env, top = parent.env(env))
 }
 

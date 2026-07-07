@@ -12,7 +12,7 @@ select_rng <- function(.data, .drop_ranges, ...) {
     return(as(ans, "DataFrame"))
   } else {
     
-    core <- S4Vectors::parallelVectorNames(.data)
+    core <- core_vector_names(.data)
     var_names <- var_names[!(var_names %in% core)]
 
     

@@ -9,7 +9,7 @@ select.DeferredGenomicRanges <- function(.data, ..., .drop_ranges = FALSE) {
   names(vars) <- vars 
   pos <- try(tidyselect::eval_select(rlang::expr(c(...)),
                                       vars,
-                                      exclude = parallelVectorNames(.data@delegate)),
+                                      exclude = core_vector_names(.data@delegate)),
               silent = TRUE)
   
   
