@@ -910,7 +910,7 @@ sessionInfo()
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.40.0 gtable_0.3.6               
-    ##  [3] rjson_0.2.23                xfun_0.58                  
+    ##  [3] rjson_0.2.23                xfun_0.59                  
     ##  [5] bslib_0.11.0                htmlwidgets_1.6.4          
     ##  [7] Biobase_2.70.0              lattice_0.22-9             
     ##  [9] vctrs_0.7.3                 tools_4.5.2                
@@ -923,24 +923,24 @@ sessionInfo()
     ## [23] compiler_4.5.2              Rsamtools_2.26.0           
     ## [25] textshaping_1.0.5           Biostrings_2.78.0          
     ## [27] codetools_0.2-20            htmltools_0.5.9            
-    ## [29] sass_0.4.10                 RCurl_1.98-1.18            
+    ## [29] sass_0.4.10                 RCurl_1.98-1.19            
     ## [31] yaml_2.3.12                 pillar_1.11.1              
     ## [33] pkgdown_2.2.0               crayon_1.5.3               
     ## [35] jquerylib_0.1.4             BiocParallel_1.44.0        
     ## [37] DelayedArray_0.36.1         cachem_1.1.0               
     ## [39] abind_1.4-8                 tidyselect_1.2.1           
-    ## [41] digest_0.6.39               restfulr_0.0.16            
-    ## [43] bookdown_0.46               labeling_0.4.3             
+    ## [41] digest_0.6.39               restfulr_0.0.17            
+    ## [43] bookdown_0.47               labeling_0.4.3             
     ## [45] fastmap_1.2.0               grid_4.5.2                 
     ## [47] cli_3.6.6                   SparseArray_1.10.10        
     ## [49] magrittr_2.0.5              S4Arrays_1.10.1            
-    ## [51] XML_3.99-0.23               withr_3.0.2                
+    ## [51] XML_3.99-0.23               withr_3.0.3                
     ## [53] scales_1.4.0                rmarkdown_2.31             
     ## [55] XVector_0.50.0              httr_1.4.8                 
     ## [57] matrixStats_1.5.0           otel_0.2.0                 
     ## [59] ragg_1.5.2                  evaluate_1.0.5             
     ## [61] knitr_1.51                  BiocIO_1.20.0              
-    ## [63] rtracklayer_1.70.1          rlang_1.2.0                
+    ## [63] rtracklayer_1.70.1          rlang_1.3.0                
     ## [65] glue_1.8.1                  BiocManager_1.30.27        
     ## [67] jsonlite_2.0.0              R6_2.6.1                   
     ## [69] MatrixGenerics_1.22.0       GenomicAlignments_1.46.0   
