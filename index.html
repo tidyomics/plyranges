@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">plyranges</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.33.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.33.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,6 +96,11 @@
 <p>To install the development version from GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"tidyomics/plyranges"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level1">
+<h1 id="namespace-note">Namespace note<a class="anchor" aria-label="anchor" href="#namespace-note"></a>
+</h1>
+<p><em>plyranges</em> re-exports <code><a href="reference/element-setops.html">between()</a></code>, <code><a href="reference/n.html">n()</a></code>, and <code><a href="reference/n_distinct.html">n_distinct()</a></code> with Ranges-specific behaviour that differs from the <code>dplyr</code> originals; use <code><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">dplyr::n()</a></code> etc. if you need the originals. See the <a href="https://tidyomics.github.io/plyranges/articles/an-introduction.html#namespace-considerations">Namespace considerations</a> section of the introduction vignette for details.</p>
 </div>
 <div class="section level1">
 <h1 id="learning-more">Learning more<a class="anchor" aria-label="anchor" href="#learning-more"></a>

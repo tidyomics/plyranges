@@ -63,6 +63,18 @@ To install the development version from GitHub:
 BiocManager::install("tidyomics/plyranges")
 ```
 
+# Namespace note
+
+*plyranges* re-exports
+[`between()`](https://tidyomics.github.io/plyranges/reference/element-setops.md),
+[`n()`](https://tidyomics.github.io/plyranges/reference/n.md), and
+[`n_distinct()`](https://tidyomics.github.io/plyranges/reference/n_distinct.md)
+with Ranges-specific behaviour that differs from the `dplyr` originals;
+use [`dplyr::n()`](https://dplyr.tidyverse.org/reference/context.html)
+etc. if you need the originals. See the [Namespace
+considerations](https://tidyomics.github.io/plyranges/articles/an-introduction.html#namespace-considerations)
+section of the introduction vignette for details.
+
 # Learning more
 
 In addition to the two package vignettes, see the following for more

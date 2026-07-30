@@ -872,6 +872,46 @@ realistic analyses than the ones covered here:
   here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
   details about the overall philosophy and design of plyranges.
 
+## Namespace considerations
+
+`plyranges` re-exports three functions that otherwise exist in `dplyr`
+with different meanings:
+
+- `between(x, y)` wraps
+  [`IRanges::pgap()`](https://rdrr.io/pkg/IRanges/man/setops-methods.html)
+  and returns the gap ranges between two paired Ranges objects. This is
+  entirely distinct from `dplyr::between(x, left, right)`, which tests
+  whether numeric values fall within a scalar interval.
+- [`n()`](https://tidyomics.github.io/plyranges/reference/n.md) is
+  re-implemented to return group sizes for grouped Ranges objects
+  (including grouped lists of ranges).
+  [`dplyr::n()`](https://dplyr.tidyverse.org/reference/context.html)
+  does the same for data frames.
+- [`n_distinct()`](https://tidyomics.github.io/plyranges/reference/n_distinct.md)
+  is re-implemented to handle Bioconductor `List` objects via
+  `lengths(unique(x))`.
+  [`dplyr::n_distinct()`](https://dplyr.tidyverse.org/reference/n_distinct.html)
+  operates on ordinary vectors.
+
+Because `plyranges` is typically loaded after `dplyr`, these three names
+will resolve to the `plyranges` versions in your session. If you need
+the original `dplyr` behaviour, call it explicitly:
+[`dplyr::n()`](https://dplyr.tidyverse.org/reference/context.html),
+[`dplyr::n_distinct()`](https://dplyr.tidyverse.org/reference/n_distinct.html),
+or
+[`dplyr::between()`](https://dplyr.tidyverse.org/reference/between.html).
+
+Note that for the standard `dplyr` verbs —
+[`mutate()`](https://dplyr.tidyverse.org/reference/mutate.html),
+[`filter()`](https://dplyr.tidyverse.org/reference/filter.html),
+[`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html),
+[`select()`](https://dplyr.tidyverse.org/reference/select.html),
+[`arrange()`](https://dplyr.tidyverse.org/reference/arrange.html), and
+[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html) —
+`plyranges` registers S4 methods so that these verbs work directly on
+`GRanges` and `IRanges` objects without any renaming. Therefore
+`mutate(<GRanges>)` works and is the same as `dplyr::mutate(<GRanges>)`.
+
 ## Session information
 
 ``` r
@@ -903,20 +943,20 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ##  [1] ggplot2_4.0.3        plyranges_1.33.1     dplyr_1.2.1         
+    ##  [1] ggplot2_4.0.3        plyranges_1.33.2     dplyr_1.2.1         
     ##  [4] GenomicRanges_1.62.1 Seqinfo_1.0.0        IRanges_2.44.0      
     ##  [7] S4Vectors_0.48.1     BiocGenerics_0.56.0  generics_0.1.4      
     ## [10] BiocStyle_2.38.0    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.40.0 gtable_0.3.6               
-    ##  [3] rjson_0.2.23                xfun_0.59                  
+    ##  [3] rjson_0.2.23                xfun_0.60                  
     ##  [5] bslib_0.11.0                htmlwidgets_1.6.4          
     ##  [7] Biobase_2.70.0              lattice_0.22-9             
     ##  [9] vctrs_0.7.3                 tools_4.5.2                
     ## [11] bitops_1.0-9                curl_7.1.0                 
     ## [13] parallel_4.5.2              tibble_3.3.1               
-    ## [15] pkgconfig_2.0.3             Matrix_1.7-5               
+    ## [15] pkgconfig_2.0.3             Matrix_1.7-6               
     ## [17] RColorBrewer_1.1-3          S7_0.2.2                   
     ## [19] desc_1.4.3                  cigarillo_1.0.0            
     ## [21] lifecycle_1.0.5             farver_2.1.2               

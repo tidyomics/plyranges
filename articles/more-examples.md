@@ -298,19 +298,19 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] plyranges_1.33.1     dplyr_1.2.1          GenomicRanges_1.62.1
+    ## [1] plyranges_1.33.2     dplyr_1.2.1          GenomicRanges_1.62.1
     ## [4] Seqinfo_1.0.0        IRanges_2.44.0       S4Vectors_0.48.1    
     ## [7] BiocGenerics_0.56.0  generics_0.1.4       BiocStyle_2.38.0    
     ## 
     ## loaded via a namespace (and not attached):
     ##  [1] SummarizedExperiment_1.40.0 rjson_0.2.23               
-    ##  [3] xfun_0.59                   bslib_0.11.0               
+    ##  [3] xfun_0.60                   bslib_0.11.0               
     ##  [5] htmlwidgets_1.6.4           Biobase_2.70.0             
     ##  [7] lattice_0.22-9              vctrs_0.7.3                
     ##  [9] tools_4.5.2                 bitops_1.0-9               
     ## [11] curl_7.1.0                  parallel_4.5.2             
     ## [13] tibble_3.3.1                pkgconfig_2.0.3            
-    ## [15] Matrix_1.7-5                desc_1.4.3                 
+    ## [15] Matrix_1.7-6                desc_1.4.3                 
     ## [17] cigarillo_1.0.0             lifecycle_1.0.5            
     ## [19] compiler_4.5.2              Rsamtools_2.26.0           
     ## [21] textshaping_1.0.5           Biostrings_2.78.0          
