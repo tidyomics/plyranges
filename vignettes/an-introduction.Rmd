@@ -460,6 +460,32 @@ up on interesting hits from a combined RNA-seq and ATAC-seq analysis.
 - The [journal article](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-018-1597-8) ([preprint here](https://www.biorxiv.org/content/early/2018/05/23/327841)) has
 details about the overall philosophy and design of plyranges.
 
+# Namespace considerations
+
+`plyranges` re-exports three functions that otherwise exist in `dplyr` with
+different meanings:
+
+- `between(x, y)` wraps `IRanges::pgap()` and returns the gap ranges between
+  two paired Ranges objects. This is entirely distinct from `dplyr::between(x,
+  left, right)`, which tests whether numeric values fall within a scalar
+  interval.
+- `n()` is re-implemented to return group sizes for grouped Ranges objects
+  (including grouped lists of ranges). `dplyr::n()` does the same for
+  data frames.
+- `n_distinct()` is re-implemented to handle Bioconductor `List` objects via
+  `lengths(unique(x))`. `dplyr::n_distinct()` operates on ordinary vectors.
+
+Because `plyranges` is typically loaded after `dplyr`, these three names will
+resolve to the `plyranges` versions in your session. If you need the original
+`dplyr` behaviour, call it explicitly: `dplyr::n()`, `dplyr::n_distinct()`,
+or `dplyr::between()`.
+
+Note that for the standard `dplyr` verbs — `mutate()`, `filter()`,
+`summarise()`, `select()`, `arrange()`, and `group_by()` — `plyranges`
+registers S4 methods so that these verbs work directly on `GRanges` and
+`IRanges` objects without any renaming. Therefore `mutate(<GRanges>)` works
+and is the same as `dplyr::mutate(<GRanges>)`.
+
 # Session information
 
 ```{r}
