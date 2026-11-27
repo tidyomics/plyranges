@@ -17,6 +17,9 @@
 
 - **Stevie Pederson**. Contributor.
 
+- **Chen-Yang Su**. Contributor.
+  [](https://orcid.org/0000-0001-6071-4660)
+
 - **Michael Love**. Contributor, maintainer.
 
 ## Citation
