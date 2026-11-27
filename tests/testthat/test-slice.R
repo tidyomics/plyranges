@@ -64,3 +64,37 @@ test_that("groupwise slice produces expected results", {
   expect_equal(as.numeric(table(strand(target))), c(1,2,1))
   
 })
+
+test_that("slice_sample, slice_min, and slice_max work with core columns and expressions", {
+  gr_var <- as_granges(data.frame(
+    seqnames = c("chr1", "chr1", "chr2", "chr2"),
+    start = c(10, 1, 20, 5),
+    width = c(1, 1000, 1, 1000),
+    gc = c(0.1, 0.9, 0.2, 0.8)
+  ))
+
+  set.seed(42)
+  draws <- replicate(50, width(dplyr::slice_sample(gr_var, n = 1, weight_by = width)))
+  expect_true(mean(draws == 1000L) > 0.9)
+
+  expect_identical(dplyr::slice_max(gr_var, order_by = width, n = 1), gr_var[c(2, 4)])
+  expect_identical(dplyr::slice_min(gr_var, order_by = start, n = 1), gr_var[2])
+  expect_identical(dplyr::slice_max(gr_var, order_by = end, n = 1), gr_var[4])
+  expect_identical(dplyr::slice_max(gr_var, order_by = width * gc, n = 1), gr_var[2])
+
+  by_seq <- group_by(gr_var, seqnames)
+  expect_identical(dplyr::slice_max(by_seq, order_by = width, n = 1) |> ungroup(), gr_var[c(2, 4)])
+  expect_identical(dplyr::slice_min(by_seq, order_by = start, n = 1) |> ungroup(), gr_var[c(2, 4)])
+
+  set.seed(42)
+  grp_draws <- replicate(
+    50,
+    width(dplyr::slice_sample(by_seq, n = 1, weight_by = width) |> ungroup())
+  )
+  expect_true(mean(grp_draws == 1000L) > 0.9)
+
+  ir_var <- as_iranges(data.frame(start = c(10, 1, 5), width = c(1, 1000, 1)))
+  expect_identical(dplyr::slice_max(ir_var, order_by = width, n = 1), ir_var[2])
+  expect_identical(dplyr::slice_min(ir_var, order_by = start, n = 1), ir_var[2])
+  expect_length(dplyr::slice_sample(ir_var, n = 1, weight_by = width), 1L)
+})
