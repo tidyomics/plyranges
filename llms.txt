@@ -40,7 +40,7 @@ vignette](https://tidyomics.github.io/plyranges/articles/more-examples.html).
 
 For a complete case-study on using *plyranges* to combine ATAC-seq and
 RNA-seq results read the [*fluentGenomics*
-workflow](https://tidyomics.github.io/fluentGenomics).
+workflow](https://sa-lee.github.io/fluentGenomics).
 
 *plyranges* is part of the [tidyomics](https://github.com/tidyomics)
 project, providing a *dplyr*-based interface for many types of genomics
