@@ -98,3 +98,28 @@ test_that("slice_sample, slice_min, and slice_max work with core columns and exp
   expect_identical(dplyr::slice_min(ir_var, order_by = start, n = 1), ir_var[2])
   expect_length(dplyr::slice_sample(ir_var, n = 1, weight_by = width), 1L)
 })
+
+test_that("slice_sample, slice_min, and slice_max work with Rle columns", {
+  gr_rle <- GRanges(
+    seqnames = c("chr1", "chr1", "chr2", "chr2"),
+    ranges = IRanges(start = c(10, 1, 20, 5), width = 1),
+    score = S4Vectors::Rle(c(1, 5, 2, 8)),
+    w = S4Vectors::Rle(c(0, 1, 0, 1))
+  )
+
+  expect_identical(dplyr::slice_max(gr_rle, order_by = score, n = 1), gr_rle[4])
+  expect_identical(dplyr::slice_min(gr_rle, order_by = score, n = 2), gr_rle[c(1, 3)])
+  expect_identical(dplyr::slice_max(gr_rle, order_by = score * width, n = 1), gr_rle[4])
+
+  by_seq <- group_by(gr_rle, seqnames)
+  expect_identical(dplyr::slice_max(by_seq, order_by = score, n = 1) |> ungroup(), gr_rle[c(2, 4)])
+  expect_identical(dplyr::slice_min(by_seq, order_by = score, n = 1) |> ungroup(), gr_rle[c(1, 3)])
+
+  # ranges with zero weight are never drawn
+  expect_identical(sort(dplyr::slice_sample(gr_rle, n = 2, weight_by = w)), sort(gr_rle[c(2, 4)]))
+  expect_identical(dplyr::slice_sample(by_seq, n = 1, weight_by = w) |> ungroup(), gr_rle[c(2, 4)])
+
+  # seqnames and strand are factor-Rle columns, not numeric ones
+  expect_error(dplyr::slice_max(gr_rle, order_by = strand, n = 1), "numeric")
+  expect_error(dplyr::slice_sample(gr_rle, n = 1, weight_by = seqnames), "numeric")
+})
