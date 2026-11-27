@@ -333,12 +333,16 @@ head_tail_index <- function(total, n = NULL, prop = NULL, from_head) {
   if (from_head) seq_len(size) else seq.int(total - size + 1L, total)
 }
 
-# Evaluate an optional weight_by quosure against .data's mcols.
+# Evaluate an optional weight_by quosure against .data (core and metadata columns).
 eval_weight_by <- function(.data, weight_quo) {
   if (rlang::quo_is_null(weight_quo)) return(NULL)
-  col_name <- rlang::as_name(weight_quo)
-  w <- mcols(.data)[[col_name]]
-  if (is.null(w)) stop(paste0("Column '", col_name, "' not found in .data."))
+  os <- overscope_ranges(.data)
+  w <- rlang::eval_tidy(weight_quo, data = os)
+  if (methods::is(w, "Rle")) w <- as.vector(w)
+  if (!is.numeric(w)) stop("`weight_by` must evaluate to a numeric vector.")
+  if (length(w) != length(.data)) {
+    stop("`weight_by` must be the same length as `.data`.")
+  }
   if (any(w < 0, na.rm = TRUE)) stop("`weight_by` values must be non-negative.")
   w
 }
@@ -353,10 +357,13 @@ check_column_numeric <- function(x, col) {
 # Build an ordering index for slice_min / slice_max.
 minmax_index <- function(.data, order_quo, n = NULL, prop = NULL, with_ties,
                          decreasing) {
-  col_name <- rlang::as_name(order_quo)
-  vals     <- mcols(.data)[[col_name]]
-  if (is.null(vals)) stop(paste0("Column '", col_name, "' not found in .data."))
-  check_column_numeric(vals, col_name)
+  os   <- overscope_ranges(.data)
+  vals <- rlang::eval_tidy(order_quo, data = os)
+  if (methods::is(vals, "Rle")) vals <- as.vector(vals)
+  check_column_numeric(vals, rlang::as_label(order_quo))
+  if (length(vals) != length(.data)) {
+    stop("`order_by` must be the same length as `.data`.")
+  }
 
   total <- length(.data)
   size  <- resolve_n_prop(total, n = n, prop = prop)
@@ -390,27 +397,14 @@ apply_grouped_slice <- function(.data, index_fn) {
 # Grouped min / max helper.
 apply_grouped_minmax <- function(.data, order_quo, n = NULL, prop = NULL,
                                  with_ties, decreasing) {
-  col_name <- rlang::as_name(order_quo)
   rng      <- .data@delegate
   grp_rows <- .group_rows(.data)
 
   selected <- lapply(grp_rows, function(i) {
-    sub  <- rng[i]
-    vals <- mcols(sub)[[col_name]]
-    if (is.null(vals)) stop(paste0("Column '", col_name, "' not found."))
-    check_column_numeric(vals, col_name)
-
-    size <- resolve_n_prop(length(i), n = n, prop = prop)
-    ord  <- order(vals, decreasing = decreasing, na.last = NA)
-
-    local_inx <- if (with_ties) {
-      threshold <- vals[ord[min(size, length(ord))]]
-      if (decreasing) which(vals >= threshold) else which(vals <= threshold)
-    } else {
-      ord[seq_len(min(size, length(ord)))]
-    }
-
-    i[sort(local_inx)]
+    sub       <- rng[i]
+    local_inx <- minmax_index(sub, order_quo, n = n, prop = prop,
+                              with_ties = with_ties, decreasing = decreasing)
+    i[local_inx]
   })
 
   rng_out <- rng[sort(unlist(selected))]
