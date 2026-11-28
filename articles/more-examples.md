@@ -298,7 +298,7 @@ sessionInfo()
     ## [8] base     
     ## 
     ## other attached packages:
-    ## [1] plyranges_1.35.0     dplyr_1.2.1          GenomicRanges_1.62.1
+    ## [1] plyranges_1.35.1     dplyr_1.2.1          GenomicRanges_1.62.1
     ## [4] Seqinfo_1.0.0        IRanges_2.44.0       S4Vectors_0.48.1    
     ## [7] BiocGenerics_0.56.0  generics_0.1.4       BiocStyle_2.38.0    
     ## 
