@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   an-introduction: an-introduction.html
   more-examples: more-examples.html
-last_built: 2026-11-27T20:29Z
+last_built: 2026-11-28T14:47Z
 urls:
   reference: https://tidyomics.github.io/plyranges/reference
   article: https://tidyomics.github.io/plyranges/articles
