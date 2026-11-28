@@ -44,7 +44,7 @@ and the
 
 For a complete case-study on using _plyranges_ to combine ATAC-seq and
 RNA-seq results read the [*fluentGenomics*
-workflow](https://tidyomics.github.io/fluentGenomics).
+workflow](https://sa-lee.github.io/fluentGenomics).
 
 _plyranges_ is part of the [tidyomics](https://github.com/tidyomics)
 project, providing a _dplyr_-based interface for many types of
